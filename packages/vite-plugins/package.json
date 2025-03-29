@@ -1,0 +1,18 @@
+{
+  "name": "vite-plugins",
+  "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./src/index.ts",
+  "devDependencies": {
+    "tsconfig": "workspace:*"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@types/node": "^20.12.5",
+    "sharp": "^0.33.5"
+  }
+}

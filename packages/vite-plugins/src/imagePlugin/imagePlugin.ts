@@ -1,7 +1,7 @@
 import { isAbsolute, parse } from 'node:path';
 import type { Plugin } from 'vite';
 
-import { createImageLoader } from './createImageLoader';
+import { createImageLoader } from './createImageLoader.js';
 
 interface ImageVariant {
   src: string;
@@ -106,7 +106,7 @@ export function imagePlugin({
       // Calculate the initial scale. We need this to understand how to rescale the image.
       let initialScale = defaultInitialScale;
       if (searchParams.has('initialScale')) {
-        initialScale = parseFloat(searchParams.get('initialScale'));
+        initialScale = parseFloat(searchParams.get('initialScale')!);
         if (!initialScale) {
           onError('"initialScale" is invalid');
         }
@@ -208,31 +208,31 @@ export function imagePlugin({
       server.middlewares.use(
         assetsBaseUrl,
         async (req, res) => {
-          const { searchParams } = new URL(req.url, 'http://a');
+          const { searchParams } = new URL(req.url || '', 'http://a');
 
           const path = searchParams.get('path');
           if (!path) {
             throw new Error('"path" is invalid');
           }
 
-          const scale = parseFloat(searchParams.get('scale'));
+          const scale = parseFloat(searchParams.get('scale')!);
           if (scale <= 0) {
             throw new Error('"scale" is invalid');
           }
 
-          const initialScale = parseFloat(searchParams.get('initialScale'));
+          const initialScale = parseFloat(searchParams.get('initialScale')!);
           if (initialScale <= 0) {
             throw new Error('"initialScale" is invalid');
           }
 
-          const format = searchParams.get('format');
+          const format = searchParams.get('format')!;
           if (!['webp', 'png'].includes(format)) {
             throw new Error('"format" is invalid');
           }
 
           const image = await loadImage({ path, initialScale, scale });
           res.writeHead(200, { 'Content-Type': `image/${format}` });
-          res.end(image[format]);
+          res.end(image[format as keyof typeof image]);
         },
       );
     },
