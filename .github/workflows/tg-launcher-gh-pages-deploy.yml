@@ -25,6 +25,9 @@ concurrency:
 jobs:
   # Single deploy job since we're just deploying
   deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -46,5 +49,18 @@ jobs:
       - name: Install deps
         run: pnpm run ci:telegram-launcher:deps
 
-      - name: Deploy
-        run: pnpm run ci:telegram-launcher:deploy
+      - name: Build
+        run: pnpm run ci:telegram-launcher:build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload dist repository
+          path: './apps/telegram-launcher/dist'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

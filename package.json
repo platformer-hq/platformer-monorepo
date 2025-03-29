@@ -1,8 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "ci:telegram-launcher:deps": "pnpm i --filter=\"./apps/telegram-launcher\"",
-    "ci:telegram-launcher:deploy": "turbo run deploy --filter=\"./apps/telegram-launcher\""
+    "ci:telegram-launcher:deps": "pnpm i --frozen-lockfile --filter=\"./apps/telegram-launcher\"",
+    "ci:telegram-launcher:build": "turbo run build --filter=\"./apps/telegram-launcher\""
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.10",

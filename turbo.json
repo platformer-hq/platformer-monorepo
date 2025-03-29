@@ -9,9 +9,6 @@
         "^build"
       ]
     },
-    "deploy": {
-      "cache": false
-    },
     "dev": {
       "cache": false,
       "persistent": true

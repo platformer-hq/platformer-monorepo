@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "main": "index.js",
-  "homepage": "https://platformer-hq.github.io/platformer-tg-launcher",
+  "homepage": "https://platformer-hq.github.io/platformer-monorepo",
   "scripts": {
     "deploy": "gh-pages -d dist",
     "dev": "vite",
