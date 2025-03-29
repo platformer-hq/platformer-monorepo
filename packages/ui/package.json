@@ -2,26 +2,7 @@
   "name": "@telegram-apps/ui-solid",
   "version": "0.0.1",
   "author": "Vladislav Kibenko <wolfram.deus@gmail.com>",
-  "homepage": "https://github.com/Telegram-Mini-Apps/tma.js#readme",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:Telegram-Mini-Apps/tma.js.git",
-    "directory": "packages/ui-solid"
-  },
-  "bugs": {
-    "url": "https://github.com/Telegram-Mini-Apps/tma.js/issues"
-  },
-  "keywords": [
-    "telegram-mini-apps",
-    "typescript",
-    "solid"
-  ],
-  "license": "MIT",
   "type": "module",
-  "sideEffects": false,
-  "files": [
-    "dist"
-  ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/dts/index.d.ts",
