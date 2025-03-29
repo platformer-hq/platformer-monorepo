@@ -1,5 +1,5 @@
 {
-  "name": "@telegram-apps/ui-solid",
+  "name": "ui",
   "version": "0.0.1",
   "author": "Vladislav Kibenko <wolfram.deus@gmail.com>",
   "type": "module",
