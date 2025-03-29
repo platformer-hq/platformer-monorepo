@@ -18,15 +18,14 @@ query parameters to the launcher's base URL.
 
 ## Usage
 
-To start using the launcher, take its base
-URL (`https://platformer-hq.github.io/platformer-tg-launcher/`) and append the
+To start using the launcher, take its base URL (`https://tgl.mini-apps.store/`) and append the
 following [options](#options) as a list of query parameters.
 
 For example, if you have a Platformer application with the identifier `10` and a `fallback_url` set
 to `https://walletbot.me/app`, the complete URL would be:
 
 ```
-https://platformer-hq.github.io/platformer-tg-launcher/?app_id=10&fallback_url=https%3A%2F%2Fwalletbot.me%2Fapp
+https://tgl.mini-apps.store/?app_id=10&fallback_url=https%3A%2F%2Fwalletbot.me%2Fapp
 ```
 
 Once you have the final URL, use it when creating a Mini App
@@ -53,8 +52,9 @@ The launcher retrieves the application information using the `app_id` option.
 
 Once the data is retrieved, it displays one of the following screens:
 
-1. A message indicating that the application is unavailable on the current platform.
-2. The application itself, if a URL was returned.
+1. A message indicating that your application is unavailable for any reason. It can either be some error, a missing URL
+   for the current platform, or even the application security settings.
+2. Your application itself, if any URL was returned from the Platformer's server.
 
 ### 4. Render the Application
 
@@ -62,11 +62,11 @@ The launcher inserts an `iframe` with the URL returned from Platformer. This URL
 you set in the admin panel, along with the launch parameters originally passed to the Mini App.
 
 After inserting the iframe, the launcher waits for the number of milliseconds specified in
-the `load_timeout` option before calling
-the [web_app_ready](https://docs.telegram-mini-apps.com/platform/methods#web-app-ready) method.
+the `load_timeout` option until the [web_app_ready](https://docs.telegram-mini-apps.com/platform/methods#web-app-ready)
+method was called by your application.
 
-To prevent uncontrollable behavior, Platformer does not automatically display the application when
-all assets are loaded (unlike Telegram). Therefore, calling the `web_app_ready` method is required.
+Unlike Telegram, to prevent uncontrollable behavior, Platformer does not automatically display the application when all
+assets are loaded. Therefore, calling the `web_app_ready` method is required.
 
 ## Security Concerns
 
@@ -88,6 +88,20 @@ called [Third-Party Validation](https://docs.telegram-mini-apps.com/platform/ini
 which allows third-party projects to validate init data using the `signature` property. Thanks to
 this feature, Platformer only requires you to specify your Bot's identifier in the admin panel for
 your Mini App.
+
+## Troubleshooting
+
+### Application Failed to Load Due to Timeout
+
+Your application may fail to display for one of the following reasons:
+
+- **Low download speed** – Your server took too long to load the application assets.
+- **Required method not called** – Your application didn’t call
+  the [web_app_ready](https://docs.telegram-mini-apps.com/platform/methods#web-app-ready) method.
+- **Incompatible SDK** – Platformer doesn’t support **Telegram SDK** or **@telegram-apps/sdk** version 2 or earlier due
+  to incorrect implementation of communication between mini apps and Telegram clients. However,
+  using [@telegram-apps/sdk@3](https://docs.telegram-mini-apps.com/packages/telegram-apps-sdk/3-x) should resolve this
+  issue.
 
 ## Environment Support
 
