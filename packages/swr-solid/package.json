@@ -1,0 +1,23 @@
+{
+  "name": "swr-solid",
+  "version": "0.0.1",
+  "author": "Vladislav Kibenko <wolfram.deus@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --noEmit && vite build"
+  },
+  "dependencies": {
+    "@solid-primitives/memo": "^1.4.1",
+    "@solid-primitives/utils": "^6.3.0",
+    "swr": "workspace:*"
+  },
+  "peerDependencies": {
+    "solid-js": "^1.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
