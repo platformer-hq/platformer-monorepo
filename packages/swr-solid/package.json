@@ -14,6 +14,9 @@
     "@solid-primitives/utils": "^6.3.0",
     "swr": "workspace:*"
   },
+  "devDependencies": {
+    "tsconfig": "workspace:*"
+  },
   "peerDependencies": {
     "solid-js": "^1.0.0"
   },
