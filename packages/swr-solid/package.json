@@ -4,11 +4,7 @@
   "author": "Vladislav Kibenko <wolfram.deus@gmail.com>",
   "license": "MIT",
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "scripts": {
-    "build": "tsc --noEmit && vite build"
-  },
+  "main": "./src/index.ts",
   "dependencies": {
     "@solid-primitives/memo": "^1.4.1",
     "@solid-primitives/utils": "^6.3.0",
