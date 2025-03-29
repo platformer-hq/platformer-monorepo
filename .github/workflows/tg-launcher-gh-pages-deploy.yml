@@ -47,10 +47,7 @@ jobs:
         id: pnpm-install
         with:
           version: 10.7.0
-          run_install: false
-
-      - name: Install deps
-        run: pnpm run ci:telegram-launcher:deps
+          run_install: true
 
       - name: Build
         run: pnpm run ci:telegram-launcher:build
