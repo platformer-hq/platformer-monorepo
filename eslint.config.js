@@ -2,13 +2,14 @@
 
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
+import solid from 'eslint-plugin-solid';
 
 export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
   {
-    files: ['./apps/telegram-launcher/**/*.tsx?'],
-    extends: ['plugin:solid/typescript']
+    files: ['./apps/{telegram-launcher,admin-panel}/**/*.{ts,tsx}'],
+    ...solid.configs.recommended,
   },
   {
     languageOptions: {
