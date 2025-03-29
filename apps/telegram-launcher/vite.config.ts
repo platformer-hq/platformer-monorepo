@@ -6,7 +6,7 @@ import mkcert from 'vite-plugin-mkcert';
 import { imagePlugin } from './plugins/imagePlugin';
 
 export default defineConfig({
-  base: 'https://platformer-hq.github.io/platformer-tg-launcher/',
+  base: 'https://platformer-hq.github.io/platformer-monorepo/',
   css: {
     preprocessorOptions: {
       scss: {
