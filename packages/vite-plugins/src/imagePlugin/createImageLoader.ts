@@ -36,7 +36,7 @@ export function createImageLoader() {
     let initialTuple = initials.get(initialKey);
     if (!initialTuple) {
       const initialSharp = sharp(readFileSync(path));
-      const { width, height } = await initialSharp.metadata();
+      const { width = 0, height = 0 } = await initialSharp.metadata();
       initialTuple = [initialSharp, { width, height }];
       initials.set(initialKey, initialTuple);
     }
