@@ -1,0 +1,41 @@
+{
+  "private": true,
+  "devDependencies": {
+    "@changesets/cli": "^2.27.10",
+    "@eslint/js": "^9.16.0",
+    "@turbo/gen": "^2.3.3",
+    "@types/eslint__js": "^8.42.3",
+    "@vitest/coverage-v8": "^2.1.6",
+    "@vitest/ui": "^2.1.6",
+    "commitizen": "^4.3.1",
+    "cross-env": "^7.0.3",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^9.16.0",
+    "husky": "^9.1.7",
+    "rimraf": "^6.0.1",
+    "tslib": "^2.8.1",
+    "tsx": "^4.19.2",
+    "turbo": "^2.3.3",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.26.0",
+    "vite": "^5.4.14",
+    "vite-plugin-dts": "^4.5.0",
+    "vite-plugin-mkcert": "^1.17.6",
+    "vite-plugin-solid": "^2.11.0",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^2.1.6"
+  },
+  "type": "module",
+  "packageManager": "pnpm@9.13.2",
+  "name": "platformer-monorepo",
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && npx cz --hook || true"
+    }
+  }
+}

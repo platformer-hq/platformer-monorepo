@@ -1,0 +1,17 @@
+@mixin variant($name, $color) {
+  &--#{$name} {
+    color: var(--tgui-list-ios-item-body-left-label-#{$name}-color, $color);
+  }
+}
+
+.tgui-list-ios__item-body-left-label {
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  @include variant("regular", black);
+  @include variant("accent", #007AFF);
+  @include variant("destructive", #FF3B30);
+  @include variant("placeholder", #8E8E93);
+}

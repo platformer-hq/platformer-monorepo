@@ -1,0 +1,17 @@
+.tgui-list-ios__item-left-icon {
+  width: 50px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+  &-image {
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    display: block;
+
+    &--rounded {
+      border-radius: 7px;
+    }
+  }
+}

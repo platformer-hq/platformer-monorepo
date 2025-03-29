@@ -1,0 +1,14 @@
+.tgui-list-ios__item-body {
+  display: flex;
+  height: 100%;
+  flex: 1 0 0;
+  align-items: center;
+  box-sizing: border-box;
+  box-shadow: 0 0.33px 0 var(--tgui-list-ios-divider-color, #C8C7CC) inset;
+  max-width: 100%;
+  padding-right: 16px;
+
+  &--first {
+    box-shadow: none;
+  }
+}

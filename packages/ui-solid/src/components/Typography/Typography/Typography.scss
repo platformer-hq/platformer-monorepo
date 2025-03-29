@@ -1,0 +1,21 @@
+.tgui-typography {
+  margin: 0;
+
+  &--strikethrough {
+    text-decoration: line-through;
+  }
+
+  &--caps {
+    text-transform: uppercase;
+  }
+
+  &--align-left {
+    text-align: left;
+  }
+
+  @each $align in [left, center, right] {
+    &--align-#{$align} {
+      text-align: $align;
+    }
+  }
+}

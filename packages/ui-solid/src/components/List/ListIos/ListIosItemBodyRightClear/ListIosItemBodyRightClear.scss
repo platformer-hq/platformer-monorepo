@@ -1,0 +1,9 @@
+@use "../../../../scss/mixins";
+
+.tgui-list-ios__item-body-right-clear {
+  color: var(--tgui-list-ios-item-body-right-clear-color, #8E8E93);
+  @include mixins.clickable;
+  padding: 10px;
+  box-sizing: content-box;
+  margin-right: -10px;
+}

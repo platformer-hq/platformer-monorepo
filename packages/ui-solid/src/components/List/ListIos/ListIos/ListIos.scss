@@ -1,0 +1,23 @@
+.tgui-list-ios {
+  &__title {
+    padding: 5px 16px;
+    margin: 0;
+    color: var(--tgui-list-ios-title-color, #6D6D72);
+  }
+
+  &__list {
+    appearance: none;
+    display: block;
+    margin: 0;
+    padding: 0;
+    background: var(--tgui-list-ios-list-bg, white);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  &__footer {
+    padding: 5px 16px;
+    margin: 0;
+    color: var(--tgui-list-ios-footer-color, #8E8E93);
+  }
+}

@@ -1,0 +1,33 @@
+@use "../../../../scss/mixins";
+
+.tgui-list-ios__item {
+  display: block;
+  height: 44px;
+
+  &--large {
+    height: 60px;
+  }
+
+  &-inner {
+    appearance: none;
+    border: none;
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+    padding: 0 0 0 16px;
+    background: transparent;
+    text-align: left;
+    cursor: unset;
+    color: inherit;
+
+    &--clickable {
+      @include mixins.clickable;
+    }
+
+    &--active {
+      background: var(--tgui-list-ios-item-active-bg, #D2D1D7);
+    }
+  }
+}

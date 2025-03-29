@@ -1,0 +1,11 @@
+.section {
+  display: flex;
+  flex-flow: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.opaque {
+  opacity: .4;
+}

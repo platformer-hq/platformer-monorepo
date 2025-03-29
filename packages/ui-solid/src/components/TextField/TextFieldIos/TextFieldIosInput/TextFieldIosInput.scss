@@ -1,0 +1,19 @@
+$component: "text-field-ios";
+
+.tgui-#{$component}__input {
+  border: none;
+  background: transparent;
+  appearance: none;
+  padding: 0 16px;
+  display: block;
+  height: 100%;
+  outline: none;
+  font-family: SF Pro, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 17px;
+  line-height: 22px;
+  color: var(--tgui-#{$component}-input-color, black);
+
+  &--clear-shown {
+    padding-right: 41px;
+  }
+}

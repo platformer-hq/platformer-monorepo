@@ -1,0 +1,21 @@
+$component: "text-field-ios";
+
+.tgui-#{$component} {
+  display: inline-block;
+  height: 46px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+
+  &__background {
+    opacity: 0.12;
+    z-index: -1;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: var(--tgui-#{$component}-background, #747480);
+    position: absolute;
+  }
+}

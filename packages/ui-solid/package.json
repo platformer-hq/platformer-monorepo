@@ -1,0 +1,75 @@
+{
+  "name": "@telegram-apps/ui-solid",
+  "version": "0.0.1",
+  "author": "Vladislav Kibenko <wolfram.deus@gmail.com>",
+  "homepage": "https://github.com/Telegram-Mini-Apps/tma.js#readme",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Telegram-Mini-Apps/tma.js.git",
+    "directory": "packages/ui-solid"
+  },
+  "bugs": {
+    "url": "https://github.com/Telegram-Mini-Apps/tma.js/issues"
+  },
+  "keywords": [
+    "telegram-mini-apps",
+    "typescript",
+    "solid"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/dts/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/dts/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./style.css": {
+      "import": "./dist/style.css",
+      "require": "./dist/style.css"
+    }
+  },
+  "scripts": {
+    "build": "tsc --noEmit -p tsconfig.build.json && vite build",
+    "icons:build": "node scripts/build-icons.js && eslint --fix src/icons/index.ts",
+    "lint": "eslint src",
+    "lint:fix": "pnpm run lint --fix",
+    "storybook": "storybook dev -p 6006",
+    "storybook:build": "storybook build",
+    "test": "vitest --run",
+    "typecheck": "tsc --noEmit -p tsconfig.build.json"
+  },
+  "peerDependencies": {
+    "solid-js": "^1.0.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-controls": "^8.6.0-beta.0",
+    "@storybook/addon-essentials": "^8.6.0-beta.0",
+    "@storybook/addon-interactions": "^8.6.0-beta.0",
+    "@storybook/addon-links": "^8.6.0-beta.0",
+    "@storybook/addon-viewport": "^8.6.0-beta.0",
+    "@storybook/blocks": "^8.6.0-beta.0",
+    "@storybook/types": "^8.6.0-beta.0",
+    "sass": "^1.71.1",
+    "storybook": "^8.6.0-beta.0",
+    "storybook-solidjs": "1.0.0-beta.6",
+    "storybook-solidjs-vite": "1.0.0-beta.6",
+    "svgo": "^3.3.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@solid-primitives/event-listener": "^2.4.0",
+    "@solid-primitives/memo": "^1.4.1",
+    "@solid-primitives/utils": "^6.3.0",
+    "@storybook/test": "^8.6.0-beta.0"
+  }
+}

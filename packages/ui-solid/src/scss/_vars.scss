@@ -1,0 +1,3 @@
+@function componentVar($component: string, $name: string, $default) {
+  @return var(--tgui-#{$component}-#{$name}, $default)
+}
