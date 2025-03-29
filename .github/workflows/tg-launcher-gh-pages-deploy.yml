@@ -47,4 +47,4 @@ jobs:
         run: pnpm run ci:telegram-launcher:deps
 
       - name: Deploy
-        run: ci:telegram-launcher:deploy
+        run: pnpm run ci:telegram-launcher:deploy
