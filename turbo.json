@@ -9,6 +9,9 @@
         "^build"
       ]
     },
+    "deploy": {
+      "cache": false
+    },
     "dev": {
       "cache": false,
       "persistent": true
@@ -23,9 +26,6 @@
       "cache": true
     },
     "typecheck": {
-      "dependsOn": [
-        "^typecheck"
-      ],
       "cache": true
     }
   }

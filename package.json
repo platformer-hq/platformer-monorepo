@@ -1,5 +1,9 @@
 {
   "private": true,
+  "scripts": {
+    "ci:telegram-launcher:deps": "pnpm i --filter=\"./apps/telegram-launcher\"",
+    "ci:telegram-launcher:deploy": "turbo run deploy --filter=\"./apps/telegram-launcher\""
+  },
   "devDependencies": {
     "@changesets/cli": "^2.27.10",
     "@eslint/js": "^9.16.0",
@@ -11,6 +15,7 @@
     "cross-env": "^7.0.3",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^9.16.0",
+    "gh-pages": "^6.1.1",
     "husky": "^9.1.7",
     "rimraf": "^6.0.1",
     "tslib": "^2.8.1",
