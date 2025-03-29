@@ -7,6 +7,10 @@ export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
   {
+    files: ['./apps/telegram-launcher/**/*.tsx?'],
+    extends: ['plugin:solid/typescript']
+  },
+  {
     languageOptions: {
       parserOptions: {
         project: [
@@ -14,6 +18,8 @@ export default tseslint.config(
           './apps/*/tsconfig.json'
         ],
         tsconfigRootDir: import.meta.dirname,
+        ecmaVersion: 'latest',
+        sourceType: 'module',
       },
     },
     rules: {

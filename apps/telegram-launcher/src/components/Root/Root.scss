@@ -1,0 +1,16 @@
+.root {
+  height: 100%;
+  background: var(--tg-theme-bg-color);
+  color: var(--tg-theme-text-color);
+
+  // For each inset type, declare CSS variables.
+  @each $inset-type in ["top", "left", "right", "bottom"] {
+    --sum-inset-#{$inset-type}: calc(
+      var(--safe-area-inset-#{$inset-type}) + var(--content-safe-area-inset-#{$inset-type})
+    );
+  }
+
+  &--mobile {
+    height: calc(100% + 1px);
+  }
+}

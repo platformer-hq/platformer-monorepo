@@ -1,0 +1,30 @@
+.status-page {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  max-width: 400px;
+  margin: 0 auto;
+
+  &__image {
+    margin: -20px 0 10px;
+  }
+
+  &__title {
+    padding: 0 16px;
+    margin: 0 0 8px;
+    font-size: 22px;
+    font-weight: 590;
+    line-height: 28px;
+  }
+
+  &__subtitle {
+    padding: 0 16px;
+    margin: 0;
+    font-size: 17px;
+    line-height: 22px;
+    color: var(--tg-theme-subtitle-text-color);
+  }
+}
