@@ -6,7 +6,6 @@ import mkcert from 'vite-plugin-mkcert';
 import { imagePlugin } from './plugins/imagePlugin';
 
 export default defineConfig({
-  base: 'https://tgl.mini-apps.store/',
   css: {
     preprocessorOptions: {
       scss: {
