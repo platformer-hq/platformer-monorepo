@@ -8,7 +8,6 @@
   "scripts": {
     "deploy": "gh-pages -d dist",
     "dev": "vite",
-    "compress-img": "imagemin --plugin.pngquant.quality=0.5 --plugin.pngquant.quality=0.9 public/img/**/*.png --out-dir public/img/compressed",
     "dev:https": "cross-env HTTPS=1 vite",
     "build": "tsc --noEmit && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
