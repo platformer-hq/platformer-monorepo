@@ -1,0 +1,19 @@
+{
+  "name": "solid-utils",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "main": "src/index.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "tsconfig": "workspace:*"
+  },
+  "peerDependencies": {
+    "solid-js": "^1.0.0"
+  },
+  "dependencies": {
+    "@solid-primitives/utils": "^6.3.0"
+  }
+}
