@@ -3,7 +3,7 @@ import { For, Match, Switch } from 'solid-js';
 import type { GqlRequestError } from '@/api/gqlRequest.js';
 import { ErrorStatusPage } from '@/components/ErrorStatusPage/ErrorStatusPage.jsx';
 
-export type AppLoadErrorError =
+export type TypedErrorStatusPageError =
   | GqlRequestError
   | ['iframe', timeout?: boolean]
   | ['unknown', unknown];
@@ -11,11 +11,11 @@ export type AppLoadErrorError =
 /**
  * Used to handle all kinds of errors.
  */
-export function TypedErrorStatusPage(props: { error: AppLoadErrorError }) {
+export function TypedErrorStatusPage(props: { error: TypedErrorStatusPageError }) {
   const networkErrTitle = 'Network error';
   const oopsTitle = 'Oops!';
 
-  function withError<T>(fn: (err: AppLoadErrorError) => T) {
+  function withError<T>(fn: (err: TypedErrorStatusPageError) => T) {
     return () => fn(props.error);
   }
 
