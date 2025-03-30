@@ -187,8 +187,8 @@ importers:
         specifier: ^9.1.0
         version: 9.10.1(@solidjs/router@0.13.6(solid-js@1.9.4))(solid-js@1.9.4)
       '@telegram-apps/sdk-solid':
-        specifier: ^3.0.10
-        version: 3.0.15(solid-js@1.9.4)(typescript@5.8.2)
+        specifier: ^3.0.16
+        version: 3.0.16(solid-js@1.9.4)(typescript@5.8.2)
       '@types/mixpanel-browser':
         specifier: ^2.51.0
         version: 2.54.0
@@ -204,9 +204,15 @@ importers:
       mixpanel-browser:
         specifier: ^2.60.0
         version: 2.62.0
+      shared:
+        specifier: workspace:*
+        version: link:../../packages/shared
       solid-js:
         specifier: ^1.9.3
         version: 1.9.4
+      ui:
+        specifier: workspace:*
+        version: link:../../packages/ui
       valibot:
         specifier: 1.0.0-beta.14
         version: 1.0.0-beta.14(typescript@5.8.2)
@@ -235,9 +241,15 @@ importers:
       '@sentry/solid':
         specifier: ^9.3.0
         version: 9.10.1(@solidjs/router@0.13.6(solid-js@1.9.4))(solid-js@1.9.4)
+      '@telegram-apps/sdk-solid':
+        specifier: ^3.0.0
+        version: 3.0.16(solid-js@1.9.4)(typescript@5.8.2)
       '@types/mixpanel-browser':
         specifier: ^2.51.0
         version: 2.54.0
+      eruda:
+        specifier: ^3.0.1
+        version: 3.4.1
       mixpanel-browser:
         specifier: ^2.60.0
         version: 2.62.0
@@ -2653,8 +2665,16 @@ packages:
     peerDependencies:
       solid-js: ^1.0.0
 
+  '@telegram-apps/sdk-solid@3.0.16':
+    resolution: {integrity: sha512-FW8pTV35VcXNPeY4Pq5/IsfxSm5hc7oTkv2farUuc/8q+r46S4V8gy7jo7KjmB5UJGvGfI1Q8G/jlzPjHZyCWQ==}
+    peerDependencies:
+      solid-js: ^1.0.0
+
   '@telegram-apps/sdk@3.5.3':
     resolution: {integrity: sha512-VL6opwJVzyykcVahKZOzJ1Y61PrD2if0SxUm7bUYu3nR9gTW9BriMq/u1saeUwakjwnakZWxNaNJLWs8hG5KoQ==}
+
+  '@telegram-apps/sdk@3.5.4':
+    resolution: {integrity: sha512-GpbtAshXhtG0oPz3DC7dRGKsOs3gMbDr6xsYc6XtWDCgn0nJDwoUvVvyq16LaNaVoKruEM0TGQTwIfGaKFparA==}
 
   '@telegram-apps/signals@1.1.1':
     resolution: {integrity: sha512-vz37r8lemGpPzDiBRfqpXYBynzmy3SFnY6zfHsTZABTYYt0b0WQZyU5mFDqqqugGhka78Gy11xmr9csgy4YgGA==}
@@ -9406,7 +9426,28 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
+  '@telegram-apps/sdk-solid@3.0.16(solid-js@1.9.4)(typescript@5.8.2)':
+    dependencies:
+      '@telegram-apps/sdk': 3.5.4(typescript@5.8.2)
+      solid-js: 1.9.4
+    transitivePeerDependencies:
+      - typescript
+
   '@telegram-apps/sdk@3.5.3(typescript@5.8.2)':
+    dependencies:
+      '@telegram-apps/bridge': 2.4.0(typescript@5.8.2)
+      '@telegram-apps/navigation': 1.0.13
+      '@telegram-apps/signals': 1.1.1
+      '@telegram-apps/toolkit': 2.0.0
+      '@telegram-apps/transformers': 2.2.0(typescript@5.8.2)
+      '@telegram-apps/types': 2.0.0
+      better-promises: 0.4.0
+      error-kid: 0.0.4
+      valibot: 1.0.0-beta.14(typescript@5.8.2)
+    transitivePeerDependencies:
+      - typescript
+
+  '@telegram-apps/sdk@3.5.4(typescript@5.8.2)':
     dependencies:
       '@telegram-apps/bridge': 2.4.0(typescript@5.8.2)
       '@telegram-apps/navigation': 1.0.13
