@@ -8,7 +8,8 @@
     "access": "public"
   },
   "peerDependencies": {
-    "solid-js": "^1.0.0"
+    "solid-js": "^1.0.0",
+    "@telegram-apps/sdk-solid": "^3.0.0"
   },
   "dependencies": {
     "@sentry/solid": "^9.3.0",
