@@ -1,7 +1,7 @@
 import { For, Match, Switch } from 'solid-js';
 
 import type { GqlRequestError } from '@/api/gqlRequest.js';
-import { LauncherError } from '@/components/LauncherError/LauncherError.js';
+import { ErrorStatusPage } from '@/components/ErrorStatusPage/ErrorStatusPage.jsx';
 
 export type AppLoadErrorError =
   | GqlRequestError
@@ -9,9 +9,9 @@ export type AppLoadErrorError =
   | ['unknown', unknown];
 
 /**
- * Used to handle all kinds of GQL request errors.
+ * Used to handle all kinds of errors.
  */
-export function LauncherLoadError(props: { error: AppLoadErrorError }) {
+export function TypedErrorStatusPage(props: { error: AppLoadErrorError }) {
   const networkErrTitle = 'Network error';
   const oopsTitle = 'Oops!';
 
@@ -30,16 +30,16 @@ export function LauncherLoadError(props: { error: AppLoadErrorError }) {
   return (
     <Switch>
       <Match when={whenFetch()}>
-        <LauncherError
+        <ErrorStatusPage
           title={networkErrTitle}
-          subtitle="Unable to send request to the server. The server is unreachable"
+          text="Unable to send request to the server. The server is unreachable"
         />
       </Match>
       <Match when={whenGql()}>
         {$errors => (
-          <LauncherError
+          <ErrorStatusPage
             title={oopsTitle}
-            subtitle={
+            text={
               <>
                 Server returned errors:{' '}
                 <For each={$errors()}>
@@ -57,9 +57,9 @@ export function LauncherLoadError(props: { error: AppLoadErrorError }) {
       </Match>
       <Match when={whenHttp()}>
         {$error => (
-          <LauncherError
+          <ErrorStatusPage
             title={networkErrTitle}
-            subtitle={`Server responded with status ${$error()[0]}: ${$error()[1]}`}
+            text={`Server responded with status ${$error()[0]}: ${$error()[1]}`}
           />
         )}
       </Match>
@@ -69,32 +69,30 @@ export function LauncherLoadError(props: { error: AppLoadErrorError }) {
             const error = $error();
             return `Unknown error occurred${error instanceof Error ? `: ${error.message}` : ''}`;
           };
-          return <LauncherError title={oopsTitle} subtitle={message()}/>;
+          return <ErrorStatusPage title={oopsTitle} text={message()}/>;
         }}
       </Match>
       <Match when={whenInvalidData()}>
         {$error => (
-          <LauncherError
+          <ErrorStatusPage
             title={oopsTitle}
-            subtitle={`Server returned unexpected response: ${$error().message}`}
+            text={`Server returned unexpected response: ${$error().message}`}
           />
         )}
       </Match>
       <Match when={whenIframe()}>
         {$tuple => (
-          <LauncherError
+          <ErrorStatusPage
             title={oopsTitle}
-            subtitle={
-              `Application failed to load due to ${$tuple()[0] ? 'timeout' : 'unknown reason'}`
-            }
+            text={`Application failed to load due to ${$tuple()[0] ? 'timeout' : 'unknown reason'}`}
           />
         )}
       </Match>
       <Match when={whenExecution()}>
         {$error => (
-          <LauncherError
+          <ErrorStatusPage
             title={oopsTitle}
-            subtitle={`Application failed to load. ${$error().message}`}
+            text={`Application failed to load. ${$error().message}`}
           />
         )}
       </Match>
