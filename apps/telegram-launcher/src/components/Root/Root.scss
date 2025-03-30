@@ -1,7 +1,5 @@
 .root {
   height: 100%;
-  background: var(--tg-theme-bg-color);
-  color: var(--tg-theme-text-color);
 
   // For each inset type, declare CSS variables.
   @each $inset-type in ["top", "left", "right", "bottom"] {

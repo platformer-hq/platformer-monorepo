@@ -1,10 +1,12 @@
-import { createMemo, createResource, createSignal, ErrorBoundary, Show } from 'solid-js';
+import { createMemo, createSignal, ErrorBoundary, Show } from 'solid-js';
 import {
-  type Platform,
-  retrieveLaunchParams,
   retrieveRawLaunchParams,
   retrieveRawInitData,
   transformQueryUsing,
+  type Platform,
+  type MiniAppHeaderColor,
+  type BackgroundColor,
+  type BottomBarColor,
 } from '@telegram-apps/sdk-solid';
 import {
   instance,
@@ -17,14 +19,17 @@ import {
   ValiError,
   union,
 } from 'valibot';
+import { pickProps, accessor } from 'solid-utils';
 
 import { BootstrapApp } from '@/components/BootstrapApp/BootstrapApp.js';
 import { RootErrorBoundary } from '@/components/RootErrorBoundary/RootErrorBoundary.js';
 import { positiveIntFromStr } from '@/validation/positiveIntFromStr.js';
 import { splitExecutionTuple } from '@/helpers/splitExecutionTuple.js';
-import { LauncherError } from '@/components/LauncherError/LauncherError.js';
-import { init } from '@/components/Root/init.js';
-import { AppLoading } from '@/components/AppLoading/AppLoading.js';
+import { ErrorStatusPage } from '@/components/ErrorStatusPage/ErrorStatusPage.js';
+import { StatusPage } from '@/components/StatusPage/StatusPage.js';
+import { MainProvider, useMainContext } from '@/providers/MainProvider.js';
+
+import { computeFallbackURL, secureInitData, secureLaunchParams } from './utils.js';
 
 import './Root.scss';
 
@@ -42,7 +47,9 @@ function useLauncherOptions() {
           union([instance(URLSearchParams), string()]),
           transformQueryUsing(
             looseObject({
-              app_id: positiveIntFromStr(),
+              app_id:
+                optional(positiveIntFromStr(), '1'),
+              // positiveIntFromStr(),
               api_base_url: optional(
                 pipe(
                   string(),
@@ -52,7 +59,7 @@ function useLauncherOptions() {
               ),
               fallback_url: optional(string()),
               init_timeout: optional(positiveIntFromStr(), '5000'),
-              load_timeout: optional(positiveIntFromStr(), '10000'),
+              load_timeout: optional(positiveIntFromStr(), '1000000'),
             }),
           ),
         ),
@@ -75,102 +82,83 @@ function useLauncherOptions() {
   });
 }
 
-function Inner() {
-  const [$options, $error] = useLauncherOptions();
-  const {
-    tgWebAppPlatform: platform,
-    tgWebAppStartParam: startParam,
-  } = retrieveLaunchParams();
+interface InnerProps {
+  debug: boolean;
+  initialColors: [
+    header: MiniAppHeaderColor,
+    background: BackgroundColor,
+    bottomBar: BottomBarColor
+  ];
+}
 
-  // Initialize the SDK.
-  const [$initResource] = createResource(() => {
-    return init((startParam || '').includes('platformer_debug') || import.meta.env.DEV, platform);
-  });
+interface RootProps extends InnerProps {
+  platform: Platform;
+}
+
+function Inner(props: InnerProps) {
+  const [$options, $error] = useLauncherOptions();
+  const context = useMainContext();
+  const $platform = accessor(context, 'platform');
 
   // Wait for the bootstrapper to load.
   const [$bootstrapperReady, setBootstrapperReady] = createSignal(false);
 
-  // We are sanitizing the hash property for security purposes, so Platformer could not use this
-  // init data to impersonate user.
-  // Instead, Platformer uses the "signature" property allowing third parties to validate the
-  // init data.
-  const securedInitDataQuery = new URLSearchParams(retrieveRawInitData() || '');
-  securedInitDataQuery.set('hash', '');
-  const securedInitData = securedInitDataQuery.toString();
+  const rawInitData = retrieveRawInitData() || '';
 
   return (
     <main
       classList={{
         'root': true,
-        // TODO: We should probably not add this class only when the platform is mobile. We
-        //  should do it only if the platform is mobile and the wrapped mini app wants to solve
-        //  the problem, solved by this class.
-        'root--mobile': (['android', 'android_x', 'ios'] satisfies Platform[]).includes(platform),
+        'root--mobile': (['android', 'android_x', 'ios'] satisfies Platform[]).includes($platform()),
       }}
     >
       <Show
         when={$options.ok() && $options()}
-        fallback={<LauncherError title="Configuration is invalid" subtitle={$error()}/>}
+        fallback={<ErrorStatusPage title="Configuration is invalid" text={$error()}/>}
       >
-        {$data => (
+        {$opts => (
           <Show
-            when={securedInitData}
+            when={
+              // We are sanitizing the hash property for security purposes, so Platformer could not
+              // use this init data to impersonate user. Instead, Platformer uses the "signature"
+              // property allowing third parties to validate the init data.
+              secureInitData(rawInitData)
+            }
             fallback={
-              <LauncherError
+              <ErrorStatusPage
                 title="Init data is missing"
-                subtitle="For some reason, init data is missing. It is the most likely that the application was launched improperly"
+                text="For some reason, init data is missing. It is the most likely that the application was launched improperly"
               />
             }
           >
             {$securedInitData => {
-              // Here we do the same thing as we did with the init data - we secure it by replacing
-              // exposed init data with the secured one.
               const rawLaunchParams = retrieveRawLaunchParams();
-              const securedLaunchParamsQuery = new URLSearchParams(rawLaunchParams);
-              securedLaunchParamsQuery.set('tgWebAppData', securedInitData);
-              const securedLaunchParams = securedLaunchParamsQuery.toString();
+              const $securedLaunchParams = createMemo(() => {
+                // Here we do the same thing as we did with the init data - we secure it by
+                // replacing exposed init data with the secured one.
+                return secureLaunchParams(rawLaunchParams, $securedInitData());
+              });
 
               // Compute fallback URL in case something went wrong with Platformer.
               const $fallbackURL = createMemo(() => {
-                const { fallbackURL } = $data();
-                if (!fallbackURL) {
-                  return;
-                }
-
-                // Create a correct fallback URL.
-                // As long as it may have a hash part, we should properly append launch parameters.
-                const url = new URL(fallbackURL);
-                let hash: string;
-                if (url.hash) {
-                  // We should use launch params and merge them with parameters, defined in
-                  // the URL hash.
-                  const qp = new URLSearchParams(rawLaunchParams);
-                  new URLSearchParams(url.hash.slice(1)).forEach((v, k) => {
-                    qp.set(k, v);
-                  });
-                  hash = qp.toString();
-                } else {
-                  hash = rawLaunchParams;
-                }
-                url.hash = `#${hash}`;
-
-                return url.toString();
+                const { fallbackURL } = $opts();
+                return fallbackURL ? computeFallbackURL(fallbackURL, rawLaunchParams) : undefined;
               });
 
               return (
                 <>
-                  <Show when={!$bootstrapperReady() || $initResource.loading}>
-                    <AppLoading platform={platform}/>
+                  <Show when={!$bootstrapperReady()}>
+                    <StatusPage state="loading"/>
                   </Show>
                   <BootstrapApp
-                    {...$data()}
+                    {...$opts()}
                     fallbackURL={$fallbackURL()}
                     onReady={() => {
                       setBootstrapperReady(true);
                     }}
                     rawLaunchParams={rawLaunchParams}
                     securedInitData={$securedInitData()}
-                    securedLaunchParams={securedLaunchParams}
+                    securedLaunchParams={$securedLaunchParams()}
                   />
                 </>
               );
@@ -182,10 +170,12 @@ function Inner() {
   );
 }
 
-export function Root() {
+export function Root(props: RootProps) {
   return (
-    <ErrorBoundary fallback={RootErrorBoundary}>
-      <Inner/>
-    </ErrorBoundary>
+    <MainProvider {...pickProps(props, 'platform')}>
+      <ErrorBoundary fallback={RootErrorBoundary}>
+        <Inner {...props}/>
+      </ErrorBoundary>
+    </MainProvider>
   );
 }
