@@ -1,15 +1,100 @@
+@use "sass:map" as map;
+@use "sass:list" as list;
+
+$baseLoaderSize: 28px;
+$errorIconShift: translate(20%, 20%);
+
 .status-page {
   height: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  text-align: center;
-  max-width: 400px;
-  margin: 0 auto;
+  position: absolute;
+  background: var(--tg-theme-bg-color);
 
   &__image {
-    margin: -20px 0 10px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  &__logo {
+    display: block;
+  }
+
+  &__error-icon {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: $errorIconShift;
+    display: block;
+    width: 16px;
+    height: 16px;
+    padding: 4px;
+    box-sizing: content-box;
+    border-radius: 50%;
+    color: white;
+    background: var(--tg-theme-destructive-text-color);
+    animation: status-page-error-icon-appear 400ms ease forwards;
+
+    path {
+      stroke-width: 4;
+    }
+  }
+
+  &__loader {
+    display: block;
+
+    &--base {
+      height: $baseLoaderSize;
+      width: $baseLoaderSize;
+      animation: 1.4s linear 0s infinite normal none running rotate;
+      color: var(--tg-theme-subtitle-text-color);
+
+      @keyframes rotate {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    }
+
+    &-base-root {
+      fill: transparent;
+      overflow: visible;
+      display: block;
+      width: 100%;
+      height: 100%;
+      animation: 1.4s ease-in-out 0s infinite normal none running base-animation;
+      stroke-width: $baseLoaderSize * 0.09;
+
+      @keyframes base-animation {
+        $settings: (
+          "0%": [#{1, $baseLoaderSize * 5}, 0],
+          "50%": [#{$baseLoaderSize * 2.5, $baseLoaderSize * 5}, $baseLoaderSize * -0.375],
+          "100%": [#{$baseLoaderSize * 2.5, $baseLoaderSize * 5}, $baseLoaderSize * -3.125],
+        );
+
+        @each $percentage in ["0%", "50%", "100%"] {
+          $stroke-settings: map.get($settings, $percentage);
+
+          #{$percentage} {
+            stroke: {
+              dasharray: list.nth($stroke-settings, 1);
+              dashoffset: list.nth($stroke-settings, 2);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &__content {
+    text-align: center;
+    animation: status-page-content-appear 200ms ease forwards;
   }
 
   &__title {
@@ -20,11 +105,39 @@
     line-height: 28px;
   }
 
-  &__subtitle {
+  &__text {
     padding: 0 16px;
     margin: 0;
     font-size: 17px;
     line-height: 22px;
     color: var(--tg-theme-subtitle-text-color);
+  }
+}
+
+@keyframes status-page-error-icon-appear {
+  from {
+    opacity: 0;
+    transform: $errorIconShift translateZ(0) scale(.65);
+  }
+
+  50% {
+    transform: $errorIconShift translateZ(0) scale(1.2);
+  }
+
+  to {
+    opacity: 1;
+    transform: $errorIconShift translateZ(0) scale(1);
+  }
+}
+
+@keyframes status-page-content-appear {
+  from {
+    opacity: 0;
+    max-height: $baseLoaderSize;
+  }
+
+  to {
+    opacity: 1;
+    max-height: 30vh;
   }
 }
