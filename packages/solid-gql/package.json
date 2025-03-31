@@ -10,7 +10,7 @@
   "dependencies": {
     "@solid-primitives/graphql": "^2.2.0",
     "solid-utils": "workspace:*",
-    "swr-solid": "workspace:*",
+    "solid-swr": "workspace:*",
     "valibot": "^1.0.0"
   },
   "devDependencies": {

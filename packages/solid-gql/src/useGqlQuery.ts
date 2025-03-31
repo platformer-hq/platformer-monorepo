@@ -6,7 +6,7 @@ import {
   type DataCache,
   type ObserversCache,
   type RevalidationCache,
-} from 'swr-solid';
+} from 'solid-swr';
 import { GraphQLError, request } from '@solid-primitives/graphql';
 import { access } from 'solid-utils';
 
@@ -15,17 +15,16 @@ import { ExtendedGraphQLError } from './ExtendedGraphQLError.js';
 
 type ErrorType = ExtendedGraphQLError | Error;
 
-export interface UseGqlQueryOptions<D extends object, V extends object>
-  extends Omit<UseSWROptions<D, [V], ErrorType>, 'args' | 'dataCache' | 'revalidationCache' | 'observersCache'> {
-  onSuccess?(response: D): void;
-  onError?(error: ErrorType): void;
-}
+export type UseGqlQueryOptions<D extends object, V extends object> = Omit<
+  UseSWROptions<D, [V], ErrorType>,
+  'args' | 'dataCache' | 'revalidationCache' | 'observersCache'
+>;
 
 export function useGqlQuery<D extends object, V extends object>(
   query: string,
   args?: UseSWROptionsArgs<V>,
   options?: UseGqlQueryOptions<D, V>,
-): UseSWRResult<D, V> {
+): UseSWRResult<D, V, ErrorType> {
   const {
     endpoint,
     authToken,

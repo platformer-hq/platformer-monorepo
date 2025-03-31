@@ -1,6 +1,6 @@
 import { createContext, type FlowProps, mergeProps, useContext } from 'solid-js';
 import { pickProps } from 'solid-utils';
-import type { DataCache, ObserversCache, RevalidationCache } from 'swr-solid';
+import type { DataCache, ObserversCache, RevalidationCache } from 'solid-swr';
 
 const Context = createContext<{
   endpoint: string;
