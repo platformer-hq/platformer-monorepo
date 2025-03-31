@@ -1,5 +1,5 @@
 import { dequal } from 'dequal/lite';
-import { createLogger } from 'shared';
+import { createLogger } from 'utils';
 
 import { type ObservableListener, type Observable, observable } from './observable.js';
 
@@ -100,7 +100,7 @@ export function createSWRStore<D extends object | string | boolean, P extends an
   revalidationCache ||= new Map();
   observersCache ||= new Map();
 
-  const [_log, _error] = logger === 'default'
+  const [_log] = logger === 'default'
     ? createLogger('swr', { bgColor: 'purple', textColor: 'white' })
     : [];
 
@@ -181,6 +181,7 @@ export function createSWRStore<D extends object | string | boolean, P extends an
             cacheValue(k, keyState.data);
             return keyState.data;
           }
+          // eslint-disable-next-line @typescript-eslint/only-throw-error
           throw keyState.error;
         })
         .finally(() => {

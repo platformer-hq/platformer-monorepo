@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "dequal": "^2.0.3",
-    "shared": "workspace:*"
+    "utils": "workspace:*"
   },
   "devDependencies": {
     "tsconfig": "workspace:*"
