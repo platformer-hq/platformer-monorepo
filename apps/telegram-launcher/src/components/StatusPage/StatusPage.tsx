@@ -7,7 +7,7 @@ import { useMainContext } from '@/providers/MainProvider.js';
 import './StatusPage.scss';
 
 export interface StatusPageProps {
-  state: 'error' | 'done' | 'loading';
+  state?: 'error' | 'loading';
   text?: JSXElement;
   title?: string;
 }
