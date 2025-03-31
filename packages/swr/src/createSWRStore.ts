@@ -1,7 +1,7 @@
 import { dequal } from 'dequal/lite';
+import { createLogger } from 'shared';
 
 import { type ObservableListener, type Observable, observable } from './observable.js';
-import { createLogger } from './createLogger.js';
 
 export interface KeyStatePending<D> {
   status: 'pending',
