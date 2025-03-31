@@ -6,17 +6,22 @@ import {
   type KeyState,
   type SWRStoreMutateFn,
 } from 'swr';
-import { access, type MaybeAccessor } from '@solid-primitives/utils';
-import { createEffect, createResource, createSignal, onCleanup, type Resource } from 'solid-js';
+import {
+  access,
+  createExecutionResource,
+  type MaybeAccessor,
+  type ExecutionResource,
+  type ExecutionResourceHooks,
+} from 'solid-utils';
+import { createEffect, createSignal, onCleanup } from 'solid-js';
 import { createWritableMemo } from '@solid-primitives/memo';
 
 export type UseSWROptionsArgs<P> =
   MaybeAccessor<[params: P, shouldRevalidate?: boolean] | undefined | null | false>;
 
-export interface UseSWROptions<D, P, E> extends CreateSWRStoreOptions<D, E> {
+export interface UseSWROptions<D, P, E>
+  extends CreateSWRStoreOptions<D, E>, ExecutionResourceHooks<D, E> {
   args?: UseSWROptionsArgs<P>;
-  onSuccess?(data: D): void;
-  onError?(error: E): void;
 }
 
 export interface UseSWRResultUtils<D, P> {
@@ -24,13 +29,13 @@ export interface UseSWRResultUtils<D, P> {
   mutate: SWRStoreMutateFn<D, P>;
 }
 
-export type UseSWRResult<D, P> = [Resource<D>, UseSWRResultUtils<D, P>];
+export type UseSWRResult<D, P, E> = [ExecutionResource<D, E>, UseSWRResultUtils<D, P>];
 
 export function useSWR<D extends object | string | boolean, P extends any[], E = unknown>(
   key: CreateSWRStoreKey<P>,
   fetcher: CreateSWRStoreFetcher<D, P>,
   options?: UseSWROptions<D, P, E>,
-): UseSWRResult<D, P> {
+): UseSWRResult<D, P, E> {
   options ||= {};
   const { onSuccess, onError } = options;
   const store = createSWRStore<D, P, E>(key, fetcher, options);
@@ -55,24 +60,32 @@ export function useSWR<D extends object | string | boolean, P extends any[], E =
   });
 
   const initialKeyState = $keyState();
-  const [resource] = createResource($keyState, keyState => {
-    return keyState.status === 'error'
-      ? Promise.reject(keyState.error)
-      : keyState.data;
-  }, initialKeyState && initialKeyState.status === 'success' ? {
-    ssrLoadFrom: 'initial',
-    initialValue: initialKeyState.data,
-  } : undefined);
+  const [resource] = createExecutionResource(
+    $keyState,
+    keyState => {
+      if (keyState.status === 'error') {
+        return [false, keyState.error];
+      }
+      const { data } = keyState;
+      return data instanceof Promise
+        ? data.then(r => [true, r], e => [false, e])
+        : [true, data];
+    },
+    initialKeyState && initialKeyState.status === 'success' ? {
+      ssrLoadFrom: 'initial',
+      initialValue: initialKeyState.data,
+    } : undefined,
+  );
 
   if (onSuccess) {
-    createEffect<Resource<any>['state'] | undefined>(status => {
+    createEffect<ExecutionResource<any, any>['state'] | undefined>(status => {
       status && resource.state === 'ready' && onSuccess(resource());
       return resource.state;
     });
   }
 
   if (onError) {
-    createEffect<Resource<any>['state'] | undefined>(status => {
+    createEffect<ExecutionResource<any, any>['state'] | undefined>(status => {
       status && resource.state === 'errored' && onError(resource.error);
       return resource.state;
     });

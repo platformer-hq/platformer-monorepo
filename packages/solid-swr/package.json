@@ -1,5 +1,5 @@
 {
-  "name": "swr-solid",
+  "name": "solid-swr",
   "version": "0.0.1",
   "author": "Vladislav Kibenko <wolfram.deus@gmail.com>",
   "license": "MIT",
@@ -7,7 +7,7 @@
   "main": "./src/index.ts",
   "dependencies": {
     "@solid-primitives/memo": "^1.4.1",
-    "@solid-primitives/utils": "^6.3.0",
+    "solid-utils": "workspace:*",
     "swr": "workspace:*"
   },
   "devDependencies": {
