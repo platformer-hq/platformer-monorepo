@@ -14,6 +14,18 @@ importers:
       '@eslint/js':
         specifier: ^9.23.0
         version: 9.23.0
+      '@graphql-codegen/cli':
+        specifier: 5.0.5
+        version: 5.0.5(@parcel/watcher@2.5.1)(@types/node@22.13.0)(enquirer@2.4.1)(graphql-sock@1.0.1(graphql@16.10.0))(graphql@16.10.0)(typescript@5.8.2)
+      '@graphql-codegen/near-operation-file-preset':
+        specifier: ^3.0.0
+        version: 3.0.0(graphql@16.10.0)
+      '@graphql-codegen/typescript-document-nodes':
+        specifier: ^4.0.15
+        version: 4.0.16(graphql@16.10.0)
+      '@graphql-codegen/typescript-operations':
+        specifier: ^4.5.1
+        version: 4.6.0(graphql-sock@1.0.1(graphql@16.10.0))(graphql@16.10.0)
       '@turbo/gen':
         specifier: ^2.3.3
         version: 2.4.0(@types/node@22.13.0)(typescript@5.8.2)
@@ -149,12 +161,12 @@ importers:
       solid-js:
         specifier: ^1.8.17
         version: 1.9.4
+      solid-swr:
+        specifier: workspace:*
+        version: link:../../packages/solid-swr
       swr:
         specifier: workspace:*
         version: link:../../packages/swr
-      swr-solid:
-        specifier: workspace:*
-        version: link:../../packages/swr-solid
       ui:
         specifier: workspace:*
         version: link:../../packages/ui
@@ -192,6 +204,9 @@ importers:
       '@types/mixpanel-browser':
         specifier: ^2.51.0
         version: 2.54.0
+      api:
+        specifier: workspace:*
+        version: link:../../packages/api
       better-promises:
         specifier: ^0.4.0
         version: 0.4.0
@@ -207,6 +222,9 @@ importers:
       shared:
         specifier: workspace:*
         version: link:../../packages/shared
+      solid-gql:
+        specifier: workspace:*
+        version: link:../../packages/solid-gql
       solid-js:
         specifier: ^1.9.3
         version: 1.9.4
@@ -239,6 +257,16 @@ importers:
         specifier: workspace:*
         version: link:../../packages/vite-plugins
 
+  packages/api:
+    dependencies:
+      '@solid-primitives/graphql':
+        specifier: ^2.2.0
+        version: 2.2.0(@graphql-typed-document-node/core@3.2.0(graphql@16.10.0))(graphql@16.10.0)(solid-js@1.9.4)
+    devDependencies:
+      tsconfig:
+        specifier: workspace:*
+        version: link:../tsconfig
+
   packages/shared:
     dependencies:
       '@sentry/solid':
@@ -267,6 +295,47 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
 
+  packages/solid-gql:
+    dependencies:
+      '@solid-primitives/graphql':
+        specifier: ^2.2.0
+        version: 2.2.0(@graphql-typed-document-node/core@3.2.0(graphql@16.10.0))(graphql@16.10.0)(solid-js@1.9.4)
+      solid-js:
+        specifier: ^1.0.0
+        version: 1.9.4
+      solid-swr:
+        specifier: workspace:*
+        version: link:../solid-swr
+      solid-utils:
+        specifier: workspace:*
+        version: link:../solid-utils
+      valibot:
+        specifier: ^1.0.0
+        version: 1.0.0(typescript@5.8.2)
+    devDependencies:
+      tsconfig:
+        specifier: workspace:*
+        version: link:../tsconfig
+
+  packages/solid-swr:
+    dependencies:
+      '@solid-primitives/memo':
+        specifier: ^1.4.1
+        version: 1.4.1(solid-js@1.9.4)
+      solid-js:
+        specifier: ^1.0.0
+        version: 1.9.4
+      solid-utils:
+        specifier: workspace:*
+        version: link:../solid-utils
+      swr:
+        specifier: workspace:*
+        version: link:../swr
+    devDependencies:
+      tsconfig:
+        specifier: workspace:*
+        version: link:../tsconfig
+
   packages/solid-utils:
     dependencies:
       '@solid-primitives/utils':
@@ -285,25 +354,9 @@ importers:
       dequal:
         specifier: ^2.0.3
         version: 2.0.3
-    devDependencies:
-      tsconfig:
+      shared:
         specifier: workspace:*
-        version: link:../tsconfig
-
-  packages/swr-solid:
-    dependencies:
-      '@solid-primitives/memo':
-        specifier: ^1.4.1
-        version: 1.4.1(solid-js@1.9.4)
-      '@solid-primitives/utils':
-        specifier: ^6.3.0
-        version: 6.3.0(solid-js@1.9.4)
-      solid-js:
-        specifier: ^1.0.0
-        version: 1.9.4
-      swr:
-        specifier: workspace:*
-        version: link:../swr
+        version: link:../shared
     devDependencies:
       tsconfig:
         specifier: workspace:*
@@ -6038,6 +6091,14 @@ packages:
   v8-compile-cache-lib@3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}
 
+  valibot@1.0.0:
+    resolution: {integrity: sha512-1Hc0ihzWxBar6NGeZv7fPLY0QuxFMyxwYR2sF1Blu7Wq7EnremwY2W02tit2ij2VJT8HcSkHAQqmFfl77f73Yw==}
+    peerDependencies:
+      typescript: '>=5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   valibot@1.0.0-beta.14:
     resolution: {integrity: sha512-tLyV2rE5QL6U29MFy3xt4AqMrn+/HErcp2ZThASnQvPMwfSozjV1uBGKIGiegtZIGjinJqn0SlBdannf18wENA==}
     peerDependencies:
@@ -7751,9 +7812,9 @@ snapshots:
 
   '@graphql-codegen/cli@5.0.5(@parcel/watcher@2.5.1)(@types/node@22.13.0)(enquirer@2.4.1)(graphql-sock@1.0.1(graphql@16.10.0))(graphql@16.10.0)(typescript@5.8.2)':
     dependencies:
-      '@babel/generator': 7.26.5
-      '@babel/template': 7.25.9
-      '@babel/types': 7.26.7
+      '@babel/generator': 7.27.0
+      '@babel/template': 7.27.0
+      '@babel/types': 7.27.0
       '@graphql-codegen/client-preset': 4.8.0(graphql-sock@1.0.1(graphql@16.10.0))(graphql@16.10.0)
       '@graphql-codegen/core': 4.0.2(graphql@16.10.0)
       '@graphql-codegen/plugin-helpers': 5.1.0(graphql@16.10.0)
@@ -7805,7 +7866,7 @@ snapshots:
   '@graphql-codegen/client-preset@4.8.0(graphql-sock@1.0.1(graphql@16.10.0))(graphql@16.10.0)':
     dependencies:
       '@babel/helper-plugin-utils': 7.26.5
-      '@babel/template': 7.25.9
+      '@babel/template': 7.27.0
       '@graphql-codegen/add': 5.0.3(graphql@16.10.0)
       '@graphql-codegen/gql-tag-operations': 4.0.17(graphql@16.10.0)
       '@graphql-codegen/plugin-helpers': 5.1.0(graphql@16.10.0)
@@ -13193,6 +13254,10 @@ snapshots:
   uuid@9.0.1: {}
 
   v8-compile-cache-lib@3.0.1: {}
+
+  valibot@1.0.0(typescript@5.8.2):
+    optionalDependencies:
+      typescript: 5.8.2
 
   valibot@1.0.0-beta.14(typescript@5.8.2):
     optionalDependencies:

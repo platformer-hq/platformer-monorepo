@@ -10,7 +10,7 @@ export default {
   schema: 'https://mini-apps.store/gql',
   generates: {
     'src/': {
-      documents: 'src/**/*.gql',
+      documents: '{apps,packages}/**/*.gql',
       preset: 'near-operation-file-preset',
       presetConfig: {
         extension: '.ts',
@@ -30,7 +30,7 @@ export default {
         },
       } satisfies TypeScriptDocumentsPluginConfig & TypeScriptDocumentNodesRawPluginConfig,
     },
-    'src/schema.ts': {
+    'packages/api/src/schema.ts': {
       config: {
         scalars: {
           Date: 'string',
