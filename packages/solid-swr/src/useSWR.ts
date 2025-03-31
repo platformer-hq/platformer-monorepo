@@ -41,7 +41,7 @@ export interface UseSWRResultUtils<D, P> {
 
 export type UseSWRResult<D, P, E> = [ExecutionResource<D, E>, UseSWRResultUtils<D, P>];
 
-export function useSWR<D extends object | string | boolean, P extends any[], E = unknown>(
+export function useSWR<D, P extends any[], E = unknown>(
   key: CreateSWRStoreKey<P>,
   fetcher: CreateSWRStoreFetcher<D, P>,
   options?: UseSWROptions<D, P, E>,
