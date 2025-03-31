@@ -1,0 +1,6 @@
+mutation Authenticate($appID: Int, $initData: String!) {
+  authenticateTelegram(appID: $appID, initData: $initData) {
+    token
+    expiresAt
+  }
+}
