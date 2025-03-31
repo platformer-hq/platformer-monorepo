@@ -1,6 +1,5 @@
 import type { ViewportGetCSSVarNameKey } from '@telegram-apps/sdk-solid';
-
-import { camelToKebab } from './camelToKebab.js';
+import { camelToKebab } from 'utils';
 
 /**
  * @returns Formatted viewport CSS variable name.
