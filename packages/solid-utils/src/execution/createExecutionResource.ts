@@ -12,8 +12,8 @@ import {
 import type { ExecutionTuple } from './types.js';
 
 export interface ExecutionResourceHooks<D, E> {
-  onSuccess?: (data: D) => void;
-  onError?: (error: E) => void;
+  onReady?: (data: D) => void;
+  onErrored?: (error: E) => void;
 }
 
 interface Unresolved {
@@ -90,18 +90,25 @@ export function createExecutionResource<D, E, S, R = unknown>(
 export function createExecutionResource<D, E, S, R = unknown>(
   arg1: ResourceFetcher<true, ExecutionTuple<D, E>, R> | ResourceSource<S>,
   arg2?:
-    | ResourceOptions<NoInfer<D>, true> & ExecutionResourceHooks<D, E>
-    | InitializedResourceOptions<NoInfer<D>, true> & ExecutionResourceHooks<D, E>
+    | (ResourceOptions<NoInfer<D>, true> & ExecutionResourceHooks<D, E>)
+    | (InitializedResourceOptions<NoInfer<D>, true> & ExecutionResourceHooks<D, E>)
     | ResourceFetcher<S, ExecutionTuple<D, E>, R>,
   arg3?: ResourceOptions<NoInfer<D>, S> & ExecutionResourceHooks<D, E>,
 ): ExecutionResourceReturn<D, E, R> | InitializedResourceReturn<D, E, R> {
-  let source: any;
+  let source: ResourceSource<S> | undefined;
   let fetcher: any;
-  let options: any;
+  let options: ResourceOptions<NoInfer<D>, S> & ExecutionResourceHooks<D, E>;
   if (typeof arg2 === 'object' || !arg2) {
-    [fetcher, options] = [arg1, arg2];
+    [fetcher, options] = [
+      arg1,
+      arg2 as ResourceOptions<NoInfer<D>, S> & ExecutionResourceHooks<D, E>,
+    ];
   } else {
-    [source, fetcher, options] = [arg1, arg2, arg3];
+    [source, fetcher, options] = [
+      arg1 as ResourceSource<S>,
+      arg2,
+      arg3 as ResourceOptions<NoInfer<D>, S> & ExecutionResourceHooks<D, E>,
+    ];
   }
 
   const wrappedFetcher = async (...args: Parameters<typeof fetcher>) => {
@@ -118,10 +125,10 @@ export function createExecutionResource<D, E, S, R = unknown>(
     options,
   );
 
-  const { onSuccess, onError } = options || {};
+  const { onErrored, onReady } = options || {};
   createEffect(() => {
-    resource.state === 'ready' && onSuccess && onSuccess(resource());
-    resource.state === 'errored' && onError && onError(resource.error.cause);
+    onReady && resource.state === 'ready' && onReady(resource());
+    onErrored && resource.state === 'errored' && onErrored(resource.error.cause);
   });
 
   return [resource, actions];
