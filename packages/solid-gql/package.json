@@ -1,0 +1,22 @@
+{
+  "name": "solid-gql",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "main": "src/index.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@solid-primitives/graphql": "^2.2.0",
+    "solid-utils": "workspace:*",
+    "swr-solid": "workspace:*",
+    "valibot": "^1.0.0"
+  },
+  "devDependencies": {
+    "tsconfig": "workspace:*"
+  },
+  "peerDependencies": {
+    "solid-js": "^1.0.0"
+  }
+}
