@@ -76,7 +76,7 @@ export type SWRStoreSubscribeFn<D, P, E> = (
   listener: ObservableListener<KeyState<D, E>>,
 ) => VoidFunction;
 
-export interface SWRStore<D extends object | string | boolean, P, E = unknown> {
+export interface SWRStore<D, P, E = unknown> {
   get: SWRStoreGetFn<D, P, E>;
   mutate: SWRStoreMutateFn<D, P>;
   subscribe: SWRStoreSubscribeFn<D, P, E>;
@@ -84,7 +84,7 @@ export interface SWRStore<D extends object | string | boolean, P, E = unknown> {
 
 export type SWRStoreKeyValue = string | number | (string | number)[];
 
-export function createSWRStore<D extends object | string | boolean, P extends any[], E = unknown>(
+export function createSWRStore<D, P extends any[], E = unknown>(
   key: CreateSWRStoreKey<P>,
   fetcher: CreateSWRStoreFetcher<D, P>,
   options?: CreateSWRStoreOptions<D, E>,
