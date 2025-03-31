@@ -1,32 +1,32 @@
 import { createContext, type FlowProps, mergeProps, useContext } from 'solid-js';
-import { pickProps } from 'solid-utils';
 import type { DataCache, ObserversCache, RevalidationCache } from 'solid-swr';
 
-const Context = createContext<{
-  endpoint: string;
-  authToken?: string;
+export interface GqlContextType {
   dataCache: DataCache<unknown>;
   revalidationCache: RevalidationCache<unknown>;
   observersCache: ObserversCache<unknown, unknown>;
-}>();
-
-export function useGqlContext() {
-  const context = useContext(Context);
-  if (!context) {
-    throw new Error('Used outside provider');
-  }
-  return context;
 }
 
-export function GqlProvider(props: FlowProps<{ endpoint: string; authToken?: string }>) {
+const Context = createContext<GqlContextType>({
+  dataCache: new Map,
+  revalidationCache: new Map,
+  observersCache: new Map,
+});
+
+export function useGqlContext() {
+  return useContext(Context);
+}
+
+export function GqlProvider(props: FlowProps<Partial<GqlContextType>>) {
   return (
     <Context.Provider
-      {...props}
-      value={mergeProps(pickProps(props, 'endpoint', 'authToken'), {
+      value={mergeProps({
         dataCache: new Map(),
         revalidationCache: new Map(),
         observersCache: new Map(),
-      })}
-    />
+      }, props)}
+    >
+      {props.children}
+    </Context.Provider>
   );
 }
