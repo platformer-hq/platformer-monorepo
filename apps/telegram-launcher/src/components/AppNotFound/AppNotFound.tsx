@@ -1,10 +1,10 @@
-import { LauncherError } from '@/components/LauncherError/LauncherError.js';
+import { StatusPage } from '@/components/StatusPage/StatusPage.js';
 
 export function AppNotFound() {
   return (
-    <LauncherError
+    <StatusPage
       title="App not found"
-      subtitle="This application doesn't exist or was hidden by the owner"
+      text="This application was not found"
     />
   );
 }
