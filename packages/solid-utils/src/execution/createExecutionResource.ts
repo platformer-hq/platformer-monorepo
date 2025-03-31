@@ -12,8 +12,8 @@ import {
 import type { ExecutionTuple } from './types.js';
 
 export interface ExecutionResourceHooks<D, E> {
-  onSuccess?(data: D): void;
-  onError?(error: E): void;
+  onSuccess?: (data: D) => void;
+  onError?: (error: E) => void;
 }
 
 interface Unresolved {
@@ -56,8 +56,8 @@ interface Errored<T> {
   (): never;
 }
 
-type Resource<D, E> = Unresolved | Pending | Ready<D> | Refreshing<D> | Errored<E>;
-type ResourceReturn<D, E, R = unknown> = [Resource<D, E>, ResourceActions<D | undefined, R>];
+export type ExecutionResource<D, E> = Unresolved | Pending | Ready<D> | Refreshing<D> | Errored<E>;
+export type ExecutionResourceReturn<D, E, R = unknown> = [ExecutionResource<D, E>, ResourceActions<D | undefined, R>];
 
 type InitializedResource<D, E> = Ready<D> | Refreshing<D> | Errored<E>;
 type InitializedResourceReturn<D, E, R = unknown> = [
@@ -68,7 +68,7 @@ type InitializedResourceReturn<D, E, R = unknown> = [
 export function createExecutionResource<D, E, R = unknown>(
   fetcher: ResourceFetcher<true, ExecutionTuple<D, E>, R>,
   options?: ResourceOptions<NoInfer<D>, true> & ExecutionResourceHooks<D, E>,
-): ResourceReturn<D, E, R>;
+): ExecutionResourceReturn<D, E, R>;
 
 export function createExecutionResource<D, E, R = unknown>(
   fetcher: ResourceFetcher<true, ExecutionTuple<D, E>, R>,
@@ -85,7 +85,7 @@ export function createExecutionResource<D, E, S, R = unknown>(
   source: ResourceSource<S>,
   fetcher: ResourceFetcher<S, ExecutionTuple<D, E>, R>,
   options?: ResourceOptions<NoInfer<D>, S> & ExecutionResourceHooks<D, E>,
-): ResourceReturn<D, E, R>;
+): ExecutionResourceReturn<D, E, R>;
 
 export function createExecutionResource<D, E, S, R = unknown>(
   arg1: ResourceFetcher<true, ExecutionTuple<D, E>, R> | ResourceSource<S>,
@@ -94,7 +94,7 @@ export function createExecutionResource<D, E, S, R = unknown>(
     | InitializedResourceOptions<NoInfer<D>, true> & ExecutionResourceHooks<D, E>
     | ResourceFetcher<S, ExecutionTuple<D, E>, R>,
   arg3?: ResourceOptions<NoInfer<D>, S> & ExecutionResourceHooks<D, E>,
-): ResourceReturn<D, E, R> | InitializedResourceReturn<D, E, R> {
+): ExecutionResourceReturn<D, E, R> | InitializedResourceReturn<D, E, R> {
   let source: any;
   let fetcher: any;
   let options: any;
@@ -118,9 +118,9 @@ export function createExecutionResource<D, E, S, R = unknown>(
     options,
   );
 
-  const { onData, onError } = options || {};
+  const { onSuccess, onError } = options || {};
   createEffect(() => {
-    resource.state === 'ready' && onData && onData(resource());
+    resource.state === 'ready' && onSuccess && onSuccess(resource());
     resource.state === 'errored' && onError && onError(resource.error.cause);
   });
 
