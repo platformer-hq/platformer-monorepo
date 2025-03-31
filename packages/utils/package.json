@@ -1,0 +1,19 @@
+{
+  "name": "utils",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "main": "src/index.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@sentry/solid": "^9.3.0",
+    "@types/mixpanel-browser": "^2.51.0",
+    "eruda": "^3.0.1",
+    "mixpanel-browser": "^2.60.0"
+  },
+  "devDependencies": {
+    "tsconfig": "workspace:*"
+  }
+}
