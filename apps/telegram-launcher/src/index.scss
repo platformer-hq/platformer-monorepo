@@ -12,9 +12,13 @@ body {
   // It also helps to prevent showing the bottom bar in mobile versions of Telegram.
   height: 100vh;
   overflow: hidden;
+
+  color: var(--tg-theme-text-color);
+
+  --tgui-loading-indicator-ios-particle-color: var(--tg-theme-subtitle-text-color);
 }
 
-#root {
+#app {
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
