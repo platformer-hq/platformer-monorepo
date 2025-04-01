@@ -22,7 +22,8 @@ import {
   type BackgroundColor,
   type BottomBarColor,
 } from '@telegram-apps/sdk-solid';
-import { lazySentryInit, formatViewportCssVar, lazeErudaInit } from 'shared';
+import { formatViewportCssVar } from 'shared';
+import { lazySentryInit, lazeErudaInit } from 'utils';
 import type { BrowserOptions } from '@sentry/solid';
 
 /**
@@ -79,10 +80,10 @@ export async function init(options: {
   restoreInitData();
 
   await Promise.all([
-    mountMiniApp().then(() => {
+    mountMiniApp.isAvailable() && mountMiniApp().then(() => {
       bindThemeParamsCssVars();
     }),
-    mountViewport().then(() => {
+    mountViewport.isAvailable() && mountViewport().then(() => {
       bindViewportCssVars(formatViewportCssVar);
     }),
   ]);
