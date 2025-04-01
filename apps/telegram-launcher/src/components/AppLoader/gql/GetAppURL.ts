@@ -1,6 +1,6 @@
-import type * as Types from 'api/src/schema.js';
+import type * as Types from 'api';
 
-import gql from 'api/src/gql.js';
+import gql from 'api';
 export type GetAppUrlQueryVariables = Types.Exact<{
   appID: Types.Scalars['Int']['input'];
   isExternal?: Types.InputMaybe<Types.Scalars['Boolean']['input']>;

@@ -5,31 +5,37 @@ import type {
 } from '@graphql-codegen/typescript-document-nodes';
 import type { NearOperationFileConfig } from '@graphql-codegen/near-operation-file-preset';
 
+function operationsConfig(
+  folder: string,
+  baseTypesPath: string,
+  gqlImport: string,
+): CodegenConfig['generates'][string] {
+  return {
+    documents: `${folder}/**/*.gql`,
+    preset: 'near-operation-file-preset',
+    presetConfig: { extension: '.ts', baseTypesPath } satisfies NearOperationFileConfig,
+    plugins: [
+      'typescript-operations',
+      'typescript-document-nodes',
+    ],
+    config: {
+      useTypeImports: true,
+      declarationKind: 'interface',
+      strictScalars: true,
+      gqlImport,
+      scalars: {
+        Date: 'string',
+      },
+    } satisfies TypeScriptDocumentsPluginConfig & TypeScriptDocumentNodesRawPluginConfig,
+  };
+}
+
 export default {
   overwrite: true,
   schema: 'https://mini-apps.store/gql',
   generates: {
-    'src/': {
-      documents: '{apps,packages}/**/*.gql',
-      preset: 'near-operation-file-preset',
-      presetConfig: {
-        extension: '.ts',
-        baseTypesPath: '~../schema.js',
-      } satisfies NearOperationFileConfig,
-      plugins: [
-        'typescript-operations',
-        'typescript-document-nodes',
-      ],
-      config: {
-        useTypeImports: true,
-        declarationKind: 'interface',
-        strictScalars: true,
-        gqlImport: '../gql.js',
-        scalars: {
-          Date: 'string',
-        },
-      } satisfies TypeScriptDocumentsPluginConfig & TypeScriptDocumentNodesRawPluginConfig,
-    },
+    'src/': operationsConfig('apps', '~api', 'api'),
+    'src2/': operationsConfig('packages', '~../schema.js', '../gql.js'),
     'packages/api/src/schema.ts': {
       config: {
         scalars: {
