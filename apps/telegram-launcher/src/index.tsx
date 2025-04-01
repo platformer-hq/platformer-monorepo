@@ -1,6 +1,12 @@
 /* @refresh reload */
+import 'ui/style.css';
+
 import { render } from 'solid-js/web';
-import { retrieveLaunchParams } from '@telegram-apps/sdk-solid';
+import {
+  retrieveLaunchParams,
+  retrieveRawInitData,
+  retrieveRawLaunchParams,
+} from '@telegram-apps/sdk-solid';
 
 import { Root } from '@/components/Root/Root.js';
 import { init } from '@/init.js';
@@ -8,8 +14,9 @@ import { init } from '@/init.js';
 import './index.scss';
 import './mockEnv.js';
 
-const { tgWebAppPlatform: platform, tgWebAppStartParam: startParam } = retrieveLaunchParams();
-const debug = (startParam || '').includes('platformer_debug') || import.meta.env.DEV;
+const launchParams = retrieveLaunchParams();
+const { tgWebAppPlatform: platform } = launchParams;
+const debug = (launchParams.tgWebAppStartParam || '').includes('platformer_debug') || import.meta.env.DEV;
 
 init({
   debug,
@@ -21,11 +28,15 @@ init({
   },
 })
   .then(({ initialColors }) => {
+    const rawLaunchParams = retrieveRawLaunchParams();
+    const rawInitData = retrieveRawInitData();
+
     render(() => (
       <Root
         debug={debug}
         platform={platform}
-        // platform="ios"
+        rawLaunchParams={rawLaunchParams}
+        rawInitData={rawInitData}
         initialColors={initialColors}
       />
     ), document.getElementById('app')!);
