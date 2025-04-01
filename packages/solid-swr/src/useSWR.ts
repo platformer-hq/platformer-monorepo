@@ -16,7 +16,7 @@ import { createEffect, createSignal, onCleanup } from 'solid-js';
 import { createWritableMemo } from '@solid-primitives/memo';
 
 export type UseSWROptionsArgs<P> =
-  MaybeAccessor<[params: P, shouldRevalidate?: boolean] | undefined | null | false>;
+  MaybeAccessor<readonly [params: Readonly<P>, shouldRevalidate?: boolean] | undefined | null | false>;
 
 export interface UseSWROptions<D, P, E> extends CreateSWRStoreOptions<D, E> {
   args?: UseSWROptionsArgs<P>;
@@ -35,7 +35,7 @@ export interface UseSWROptions<D, P, E> extends CreateSWRStoreOptions<D, E> {
 }
 
 export interface UseSWRResultUtils<D, P> {
-  get: (params: P, shouldRevalidate?: boolean) => void;
+  get: (params: Readonly<P>, shouldRevalidate?: boolean) => void;
   mutate: SWRStoreMutateFn<D, P>;
 }
 

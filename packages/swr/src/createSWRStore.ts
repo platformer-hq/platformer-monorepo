@@ -64,15 +64,18 @@ export type SWRStoreMutateFnData<D> =
   | undefined
   | null
   | false
-  | [D];
-export type SWRStoreGetFn<D, P, E> = (params: P, shouldRevalidate?: boolean) => KeyState<D, E>;
+  | [Readonly<D>];
+export type SWRStoreGetFn<D, P, E> = (
+  params: Readonly<P>,
+  shouldRevalidate?: boolean,
+) => KeyState<D, E>;
 export type SWRStoreMutateFn<D, P> = (
-  params: P,
+  params: Readonly<P>,
   data?: SWRStoreMutateFnData<D> | ((current?: D) => SWRStoreMutateFnData<D>),
   shouldRevalidate?: boolean,
 ) => void;
 export type SWRStoreSubscribeFn<D, P, E> = (
-  params: P,
+  params: Readonly<P>,
   listener: ObservableListener<KeyState<D, E>>,
 ) => VoidFunction;
 
@@ -107,7 +110,7 @@ export function createSWRStore<D, P extends any[], E = unknown>(
   function log(...args: any[]) {
     _log && _log(...args);
   }
-//
+
   // Guaranteed returns an observable for the specified key.
   const observableByKey = (key: string): Observable<KeyState<D, E>> => {
     const value = observersCache.get(key) || observable();
