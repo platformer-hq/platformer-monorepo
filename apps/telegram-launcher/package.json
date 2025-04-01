@@ -22,15 +22,18 @@
     "@sentry/solid": "^9.1.0",
     "@telegram-apps/sdk-solid": "^3.0.16",
     "@types/mixpanel-browser": "^2.51.0",
+    "api": "workspace:*",
     "better-promises": "^0.4.0",
     "error-kid": "^0.0.4",
     "eruda": "^3.0.1",
     "mixpanel-browser": "^2.60.0",
     "shared": "workspace:*",
     "solid-js": "^1.9.3",
+    "solid-gql": "workspace:*",
     "solid-utils": "workspace:*",
     "valibot": "1.0.0-beta.14",
-    "ui": "workspace:*"
+    "ui": "workspace:*",
+    "utils": "workspace:*"
   },
   "devDependencies": {
     "globals": "^15.2.0",
