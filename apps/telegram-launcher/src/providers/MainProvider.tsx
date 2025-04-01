@@ -16,7 +16,7 @@ export function useMainContext() {
 
 export function MainProvider(props: FlowProps<{ platform: Platform }>) {
   return (
-    <Context.Provider value={pickProps(props, 'platform')}>
+    <Context.Provider value={pickProps(props, ['platform'])}>
       {props.children}
     </Context.Provider>
   );
