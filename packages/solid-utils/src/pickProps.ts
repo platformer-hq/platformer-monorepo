@@ -9,7 +9,7 @@ export type PickResult<Props, Key extends keyof Props> = SplitProps<Props, [[Key
  */
 export function pickProps<Props extends Record<any, any>, Keys extends keyof Props>(
   props: Props,
-  ...keys: readonly Keys[]
+  keys: readonly Keys[]
 ): PickResult<Props, Keys> {
   return splitProps(props, keys)[0];
 }
