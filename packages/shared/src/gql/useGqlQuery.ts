@@ -3,34 +3,55 @@ import {
   useGqlScoped,
   type UseGqlOptions,
   type UseGqlError,
+  type RequestOptions,
 } from 'solid-gql';
 import { access } from 'solid-utils';
 
 import { useGqlContext } from './GqlProvider.js';
 
-export type UseGqlQueryOptions<D extends object, V extends object> = Omit<
+export type UseGqlQueryValue<V extends object> =
+  | V
+  | [variables: V, options?: Omit<RequestOptions, 'variables'>];
+
+export type UseGqlQueryOptions<D, V extends object> = Omit<
   UseGqlOptions<D, V>,
   'args' | 'dataCache' | 'revalidationCache' | 'observersCache'
 >;
 
-export type UseGqlQueryResult<D, V> = UseSWRResult<D, V, UseGqlError>;
+export type UseGqlQueryResult<D, V extends object> =
+  UseSWRResult<D, UseGqlQueryValue<V>, UseGqlError>;
 
-export function useGqlQuery<D extends object, V extends object>(
+export function useGqlQuery<D, V extends object>(
   query: string,
-  args?: UseSWROptionsArgs<V>,
+  args?: UseSWROptionsArgs<UseGqlQueryValue<V>>,
   options?: UseGqlQueryOptions<D, V>,
 ): UseGqlQueryResult<D, V> {
   const context = useGqlContext();
   options ||= {};
 
-  const createArguments = (variables: V) => {
+  const createArguments = (
+    variablesOrTuple:
+      | V
+      | [variables: V, options?: Omit<RequestOptions, 'variables'>],
+  ): [string, string, RequestOptions<V>] => {
     const { authToken } = context;
+    let variables: V;
+    let options: Omit<RequestOptions<any>, 'variables'> = {};
+    if (Array.isArray(variablesOrTuple)) {
+      variables = variablesOrTuple[0];
+      options = variablesOrTuple[1] || {};
+    } else {
+      variables = variablesOrTuple;
+    }
+
     return [context.endpoint, query, {
+      ...options,
       variables,
       headers: {
         Authorization: authToken ? `jwt ${authToken}` : '',
+        ...options.headers,
       },
-    }] as const;
+    }];
   };
 
   const [resource, utils] = useGqlScoped({
