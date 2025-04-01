@@ -1,6 +1,7 @@
 import { onCleanup, onMount } from 'solid-js';
 import { postEvent } from '@telegram-apps/sdk-solid';
 import { looseObject, optional, parse, string, unknown } from 'valibot';
+import { createEventListener } from 'solid-utils';
 
 import './AppContainer.scss';
 
@@ -16,15 +17,15 @@ export function AppContainer(props: {
   /**
    * Will be called whenever the iframe failed to load.
    */
-  onError(): void;
+  onError: () => void;
   /**
    * Will be called whenever the application notified about being ready.
    */
-  onReady(): void;
+  onReady: () => void;
   /**
    * Will be called whenever the application failed to load due to timeout.
    */
-  onTimeout(): void;
+  onTimeout: () => void;
   /**
    * URL of the mini application to open.
    */
@@ -32,9 +33,12 @@ export function AppContainer(props: {
 }) {
   let iframe!: HTMLIFrameElement;
 
-  // Give some time the mini application to load.
+  // Give some time for the mini application to load.
   // When the timeout is reached, notify the parent component about it.
   const timeoutID = setTimeout(props.onTimeout, props.loadTimeout);
+  onCleanup(() => {
+    clearTimeout(timeoutID);
+  });
 
   onMount(() => {
     const { contentWindow } = iframe;
@@ -52,30 +56,27 @@ export function AppContainer(props: {
           eventType: string(),
           eventData: optional(unknown()),
         }), JSON.parse(data));
-      } catch (e) { /* empty */
+      } catch {
       }
-
-      if (payload) {
-        if (source === contentWindow) {
-          // Whenever the mini app notifies about it being ready, we should also notify the parent
-          // component.
-          if (payload.eventType === 'web_app_ready') {
-            clearTimeout(timeoutID);
-            props.onReady();
-          }
-
-          (postEvent as any)(payload.eventType, payload.eventData);
-        } else {
-          // TODO: Set target origin?
-          contentWindow.postMessage(data, '*');
+      if (!payload) {
+        return;
+      }
+      if (source === contentWindow) {
+        // Whenever the mini app notifies about it being ready, we should also notify the parent
+        // component.
+        if (payload.eventType === 'web_app_ready') {
+          clearTimeout(timeoutID);
+          props.onReady();
         }
+
+        (postEvent as any)(payload.eventType, payload.eventData);
+      } else {
+        // TODO: Set target origin?
+        contentWindow.postMessage(data, '*');
       }
     };
 
-    window.addEventListener('message', onMessage);
-    onCleanup(() => {
-      window.removeEventListener('message', onMessage);
-    });
+    createEventListener(window, 'message', onMessage);
   });
 
   return (
