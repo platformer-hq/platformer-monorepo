@@ -13,7 +13,7 @@ export function lazySentryInit(options: BrowserOptions) {
   });
 }
 
-export function lazeErudaInit() {
+export function lazyErudaInit() {
   return import('eruda').then(({ default: eruda }) => {
     eruda.init();
     eruda.position({ x: window.innerWidth - 50, y: 0 });
