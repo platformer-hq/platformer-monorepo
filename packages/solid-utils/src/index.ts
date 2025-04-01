@@ -11,3 +11,5 @@ export * from './signalsToRecord.js';
 export * from '@solid-primitives/utils';
 export * from '@solid-primitives/event-listener';
 export * from '@solid-primitives/timer';
+export * from '@solid-primitives/memo';
+export * from '@solid-primitives/scheduled';
