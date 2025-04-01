@@ -6,6 +6,8 @@ interface SplitResultSignal<T> extends Accessor<T> {
   ok: Accessor<boolean>;
 }
 
+export type SplitExecutionTupleResult<D, E> = [SplitResultSignal<D>, SplitResultSignal<E>];
+
 function createSignal<T, E>(
   $executionResult: Accessor<ExecutionTuple<T, E>>,
   extractSuccessful: true,
@@ -39,10 +41,9 @@ function createSignal<T, E>(
  * data and error.
  * @param $executionResult - signal returning an execution result.
  */
-export function splitExecutionTuple<T, E>($executionResult: Accessor<ExecutionTuple<T, E>>): [
-  SplitResultSignal<T>,
-  SplitResultSignal<E>
-] {
+export function splitExecutionTuple<D, E>(
+  $executionResult: Accessor<ExecutionTuple<D, E>>,
+): SplitExecutionTupleResult<D, E> {
   return [
     createSignal($executionResult, true),
     createSignal($executionResult, false),
