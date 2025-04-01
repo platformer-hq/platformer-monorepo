@@ -1,5 +1,5 @@
 /* @refresh reload */
-import 'ui/style.css';
+import 'ui/index.css';
 
 import { render } from 'solid-js/web';
 import {
