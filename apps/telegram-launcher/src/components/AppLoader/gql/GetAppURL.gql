@@ -1,0 +1,10 @@
+query GetAppURL(
+  $appID: Int!,
+  $isExternal: Boolean,
+  $launchParams: String!,
+  $reSignInitData: Boolean
+) {
+  app(appID: $appID) {
+    telegramURL(isExternal: $isExternal, launchParams: $launchParams, reSignInitData: $reSignInitData)
+  }
+}
