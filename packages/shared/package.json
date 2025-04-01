@@ -8,10 +8,14 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@telegram-apps/sdk-solid": "^3.0.0"
+    "@telegram-apps/sdk-solid": "^3.0.0",
+    "solid-js": "^1.0.0"
   },
   "dependencies": {
     "utils": "workspace:*",
+    "solid-gql": "workspace:*",
+    "solid-utils": "workspace:*",
+    "solid-swr": "workspace:*",
     "valibot": "1.0.0-rc.3"
   },
   "devDependencies": {
