@@ -1,5 +1,6 @@
 import { type JSXElement, Show } from 'solid-js';
-import { bem, Xmark28, LoadingIndicatorIos, TypographyIos } from 'ui';
+import { Xmark28, LoadingIndicatorIos, TypographyIos } from 'ui';
+import { bem } from 'utils';
 import { accessor } from 'solid-utils';
 
 import { useMainContext } from '@/providers/MainProvider.js';
