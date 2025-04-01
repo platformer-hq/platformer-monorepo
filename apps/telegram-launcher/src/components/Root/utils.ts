@@ -1,25 +1,4 @@
 /**
- * Removes sensitive part from the init data.
- * @param initData - raw init data.
- */
-export function secureInitData(initData: string): string {
-  const query = new URLSearchParams(initData);
-  query.set('hash', '');
-  return query.toString();
-}
-
-/**
- * Removes sensitive part from the init data.
- * @param launchParams - raw launch parameters.
- * @param initData - secured init data.
- */
-export function secureLaunchParams(launchParams: string, initData: string): string {
-  const query = new URLSearchParams(launchParams);
-  query.set('tgWebAppData', initData);
-  return query.toString();
-}
-
-/**
  * Computes fallback URl based on the URL value and raw launch parameters.
  * @param fallbackURL - base URL.
  * @param launchParams - raw launch parameters.
