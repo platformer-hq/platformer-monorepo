@@ -64,18 +64,18 @@ export type SWRStoreMutateFnData<D> =
   | undefined
   | null
   | false
-  | [Readonly<D>];
+  | [D];
 export type SWRStoreGetFn<D, P, E> = (
-  params: Readonly<P>,
+  params: P,
   shouldRevalidate?: boolean,
 ) => KeyState<D, E>;
 export type SWRStoreMutateFn<D, P> = (
-  params: Readonly<P>,
+  params: P,
   data?: SWRStoreMutateFnData<D> | ((current?: D) => SWRStoreMutateFnData<D>),
   shouldRevalidate?: boolean,
 ) => void;
 export type SWRStoreSubscribeFn<D, P, E> = (
-  params: Readonly<P>,
+  params: P,
   listener: ObservableListener<KeyState<D, E>>,
 ) => VoidFunction;
 
