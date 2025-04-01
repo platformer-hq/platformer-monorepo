@@ -1,4 +1,5 @@
 import { createContext, type FlowProps, mergeProps, useContext } from 'solid-js';
+import { pickProps } from 'solid-utils';
 import type { DataCache, ObserversCache, RevalidationCache } from 'solid-swr';
 
 export interface GqlContextType {
@@ -26,7 +27,7 @@ export function GqlProvider(props: GqlProviderProps) {
         dataCache: new Map(),
         revalidationCache: new Map(),
         observersCache: new Map(),
-      }, props)}
+      }, pickProps(props, ['dataCache', 'revalidationCache', 'observersCache']))}
     >
       {props.children}
     </Context.Provider>

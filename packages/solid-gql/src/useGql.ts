@@ -3,6 +3,7 @@ import { useSWR, type UseSWROptions, type UseSWRResult } from 'solid-swr';
 
 import { GraphQLError } from './GraphQLError.js';
 
+export type { RequestOptions };
 export type RequestParameters<V extends object> = [
   url: string,
   query: string,
