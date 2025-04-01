@@ -1,7 +1,7 @@
-import { GraphQLError, request, type RequestOptions } from '@solid-primitives/graphql';
+import { request, type RequestOptions } from '@solid-primitives/graphql';
 import { useSWR, type UseSWROptions, type UseSWRResult } from 'solid-swr';
 
-import { ExtendedGraphQLError } from './ExtendedGraphQLError.js';
+import { GraphQLError } from './GraphQLError.js';
 
 export type RequestParameters<V extends object> = [
   url: string,
@@ -9,7 +9,7 @@ export type RequestParameters<V extends object> = [
   options?: RequestOptions<V>
 ];
 
-export type UseGqlError = ExtendedGraphQLError | Error;
+export type UseGqlError = GraphQLError | Error;
 export type UseGqlOptions<D, V extends object> = UseSWROptions<D, RequestParameters<V>, UseGqlError>;
 export type UseGqlResult<D, V extends object> = UseSWRResult<D, RequestParameters<V>, UseGqlError>;
 
@@ -21,7 +21,7 @@ export function useGql<D, V extends object>(options?: UseGqlOptions<D, V>): UseG
     (...args) => {
       return request(...args).catch(error => {
         if (error instanceof GraphQLError) {
-          throw new ExtendedGraphQLError(error.message, error.locations, error.extensions);
+          throw new GraphQLError(error.message, error.locations, error.extensions);
         }
         throw error;
       });
