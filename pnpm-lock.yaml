@@ -104,94 +104,55 @@ importers:
 
   apps/admin-panel:
     dependencies:
-      '@graphql-typed-document-node/core':
-        specifier: ^3.2.0
-        version: 3.2.0(graphql@16.10.0)
       '@sentry/solid':
-        specifier: ^9.3.0
+        specifier: ^9.1.0
         version: 9.10.1(@solidjs/router@0.13.6(solid-js@1.9.4))(solid-js@1.9.4)
-      '@solid-primitives/graphql':
-        specifier: ^2.2.0
-        version: 2.2.0(@graphql-typed-document-node/core@3.2.0(graphql@16.10.0))(graphql@16.10.0)(solid-js@1.9.4)
-      '@solid-primitives/memo':
-        specifier: ^1.4.1
-        version: 1.4.1(solid-js@1.9.4)
-      '@solid-primitives/scheduled':
-        specifier: ^1.5.0
-        version: 1.5.0(solid-js@1.9.4)
-      '@solid-primitives/utils':
-        specifier: ^6.3.0
-        version: 6.3.0(solid-js@1.9.4)
       '@solidjs/router':
         specifier: ^0.13.6
         version: 0.13.6(solid-js@1.9.4)
       '@telegram-apps/sdk-solid':
         specifier: ^3.0.15
         version: 3.0.15(solid-js@1.9.4)(typescript@5.8.2)
-      '@types/mixpanel-browser':
-        specifier: ^2.51.0
-        version: 2.54.0
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^7.8.0
-        version: 7.18.0(@typescript-eslint/parser@8.26.0(eslint@9.19.0(jiti@2.4.2))(typescript@5.8.2))(eslint@9.19.0(jiti@2.4.2))(typescript@5.8.2)
-      '@typescript-eslint/parser':
-        specifier: ^8.26.0
-        version: 8.26.0(eslint@9.19.0(jiti@2.4.2))(typescript@5.8.2)
-      eruda:
-        specifier: ^3.0.1
-        version: 3.4.1
-      eslint-plugin-solid:
-        specifier: ^0.14.0
-        version: 0.14.5(eslint@9.19.0(jiti@2.4.2))(typescript@5.8.2)
-      globals:
-        specifier: ^15.2.0
-        version: 15.15.0
-      graphql:
-        specifier: ^16.10.0
-        version: 16.10.0
-      mixpanel-browser:
-        specifier: ^2.60.0
-        version: 2.62.0
+      api:
+        specifier: workspace:*
+        version: link:../../packages/api
       shared:
         specifier: workspace:*
         version: link:../../packages/shared
       solid-devtools:
         specifier: ^0.30.1
         version: 0.30.1(solid-js@1.9.4)(vite@5.4.14(@types/node@22.13.0)(sass-embedded@1.86.0)(sass@1.83.4))
+      solid-gql:
+        specifier: workspace:*
+        version: link:../../packages/solid-gql
       solid-js:
         specifier: ^1.8.17
         version: 1.9.4
       solid-swr:
         specifier: workspace:*
         version: link:../../packages/solid-swr
+      solid-utils:
+        specifier: workspace:*
+        version: link:../../packages/solid-utils
       swr:
         specifier: workspace:*
         version: link:../../packages/swr
       ui:
         specifier: workspace:*
         version: link:../../packages/ui
+      utils:
+        specifier: workspace:*
+        version: link:../../packages/utils
       valibot:
         specifier: 1.0.0-rc.3
         version: 1.0.0-rc.3(typescript@5.8.2)
     devDependencies:
-      '@graphql-codegen/cli':
-        specifier: 5.0.5
-        version: 5.0.5(@parcel/watcher@2.5.1)(@types/node@22.13.0)(enquirer@2.4.1)(graphql-sock@1.0.1(graphql@16.10.0))(graphql@16.10.0)(typescript@5.8.2)
-      '@graphql-codegen/near-operation-file-preset':
-        specifier: ^3.0.0
-        version: 3.0.0(graphql@16.10.0)
-      '@graphql-codegen/typescript':
-        specifier: 4.1.5
-        version: 4.1.5(graphql@16.10.0)
-      '@graphql-codegen/typescript-document-nodes':
-        specifier: ^4.0.15
-        version: 4.0.16(graphql@16.10.0)
-      '@graphql-codegen/typescript-operations':
-        specifier: ^4.5.1
-        version: 4.6.0(graphql-sock@1.0.1(graphql@16.10.0))(graphql@16.10.0)
       '@telegram-apps/mate':
         specifier: ^0.0.26
         version: 0.0.26
+      tsconfig:
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
 
   apps/telegram-launcher:
     dependencies:
@@ -201,9 +162,6 @@ importers:
       '@telegram-apps/sdk-solid':
         specifier: ^3.0.16
         version: 3.0.16(solid-js@1.9.4)(typescript@5.8.2)
-      '@types/mixpanel-browser':
-        specifier: ^2.51.0
-        version: 2.54.0
       api:
         specifier: workspace:*
         version: link:../../packages/api
@@ -213,12 +171,6 @@ importers:
       error-kid:
         specifier: ^0.0.4
         version: 0.0.4
-      eruda:
-        specifier: ^3.0.1
-        version: 3.4.1
-      mixpanel-browser:
-        specifier: ^2.60.0
-        version: 2.62.0
       shared:
         specifier: workspace:*
         version: link:../../packages/shared
@@ -344,6 +296,12 @@ importers:
       '@solid-primitives/event-listener':
         specifier: ^2.4.0
         version: 2.4.0(solid-js@1.9.4)
+      '@solid-primitives/memo':
+        specifier: ^1.4.1
+        version: 1.4.1(solid-js@1.9.4)
+      '@solid-primitives/scheduled':
+        specifier: ^1.5.0
+        version: 1.5.0(solid-js@1.9.4)
       '@solid-primitives/timer':
         specifier: ^1.4.0
         version: 1.4.0(solid-js@1.9.4)
@@ -1599,12 +1557,6 @@ packages:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
       graphql-sock: ^1.0.0
 
-  '@graphql-codegen/typescript@4.1.5':
-    resolution: {integrity: sha512-BmbXcS8hv75qDIp4LCFshFXXDq0PCd48n8WLZ5Qf4XCOmHYGSxMn49dp/eKeApMqXWYTkAZuNt8z90zsRSQeOg==}
-    engines: {node: '>=16'}
-    peerDependencies:
-      graphql: ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
-
   '@graphql-codegen/typescript@4.1.6':
     resolution: {integrity: sha512-vpw3sfwf9A7S+kIUjyFxuvrywGxd4lmwmyYnnDVjVE4kSQ6Td3DpqaPTy8aNQ6O96vFoi/bxbZS2BW49PwSUUA==}
     engines: {node: '>=16'}
@@ -1613,12 +1565,6 @@ packages:
 
   '@graphql-codegen/visitor-plugin-common@2.13.1':
     resolution: {integrity: sha512-mD9ufZhDGhyrSaWQGrU1Q1c5f01TeWtSWy/cDwXYjJcHIj1Y/DG2x0tOflEfCvh5WcnmHNIw4lzDsg1W7iFJEg==}
-    peerDependencies:
-      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
-
-  '@graphql-codegen/visitor-plugin-common@5.7.1':
-    resolution: {integrity: sha512-jnBjDN7IghoPy1TLqIE1E4O0XcoRc7dJOHENkHvzGhu0SnvPL6ZgJxkQiADI4Vg2hj/4UiTGqo8q/GRoZz22lQ==}
-    engines: {node: '>=16'}
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
 
@@ -2934,13 +2880,6 @@ packages:
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       '@typescript-eslint/parser': ^8.0.0 || ^8.0.0-alpha.0
-      eslint: ^8.57.0 || ^9.0.0
-      typescript: '>=4.8.4 <5.9.0'
-
-  '@typescript-eslint/parser@8.26.0':
-    resolution: {integrity: sha512-mNtXP9LTVBy14ZF3o7JG69gRPBK/2QWtQd0j0oH26HcY/foyJJau6pNUez7QrM5UHnSvwlQcJXKsk0I99B9pOA==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    peerDependencies:
       eslint: ^8.57.0 || ^9.0.0
       typescript: '>=4.8.4 <5.9.0'
 
@@ -8018,17 +7957,6 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@graphql-codegen/typescript@4.1.5(graphql@16.10.0)':
-    dependencies:
-      '@graphql-codegen/plugin-helpers': 5.1.0(graphql@16.10.0)
-      '@graphql-codegen/schema-ast': 4.1.0(graphql@16.10.0)
-      '@graphql-codegen/visitor-plugin-common': 5.7.1(graphql@16.10.0)
-      auto-bind: 4.0.0
-      graphql: 16.10.0
-      tslib: 2.6.3
-    transitivePeerDependencies:
-      - encoding
-
   '@graphql-codegen/typescript@4.1.6(graphql@16.10.0)':
     dependencies:
       '@graphql-codegen/plugin-helpers': 5.1.0(graphql@16.10.0)
@@ -8056,22 +7984,6 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - supports-color
-
-  '@graphql-codegen/visitor-plugin-common@5.7.1(graphql@16.10.0)':
-    dependencies:
-      '@graphql-codegen/plugin-helpers': 5.1.0(graphql@16.10.0)
-      '@graphql-tools/optimize': 2.0.0(graphql@16.10.0)
-      '@graphql-tools/relay-operation-optimizer': 7.0.19(graphql@16.10.0)
-      '@graphql-tools/utils': 10.8.6(graphql@16.10.0)
-      auto-bind: 4.0.0
-      change-case-all: 1.0.15
-      dependency-graph: 0.11.0
-      graphql: 16.10.0
-      graphql-tag: 2.12.6(graphql@16.10.0)
-      parse-filepath: 1.0.2
-      tslib: 2.6.3
-    transitivePeerDependencies:
-      - encoding
 
   '@graphql-codegen/visitor-plugin-common@5.8.0(graphql@16.10.0)':
     dependencies:
@@ -9758,24 +9670,6 @@ snapshots:
     dependencies:
       '@types/node': 20.17.16
 
-  '@typescript-eslint/eslint-plugin@7.18.0(@typescript-eslint/parser@8.26.0(eslint@9.19.0(jiti@2.4.2))(typescript@5.8.2))(eslint@9.19.0(jiti@2.4.2))(typescript@5.8.2)':
-    dependencies:
-      '@eslint-community/regexpp': 4.12.1
-      '@typescript-eslint/parser': 8.26.0(eslint@9.19.0(jiti@2.4.2))(typescript@5.8.2)
-      '@typescript-eslint/scope-manager': 7.18.0
-      '@typescript-eslint/type-utils': 7.18.0(eslint@9.19.0(jiti@2.4.2))(typescript@5.8.2)
-      '@typescript-eslint/utils': 7.18.0(eslint@9.19.0(jiti@2.4.2))(typescript@5.8.2)
-      '@typescript-eslint/visitor-keys': 7.18.0
-      eslint: 9.19.0(jiti@2.4.2)
-      graphemer: 1.4.0
-      ignore: 5.3.2
-      natural-compare: 1.4.0
-      ts-api-utils: 1.4.3(typescript@5.8.2)
-    optionalDependencies:
-      typescript: 5.8.2
-    transitivePeerDependencies:
-      - supports-color
-
   '@typescript-eslint/eslint-plugin@7.18.0(@typescript-eslint/parser@8.28.0(eslint@9.19.0(jiti@2.4.2))(typescript@5.8.2))(eslint@9.19.0(jiti@2.4.2))(typescript@5.8.2)':
     dependencies:
       '@eslint-community/regexpp': 4.12.1
@@ -9807,18 +9701,6 @@ snapshots:
       ignore: 5.3.2
       natural-compare: 1.4.0
       ts-api-utils: 2.0.1(typescript@5.8.2)
-      typescript: 5.8.2
-    transitivePeerDependencies:
-      - supports-color
-
-  '@typescript-eslint/parser@8.26.0(eslint@9.19.0(jiti@2.4.2))(typescript@5.8.2)':
-    dependencies:
-      '@typescript-eslint/scope-manager': 8.26.0
-      '@typescript-eslint/types': 8.26.0
-      '@typescript-eslint/typescript-estree': 8.26.0(typescript@5.8.2)
-      '@typescript-eslint/visitor-keys': 8.26.0
-      debug: 4.4.0
-      eslint: 9.19.0(jiti@2.4.2)
       typescript: 5.8.2
     transitivePeerDependencies:
       - supports-color
