@@ -7,6 +7,8 @@ export interface GqlContextType {
   observersCache: ObserversCache<unknown, unknown>;
 }
 
+export type GqlProviderProps = FlowProps<Partial<GqlContextType>>;
+
 const Context = createContext<GqlContextType>({
   dataCache: new Map,
   revalidationCache: new Map,
@@ -17,7 +19,7 @@ export function useGqlContext() {
   return useContext(Context);
 }
 
-export function GqlProvider(props: FlowProps<Partial<GqlContextType>>) {
+export function GqlProvider(props: GqlProviderProps) {
   return (
     <Context.Provider
       value={mergeProps({
