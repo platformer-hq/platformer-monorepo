@@ -1,5 +1,5 @@
 import { type JSXElement, Show } from 'solid-js';
-import { bem, Xmark28, LoadingIndicatorIos } from 'ui';
+import { bem, Xmark28, LoadingIndicatorIos, TypographyIos } from 'ui';
 import { accessor } from 'solid-utils';
 
 import { useMainContext } from '@/providers/MainProvider.js';
@@ -80,9 +80,13 @@ export function StatusPage(props: StatusPageProps) {
         }
       >
         <div class={e('content')}>
-          <h1 class={e('title')}>{$title()}</h1>
+          <TypographyIos class={e('title')} variant="title1">
+            {$title()}
+          </TypographyIos>
           <Show when={$text()}>
-            <p class={e('text')}>{$text()}</p>
+            <TypographyIos class={e('text')} variant="body">
+              {$text()}
+            </TypographyIos>
           </Show>
         </div>
       </Show>
