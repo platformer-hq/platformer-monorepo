@@ -11,7 +11,7 @@ on:
     branches:
       - main
     paths:
-      - 'apps/admin-panel/**'
+      - 'apps/admin-panel'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -43,14 +43,6 @@ jobs:
         with:
           name: "admin-panel-build"
           path: apps/admin-panel/dist
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: admin-panel-build
 
       - name: Deploy
         run: pnpm run ci:admin-panel:deploy
