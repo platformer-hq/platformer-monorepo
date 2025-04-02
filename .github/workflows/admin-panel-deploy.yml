@@ -38,12 +38,6 @@ jobs:
       - name: Build
         run: pnpm run ci:admin-panel:build
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: "admin-panel-build"
-          path: apps/admin-panel/dist
-
       - name: Deploy
         run: pnpm run ci:admin-panel:deploy
         env:
