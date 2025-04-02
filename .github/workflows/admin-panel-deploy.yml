@@ -20,6 +20,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: 'true'
+          token: '${{ secrets.ADMIN_PANEL_CHECKOUT_TOKEN }}'
 
       - name: Setup node
         uses: actions/setup-node@v3
@@ -43,6 +44,7 @@ jobs:
           name: "admin-panel-build"
           path: apps/admin-panel/dist
   deploy:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact
