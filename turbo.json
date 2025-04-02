@@ -4,6 +4,12 @@
     "**/.env.*local"
   ],
   "tasks": {
+    "ci:deploy": {
+      "passThroughEnv": [
+        "ADMIN_PANEL_MATE_TOKEN",
+        "ADMIN_PANEL_MATE_PROJECT_ID"
+      ]
+    },
     "build": {
       "dependsOn": [
         "^build"

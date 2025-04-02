@@ -1,0 +1,57 @@
+name: Deploy admin panel
+
+# Allow one concurrent deployment
+concurrency:
+  group: 'admin-panel-deploy'
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/admin-panel/**'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: 'true'
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        id: pnpm-install
+        with:
+          version: 10.7.0
+          run_install: true
+
+      - name: Build
+        run: pnpm run ci:admin-panel:build
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: "admin-panel-build"
+          path: apps/admin-panel/dist
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: admin-panel-build
+
+      - name: Deploy
+        run: pnpm run ci:admin-panel:deploy
+        env:
+          ADMIN_PANEL_MATE_TOKEN: ${{ secrets.ADMIN_PANEL_MATE_TOKEN }}
+          ADMIN_PANEL_MATE_PROJECT_ID: ${{ vars.ADMIN_PANEL_MATE_PROJECT_ID }}

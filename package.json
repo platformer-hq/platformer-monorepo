@@ -1,7 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "ci:telegram-launcher:deps": "pnpm i --frozen-lockfile --filter=\"./apps/telegram-launcher\"",
+    "ci:admin-panel:build": "turbo run build --filter=\"./apps/admin-panel\"",
+    "ci:admin-panel:deploy": "turbo run ci:deploy --filter=\"./apps/admin-panel\"",
     "ci:telegram-launcher:build": "turbo run build --filter=\"./apps/telegram-launcher\"",
     "codegen": "graphql-codegen --config graphql-codegen.ts",
     "codegen:watch": "graphql-codegen --config graphql-codegen.ts --watch"
