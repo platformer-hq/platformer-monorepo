@@ -1,7 +1,7 @@
 /**
  * Message log level.
  */
-export type LogLevel = 'log' | 'error';
+export type LogLevel = 'log' | 'error' | 'group';
 
 export interface LoggerOptions {
   bgColor?: string;
@@ -9,19 +9,10 @@ export interface LoggerOptions {
 }
 
 /*@__NO_SIDE_EFFECTS__*/
-export function createLogger(scope: string, options?: LoggerOptions): [
-  /**
-   * Prints a log message into the console.
-   * @param args - items to log.
-   */
-  log: (...args: any[]) => void,
-  /**
-   * Prints an error message into the console.
-   * @param force - should `shouldLog` value be ignored.
-   * @param args - items to log.
-   */
-  error: (...args: any[]) => void,
-] {
+export function createLogger(scope: string, options?: LoggerOptions): Pick<
+  Console,
+  'log' | 'error' | 'group' | 'groupEnd'
+> {
   options ||= {};
   const { textColor, bgColor } = options;
 
@@ -51,5 +42,10 @@ export function createLogger(scope: string, options?: LoggerOptions): [
     );
   }
 
-  return [print.bind(undefined, 'log'), print.bind(undefined, 'error')];
+  return {
+    log: print.bind(undefined, 'log'),
+    error: print.bind(undefined, 'error'),
+    group: print.bind(undefined, 'group'),
+    groupEnd: console.groupEnd.bind(console),
+  };
 }

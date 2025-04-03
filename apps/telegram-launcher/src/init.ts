@@ -26,6 +26,8 @@ import { formatViewportCssVar } from 'shared';
 import { lazySentryInit, lazyErudaInit } from 'utils';
 import type { BrowserOptions } from '@sentry/solid';
 
+import type { InitialColorsTuple } from '@/types/common.js';
+
 /**
  * Initializes the SDK.
  * @param options - execution options.
@@ -35,13 +37,7 @@ export async function init(options: {
   eruda: boolean;
   mockForMacOS: boolean;
   sentry: BrowserOptions;
-}): Promise<{
-  initialColors: [
-    header: MiniAppHeaderColor,
-    background: BackgroundColor,
-    bottomBar: BottomBarColor
-  ];
-}> {
+}): Promise<{ initialColors: InitialColorsTuple }> {
   setDebug(options.debug);
   initSDK();
 
@@ -88,30 +84,18 @@ export async function init(options: {
     }),
   ]);
 
-  function applyAndSub<T>(
-    signal: {
-      (): T;
-      sub: (listener: (value: T) => void) => VoidFunction;
-    },
-    fn: (value: T) => void,
-  ) {
-    fn(signal());
-    signal.sub(fn);
-  }
-
   const initialColors: [
     header: MiniAppHeaderColor,
     background: BackgroundColor,
     bottomBar: BottomBarColor
   ] = [miniAppHeaderColor(), miniAppBackgroundColor(), miniAppBottomBarColor()];
 
-  applyAndSub(themeParamsBackgroundColor, color => {
-    if (color) {
-      setMiniAppHeaderColor(color);
-      setMiniAppBackgroundColor(color);
-      setMiniAppBottomBarColor(color);
-    }
-  });
+  const desiredColor = themeParamsBackgroundColor();
+  if (desiredColor) {
+    setMiniAppHeaderColor(desiredColor);
+    setMiniAppBackgroundColor(desiredColor);
+    setMiniAppBottomBarColor(desiredColor);
+  }
 
   return { initialColors };
 }

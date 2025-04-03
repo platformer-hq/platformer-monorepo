@@ -103,9 +103,9 @@ export function createSWRStore<D, P extends any[], E = unknown>(
   revalidationCache ||= new Map();
   observersCache ||= new Map();
 
-  const [_log] = logger === 'default'
+  const { log: _log } = logger === 'default'
     ? createLogger('swr', { bgColor: 'purple', textColor: 'white' })
-    : [];
+    : {};
 
   function log(...args: any[]) {
     _log && _log(...args);

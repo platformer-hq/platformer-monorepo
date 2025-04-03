@@ -1,10 +1,16 @@
 import type { Platform } from '@telegram-apps/sdk-solid';
 import { createContext, type FlowProps, useContext } from 'solid-js';
-import { pickProps } from 'solid-utils';
+import { omitProps } from 'solid-utils';
 
-const Context = createContext<{
+import type { InitialColorsTuple } from '@/types/common.js';
+
+interface ContextType {
   platform: Platform;
-}>();
+  initialColors: InitialColorsTuple;
+  logger: Pick<Console, 'log' | 'group' | 'groupEnd'>;
+}
+
+const Context = createContext<ContextType>();
 
 export function useMainContext() {
   const context = useContext(Context);
@@ -14,9 +20,9 @@ export function useMainContext() {
   return context;
 }
 
-export function MainProvider(props: FlowProps<{ platform: Platform }>) {
+export function MainProvider(props: FlowProps<ContextType>) {
   return (
-    <Context.Provider value={pickProps(props, ['platform'])}>
+    <Context.Provider value={omitProps(props, ['children'])}>
       {props.children}
     </Context.Provider>
   );

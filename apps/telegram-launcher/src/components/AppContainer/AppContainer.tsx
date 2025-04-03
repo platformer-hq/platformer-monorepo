@@ -1,7 +1,10 @@
 import { onCleanup, onMount } from 'solid-js';
-import { postEvent } from '@telegram-apps/sdk-solid';
+import { isRGB, MethodName, postEvent } from '@telegram-apps/sdk-solid';
 import { looseObject, optional, parse, string, unknown } from 'valibot';
 import { createEventListener } from 'solid-utils';
+
+import { useMainContext } from '@/providers/MainProvider.js';
+import type { InitialColorsTuple } from '@/types/common.js';
 
 import './AppContainer.scss';
 
@@ -31,6 +34,12 @@ export function AppContainer(props: {
    */
   url: string;
 }) {
+  const { initialColors, logger: { log, group, groupEnd } } = useMainContext();
+
+  // List of collected Mini Apps events along with their parameters, which are related to the
+  // UI updates.
+  const collectedUIEvents: [string, unknown][] = [];
+  let isContainerReady = false;
   let iframe!: HTMLIFrameElement;
 
   // Give some time for the mini application to load.
@@ -57,23 +66,83 @@ export function AppContainer(props: {
           eventData: optional(unknown()),
         }), JSON.parse(data));
       } catch {
-      }
-      if (!payload) {
         return;
       }
-      if (source === contentWindow) {
-        // Whenever the mini app notifies about it being ready, we should also notify the parent
-        // component.
-        if (payload.eventType === 'web_app_ready') {
-          clearTimeout(timeoutID);
-          props.onReady();
-        }
-
-        (postEvent as any)(payload.eventType, payload.eventData);
-      } else {
+      if (source !== contentWindow) {
+        // The event was sent from the Telegram application. Pass it to the wrapped mini app.
         // TODO: Set target origin?
-        contentWindow.postMessage(data, '*');
+        return contentWindow.postMessage(data, '*');
       }
+      const { eventType, eventData } = payload;
+
+      // Container is already ready. In this case we just proxy all calls.
+      if (isContainerReady) {
+        return (postEvent as any)(eventType, eventData);
+      }
+
+      // Whenever the mini app notifies about it being ready to be shown, we should call all
+      // UI-related methods that were collected before this moment. We do it to prevent
+      // accidental appearance of UI components during the launcher waiting the app to be ready.
+      if (eventType === 'web_app_ready') {
+        group('The app is ready. Going to call previously collected events:');
+        collectedUIEvents.forEach(event => {
+          console.log(event);
+        });
+        groupEnd();
+        isContainerReady = true;
+
+        const uiColorsToSet: Partial<InitialColorsTuple> = [...initialColors];
+        const uiMethods = [
+          'web_app_set_header_color',
+          'web_app_set_background_color',
+          'web_app_set_bottom_bar_color',
+        ];
+        collectedUIEvents.forEach(([method, payload]: [string, any]) => {
+          // As long the launcher mutates UI colors, we need to restore them as long the wrapped
+          // application expects them to be initial ones. Nevertheless, we don't have to call UI
+          // updates in case, the app already did it.
+          const index = uiMethods.indexOf(method);
+          index >= 0 && (uiColorsToSet[index] = undefined);
+
+          // Call collected UI event.
+          (postEvent as any)(method, payload);
+        });
+        uiMethods.forEach((method, idx) => {
+          const color = uiColorsToSet[idx];
+          if (color) {
+            log('Restoring UI color using', { method, color });
+            (postEvent as any)(
+              method,
+              // "web_app_setup_header_color" accepts the "color_key" parameter if non-RGB value
+              // was passed. All other methods accept the "color" parameter.
+              idx === 0 && !isRGB(color) ? { color_key: color } : { color },
+            );
+          }
+        });
+
+        clearTimeout(timeoutID);
+        return props.onReady();
+      }
+
+      // All methods except specified in this list are considered as UI-affecting. We will
+      // memoize them and will call whenever the app is ready to be shown.
+      if (
+        !([
+          'iframe_ready',
+          'iframe_will_reload',
+          'web_app_invoke_custom_method',
+          'web_app_request_content_safe_area',
+          'web_app_request_safe_area',
+          'web_app_request_theme',
+          'web_app_request_viewport',
+        ] satisfies MethodName[] as string[]).includes(eventType)
+      ) {
+        log('Delaying call until the app is ready:', payload);
+        collectedUIEvents.push([eventType, eventData]);
+        return;
+      }
+
+      (postEvent as any)(eventType, eventData);
     };
 
     createEventListener(window, 'message', onMessage);

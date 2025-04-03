@@ -7,6 +7,7 @@ import {
   retrieveRawInitData,
   retrieveRawLaunchParams,
 } from '@telegram-apps/sdk-solid';
+import { createLogger } from 'utils';
 
 import { Root } from '@/components/Root/Root.js';
 import { init } from '@/init.js';
@@ -30,6 +31,15 @@ init({
   .then(({ initialColors }) => {
     const rawLaunchParams = retrieveRawLaunchParams();
     const rawInitData = retrieveRawInitData();
+    const noop = () => {
+    };
+    const logger = debug
+      ? createLogger('@platformer / Launcher', { textColor: 'white', bgColor: 'chocolate' })
+      : {
+        log: noop,
+        group: noop,
+        groupEnd: noop,
+      };
 
     render(() => (
       <Root
@@ -38,6 +48,7 @@ init({
         rawLaunchParams={rawLaunchParams}
         rawInitData={rawInitData}
         initialColors={initialColors}
+        logger={logger}
       />
     ), document.getElementById('app')!);
   })
