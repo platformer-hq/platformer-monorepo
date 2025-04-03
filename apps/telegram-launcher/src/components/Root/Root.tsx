@@ -1,10 +1,13 @@
-import { createMemo, createSignal, ErrorBoundary, Match, Show, Switch } from 'solid-js';
-import type {
-  Platform,
-  MiniAppHeaderColor,
-  BackgroundColor,
-  BottomBarColor,
-} from '@telegram-apps/sdk-solid';
+import {
+  createEffect,
+  createMemo,
+  createSignal,
+  ErrorBoundary,
+  Match,
+  Show,
+  Switch,
+} from 'solid-js';
+import type { Platform } from '@telegram-apps/sdk-solid';
 import { pickProps, accessor } from 'solid-utils';
 import { GqlProvider } from 'shared';
 
@@ -16,6 +19,7 @@ import {
   TypedErrorStatusPage,
   type TypedErrorStatusPageError,
 } from '@/components/TypedErrorStatusPage/TypedErrorStatusPage.js';
+import type { InitialColorsTuple } from '@/types/common.js';
 
 import { useLauncherOptions } from './useLauncherOptions.js';
 import { computeFallbackURL } from './utils.js';
@@ -24,17 +28,14 @@ import './Root.scss';
 
 interface InnerProps {
   debug: boolean;
-  initialColors: [
-    header: MiniAppHeaderColor,
-    background: BackgroundColor,
-    bottomBar: BottomBarColor
-  ];
   rawInitData?: string;
   rawLaunchParams: string;
 }
 
 interface RootProps extends InnerProps {
   platform: Platform;
+  initialColors: InitialColorsTuple;
+  logger: Pick<Console, 'log' | 'group' | 'groupEnd'>;
 }
 
 function Inner(props: InnerProps) {
@@ -42,6 +43,10 @@ function Inner(props: InnerProps) {
   const context = useMainContext();
   const $platform = accessor(context, 'platform');
   const [$loaderReady, setLoaderReady] = createSignal(false);
+
+  createEffect(() => {
+    $loaderReady() && context.logger.log('Removing the loader');
+  });
 
   return (
     <main
@@ -137,7 +142,7 @@ function Inner(props: InnerProps) {
 
 export function Root(props: RootProps) {
   return (
-    <MainProvider {...pickProps(props, ['platform'])}>
+    <MainProvider {...pickProps(props, ['platform', 'initialColors', 'logger'])}>
       <ErrorBoundary fallback={error => <TypedErrorStatusPage error={['unknown', error]}/>}>
         <Inner {...props}/>
       </ErrorBoundary>
