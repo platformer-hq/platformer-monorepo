@@ -22,9 +22,11 @@ export type UseGqlQueryOptions<D, V extends object> = Omit<
 export type UseGqlQueryResult<D, V extends object> =
   UseSWRResult<D, UseGqlQueryValue<V>, UseGqlError>;
 
+export type UseGqlQueryArgs<V extends object> = UseSWROptionsArgs<UseGqlQueryValue<V>>;
+
 export function useGqlQuery<D, V extends object>(
   query: TypedDocumentNode<D, V>,
-  args?: UseSWROptionsArgs<UseGqlQueryValue<V>>,
+  args?: UseGqlQueryArgs<V>,
   options?: UseGqlQueryOptions<D, V>,
 ): UseGqlQueryResult<D, V> {
   const context = useGqlContext();
