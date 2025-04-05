@@ -1,4 +1,4 @@
-import { request, type RequestOptions } from '@solid-primitives/graphql';
+import { request, type RequestOptions, GraphQLError as _GraphQLError } from '@solid-primitives/graphql';
 import type { DocumentNode } from 'api';
 import { useSWR, type UseSWROptions, type UseSWRResult } from 'solid-swr';
 
@@ -22,7 +22,7 @@ export function useGql<D, V extends object>(options?: UseGqlOptions<D, V>): UseG
     },
     (...args) => {
       return request(...args).catch(error => {
-        if (error instanceof GraphQLError) {
+        if (error instanceof _GraphQLError) {
           throw new GraphQLError(error.message, error.locations, error.extensions);
         }
         throw error;
