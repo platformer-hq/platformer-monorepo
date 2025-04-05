@@ -8,6 +8,7 @@
     "access": "public"
   },
   "dependencies": {
+    "api": "workspace:*",
     "@solid-primitives/graphql": "^2.2.0",
     "solid-utils": "workspace:*",
     "solid-swr": "workspace:*",
