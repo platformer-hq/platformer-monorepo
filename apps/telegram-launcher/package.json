@@ -20,17 +20,17 @@
   },
   "dependencies": {
     "@sentry/solid": "^9.1.0",
-    "@telegram-apps/sdk-solid": "^3.0.16",
+    "@telegram-apps/sdk-solid": "^3.0.19",
     "api": "workspace:*",
     "better-promises": "^0.4.0",
     "error-kid": "^0.0.4",
     "shared": "workspace:*",
-    "solid-js": "^1.9.3",
     "solid-gql": "workspace:*",
+    "solid-js": "^1.9.3",
     "solid-utils": "workspace:*",
-    "valibot": "1.0.0-beta.14",
     "ui": "workspace:*",
-    "utils": "workspace:*"
+    "utils": "workspace:*",
+    "valibot": "1.0.0-beta.14"
   },
   "devDependencies": {
     "globals": "^15.2.0",
