@@ -137,7 +137,7 @@ export function createExecutionResource<D, E, S, R = unknown>(
       onReady(s, resource());
     });
     onErrored && resource.state === 'errored' && s && untrack(() => {
-      onErrored(s, resource.error.cause);
+      onErrored(s, resource.error);
     });
   });
 
