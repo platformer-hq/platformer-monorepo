@@ -21,16 +21,18 @@ export interface UseSWROptions<D, P, E> extends CreateSWRStoreOptions<D, E> {
   args?: UseSWROptionsArgs<P>;
   /**
    * Hook being called whenever any error occurred.
+   * @param params - used parameters.
    * @param error - occurred error.
    */
-  onErrored?: (error: E) => void;
+  onErrored?: (params: P, error: E) => void;
   /**
    * Hook being called whenever the resource is ready. The difference with the `onSuccess` hook
    * is `onSuccess` is only called when any request was performed.
+   * @param params - used parameters.
    * @param data - retrieved data.
    * @param cached - true if the retrieved data is considered as cached.
    */
-  onReady?: (data: D, cached: boolean) => void;
+  onReady?: (params: P, data: D, cached: boolean) => void;
 }
 
 export interface UseSWRResultUtils<D, P> {
@@ -50,6 +52,10 @@ export function useSWR<D, P extends any[], E = unknown>(
   const store = createSWRStore<D, P, E>(key, fetcher, options);
 
   const [$args, setArgs] = createWritableMemo(() => access(options.args));
+  const $params = () => {
+    const args = $args();
+    return Array.isArray(args) ? args[0] : undefined;
+  };
   const initialArgs = $args();
   const [$keyState, setKeyState] = createSignal<KeyState<D, E> | undefined>(
     initialArgs ? store.get(...initialArgs) : undefined,
@@ -62,9 +68,6 @@ export function useSWR<D, P extends any[], E = unknown>(
       canSetState && setKeyState(store.get(...args));
       onCleanup(store.subscribe(args[0], setKeyState));
     }
-  });
-
-  createEffect(() => {
     canSetState = true;
   });
 
@@ -86,9 +89,11 @@ export function useSWR<D, P extends any[], E = unknown>(
         ssrLoadFrom: 'initial',
         initialValue: initialKeyState.data,
       } : undefined,
-      onErrored,
-      onReady: onReady ? data => {
-        onReady(data, hasCachedData);
+      onErrored: onErrored ? (_, error) => {
+        onErrored($params()!, error);
+      } : undefined,
+      onReady: onReady ? (_, data) => {
+        onReady($params()!, data, hasCachedData);
         hasCachedData = false;
       } : undefined,
     },
