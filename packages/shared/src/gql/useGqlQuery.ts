@@ -23,7 +23,7 @@ export type UseGqlQueryResult<D, V extends object> =
   UseSWRResult<D, UseGqlQueryValue<V>, UseGqlError>;
 
 export function useGqlQuery<D, V extends object>(
-  query: string | TypedDocumentNode<D, V>,
+  query: TypedDocumentNode<D, V>,
   args?: UseSWROptionsArgs<UseGqlQueryValue<V>>,
   options?: UseGqlQueryOptions<D, V>,
 ): UseGqlQueryResult<D, V> {
@@ -34,7 +34,7 @@ export function useGqlQuery<D, V extends object>(
     variablesOrTuple:
       | V
       | [variables: V, options?: Omit<RequestOptions, 'variables'>],
-  ): [string, string | TypedDocumentNode<D, V>, RequestOptions<V>] => {
+  ): [string, TypedDocumentNode<D, V>, RequestOptions<V>] => {
     const { authToken } = context;
     let variables: V;
     let options: Omit<RequestOptions<any>, 'variables'> = {};

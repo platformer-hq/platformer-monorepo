@@ -7,7 +7,7 @@ import { GraphQLError } from './GraphQLError.js';
 export type { RequestOptions };
 export type RequestParameters<D, V extends object> = [
   url: string,
-  query: string | TypedDocumentNode<D, V>,
+  query: TypedDocumentNode<D, V>,
   options?: RequestOptions<V>
 ];
 
