@@ -7,6 +7,7 @@ import {
   type ResourceOptions,
   type ResourceSource,
   type ResourceActions,
+  untrack,
 } from 'solid-js';
 import { access } from '@solid-primitives/utils';
 
@@ -131,11 +132,13 @@ export function createExecutionResource<D, E, S, R = unknown>(
 
   const { onErrored, onReady } = options || {};
   createEffect(() => {
-    onReady && resource.state === 'ready' && onReady(access(source) as S, resource());
-    onErrored && resource.state === 'errored' && onErrored(
-      access(source) as S,
-      resource.error.cause,
-    );
+    const s = untrack(() => access(source));
+    onReady && resource.state === 'ready' && s && untrack(() => {
+      onReady(s, resource());
+    });
+    onErrored && resource.state === 'errored' && s && untrack(() => {
+      onErrored(s, resource.error.cause);
+    });
   });
 
   return [resource, actions];
