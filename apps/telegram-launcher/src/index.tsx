@@ -22,6 +22,7 @@ const debug = (launchParams.tgWebAppStartParam || '').includes('platformer_debug
 init({
   debug,
   eruda: debug && ['ios', 'android'].includes(platform),
+  mockForWebK: platform === 'web',
   mockForMacOS: platform === 'macos',
   sentry: {
     dsn: 'https://8888815a88eb8e06bd1ac55195df9ab0@o992980.ingest.us.sentry.io/4508812774473728',
