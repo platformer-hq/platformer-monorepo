@@ -12,7 +12,7 @@ $errorIconShift: translate(20%, 20%);
   justify-content: center;
   flex-direction: column;
   position: absolute;
-  background: var(--tg-theme-bg-color);
+  background: var(--theme-bg-color);
 
   &__image {
     margin-bottom: 16px;
@@ -35,7 +35,7 @@ $errorIconShift: translate(20%, 20%);
     box-sizing: content-box;
     border-radius: 50%;
     color: white;
-    background: var(--tg-theme-destructive-text-color);
+    background: var(--theme-destructive-text-color);
     animation: status-page-error-icon-appear 400ms ease forwards;
 
     path {
@@ -50,7 +50,7 @@ $errorIconShift: translate(20%, 20%);
       height: $baseLoaderSize;
       width: $baseLoaderSize;
       animation: 1.4s linear 0s infinite normal none running rotate;
-      color: var(--tg-theme-subtitle-text-color);
+      color: var(--theme-subtitle-text-color);
 
       @keyframes rotate {
         0% {
@@ -105,7 +105,7 @@ $errorIconShift: translate(20%, 20%);
   &__text {
     padding: 0 16px;
     margin: 0;
-    color: var(--tg-theme-subtitle-text-color);
+    color: var(--theme-subtitle-text-color);
   }
 }
 

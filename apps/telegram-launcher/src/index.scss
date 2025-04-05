@@ -9,8 +9,8 @@ body {
   height: 100vh;
   overflow: hidden;
 
-  color: var(--tg-theme-text-color);
-  --tgui-loading-indicator-ios-particle-color: var(--tg-theme-subtitle-text-color);
+  color: var(--theme-text-color);
+  --tgui-loading-indicator-ios-particle-color: var(--theme-subtitle-text-color);
 }
 
 #app {

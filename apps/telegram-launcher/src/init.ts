@@ -6,7 +6,6 @@ import {
   mountViewport,
   bindViewportCssVars,
   setMiniAppHeaderColor,
-  mountMiniApp,
   setMiniAppBottomBarColor,
   setMiniAppBackgroundColor,
   mockTelegramEnv,
@@ -21,8 +20,10 @@ import {
   type MiniAppHeaderColor,
   type BackgroundColor,
   type BottomBarColor,
+  mountMiniAppSync,
+  mountThemeParamsSync,
 } from '@telegram-apps/sdk-solid';
-import { formatViewportCssVar } from 'shared';
+import { formatThemeParamsCssVar, formatViewportCssVar } from 'shared';
 import { lazySentryInit, lazyErudaInit } from 'utils';
 import type { BrowserOptions } from '@sentry/solid';
 
@@ -82,14 +83,15 @@ export async function init(options: {
   // Initialize required components.
   restoreInitData();
 
-  await Promise.all([
-    mountMiniApp.isAvailable() && mountMiniApp().then(() => {
-      bindThemeParamsCssVars();
-    }),
-    mountViewport.isAvailable() && mountViewport().then(() => {
-      bindViewportCssVars(formatViewportCssVar);
-    }),
-  ]);
+  if (mountThemeParamsSync.isAvailable()) {
+    mountThemeParamsSync();
+    bindThemeParamsCssVars(formatThemeParamsCssVar);
+  }
+  if (mountViewport.isAvailable()) {
+    await mountViewport();
+    bindViewportCssVars(formatViewportCssVar)
+  }
+  mountMiniAppSync.ifAvailable();
 
   const initialColors: [
     header: MiniAppHeaderColor,
