@@ -3,6 +3,7 @@ import solidPlugin from 'vite-plugin-solid';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import mkcert from 'vite-plugin-mkcert';
 import { imagePlugin } from 'vite-plugins';
+import autoprefixer from 'autoprefixer';
 
 export default defineConfig({
   css: {
@@ -11,11 +12,16 @@ export default defineConfig({
         api: 'modern',
       },
     },
+    postcss: {
+      plugins: [
+        autoprefixer(),
+      ],
+    },
   },
   plugins: [
     // Uncomment the following line to enable solid-devtools.
-    // For more info see https://github.com/thetarnav/solid-devtools/tree/main/packages/extension#readme
-    // devtools(),
+    // For more info see
+    // https://github.com/thetarnav/solid-devtools/tree/main/packages/extension#readme devtools(),
     solidPlugin(),
     // Allows using the compilerOptions.paths property in tsconfig.json.
     // https://www.npmjs.com/package/vite-tsconfig-paths

@@ -7,13 +7,25 @@ import {
   type ResourceOptions,
   type ResourceSource,
   type ResourceActions,
+  untrack,
 } from 'solid-js';
+import { access } from '@solid-primitives/utils';
 
 import type { ExecutionTuple } from './types.js';
 
-export interface ExecutionResourceHooks<D, E> {
-  onReady?: (data: D) => void;
-  onErrored?: (error: E) => void;
+export interface ExecutionResourceHooks<D, E, S> {
+  /**
+   * Hooks that will be called whenever the resource is ready.
+   * @param source - resource source.
+   * @param data - resource data.
+   */
+  onReady?: (source: S, data: D) => void;
+  /**
+   * Hooks that will be called whenever the resource errored.
+   * @param source - resource source.
+   * @param error - resource error.
+   */
+  onErrored?: (source: S, error: E) => void;
 }
 
 interface Unresolved {
@@ -48,10 +60,10 @@ interface Refreshing<T> {
   (): T;
 }
 
-interface Errored<T> {
+interface Errored<E> {
   state: 'errored';
   loading: false;
-  error: T;
+  error: E;
   latest: never;
   (): never;
 }
@@ -67,48 +79,41 @@ type InitializedResourceReturn<D, E, R = unknown> = [
 
 export function createExecutionResource<D, E, R = unknown>(
   fetcher: ResourceFetcher<true, ExecutionTuple<D, E>, R>,
-  options?: ResourceOptions<NoInfer<D>, true> & ExecutionResourceHooks<D, E>,
+  options?: ResourceOptions<NoInfer<D>, true> & ExecutionResourceHooks<D, E, void>,
 ): ExecutionResourceReturn<D, E, R>;
 
 export function createExecutionResource<D, E, R = unknown>(
   fetcher: ResourceFetcher<true, ExecutionTuple<D, E>, R>,
-  options: InitializedResourceOptions<NoInfer<D>, true> & ExecutionResourceHooks<D, E>,
+  options: InitializedResourceOptions<NoInfer<D>, true> & ExecutionResourceHooks<D, E, void>,
 ): InitializedResourceReturn<D, E, R>;
 
 export function createExecutionResource<D, E, S, R = unknown>(
   source: ResourceSource<S>,
   fetcher: ResourceFetcher<S, ExecutionTuple<D, E>, R>,
-  options: InitializedResourceOptions<NoInfer<D>, S> & ExecutionResourceHooks<D, E>,
+  options: InitializedResourceOptions<NoInfer<D>, S> & ExecutionResourceHooks<D, E, S>,
 ): InitializedResourceReturn<D, E, R>;
 
 export function createExecutionResource<D, E, S, R = unknown>(
   source: ResourceSource<S>,
   fetcher: ResourceFetcher<S, ExecutionTuple<D, E>, R>,
-  options?: ResourceOptions<NoInfer<D>, S> & ExecutionResourceHooks<D, E>,
+  options?: ResourceOptions<NoInfer<D>, S> & ExecutionResourceHooks<D, E, S>,
 ): ExecutionResourceReturn<D, E, R>;
 
 export function createExecutionResource<D, E, S, R = unknown>(
   arg1: ResourceFetcher<true, ExecutionTuple<D, E>, R> | ResourceSource<S>,
   arg2?:
-    | (ResourceOptions<NoInfer<D>, true> & ExecutionResourceHooks<D, E>)
-    | (InitializedResourceOptions<NoInfer<D>, true> & ExecutionResourceHooks<D, E>)
+    | (ResourceOptions<NoInfer<D>, true> & ExecutionResourceHooks<D, E, S>)
+    | (InitializedResourceOptions<NoInfer<D>, true> & ExecutionResourceHooks<D, E, S>)
     | ResourceFetcher<S, ExecutionTuple<D, E>, R>,
-  arg3?: ResourceOptions<NoInfer<D>, S> & ExecutionResourceHooks<D, E>,
+  arg3?: ResourceOptions<NoInfer<D>, S> & ExecutionResourceHooks<D, E, S>,
 ): ExecutionResourceReturn<D, E, R> | InitializedResourceReturn<D, E, R> {
   let source: ResourceSource<S> | undefined;
   let fetcher: any;
-  let options: ResourceOptions<NoInfer<D>, S> & ExecutionResourceHooks<D, E>;
+  let options: ResourceOptions<NoInfer<D>, S> & ExecutionResourceHooks<D, E, S>;
   if (typeof arg2 === 'object' || !arg2) {
-    [fetcher, options] = [
-      arg1,
-      arg2 as ResourceOptions<NoInfer<D>, S> & ExecutionResourceHooks<D, E>,
-    ];
+    [fetcher, options] = [arg1, arg2 as any];
   } else {
-    [source, fetcher, options] = [
-      arg1 as ResourceSource<S>,
-      arg2,
-      arg3 as ResourceOptions<NoInfer<D>, S> & ExecutionResourceHooks<D, E>,
-    ];
+    [source, fetcher, options] = [arg1 as ResourceSource<S>, arg2, arg3 as any];
   }
 
   const wrappedFetcher = async (...args: Parameters<typeof fetcher>) => {
@@ -127,8 +132,13 @@ export function createExecutionResource<D, E, S, R = unknown>(
 
   const { onErrored, onReady } = options || {};
   createEffect(() => {
-    onReady && resource.state === 'ready' && onReady(resource());
-    onErrored && resource.state === 'errored' && onErrored(resource.error.cause);
+    const s = untrack(() => access(source));
+    onReady && resource.state === 'ready' && s && untrack(() => {
+      onReady(s, resource());
+    });
+    onErrored && resource.state === 'errored' && s && untrack(() => {
+      onErrored(s, resource.error.cause);
+    });
   });
 
   return [resource, actions];

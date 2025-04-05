@@ -8,14 +8,14 @@ export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
   {
-    files: ['./apps/{telegram-launcher,admin-panel}/**/*.{ts,tsx}'],
+    files: ['./apps/{telegram-launcher,admin-panel}/src/**/*.{ts,tsx}'],
     ...solid.configs.recommended,
   },
   {
     languageOptions: {
       parserOptions: {
         project: [
-          './packages/*/tsconfig.eslint.json',
+          './packages/*/tsconfig.json',
           './apps/*/tsconfig.json'
         ],
         tsconfigRootDir: import.meta.dirname,
@@ -35,6 +35,7 @@ export default tseslint.config(
       '@typescript-eslint/no-unused-expressions': 0,
       '@typescript-eslint/no-unsafe-call': 0,
       '@typescript-eslint/no-namespace': 0,
+      '@typescript-eslint/no-misused-promises': 0,
       'no-empty': 0,
     },
   },
