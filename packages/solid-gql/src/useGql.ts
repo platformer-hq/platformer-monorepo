@@ -1,5 +1,5 @@
 import { request, type RequestOptions } from '@solid-primitives/graphql';
-import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
+import type { DocumentNode } from 'api';
 import { useSWR, type UseSWROptions, type UseSWRResult } from 'solid-swr';
 
 import { GraphQLError } from './GraphQLError.js';
@@ -7,7 +7,7 @@ import { GraphQLError } from './GraphQLError.js';
 export type { RequestOptions };
 export type RequestParameters<D, V extends object> = [
   url: string,
-  query: TypedDocumentNode<D, V>,
+  query: DocumentNode<D, V>,
   options?: RequestOptions<V>
 ];
 
