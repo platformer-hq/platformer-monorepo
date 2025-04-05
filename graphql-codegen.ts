@@ -11,14 +11,7 @@ function operationsConfig(
   gqlImport: string,
 ): CodegenConfig['generates'][string] {
   return {
-    documents: [
-      `${folder}/**/*.gql`,
-      // Prevent pnpm symlinks. Currently telegram-launcher requires package "api" and find
-      // path like "apps/telegram-launcher/node_modules/api/src/operations/Authenticate.gql"
-      // We need to apply the "Authenticate.gql" logic from "packages/**/*.gql"
-      // instead of "apps/**/*.gql"
-      '!**/node_modules/**/*.gql',
-    ],
+    documents: [`${folder}/**/*.gql`],
     preset: 'near-operation-file-preset',
     presetConfig: { extension: '.ts', baseTypesPath } satisfies NearOperationFileConfig,
     plugins: [
@@ -47,8 +40,8 @@ export default {
   overwrite: true,
   schema: 'https://mini-apps.store/gql',
   generates: {
-    'apps/': operationsConfig('apps', '~api', 'api#gql'),
-    'packages/': operationsConfig('packages', '~../schema.js', '../gql.js#gql'),
+    'apps/': operationsConfig('apps/*/src', '~api', 'api#gql'),
+    'api/': operationsConfig('packages/api/src', '~../schema.js', '../gql.js#gql'),
     'packages/api/src/schema.ts': {
       config: {
         scalars: {
