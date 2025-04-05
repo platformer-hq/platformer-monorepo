@@ -1,4 +1,4 @@
-import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
+import type { DocumentNode } from 'api';
 import type { UseSWROptionsArgs, UseSWRResult } from 'solid-swr';
 import {
   useGqlScoped,
@@ -28,7 +28,7 @@ export type UseGqlQueryResult<D, V extends object> =
 export type UseGqlQueryArgs<V extends object> = UseSWROptionsArgs<UseGqlQueryValue<V>>;
 
 export function useGqlQuery<D, V extends object>(
-  query: TypedDocumentNode<D, V>,
+  query: DocumentNode<D, V>,
   args?: UseGqlQueryArgs<V>,
   options?: UseGqlQueryOptions<D, V>,
 ): UseGqlQueryResult<D, V> {
@@ -39,7 +39,7 @@ export function useGqlQuery<D, V extends object>(
     variablesOrTuple:
       | V
       | [variables: V, options?: Omit<RequestOptions, 'variables'>],
-  ): [string, TypedDocumentNode<D, V>, RequestOptions<V>] => {
+  ): [string, DocumentNode<D, V>, RequestOptions<V>] => {
     const { authToken } = context;
     let variables: V;
     let options: Omit<RequestOptions<any>, 'variables'> = {};

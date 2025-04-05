@@ -12,6 +12,7 @@
     "solid-js": "^1.0.0"
   },
   "dependencies": {
+    "api": "workspace:*",
     "utils": "workspace:*",
     "solid-gql": "workspace:*",
     "solid-utils": "workspace:*",

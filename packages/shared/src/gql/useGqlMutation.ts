@@ -1,4 +1,4 @@
-import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
+import type { DocumentNode } from 'api';
 
 import { hapticFeedbackNotificationOccurred } from '@telegram-apps/sdk-solid';
 
@@ -8,7 +8,7 @@ export type UseGqlMutationOptions<D extends object, V extends object> =
   Omit<UseGqlQueryOptions<D, V>, 'freshAge' | 'staleAge'>;
 
 export function useGqlMutation<D extends object, V extends object>(
-  query: TypedDocumentNode<D, V>,
+  query: DocumentNode<D, V>,
   options?: UseGqlMutationOptions<D, V>,
 ) {
   options ||= {};
