@@ -1,5 +1,6 @@
 import { createMemo, Match, Show, Switch } from 'solid-js';
 import { type UseGqlError, GraphQLError } from 'solid-gql';
+import { TypographyIos } from 'ui';
 
 import { ErrorStatusPage } from '@/components/ErrorStatusPage/ErrorStatusPage.jsx';
 import { is, looseObject, string } from 'valibot';
@@ -50,7 +51,10 @@ export function TypedErrorStatusPage(props: { error: TypedErrorStatusPageError }
                   Server returned error:{' '}
                   {$error().message}
                   <Show when={$code()}>
-                    &nbsp;<b>({$code()})</b>
+                    &nbsp;
+                    <TypographyIos component="span" weight="semibold">
+                      ({$code()})
+                    </TypographyIos>
                   </Show>
                 </>
               }

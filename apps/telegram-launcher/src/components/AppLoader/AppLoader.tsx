@@ -74,7 +74,13 @@ export function AppLoader(props: {
   const [$authQuery] = useGqlQuery(
     Authenticate,
     () => [[{ appID: $appID(), initData: $securedRawInitData() }, { signal: $timeoutSignal() }]],
-    { onErrored: setError },
+    {
+      freshAge: 0,
+      staleAge: 0,
+      onErrored(_, err) {
+        setError(err);
+      },
+    },
   );
 
   // Retrieve application data.
@@ -90,7 +96,13 @@ export function AppLoader(props: {
         }],
       ]
       : false,
-    { onErrored: setError },
+    {
+      freshAge: 0,
+      staleAge: 0,
+      onErrored(_, err) {
+        setError(err);
+      },
+    },
   );
 
   return (
