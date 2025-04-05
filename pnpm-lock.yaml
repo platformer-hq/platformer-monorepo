@@ -233,6 +233,9 @@ importers:
       '@telegram-apps/sdk-solid':
         specifier: ^3.0.0
         version: 3.0.16(solid-js@1.9.4)(typescript@5.8.2)
+      api:
+        specifier: workspace:*
+        version: link:../api
       solid-gql:
         specifier: workspace:*
         version: link:../solid-gql
@@ -261,6 +264,9 @@ importers:
       '@solid-primitives/graphql':
         specifier: ^2.2.0
         version: 2.2.0(@graphql-typed-document-node/core@3.2.0(graphql@16.10.0))(graphql@16.10.0)(solid-js@1.9.4)
+      api:
+        specifier: workspace:*
+        version: link:../api
       solid-js:
         specifier: ^1.0.0
         version: 1.9.4
