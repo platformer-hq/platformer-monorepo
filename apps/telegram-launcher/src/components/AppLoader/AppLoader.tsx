@@ -8,11 +8,7 @@ import {
 } from 'solid-js';
 import { accessor, pickProps } from 'solid-utils';
 import { useGqlQuery } from 'shared';
-import {
-  Authenticate,
-  type AuthenticateMutation,
-  type AuthenticateMutationVariables,
-} from 'api';
+import { Authenticate } from 'api';
 
 import {
   TypedErrorStatusPage,
@@ -23,11 +19,7 @@ import { AppNotFound } from '@/components/AppNotFound/AppNotFound.js';
 import { AppContainer } from '@/components/AppContainer/AppContainer.js';
 import { createTimeoutSignal } from '@/async/createTimeoutSignal.js';
 
-import {
-  GetAppUrl,
-  type GetAppUrlQuery,
-  type GetAppUrlQueryVariables,
-} from './gql/GetAppURL.js';
+import { GetAppUrl } from './gql/GetAppURL.js';
 
 function BootstrappedContainer(props: {
   loadTimeout: number;
@@ -79,14 +71,14 @@ export function AppLoader(props: {
   const $appID = accessor(props, 'appID');
 
   // Retrieve Platformer authorization token.
-  const [$authQuery] = useGqlQuery<AuthenticateMutation, AuthenticateMutationVariables>(
+  const [$authQuery] = useGqlQuery(
     Authenticate,
     () => [[{ appID: $appID(), initData: $securedRawInitData() }, { signal: $timeoutSignal() }]],
     { onErrored: setError },
   );
 
   // Retrieve application data.
-  const [$getAppUrlQuery] = useGqlQuery<GetAppUrlQuery, GetAppUrlQueryVariables>(
+  const [$getAppUrlQuery] = useGqlQuery(
     GetAppUrl,
     () => $authQuery.state === 'ready'
       ? [

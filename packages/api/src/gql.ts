@@ -1,1 +1,1 @@
-export { gql as default } from '@solid-primitives/graphql';
+export { gql } from '@solid-primitives/graphql';
