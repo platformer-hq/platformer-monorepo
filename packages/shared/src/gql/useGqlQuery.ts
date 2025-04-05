@@ -14,10 +14,13 @@ export type UseGqlQueryValue<V extends object> =
   | V
   | [variables: V, options?: Omit<RequestOptions, 'variables'>];
 
-export type UseGqlQueryOptions<D, V extends object> = Omit<
+export interface UseGqlQueryOptions<D, V extends object> extends Omit<
   UseGqlOptions<D, V>,
-  'args' | 'dataCache' | 'revalidationCache' | 'observersCache'
->;
+  'args' | 'dataCache' | 'revalidationCache' | 'observersCache' | 'onErrored' | 'onReady'
+> {
+  onErrored?: (variables: V, error: UseGqlError) => void;
+  onReady?: (variables: V, data: D, cached: boolean) => void;
+}
 
 export type UseGqlQueryResult<D, V extends object> =
   UseSWRResult<D, UseGqlQueryValue<V>, UseGqlError>;
@@ -57,8 +60,17 @@ export function useGqlQuery<D, V extends object>(
     }];
   };
 
-  const [resource, utils] = useGqlScoped({
+  const { onReady, onErrored } = options;
+  const [resource, utils] = useGqlScoped<D, V>({
     ...options,
+    onReady: onReady ? ([, , reqOptions], ...rest) => {
+      reqOptions ||= {};
+      onReady(reqOptions.variables as V, ...rest);
+    } : undefined,
+    onErrored: onErrored ? ([, , reqOptions], ...rest) => {
+      reqOptions ||= {};
+      onErrored(reqOptions.variables as V, ...rest);
+    } : undefined,
     args() {
       const argsValue = access(args);
       return argsValue && [createArguments(argsValue[0]), argsValue[1]];
