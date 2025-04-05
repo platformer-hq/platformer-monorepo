@@ -88,7 +88,7 @@ export function AppLoader(props: {
     GetAppUrl,
     () => $authQuery.state === 'ready'
       ? [
-        [{ appID: $appID(), launchParams: props.securedRawLaunchParams }, {
+        [{ appID: $appID(), launchParams: props.securedRawLaunchParams, isExternal: true }, {
           signal: $timeoutSignal(),
           headers: {
             Authorization: `jwt ${$authQuery().authenticateTelegram.token}`,
