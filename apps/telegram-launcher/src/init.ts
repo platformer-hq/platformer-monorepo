@@ -9,9 +9,7 @@ import {
   setMiniAppBottomBarColor,
   setMiniAppBackgroundColor,
   mockTelegramEnv,
-  type ThemeParams,
   themeParamsState,
-  retrieveLaunchParams,
   emitEvent,
   themeParamsBackgroundColor,
   miniAppHeaderColor,
@@ -56,18 +54,10 @@ export async function init(options: {
   const { mockForMacOS, mockForWebK } = options;
   if (mockForMacOS || mockForWebK) {
     const noInsets = { left: 0, top: 0, right: 0, bottom: 0 };
-    let firstThemeSent = false;
     mockTelegramEnv({
       onEvent(event, next) {
         if (mockForMacOS && event[0] === 'web_app_request_theme') {
-          let tp: ThemeParams = {};
-          if (firstThemeSent) {
-            tp = themeParamsState();
-          } else {
-            firstThemeSent = true;
-            tp ||= retrieveLaunchParams().tgWebAppThemeParams;
-          }
-          return emitEvent('theme_changed', { theme_params: tp });
+          return emitEvent('theme_changed', { theme_params: themeParamsState() });
         }
         if (mockForWebK && event[0] === 'web_app_request_content_safe_area') {
           return emitEvent('content_safe_area_changed', noInsets);
