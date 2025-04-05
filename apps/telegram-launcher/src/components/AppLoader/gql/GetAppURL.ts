@@ -1,6 +1,6 @@
 import type * as Types from 'api';
 
-import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+import type { DocumentNode } from 'api';
 import { gql } from 'api';
 export type GetAppUrlQueryVariables = Types.Exact<{
   appID: Types.Scalars['Int']['input'];

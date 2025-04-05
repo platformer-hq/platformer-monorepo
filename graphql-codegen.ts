@@ -8,7 +8,7 @@ import type { NearOperationFileConfig } from '@graphql-codegen/near-operation-fi
 function operationsConfig(
   folder: string,
   baseTypesPath: string,
-  gqlImport: string,
+  apiRawImportPath: string,
 ): CodegenConfig['generates'][string] {
   return {
     documents: [`${folder}/**/*.gql`],
@@ -28,7 +28,8 @@ function operationsConfig(
       documentMode: 'graphQLTag' as TypeScriptTypedDocumentNodesConfig['documentMode'],
       // Prevent `Document` suffix
       documentVariableSuffix: '',
-      gqlImport,
+      documentNodeImport: `${apiRawImportPath}#DocumentNode`,
+      gqlImport: `${apiRawImportPath}#gql`,
       scalars: {
         Date: 'string',
       },
@@ -40,8 +41,8 @@ export default {
   overwrite: true,
   schema: 'https://mini-apps.store/gql',
   generates: {
-    'apps/': operationsConfig('apps/*/src', '~api', 'api#gql'),
-    'api/': operationsConfig('packages/api/src', '~../schema.js', '../gql.js#gql'),
+    'apps/': operationsConfig('apps/*/src', '~api', 'api'),
+    'api/': operationsConfig('packages/api/src', '~../schema.js', '../gql.js'),
     'packages/api/src/schema.ts': {
       config: {
         scalars: {
