@@ -1,7 +1,9 @@
 import type { Config } from 'mixpanel-browser';
 import type { BrowserOptions } from '@sentry/solid';
 
-export function lazyMixpanelInit(token: string, config?: Partial<Config>) {
+export type MixpanelConfig = Config;
+
+export function lazyMixpanelInit(token: string, config?: Partial<MixpanelConfig>) {
   return import('mixpanel-browser').then(({ default: mixpanel }) => {
     mixpanel.init(token, config);
   });
