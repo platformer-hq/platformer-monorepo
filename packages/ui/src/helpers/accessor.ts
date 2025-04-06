@@ -1,5 +1,5 @@
 import type { Accessor } from 'solid-js';
-import { type MaybeAccessor, access } from '@solid-primitives/utils';
+import { type MaybeAccessor, access } from 'solid-utils';
 
 /**
  * @return A function to retrieve a value from the specified value.

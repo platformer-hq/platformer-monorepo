@@ -1,5 +1,5 @@
 import { createMemo, mergeProps, Show } from 'solid-js';
-import { createWritableMemo } from '@solid-primitives/memo';
+import { createWritableMemo } from 'solid-utils';
 
 import { cnCreate } from '@/css/cnCreate.js';
 import { TypographyIos } from '@/components/Typography/TypographyIos/TypographyIos.jsx';

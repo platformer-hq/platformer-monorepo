@@ -1,4 +1,4 @@
-import { slotGen } from '@/slots/slots.js';
+import { slotGen } from 'solid-utils';
 
 import type { ListIosItemProps } from './ListIosItem/ListIosItem.js';
 

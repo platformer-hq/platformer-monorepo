@@ -345,21 +345,15 @@ importers:
 
   packages/ui:
     dependencies:
-      '@solid-primitives/event-listener':
-        specifier: ^2.4.0
-        version: 2.4.0(solid-js@1.9.4)
-      '@solid-primitives/memo':
-        specifier: ^1.4.1
-        version: 1.4.1(solid-js@1.9.4)
-      '@solid-primitives/utils':
-        specifier: ^6.3.0
-        version: 6.3.0(solid-js@1.9.4)
       '@storybook/test':
         specifier: ^8.6.0-beta.0
         version: 8.6.11(storybook@8.6.11(prettier@2.8.8))
       solid-js:
         specifier: ^1.0.0
         version: 1.9.4
+      solid-utils:
+        specifier: workspace:*
+        version: link:../solid-utils
     devDependencies:
       '@storybook/addon-controls':
         specifier: ^8.6.0-beta.0
