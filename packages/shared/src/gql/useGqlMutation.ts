@@ -12,12 +12,16 @@ export function useGqlMutation<D extends object, V extends object>(
   options?: UseGqlMutationOptions<D, V>,
 ) {
   options ||= {};
-  const { onReady } = options;
+  const { onReady, onErrored } = options;
   return useGqlQuery<D, V>(query, undefined, {
     ...options,
     onReady(...args) {
       hapticFeedbackNotificationOccurred('success');
       onReady && onReady(...args);
+    },
+    onErrored(...args) {
+      hapticFeedbackNotificationOccurred('error');
+      onErrored && onErrored(...args);
     },
     staleAge: 0,
     freshAge: 0,
