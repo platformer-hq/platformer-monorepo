@@ -25,7 +25,7 @@ export default defineConfig(({ mode }) => {
       emptyOutDir: true,
       sourcemap: true,
       rollupOptions: {
-        external: ['solid-js', '@solid-primitives/memo'],
+        external: ['solid-js', 'solid-utils'],
       },
       lib: {
         entry: 'src/index.ts',
