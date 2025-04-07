@@ -55,10 +55,29 @@ export type CreateSWRStoreFetcher<D, P extends any[]> = (...args: P) => Promise<
 export interface CreateSWRStoreOptions<D, E> {
   dataCache?: DataCache<D>;
   freshAge?: number;
-  revalidationCache?: RevalidationCache<D>;
-  observersCache?: ObserversCache<D, E>;
-  staleAge?: number;
   logger?: 'default';
+  observersCache?: ObserversCache<D, E>;
+  /**
+   * Count of retries to perform.
+   * @default 3
+   */
+  retries?: number;
+  /**
+   * Interval between call attempts presented as a count of milliseconds or a function, accepting
+   * the current attempt error and count of attempts performed already.
+   * @default By default, the retry interval will be computed based on the attempts performed.
+   * The actual formula is (2 ^ (attemptsPerformed - 1) * 100). In other words, the exponential
+   *   backoff is used.
+   */
+  retryInterval?: number | ((error: E, attemptsPerformed: number) => number);
+  revalidationCache?: RevalidationCache<D>;
+  /**
+   * @returns True if the retry should be applied.
+   * @default True
+   * @param error - error received during the last attempt.
+   */
+  shouldRetry?: boolean | ((error: E) => boolean);
+  staleAge?: number;
 }
 export type SWRStoreMutateFnData<D> =
   | undefined
@@ -97,11 +116,20 @@ export function createSWRStore<D, P extends any[], E = unknown>(
     freshAge = 5000,
     staleAge = 30000,
     logger,
+    retries = 3,
+    retryInterval: _retryInterval,
+    shouldRetry: _shouldRetry,
   } = options;
   let { dataCache, revalidationCache, observersCache } = options;
   dataCache ||= new Map();
   revalidationCache ||= new Map();
   observersCache ||= new Map();
+  const shouldRetry = typeof _shouldRetry === 'function'
+    ? _shouldRetry
+    : () => _shouldRetry || true;
+  const retryInterval = typeof _retryInterval === 'number'
+    ? () => _retryInterval
+    : _retryInterval || ((_, retriesPerformed) => Math.pow(2, retriesPerformed - 1) * 100);
 
   const { log: _log } = logger === 'default'
     ? createLogger('swr', { bgColor: 'purple', textColor: 'white' })
@@ -154,18 +182,39 @@ export function createSWRStore<D, P extends any[], E = unknown>(
     // state change.
     if (!pendingPromise) {
       log('@revalidate: pending promise missing. Fetching..');
-      pendingPromise = fetcher(...params)
-        .then<KeyStateSuccess<D>, KeyStateError<D, E>>(
-          data => ({ status: 'success', data }),
-          e => {
-            const cachedData = getAtLeastStale(k);
+
+      pendingPromise = (async () => {
+        // Perform N + 1 calls, where N is a number of retries.
+        let lastError: E;
+        for (let i = 0; i < retries + 1; i++) {
+          // If it is not the first attempt, we should apply additional retry-related checks.
+          if (i) {
+            // 1. Check if we should retry at all.
+            if (!shouldRetry(lastError!)) {
+              break;
+            }
+            // 2. Wait for a specific amount of time.
+            await new Promise(r => setTimeout(r, retryInterval(lastError, i)));
+          }
+
+          try {
+            // If the call was successful, return its result.
             return {
-              status: 'error',
-              error: e,
-              latestData: cachedData ? cachedData.data : undefined,
-            };
-          },
-        )
+              status: 'success',
+              data: await fetcher(...params),
+            } satisfies KeyStateSuccess<D>;
+          } catch (e) {
+            // Otherwise memoize the error.
+            lastError = e as E;
+          }
+        }
+        const cachedData = getAtLeastStale(k);
+        return {
+          status: 'error',
+          error: lastError!,
+          latestData: cachedData ? cachedData.data : undefined,
+        } satisfies KeyStateError<D, E>;
+      })()
         .then(keyState => {
           const cachedData = dataCache.get(k);
           if (
