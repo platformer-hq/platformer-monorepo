@@ -1,6 +1,7 @@
 {
   "name": "shared",
   "private": true,
+  "description": "Package containing any shared behavior between applications.",
   "version": "0.0.1",
   "type": "module",
   "main": "src/index.ts",
