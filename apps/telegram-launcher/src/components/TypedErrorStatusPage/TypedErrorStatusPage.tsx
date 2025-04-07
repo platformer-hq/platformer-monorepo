@@ -7,6 +7,7 @@ import { is, looseObject, string } from 'valibot';
 
 export type TypedErrorStatusPageError =
   | UseGqlError
+  | ['init', timeout: number]
   | ['iframe', timeout?: boolean]
   | ['unknown', unknown];
 
@@ -15,7 +16,13 @@ export type TypedErrorStatusPageError =
  */
 export function TypedErrorStatusPage(props: { error: TypedErrorStatusPageError }) {
   function withError<T>(
-    fn: (err: ['gql', UseGqlError] | ['iframe', timeout?: boolean] | ['unknown', unknown]) => T,
+    fn: (
+      err:
+        | ['init', timeout: number]
+        | ['gql', UseGqlError]
+        | ['iframe', timeout?: boolean]
+        | ['unknown', unknown],
+    ) => T,
   ) {
     return () => {
       const { error } = props;
@@ -30,6 +37,7 @@ export function TypedErrorStatusPage(props: { error: TypedErrorStatusPageError }
   const whenUnknown = withError(e => {
     return e[0] === 'unknown' || (e[0] === 'gql' && !GraphQLError.is(e[0])) ? e[1] : false;
   });
+  const whenInit = withError(e => e[0] === 'init' ? e[1] : false);
   const title = 'Oops!';
 
   return (
@@ -70,6 +78,14 @@ export function TypedErrorStatusPage(props: { error: TypedErrorStatusPageError }
           };
           return <ErrorStatusPage title={title} text={message()}/>;
         }}
+      </Match>
+      <Match when={whenInit()}>
+        {$timeout => (
+          <ErrorStatusPage
+            title={title}
+            text={`Application failed to load due to Platformer not responding in time. Timeout ${$timeout()}ms reached.`}
+          />
+        )}
       </Match>
       <Match when={whenIframe()}>
         {$tuple => (

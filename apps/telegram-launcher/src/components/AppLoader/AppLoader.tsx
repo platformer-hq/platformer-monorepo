@@ -6,9 +6,11 @@ import {
   Show,
   Switch,
 } from 'solid-js';
+import { GraphQLError, type UseGqlError } from 'solid-gql';
 import { accessor, pickProps } from 'solid-utils';
-import { useGqlQuery } from 'shared';
+import { getAuthTokenFromStorage, saveAuthTokenToStorage, useGqlQuery } from 'shared';
 import { Authenticate } from 'api';
+import { isTimeoutError } from 'better-promises';
 
 import {
   TypedErrorStatusPage,
@@ -19,7 +21,7 @@ import { AppNotFound } from '@/components/AppNotFound/AppNotFound.js';
 import { AppContainer } from '@/components/AppContainer/AppContainer.js';
 import { createTimeoutSignal } from '@/async/createTimeoutSignal.js';
 
-import { GetAppUrl } from './gql/GetAppURL.js';
+import { GetAppUrl } from './operations.js';
 
 function BootstrappedContainer(props: {
   loadTimeout: number;
@@ -66,42 +68,77 @@ export function AppLoader(props: {
   securedRawLaunchParams: string;
 }) {
   const [$error, setError] = createSignal<TypedErrorStatusPageError>();
-  const $timeoutSignal = createTimeoutSignal(accessor(props, 'initTimeout'));
+  const $timeout = accessor(props, 'initTimeout');
+  const $timeoutSignal = createTimeoutSignal($timeout);
   const $securedRawInitData = accessor(props, 'securedRawInitData');
   const $appID = accessor(props, 'appID');
 
-  // Retrieve Platformer authorization token.
-  const [$authQuery] = useGqlQuery(
+  /* Retrieve Platformer authorization token. */
+  // First of all, try to extract it from the storage.
+  const [$token, setToken] = createSignal((getAuthTokenFromStorage() || {}).token);
+
+  const handleError = (fn: (error: UseGqlError) => void) => {
+    return (_: any, error: UseGqlError) => {
+      isTimeoutError(error)
+        ? setError(['init', $timeout()])
+        : fn(error);
+    };
+  };
+
+  // Then, try to get it using the init data.
+  useGqlQuery(
     Authenticate,
-    () => [[{ appID: $appID(), initData: $securedRawInitData() }, { signal: $timeoutSignal() }]],
+    () => $token()
+      ? undefined
+      : [[{ appID: $appID(), initData: $securedRawInitData() }, { signal: $timeoutSignal() }]],
     {
       freshAge: 0,
-      staleAge: 0,
-      onErrored(_, err) {
-        setError(err);
+      onErrored: handleError(setError),
+      onReady(_, { authenticateTelegram }) {
+        const { token } = authenticateTelegram;
+        saveAuthTokenToStorage(token, new Date(authenticateTelegram.expiresAt));
+        setToken(token);
       },
+      shouldRetry(err) {
+        // Do not retry if timeout was reached, or the passed init data is invalid.
+        return !isTimeoutError(err)
+          || !GraphQLError.is(err)
+          || !err.isOfType('ERR_INIT_DATA_INVALID');
+      },
+      staleAge: 0,
     },
   );
 
   // Retrieve application data.
   const [$getAppUrlQuery] = useGqlQuery(
     GetAppUrl,
-    () => $authQuery.state === 'ready'
-      ? [
-        [{ appID: $appID(), launchParams: props.securedRawLaunchParams, isExternal: true }, {
+    () => {
+      const token = $token();
+      return token
+        ? [[{ appID: $appID(), launchParams: props.securedRawLaunchParams, isExternal: true }, {
           signal: $timeoutSignal(),
-          headers: {
-            Authorization: `jwt ${$authQuery().authenticateTelegram.token}`,
-          },
-        }],
-      ]
-      : false,
+          headers: { Authorization: `jwt ${token}` },
+        }]]
+        : false;
+    },
     {
       freshAge: 0,
-      staleAge: 0,
-      onErrored(_, err) {
-        setError(err);
+      onErrored: handleError(error => {
+        if (GraphQLError.is(error) && error.isOfType('ERR_UNAUTHORIZED')) {
+          // If the API considers the token as the expired one, we drop it and run the process
+          // from the beginning.
+          setToken();
+        } else {
+          setError(error);
+        }
+      }),
+      shouldRetry(err) {
+        // Do not retry if timeout was reached, or the token is considered expired.
+        return !isTimeoutError(err)
+          || !GraphQLError.is(err)
+          || !err.isOfType('ERR_UNAUTHORIZED');
       },
+      staleAge: 0,
     },
   );
 
