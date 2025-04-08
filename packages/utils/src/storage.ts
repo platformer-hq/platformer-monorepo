@@ -23,3 +23,15 @@ export function setStorageItem(key: string, value: string): void {
     console.error('Unable to use localStorage.setItem', e);
   }
 }
+
+/**
+ * Deletes an item from the storage.
+ * @param key - storage key to remove.
+ */
+export function deleteStorageItem(key: string): void {
+  try {
+    localStorage.removeItem(key);
+  } catch (e) {
+    console.error('Unable to use localStorage.removeItem', e);
+  }
+}
