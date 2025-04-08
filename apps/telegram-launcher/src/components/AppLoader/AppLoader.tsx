@@ -95,7 +95,7 @@ export function AppLoader(props: {
       return token
         ? [[{ appID: $appID(), launchParams: props.securedRawLaunchParams, isExternal: true }, {
           signal: $timeoutSignal(),
-          headers: { Authorization: `jwt ${token}` },
+          headers: { Authorization: `jwt ${token.token}` },
         }]]
         : false;
     },
