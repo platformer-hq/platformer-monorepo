@@ -14,12 +14,16 @@ export type UseGqlQueryValue<V extends object> =
   | V
   | [variables: V, options?: Omit<RequestOptions, 'variables'>];
 
+export type UseGqlQueryOnErroredFn<V> = (variables: V, error: UseGqlError) => void;
+
+export type UseGqlQueryOnReadyFn<V, D> = (variables: V, data: D, cached: boolean) => void;
+
 export interface UseGqlQueryOptions<D, V extends object> extends Omit<
   UseGqlOptions<D, V>,
   'args' | 'dataCache' | 'revalidationCache' | 'observersCache' | 'onErrored' | 'onReady'
 > {
-  onErrored?: (variables: V, error: UseGqlError) => void;
-  onReady?: (variables: V, data: D, cached: boolean) => void;
+  onErrored?: UseGqlQueryOnErroredFn<V>;
+  onReady?: UseGqlQueryOnReadyFn<V, D>;
 }
 
 export type UseGqlQueryResult<D, V extends object> =
