@@ -80,7 +80,9 @@ export function AppLoader(props: {
         : fn(error);
     };
   };
-  const [[$token, setToken]] = useAuthToken($appID, $securedRawInitData, {
+  const [[$token, setToken]] = useAuthToken({
+    appID: $appID,
+    initData: $securedRawInitData,
     request: () => ({ signal: $timeoutSignal() }),
     onErrored: handleError(setError),
   });
