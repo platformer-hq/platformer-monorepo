@@ -14,10 +14,11 @@
   },
   "dependencies": {
     "api": "workspace:*",
-    "utils": "workspace:*",
+    "better-promises": "^0.4.0",
     "solid-gql": "workspace:*",
-    "solid-utils": "workspace:*",
     "solid-swr": "workspace:*",
+    "solid-utils": "workspace:*",
+    "utils": "workspace:*",
     "valibot": "1.0.0-rc.3"
   },
   "devDependencies": {
