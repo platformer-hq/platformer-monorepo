@@ -8,8 +8,10 @@ concurrency:
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
+    branches: [ 'master' ]
+    paths:
+      - "./apps/admin-panel"
+
 jobs:
   build:
     runs-on: ubuntu-latest
