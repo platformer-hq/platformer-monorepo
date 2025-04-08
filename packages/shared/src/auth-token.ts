@@ -1,5 +1,5 @@
 import { date, looseObject, parse, pipe, string, transform } from 'valibot';
-import { getStorageItem, setStorageItem } from 'utils';
+import { deleteStorageItem, getStorageItem, setStorageItem } from 'utils';
 import { createSignal } from 'solid-js';
 import { type MaybeAccessor, access } from 'solid-utils';
 import { type RequestOptions, GraphQLError } from 'solid-gql';
@@ -39,18 +39,6 @@ function getAuthTokenFromStorage(): { token: string, expiresAt: Date } | undefin
 }
 
 /**
- * Saves the project authorization token.
- * @param token - token to save.
- * @param expiresAt - token expiration date.
- */
-function saveAuthTokenToStorage(token: string, expiresAt: Date): void {
-  return setStorageItem(STORAGE_KEY, JSON.stringify({
-    token,
-    expiresAt: expiresAt.toISOString(),
-  }));
-}
-
-/**
  * Retrieves the current user Platformer authorization token. The function automatically retrieves
  * the token from the storage in case it is considered as non-expired. It also automatically
  * saves it if the authentication request was performed.
@@ -58,7 +46,7 @@ function saveAuthTokenToStorage(token: string, expiresAt: Date): void {
  */
 export function useAuthToken(options: UseAuthTokenOptions) {
   const { onReady, request, ...rest } = options;
-  const [$token, setToken] = createSignal((getAuthTokenFromStorage() || {}).token);
+  const [$token, setToken] = createSignal(getAuthTokenFromStorage());
 
   const [$query, utils] = useGqlQuery(
     Authenticate,
@@ -70,9 +58,10 @@ export function useAuthToken(options: UseAuthTokenOptions) {
       freshAge: 0,
       onReady(vars, data, cached) {
         const { authenticateTelegram } = data;
-        const { token } = authenticateTelegram;
-        saveAuthTokenToStorage(token, new Date(authenticateTelegram.expiresAt));
-        setToken(token);
+        setToken({
+          token: authenticateTelegram.token,
+          expiresAt: new Date(authenticateTelegram.expiresAt),
+        });
         onReady && onReady(vars, data, cached);
       },
       shouldRetry(err) {
@@ -84,6 +73,18 @@ export function useAuthToken(options: UseAuthTokenOptions) {
       staleAge: 0,
     },
   );
+
+  createSignal(() => {
+    const token = $token();
+    if (token) {
+      setStorageItem(STORAGE_KEY, JSON.stringify({
+        token: token.token,
+        expiresAt: token.expiresAt.toISOString(),
+      }));
+    } else {
+      deleteStorageItem(STORAGE_KEY);
+    }
+  });
 
   return [
     [$token, setToken],
