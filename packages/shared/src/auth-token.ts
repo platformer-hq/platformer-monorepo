@@ -13,6 +13,8 @@ export interface UseAuthTokenOptions
     UseGqlQueryOptions<AuthenticateMutation, AuthenticateMutationVariables>,
     'freshAge' | 'staleAge' | 'shouldRetry'
   > {
+  appID?: MaybeAccessor<number>,
+  initData: MaybeAccessor<string>,
   request?: MaybeAccessor<Omit<RequestOptions, 'variables'>>;
 }
 
@@ -52,16 +54,9 @@ function saveAuthTokenToStorage(token: string, expiresAt: Date): void {
  * Retrieves the current user Platformer authorization token. The function automatically retrieves
  * the token from the storage in case it is considered as non-expired. It also automatically
  * saves it if the authentication request was performed.
- * @param appID - application identifier.
- * @param initData - init data used to authenticate.
  * @param options - additional options.
  */
-export function useAuthToken(
-  appID: MaybeAccessor<number>,
-  initData: MaybeAccessor<string>,
-  options?: UseAuthTokenOptions,
-) {
-  options ||= {};
+export function useAuthToken(options: UseAuthTokenOptions) {
   const { onReady, request, ...rest } = options;
   const [$token, setToken] = createSignal((getAuthTokenFromStorage() || {}).token);
 
@@ -69,7 +64,7 @@ export function useAuthToken(
     Authenticate,
     () => $token()
       ? undefined
-      : [[{ appID: access(appID), initData: access(initData) }, access(request)]],
+      : [[{ appID: access(options.appID), initData: access(options.initData) }, access(request)]],
     {
       ...rest,
       freshAge: 0,
