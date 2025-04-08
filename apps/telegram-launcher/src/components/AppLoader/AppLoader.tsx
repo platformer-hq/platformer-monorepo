@@ -8,8 +8,7 @@ import {
 } from 'solid-js';
 import { GraphQLError, type UseGqlError } from 'solid-gql';
 import { accessor, pickProps } from 'solid-utils';
-import { getAuthTokenFromStorage, saveAuthTokenToStorage, useGqlQuery } from 'shared';
-import { Authenticate } from 'api';
+import { useAuthToken, useGqlQuery } from 'shared';
 import { isTimeoutError } from 'better-promises';
 
 import {
@@ -73,10 +72,7 @@ export function AppLoader(props: {
   const $securedRawInitData = accessor(props, 'securedRawInitData');
   const $appID = accessor(props, 'appID');
 
-  /* Retrieve Platformer authorization token. */
-  // First of all, try to extract it from the storage.
-  const [$token, setToken] = createSignal((getAuthTokenFromStorage() || {}).token);
-
+  // Retrieve Platformer authorization token.
   const handleError = (fn: (error: UseGqlError) => void) => {
     return (_: any, error: UseGqlError) => {
       isTimeoutError(error)
@@ -84,30 +80,10 @@ export function AppLoader(props: {
         : fn(error);
     };
   };
-
-  // Then, try to get it using the init data.
-  useGqlQuery(
-    Authenticate,
-    () => $token()
-      ? undefined
-      : [[{ appID: $appID(), initData: $securedRawInitData() }, { signal: $timeoutSignal() }]],
-    {
-      freshAge: 0,
-      onErrored: handleError(setError),
-      onReady(_, { authenticateTelegram }) {
-        const { token } = authenticateTelegram;
-        saveAuthTokenToStorage(token, new Date(authenticateTelegram.expiresAt));
-        setToken(token);
-      },
-      shouldRetry(err) {
-        // Do not retry if timeout was reached, or the passed init data is invalid.
-        return !isTimeoutError(err)
-          || !GraphQLError.is(err)
-          || !err.isOfType('ERR_INIT_DATA_INVALID');
-      },
-      staleAge: 0,
-    },
-  );
+  const [[$token, setToken]] = useAuthToken($appID, $securedRawInitData, {
+    request: () => ({ signal: $timeoutSignal() }),
+    onErrored: handleError(setError),
+  });
 
   // Retrieve application data.
   const [$getAppUrlQuery] = useGqlQuery(
