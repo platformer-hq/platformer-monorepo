@@ -20,6 +20,12 @@
     font-size: 17px;
     line-height: 22px;
     color: var(--tgui-list-ios-item-body-input-text-color, black);
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
   }
 
   &-placeholder {
