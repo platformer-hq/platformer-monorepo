@@ -4,51 +4,41 @@ import type {
   TypeScriptTypedDocumentNodesConfig,
 } from '@graphql-codegen/typed-document-node';
 import type { NearOperationFileConfig } from '@graphql-codegen/near-operation-file-preset';
+import { DocumentMode } from '@graphql-codegen/visitor-plugin-common';
 
-function operationsConfig(
-  folder: string,
-  baseTypesPath: string,
-  apiRawImportPath: string,
-): CodegenConfig['generates'][string] {
-  return {
-    documents: [`${folder}/**/*.gql`],
-    preset: 'near-operation-file-preset',
-    presetConfig: { extension: '.ts', baseTypesPath } satisfies NearOperationFileConfig,
-    plugins: [
-      'typescript-operations',
-      'typed-document-node',
-    ],
-    config: {
-      useTypeImports: true,
-      declarationKind: 'interface',
-      strictScalars: true,
-      // Because no DocumentMode exported from library
-      // Generate "gql`` as unknown as DocumentNode<query, variables>" to
-      // prevent manual addition of generics useGqlQuery / useGqlMutation
-      documentMode: 'graphQLTag' as TypeScriptTypedDocumentNodesConfig['documentMode'],
-      // Prevent `Document` suffix
-      documentVariableSuffix: '',
-      documentNodeImport: `${apiRawImportPath}#DocumentNode`,
-      gqlImport: `${apiRawImportPath}#gql`,
-      scalars: {
-        Date: 'string',
-      },
-    } satisfies TypeScriptDocumentsPluginConfig & TypeScriptTypedDocumentNodesConfig,
-  };
-}
+const scalars = {
+  Date: 'string',
+};
 
 export default {
   overwrite: true,
   schema: 'https://mini-apps.store/gql',
   generates: {
-    'apps/': operationsConfig('apps/*/src', '~api', 'api'),
-    'api/': operationsConfig('packages/api/src', '~../schema.js', '../gql.js'),
-    'packages/api/src/schema.ts': {
+    'apps/': {
+      documents: [`apps/*/src/**/*.gql`],
+      preset: 'near-operation-file-preset',
+      presetConfig: { extension: '.ts', baseTypesPath: '~api' } satisfies NearOperationFileConfig,
+      plugins: [
+        'typescript-operations',
+        'typed-document-node',
+      ],
       config: {
-        scalars: {
-          Date: 'string',
-        },
-      },
+        useTypeImports: true,
+        declarationKind: 'interface',
+        strictScalars: true,
+        // Because no DocumentMode exported from library, generate
+        // "gql`...` as unknown as DocumentNode<query, variables>" to prevent manual addition
+        // of generics useGqlQuery / useGqlMutation.
+        documentMode: DocumentMode.graphQLTag,
+        // Remove `Document` suffix.
+        documentVariableSuffix: '',
+        documentNodeImport: 'api#DocumentNode',
+        gqlImport: 'api#gql',
+        scalars,
+      } satisfies TypeScriptDocumentsPluginConfig & TypeScriptTypedDocumentNodesConfig,
+    },
+    'packages/api/src/schema.ts': {
+      config: { scalars },
       plugins: ['typescript'],
     },
   },
