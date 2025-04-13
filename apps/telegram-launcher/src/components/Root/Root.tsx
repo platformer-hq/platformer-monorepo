@@ -81,20 +81,16 @@ function Inner(props: InnerProps) {
                     ? computeFallbackURL(fallbackURL, props.rawLaunchParams)
                     : undefined;
                 });
-                const $securedRawInitData = createMemo(() => {
-                  // We are sanitizing the hash property for security purposes, so Platformer could
-                  // not use this init data to impersonate user. Instead, Platformer uses the
-                  // "signature" property allowing third parties to validate the init data.
-                  const query = new URLSearchParams($rawInitData());
-                  query.set('hash', '');
-                  return query.toString();
-                });
                 const $securedRawLaunchParams = createMemo(() => {
-                  // Here we do the same thing as we did with the init data - we secure it by
-                  // replacing exposed init data with the secured one.
-                  const query = new URLSearchParams(props.rawLaunchParams);
-                  query.set('tgWebAppData', $securedRawInitData());
-                  return query.toString();
+                  // We are sanitizing the "hash" property for security purposes, so Platformer
+                  // could not use this init data to impersonate user. Instead, Platformer uses the
+                  // "signature" property allowing third parties to validate the init data.
+                  const initDataQuery = new URLSearchParams($rawInitData());
+                  initDataQuery.set('hash', '');
+
+                  const launchParamsQuery = new URLSearchParams(props.rawLaunchParams);
+                  launchParamsQuery.set('tgWebAppData', initDataQuery.toString());
+                  return launchParamsQuery.toString();
                 });
 
                 return (
@@ -113,7 +109,6 @@ function Inner(props: InnerProps) {
                         )}
                         {...pickProps(props, ['rawLaunchParams'])}
                         fallbackURL={$fallbackURL()}
-                        securedRawInitData={$securedRawInitData()}
                         securedRawLaunchParams={$securedRawLaunchParams()}
                         onError={(error, fallbackURL) => {
                           fallbackURL && console.error('Fallback URL failed to load:', fallbackURL);
