@@ -172,8 +172,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/api
       better-promises:
-        specifier: ^0.4.0
-        version: 0.4.0
+        specifier: ^0.4.1
+        version: 0.4.1
       error-kid:
         specifier: ^0.0.4
         version: 0.0.4
@@ -3288,6 +3288,9 @@ packages:
   better-promises@0.4.0:
     resolution: {integrity: sha512-AcKkTUSd4o1vMf41eBbHW1NkY7vrXeNI6etitGdQE54WFXsF2wkfonrKA06Za7lViRNyT/cMvj5z+DScqhYW8A==}
 
+  better-promises@0.4.1:
+    resolution: {integrity: sha512-cDW7eMvhvCoWzSih5o/OxsAgTUfP05yGMq77xNZUTmcZoNU9vEeFZJ+yJJi4lnocvxFrVFKsG0Yxt7ZnuYJEig==}
+
   bl@4.1.0:
     resolution: {integrity: sha512-1W07cM9gS6DcLperZfFSj+bWLtaPGSOHWhPiGzXmvVJbRLdG82sH/Kn8EtW1VqWVA54AKf2h5k5BbnIbwF3h6w==}
 
@@ -3785,6 +3788,9 @@ packages:
 
   error-kid@0.0.4:
     resolution: {integrity: sha512-x+yQhY56SorLMnX6kOf+z3JCv2QBurcWEDcIjgxYtVr4fGeCfAtOdZOCyWttkHHDFPtL2PqnaRUmphbmALJd9w==}
+
+  error-kid@0.0.7:
+    resolution: {integrity: sha512-8mFs7ZaDWlBFgjOy4lHLMCe2+KZfZXGx5GOgh2VQ/M1CCIvSWzbl2OMl+5fdZgrgoUfhTeF+NPhmqfEvUhN8yw==}
 
   eruda@3.4.1:
     resolution: {integrity: sha512-RmaO5yD97URY/9Q0lye3cmmNPoXNKreeePIw7c/zllbscR92CjGFZFuQ70+0fLIvLcKW3Xha8DS8NFhmeNbEBQ==}
@@ -9440,7 +9446,7 @@ snapshots:
       '@telegram-apps/toolkit': 2.0.0
       '@telegram-apps/transformers': 2.2.0(typescript@5.8.2)
       '@telegram-apps/types': 2.0.0
-      better-promises: 0.4.0
+      better-promises: 0.4.1
       error-kid: 0.0.4
       mitt: 3.0.1
       valibot: 1.0.0-beta.14(typescript@5.8.2)
@@ -9503,7 +9509,7 @@ snapshots:
       '@telegram-apps/toolkit': 2.0.0
       '@telegram-apps/transformers': 2.2.0(typescript@5.8.2)
       '@telegram-apps/types': 2.0.0
-      better-promises: 0.4.0
+      better-promises: 0.4.1
       error-kid: 0.0.4
       valibot: 1.0.0-beta.14(typescript@5.8.2)
     transitivePeerDependencies:
@@ -10241,6 +10247,10 @@ snapshots:
     dependencies:
       error-kid: 0.0.4
 
+  better-promises@0.4.1:
+    dependencies:
+      error-kid: 0.0.7
+
   bl@4.1.0:
     dependencies:
       buffer: 5.7.1
@@ -10784,6 +10794,8 @@ snapshots:
       is-arrayish: 0.2.1
 
   error-kid@0.0.4: {}
+
+  error-kid@0.0.7: {}
 
   eruda@3.4.1: {}
 
