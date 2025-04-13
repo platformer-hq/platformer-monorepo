@@ -22,7 +22,7 @@
     "@sentry/solid": "^9.1.0",
     "@telegram-apps/sdk-solid": "^3.0.19",
     "api": "workspace:*",
-    "better-promises": "^0.4.0",
+    "better-promises": "^0.4.1",
     "error-kid": "^0.0.4",
     "shared": "workspace:*",
     "solid-gql": "workspace:*",
