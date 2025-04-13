@@ -125,6 +125,9 @@ importers:
       api:
         specifier: workspace:*
         version: link:../../packages/api
+      better-promises:
+        specifier: ^0.4.1
+        version: 0.4.1
       shared:
         specifier: workspace:*
         version: link:../../packages/shared
@@ -9436,7 +9439,7 @@ snapshots:
       '@telegram-apps/toolkit': 2.0.0
       '@telegram-apps/transformers': 2.2.0(typescript@5.8.2)
       '@telegram-apps/types': 2.0.0
-      better-promises: 0.4.0
+      better-promises: 0.4.1
       error-kid: 0.0.4
       mitt: 3.0.1
       valibot: 1.0.0-beta.14(typescript@5.8.2)
@@ -9498,7 +9501,7 @@ snapshots:
       '@telegram-apps/toolkit': 2.0.0
       '@telegram-apps/transformers': 2.2.0(typescript@5.8.2)
       '@telegram-apps/types': 2.0.0
-      better-promises: 0.4.0
+      better-promises: 0.4.1
       error-kid: 0.0.4
       valibot: 1.0.0-beta.14(typescript@5.8.2)
     transitivePeerDependencies:
