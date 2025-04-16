@@ -2643,10 +2643,10 @@ packages:
       react-dom:
         optional: true
 
-  '@storybook/builder-vite@9.0.0-alpha.17':
-    resolution: {integrity: sha512-Xz7QXErLIc4B+yU26l8eEXQ5Ikv8h+purD8FRVHjaNvx9pnK0GeOXpmXzvybDqP21F6CY2f03AKuz1BZaYsMnQ==}
+  '@storybook/builder-vite@9.0.0-alpha.19':
+    resolution: {integrity: sha512-m6mR8SX4A40I+uPjbBjsV5Kitaqialau7J3PmkoV+1Cp2NC5DqGTPCV6SkyLznVIzxG/7uEbIB1d071upwAu0w==}
     peerDependencies:
-      storybook: ^9.0.0-alpha.17
+      storybook: ^9.0.0-alpha.19
       vite: ^5.0.0 || ^6.0.0
 
   '@storybook/core@8.6.11':
@@ -2662,10 +2662,10 @@ packages:
     peerDependencies:
       storybook: ^8.6.11
 
-  '@storybook/csf-plugin@9.0.0-alpha.17':
-    resolution: {integrity: sha512-5as8EF6Nabo5Oi0h8/XOTy3SgQIgYRMb+u3RixUYKfItDmKbh99n1/Bqhvs7350HIIopvjRkm8AoAC6c4WpQcw==}
+  '@storybook/csf-plugin@9.0.0-alpha.19':
+    resolution: {integrity: sha512-Kw9IiBbzjhfvGJpjry2YhOZXM5xPUirok4Nggl3nsEKmA6179b8BmNL+thU5zjzmU4RH2W5IJDqCO1qKTAvQQw==}
     peerDependencies:
-      storybook: ^9.0.0-alpha.17
+      storybook: ^9.0.0-alpha.19
 
   '@storybook/global@5.0.0':
     resolution: {integrity: sha512-FcOqPAXACP0I3oJ/ws6/rrPT9WGhu915Cg8D02a9YxLo0DE9zI+a9A5gRGvmQ09fiWPukqI8ZAEoQEdWUKMQdQ==}
@@ -9349,9 +9349,9 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
-  '@storybook/builder-vite@9.0.0-alpha.17(storybook@8.6.11(prettier@2.8.8))(vite@6.2.3(@types/node@22.13.0)(jiti@2.4.2)(sass-embedded@1.86.0)(sass@1.83.4)(tsx@4.19.2)(yaml@2.7.0))':
+  '@storybook/builder-vite@9.0.0-alpha.19(storybook@8.6.11(prettier@2.8.8))(vite@6.2.3(@types/node@22.13.0)(jiti@2.4.2)(sass-embedded@1.86.0)(sass@1.83.4)(tsx@4.19.2)(yaml@2.7.0))':
     dependencies:
-      '@storybook/csf-plugin': 9.0.0-alpha.17(storybook@8.6.11(prettier@2.8.8))
+      '@storybook/csf-plugin': 9.0.0-alpha.19(storybook@8.6.11(prettier@2.8.8))
       browser-assert: 1.2.1
       storybook: 8.6.11(prettier@2.8.8)
       ts-dedent: 2.2.0
@@ -9383,7 +9383,7 @@ snapshots:
       storybook: 8.6.11(prettier@2.8.8)
       unplugin: 1.16.1
 
-  '@storybook/csf-plugin@9.0.0-alpha.17(storybook@8.6.11(prettier@2.8.8))':
+  '@storybook/csf-plugin@9.0.0-alpha.19(storybook@8.6.11(prettier@2.8.8))':
     dependencies:
       storybook: 8.6.11(prettier@2.8.8)
       unplugin: 1.16.1
@@ -12859,7 +12859,7 @@ snapshots:
 
   storybook-solidjs-vite@1.0.0-beta.6(@testing-library/jest-dom@6.5.0)(solid-js@1.9.4)(storybook@8.6.11(prettier@2.8.8))(vite@6.2.3(@types/node@22.13.0)(jiti@2.4.2)(sass-embedded@1.86.0)(sass@1.83.4)(tsx@4.19.2)(yaml@2.7.0)):
     dependencies:
-      '@storybook/builder-vite': 9.0.0-alpha.17(storybook@8.6.11(prettier@2.8.8))(vite@6.2.3(@types/node@22.13.0)(jiti@2.4.2)(sass-embedded@1.86.0)(sass@1.83.4)(tsx@4.19.2)(yaml@2.7.0))
+      '@storybook/builder-vite': 9.0.0-alpha.19(storybook@8.6.11(prettier@2.8.8))(vite@6.2.3(@types/node@22.13.0)(jiti@2.4.2)(sass-embedded@1.86.0)(sass@1.83.4)(tsx@4.19.2)(yaml@2.7.0))
       magic-string: 0.30.17
       vite-plugin-solid: 2.11.0(@testing-library/jest-dom@6.5.0)(solid-js@1.9.4)(vite@6.2.3(@types/node@22.13.0)(jiti@2.4.2)(sass-embedded@1.86.0)(sass@1.83.4)(tsx@4.19.2)(yaml@2.7.0))
     transitivePeerDependencies:
