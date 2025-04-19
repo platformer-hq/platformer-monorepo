@@ -1,0 +1,24 @@
+diff --git a/cjs/visitor.js b/cjs/visitor.js
+index 1f0e82e7c895a0fcd98bb4c975b9269524d4f898..f422b509ffbf0e38d1d7cc686e53432653386906 100644
+--- a/cjs/visitor.js
++++ b/cjs/visitor.js
+@@ -226,6 +226,7 @@ class TsVisitor extends visitor_plugin_common_1.BaseTypesVisitor {
+         return comment + (0, visitor_plugin_common_1.indent)(buildFieldDefinition());
+     }
+     EnumTypeDefinition(node) {
++        if (true) return '';
+         const enumName = node.name;
+         // In case of mapped external enum string
+         if (this.config.enumValues[enumName]?.sourceFile) {
+diff --git a/esm/visitor.js b/esm/visitor.js
+index d46d3bae098cd20c7b62747145c358d13281411c..75b91e3c51e15398a20be9230a57b393f5fd1ce2 100644
+--- a/esm/visitor.js
++++ b/esm/visitor.js
+@@ -222,6 +222,7 @@ export class TsVisitor extends BaseTypesVisitor {
+         return comment + indent(buildFieldDefinition());
+     }
+     EnumTypeDefinition(node) {
++        if (true) return '';
+         const enumName = node.name;
+         // In case of mapped external enum string
+         if (this.config.enumValues[enumName]?.sourceFile) {
