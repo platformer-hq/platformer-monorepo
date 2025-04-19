@@ -1,0 +1,24 @@
+diff --git a/cjs/base-types-visitor.js b/cjs/base-types-visitor.js
+index 4116fdd00fa67f43e4b602d70809284aaf02690e..28ec8ab9f66fe01a4fd3aa5fa1db3e50b02b8842 100644
+--- a/cjs/base-types-visitor.js
++++ b/cjs/base-types-visitor.js
+@@ -142,6 +142,7 @@ class BaseTypesVisitor extends base_visitor_js_1.BaseVisitor {
+             .withContent(`\n` + node.fields.join('\n  |'));
+     }
+     InputObjectTypeDefinition(node) {
++        if (true) return '';
+         if (this.config.onlyEnums)
+             return '';
+         // Why the heck is node.name a string and not { value: string } at runtime ?!
+diff --git a/esm/base-types-visitor.js b/esm/base-types-visitor.js
+index cc62222e72752590461d40abb54070f85bda6e62..6cf4c69a5c6ed6791539d45381a8b0dc58f8eaa7 100644
+--- a/esm/base-types-visitor.js
++++ b/esm/base-types-visitor.js
+@@ -139,6 +139,7 @@ export class BaseTypesVisitor extends BaseVisitor {
+             .withContent(`\n` + node.fields.join('\n  |'));
+     }
+     InputObjectTypeDefinition(node) {
++        if (true) return '';
+         if (this.config.onlyEnums)
+             return '';
+         // Why the heck is node.name a string and not { value: string } at runtime ?!

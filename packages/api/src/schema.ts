@@ -14,33 +14,3 @@ export type Scalars = {
   Float: { input: number; output: number; }
   Date: { input: string; output: string; }
 };
-
-export enum AppManagementInviteRole {
-  /** Provides the application write access. */
-  Admin = 'ADMIN',
-  /** Provides the application read access. */
-  Member = 'MEMBER'
-}
-
-export enum AppPrivacy {
-  /** Application is visible only to application managers. */
-  Hidden = 'HIDDEN',
-  /** Application is visible to all users. */
-  Visible = 'VISIBLE'
-}
-
-export enum AppRole {
-  /** Provides the application write access. */
-  Admin = 'ADMIN',
-  /** Provides the application read access. */
-  Member = 'MEMBER',
-  /** Application owner role. */
-  Owner = 'OWNER'
-}
-
-export type InputAppUrl = {
-  /** Platform identifier. */
-  platformID: Scalars['Int']['input'];
-  /** URL to set. */
-  url: Scalars['String']['input'];
-};

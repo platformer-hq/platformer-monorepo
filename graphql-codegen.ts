@@ -26,9 +26,8 @@ export default {
         useTypeImports: true,
         declarationKind: 'interface',
         strictScalars: true,
-        // Because no DocumentMode exported from library, generate
-        // "gql`...` as unknown as DocumentNode<query, variables>" to prevent manual addition
-        // of generics useGqlQuery / useGqlMutation.
+        // Generate "gql`...` as unknown as DocumentNode<query, variables>" to prevent manual
+        // addition of generics useGqlQuery / useGqlMutation.
         documentMode: DocumentMode.graphQLTag,
         // Remove `Document` suffix.
         documentVariableSuffix: '',
@@ -38,7 +37,12 @@ export default {
       } satisfies TypeScriptDocumentsPluginConfig & TypeScriptTypedDocumentNodesConfig,
     },
     'packages/api/src/schema.ts': {
-      config: { scalars, onlyOperationTypes: true },
+      // Schema used only for common types
+      // Patches prevent generating unconfigured params
+      config: {
+        scalars,
+        onlyOperationTypes: true,
+      },
       plugins: ['typescript'],
     },
   },
