@@ -1,6 +1,8 @@
 import {
   instance,
+  integer,
   looseObject,
+  minValue,
   optional,
   parse,
   pipe,
@@ -12,7 +14,9 @@ import {
 import { transformQueryUsing } from '@telegram-apps/sdk-solid';
 import { splitExecutionTuple } from 'solid-utils';
 
-import { positiveIntFromStr } from '@/validation/positiveIntFromStr.js';
+function positiveIntFromStr() {
+  return pipe(string(), transform(Number), integer(), minValue(1));
+}
 
 export function useLauncherOptions() {
   return splitExecutionTuple<{
