@@ -4,7 +4,7 @@
   // For each inset type, declare CSS variables.
   @each $inset-type in ["top", "left", "right", "bottom"] {
     --sum-inset-#{$inset-type}: calc(
-      var(--safe-area-inset-#{$inset-type}) + var(--content-safe-area-inset-#{$inset-type})
+      var(--safe-area-inset-#{$inset-type}, 0px) + var(--content-safe-area-inset-#{$inset-type}, 0px)
     );
   }
 
