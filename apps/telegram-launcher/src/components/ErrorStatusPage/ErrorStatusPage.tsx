@@ -7,7 +7,7 @@ import { onMainButtonClick, setMainButtonParams } from '@telegram-apps/sdk-solid
 import { useTranslator } from '@/providers/MainProvider.js';
 import { StatusPage, type StatusPageProps } from '@/components/StatusPage/StatusPage.js';
 
-export type TypedErrorStatusPageError =
+export type ErrorStatusPageError =
   | UseGqlError
   | ['server', UseGqlError]
   | ['init', timeout: number]
@@ -15,15 +15,15 @@ export type TypedErrorStatusPageError =
   | ['init-data-missing']
   | ['config-invalid', error: ValiError<any>];
 
-function ErrorStatusPage(props: Pick<StatusPageProps, 'title' | 'text'>) {
+function EnhancedStatusPage(props: Pick<StatusPageProps, 'title' | 'text'>) {
   return <StatusPage state="error" {...props} />;
 }
 
 /**
  * Component used to handle all kinds of errors.
  */
-export function TypedErrorStatusPage(props: {
-  error: TypedErrorStatusPageError;
+export function ErrorStatusPage(props: {
+  error: ErrorStatusPageError;
   onRetry?: () => void;
 }) {
   function withError<T>(fn: (
@@ -90,13 +90,13 @@ export function TypedErrorStatusPage(props: {
       {/* Invalid config */}
       <Match when={withError(e => e[0] === 'config-invalid' ? e[1] : false)}>
         {$err => (
-          <ErrorStatusPage title={t('configInvalidTitle')} text={$err().message}/>
+          <EnhancedStatusPage title={t('configInvalidTitle')} text={$err().message}/>
         )}
       </Match>
 
       {/* Init data missing */}
       <Match when={withError(e => e[0] === 'init-data-missing')}>
-        <ErrorStatusPage title={t('initDataMissingTitle')} text={t('initDataMissingMessage')}/>
+        <EnhancedStatusPage title={t('initDataMissingTitle')} text={t('initDataMissingMessage')}/>
       </Match>
 
       {/* Server error */}
@@ -108,7 +108,7 @@ export function TypedErrorStatusPage(props: {
               return GraphQLError.is(e) ? e : false;
             })()}
             fallback={
-              <ErrorStatusPage
+              <EnhancedStatusPage
                 title={defaultTitle}
                 text={t('requestMessage', { error: $error().message })}
               />
@@ -123,7 +123,7 @@ export function TypedErrorStatusPage(props: {
               });
 
               return (
-                <ErrorStatusPage
+                <EnhancedStatusPage
                   title={defaultTitle}
                   text={
                     <>
@@ -146,7 +146,7 @@ export function TypedErrorStatusPage(props: {
       {/* Init error */}
       <Match when={withError(e => e[0] === 'init' ? e[1] : false)}>
         {$timeout => (
-          <ErrorStatusPage
+          <EnhancedStatusPage
             title={defaultTitle}
             text={t('apiTimeoutMessage', { time: $timeout() })}
           />
@@ -156,7 +156,7 @@ export function TypedErrorStatusPage(props: {
       {/* Application load error */}
       <Match when={withError(e => e[0] === 'iframe' ? [e[1]] : false)}>
         {$tuple => (
-          <ErrorStatusPage
+          <EnhancedStatusPage
             title={defaultTitle}
             text={t($tuple()[0] ? 'loadTimeoutMessage' : 'appUnknownMessage')}
           />
@@ -165,13 +165,15 @@ export function TypedErrorStatusPage(props: {
 
       {/* Unknown error */}
       <Match when={withError(e => e[0] === 'unknown' ? e[1] : false)}>
-        {$error => {
-          const message = () => {
-            const error = $error();
-            return t('defaultMessage', { error: error instanceof Error ? `: ${error.message}` : '' });
-          };
-          return <ErrorStatusPage title={defaultTitle} text={message()}/>;
-        }}
+        {$error => (
+          <EnhancedStatusPage
+            title={defaultTitle}
+            text={(() => {
+              const error = $error();
+              return t('defaultMessage', { error: error instanceof Error ? `: ${error.message}` : '' });
+            })()}
+          />
+        )}
       </Match>
     </Switch>
   );

@@ -15,9 +15,9 @@ import { AppLoader } from '@/components/AppLoader/AppLoader.js';
 import { StatusPage } from '@/components/StatusPage/StatusPage.js';
 import { MainProvider, useMainContext } from '@/providers/MainProvider.js';
 import {
-  TypedErrorStatusPage,
-  type TypedErrorStatusPageError,
-} from '@/components/TypedErrorStatusPage/TypedErrorStatusPage.js';
+  ErrorStatusPage,
+  type ErrorStatusPageError,
+} from '@/components/ErrorStatusPage/ErrorStatusPage.js';
 import type { InitialColorsTuple, Locale } from '@/types/common.js';
 
 import { useLauncherOptions } from './useLauncherOptions.js';
@@ -44,9 +44,6 @@ function Inner(props: InnerProps) {
   const $platform = accessor(context, 'platform');
   const [$loaderReady, setLoaderReady] = createSignal(false);
 
-  // We only need this signal to restart the AppLoader.
-  const [$retrySeed, setRetrySeed] = createSignal<number>(1);
-
   createEffect(() => {
     $loaderReady() && context.logger.log('Removing the loader');
   });
@@ -65,7 +62,7 @@ function Inner(props: InnerProps) {
       <Switch>
         <Match when={$error.ok() && $error()}>
           {$$error => (
-            <TypedErrorStatusPage error={['config-invalid', $$error()]}/>
+            <ErrorStatusPage error={['config-invalid', $$error()]}/>
           )}
         </Match>
         <Match when={$options.ok() && $options()}>
@@ -73,11 +70,13 @@ function Inner(props: InnerProps) {
             <GqlProvider endpoint={$opts().apiBaseURL}>
               <Show
                 when={props.rawInitData}
-                fallback={<TypedErrorStatusPage error={['init-data-missing']}/>}
+                fallback={<ErrorStatusPage error={['init-data-missing']}/>}
               >
                 {$rawInitData => {
                   // Error occurred during application loading.
-                  const [$loaderError, setLoaderError] = createSignal<TypedErrorStatusPageError>();
+                  const [$loaderError, setLoaderError] = createSignal<ErrorStatusPageError>();
+                  // We only need this signal to restart the AppLoader.
+                  const [$retrySeed, setRetrySeed] = createSignal<number>(1);
 
                   // Compute fallback URL in case something went wrong with Platformer.
                   const $fallbackURL = createMemo(() => {
@@ -102,7 +101,7 @@ function Inner(props: InnerProps) {
                     <Switch>
                       <Match when={$loaderError()}>
                         {$$loaderError => (
-                          <TypedErrorStatusPage
+                          <ErrorStatusPage
                             error={$$loaderError()}
                             onRetry={() => {
                               setRetrySeed($retrySeed() + 1);
@@ -155,7 +154,7 @@ export function Root(props: RootProps) {
     <MainProvider {...pickProps(props, ['platform', 'initialColors', 'logger', 'locale'])}>
       <ErrorBoundary
         fallback={(error, reset) => (
-          <TypedErrorStatusPage error={error} onRetry={reset}/>
+          <ErrorStatusPage error={error} onRetry={reset}/>
         )}
       >
         <Inner {...props}/>

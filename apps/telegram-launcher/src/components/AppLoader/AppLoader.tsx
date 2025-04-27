@@ -11,9 +11,7 @@ import { accessor, pickProps } from 'solid-utils';
 import { useGqlQuery } from 'shared';
 import { isTimeoutError } from 'better-promises';
 
-import type {
-  TypedErrorStatusPageError,
-} from '@/components/TypedErrorStatusPage/TypedErrorStatusPage.js';
+import type { ErrorStatusPageError } from '@/components/ErrorStatusPage/ErrorStatusPage.js';
 import { AppContainer } from '@/components/AppContainer/AppContainer.js';
 import { StatusPage } from '@/components/StatusPage/StatusPage.js';
 import { createTimeoutSignal } from '@/async/createTimeoutSignal.js';
@@ -23,7 +21,7 @@ import { GetAppUrl } from './operations.js';
 
 function BootstrappedContainer(props: {
   loadTimeout: number;
-  onError: (error: TypedErrorStatusPageError) => void;
+  onError: (error: ErrorStatusPageError) => void;
   onReady: () => void;
   url: string;
 }) {
@@ -59,7 +57,7 @@ export function AppLoader(props: {
   fallbackURL?: Maybe<string>;
   initTimeout: number;
   loadTimeout: number;
-  onError: (error: TypedErrorStatusPageError, fallbackURL?: string) => void;
+  onError: (error: ErrorStatusPageError, fallbackURL?: string) => void;
   onReady: (fallbackURL?: string) => void;
   rawLaunchParams: string;
   retrySeed: number;
@@ -79,7 +77,7 @@ export function AppLoader(props: {
       noAccessText: 'Приложение недоступно на Вашем устройстве',
     },
   });
-  const [$error, setError] = createSignal<TypedErrorStatusPageError>();
+  const [$error, setError] = createSignal<ErrorStatusPageError>();
   const $timeout = accessor(props, 'initTimeout');
   const $timeoutSignal = createTimeoutSignal($timeout);
   const $appID = accessor(props, 'appID');
