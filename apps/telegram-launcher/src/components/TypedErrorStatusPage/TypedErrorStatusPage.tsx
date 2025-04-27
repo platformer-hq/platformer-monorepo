@@ -3,9 +3,9 @@ import { resolveTemplate, translator } from '@solid-primitives/i18n';
 import { type UseGqlError, GraphQLError } from 'solid-gql';
 import { TypographyIos } from 'ui';
 import { is, looseObject, string } from 'valibot';
-import { retrieveLaunchParams } from '@telegram-apps/sdk-solid';
 
 import { ErrorStatusPage } from '@/components/ErrorStatusPage/ErrorStatusPage.jsx';
+import { useMainContext } from '@/providers/MainProvider.js';
 
 export type TypedErrorStatusPageError =
   | UseGqlError
@@ -49,14 +49,7 @@ export function TypedErrorStatusPage(props: { error: TypedErrorStatusPageError }
     };
   }
 
-  let locale: 'en' | 'ru' = 'en';
-  try {
-    const { language_code: lang } = (retrieveLaunchParams().tgWebAppData || {}).user || {};
-    if (lang === 'ru' || lang === 'en') {
-      locale = lang;
-    }
-  } catch {
-  }
+  const { locale } = useMainContext();
   const t = translator(() => translations[locale], resolveTemplate);
   const title = t('title');
 

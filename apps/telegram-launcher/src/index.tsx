@@ -11,6 +11,7 @@ import { createLogger } from 'utils';
 
 import { Root } from '@/components/Root/Root.js';
 import { init } from '@/init.js';
+import type { Locale } from '@/types/common.js';
 
 import './index.scss';
 import './mockEnv.js';
@@ -42,6 +43,12 @@ init({
         groupEnd: noop,
       };
 
+    let locale: Locale = 'en';
+    const { language_code: lang } = (retrieveLaunchParams().tgWebAppData || {}).user || {};
+    if (lang === 'ru' || lang === 'en') {
+      locale = lang;
+    }
+
     render(() => (
       <Root
         debug={debug}
@@ -50,6 +57,7 @@ init({
         rawInitData={rawInitData}
         initialColors={initialColors}
         logger={logger}
+        locale={locale}
       />
     ), document.getElementById('app')!);
   })

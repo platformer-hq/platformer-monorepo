@@ -2,12 +2,13 @@ import type { Platform } from '@telegram-apps/sdk-solid';
 import { createContext, type FlowProps, useContext } from 'solid-js';
 import { omitProps } from 'solid-utils';
 
-import type { InitialColorsTuple } from '@/types/common.js';
+import { InitialColorsTuple, Locale } from '@/types/common.js';
 
 interface ContextType {
-  platform: Platform;
   initialColors: InitialColorsTuple;
+  locale: Locale;
   logger: Pick<Console, 'log' | 'group' | 'groupEnd'>;
+  platform: Platform;
 }
 
 const Context = createContext<ContextType>();

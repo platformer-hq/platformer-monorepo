@@ -19,7 +19,7 @@ import {
   TypedErrorStatusPage,
   type TypedErrorStatusPageError,
 } from '@/components/TypedErrorStatusPage/TypedErrorStatusPage.js';
-import type { InitialColorsTuple } from '@/types/common.js';
+import { InitialColorsTuple, Locale } from '@/types/common.js';
 
 import { useLauncherOptions } from './useLauncherOptions.js';
 import { computeFallbackURL } from './utils.js';
@@ -33,9 +33,10 @@ interface InnerProps {
 }
 
 interface RootProps extends InnerProps {
-  platform: Platform;
   initialColors: InitialColorsTuple;
+  locale: Locale;
   logger: Pick<Console, 'log' | 'group' | 'groupEnd'>;
+  platform: Platform;
 }
 
 function Inner(props: InnerProps) {
@@ -137,7 +138,7 @@ function Inner(props: InnerProps) {
 
 export function Root(props: RootProps) {
   return (
-    <MainProvider {...pickProps(props, ['platform', 'initialColors', 'logger'])}>
+    <MainProvider {...pickProps(props, ['platform', 'initialColors', 'logger', 'locale'])}>
       <ErrorBoundary fallback={error => <TypedErrorStatusPage error={['unknown', error]}/>}>
         <Inner {...props}/>
       </ErrorBoundary>
