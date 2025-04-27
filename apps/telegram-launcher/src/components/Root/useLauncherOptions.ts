@@ -25,7 +25,7 @@ export function useLauncherOptions() {
     fallbackURL?: Maybe<string>;
     initTimeout: number;
     loadTimeout: number;
-  }, string>(() => {
+  }, ValiError<any>>(() => {
     try {
       const argsObject = parse(
         pipe(
@@ -60,7 +60,7 @@ export function useLauncherOptions() {
         loadTimeout: argsObject.load_timeout,
       }];
     } catch (e) {
-      return [false, (e as ValiError<never>).message];
+      return [false, (e as ValiError<any>)];
     }
   });
 }
