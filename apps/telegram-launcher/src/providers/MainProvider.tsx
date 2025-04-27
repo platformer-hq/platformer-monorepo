@@ -1,6 +1,7 @@
 import type { Platform } from '@telegram-apps/sdk-solid';
 import { createContext, type FlowProps, useContext } from 'solid-js';
-import { omitProps } from 'solid-utils';
+import { omitProps, access } from 'solid-utils';
+import { type BaseRecordDict, translator, resolveTemplate } from '@solid-primitives/i18n';
 
 import { InitialColorsTuple, Locale } from '@/types/common.js';
 
@@ -19,6 +20,11 @@ export function useMainContext() {
     throw new Error('Used outside context');
   }
   return context;
+}
+
+export function useTranslator<T extends Record<Locale, BaseRecordDict>>(dict: T | (() => T)) {
+  const { locale } = useMainContext();
+  return translator<T[Locale]>(() => access(dict)[locale], resolveTemplate);
 }
 
 export function MainProvider(props: FlowProps<ContextType>) {
