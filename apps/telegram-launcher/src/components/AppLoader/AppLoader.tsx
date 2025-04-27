@@ -60,7 +60,6 @@ export function AppLoader(props: {
   onError: (error: ErrorStatusPageError, fallbackURL?: string) => void;
   onReady: (fallbackURL?: string) => void;
   rawLaunchParams: string;
-  retrySeed: number;
   securedRawLaunchParams: string;
 }) {
   const t = useTranslator({
@@ -85,12 +84,10 @@ export function AppLoader(props: {
   const [$appData, setAppData] = createSignal<[appFound: boolean, url?: Maybe<string>]>();
   useGqlQuery(
     GetAppUrl,
-    () => props.retrySeed
-      ? [[{
-        appID: $appID(),
-        launchParams: props.securedRawLaunchParams,
-      }, { signal: $timeoutSignal() }]]
-      : undefined,
+    () => [[{
+      appID: $appID(),
+      launchParams: props.securedRawLaunchParams,
+    }, { signal: $timeoutSignal() }]],
     {
       freshAge: 0,
       onReady(_, data) {
