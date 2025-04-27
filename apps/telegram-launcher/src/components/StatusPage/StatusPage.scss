@@ -9,10 +9,11 @@ $errorIconShift: translate(20%, 20%);
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   flex-direction: column;
   position: absolute;
   background: var(--theme-bg-color);
+  padding: calc(var(--sum-inset-top) + 16px) calc(var(--sum-inset-right) + 16px) calc(var(--sum-inset-top) + 16px) calc(var(--sum-inset-top) + 16px);
 
   &__image {
     margin-bottom: 16px;
@@ -90,6 +91,13 @@ $errorIconShift: translate(20%, 20%);
         }
       }
     }
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   &__content {
