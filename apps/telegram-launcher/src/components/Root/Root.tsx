@@ -8,7 +8,7 @@ import {
   Switch,
 } from 'solid-js';
 import type { Platform } from '@telegram-apps/sdk-solid';
-import { pickProps, accessor } from 'solid-utils';
+import { pickProps } from 'solid-utils';
 import { GqlProvider } from 'shared';
 
 import { AppLoader } from '@/components/AppLoader/AppLoader.js';
@@ -41,13 +41,6 @@ interface RootProps extends InnerProps {
 function Inner(props: InnerProps) {
   const [$options, $error] = useLauncherOptions();
   const context = useMainContext();
-  const logger = useLogger();
-  const $platform = accessor(context, 'platform');
-  const [$loaderReady, setLoaderReady] = createSignal(false);
-
-  createEffect(() => {
-    $loaderReady() && logger.log('Removing the loader');
-  });
 
   return (
     <main
@@ -57,7 +50,7 @@ function Inner(props: InnerProps) {
           'android',
           'android_x',
           'ios',
-        ] satisfies Platform[]).includes($platform()),
+        ] satisfies Platform[]).includes(context.platform),
       }}
     >
       <Switch>
@@ -74,10 +67,13 @@ function Inner(props: InnerProps) {
                 fallback={<ErrorStatusPage error={['init-data-missing']}/>}
               >
                 {$rawInitData => {
-                  // Error occurred during application loading.
+                  const logger = useLogger();
                   const [$loaderError, setLoaderError] = createSignal<ErrorStatusPageError>();
-                  // We only need this signal to restart the AppLoader.
-                  const [$retrySeed, setRetrySeed] = createSignal<number>(1);
+                  const [$loaderReady, setLoaderReady] = createSignal(false);
+
+                  createEffect(() => {
+                    $loaderReady() && logger.log('Removing the loader');
+                  });
 
                   // Compute fallback URL in case something went wrong with Platformer.
                   const $fallbackURL = createMemo(() => {
@@ -105,7 +101,8 @@ function Inner(props: InnerProps) {
                           <ErrorStatusPage
                             error={$$loaderError()}
                             onRetry={() => {
-                              setRetrySeed($retrySeed() + 1);
+                              setLoaderReady(false);
+                              setLoaderError();
                             }}
                           />
                         )}
@@ -124,18 +121,17 @@ function Inner(props: InnerProps) {
                           fallbackURL={$fallbackURL()}
                           securedRawLaunchParams={$securedRawLaunchParams()}
                           onError={(error, fallbackURL) => {
-                            fallbackURL && console.error('Fallback URL failed to load:', fallbackURL);
+                            fallbackURL && logger.forceError('Fallback URL failed to load:', fallbackURL);
                             setLoaderError(error);
                             setLoaderReady(true);
                           }}
                           onReady={(fallbackURL) => {
-                            fallbackURL && console.warn(
+                            fallbackURL && logger.forceWarn(
                               'Platformer failed to load. Used fallback:',
                               fallbackURL,
                             );
                             setLoaderReady(true);
                           }}
-                          retrySeed={$retrySeed()}
                         />
                       </Match>
                     </Switch>
