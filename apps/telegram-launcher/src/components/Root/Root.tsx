@@ -12,14 +12,13 @@ import { pickProps, accessor } from 'solid-utils';
 import { GqlProvider } from 'shared';
 
 import { AppLoader } from '@/components/AppLoader/AppLoader.js';
-import { ErrorStatusPage } from '@/components/ErrorStatusPage/ErrorStatusPage.js';
 import { StatusPage } from '@/components/StatusPage/StatusPage.js';
 import { MainProvider, useMainContext } from '@/providers/MainProvider.js';
 import {
   TypedErrorStatusPage,
   type TypedErrorStatusPageError,
 } from '@/components/TypedErrorStatusPage/TypedErrorStatusPage.js';
-import { InitialColorsTuple, Locale } from '@/types/common.js';
+import type { InitialColorsTuple, Locale } from '@/types/common.js';
 
 import { useLauncherOptions } from './useLauncherOptions.js';
 import { computeFallbackURL } from './utils.js';
@@ -45,6 +44,9 @@ function Inner(props: InnerProps) {
   const $platform = accessor(context, 'platform');
   const [$loaderReady, setLoaderReady] = createSignal(false);
 
+  // We only need this signal to restart the AppLoader.
+  const [$retrySeed, setRetrySeed] = createSignal<number>(1);
+
   createEffect(() => {
     $loaderReady() && context.logger.log('Removing the loader');
   });
@@ -53,85 +55,97 @@ function Inner(props: InnerProps) {
     <main
       classList={{
         'root': true,
-        'root--mobile': (['android', 'android_x', 'ios'] satisfies Platform[]).includes($platform()),
+        'root--mobile': ([
+          'android',
+          'android_x',
+          'ios',
+        ] satisfies Platform[]).includes($platform()),
       }}
     >
-      <Show
-        when={$options.ok() && $options()}
-        fallback={<ErrorStatusPage title="Configuration is invalid" text={$error()}/>}
-      >
-        {$opts => (
-          <GqlProvider endpoint={$opts().apiBaseURL}>
-            <Show
-              when={props.rawInitData}
-              fallback={
-                <ErrorStatusPage
-                  title="Init data is missing"
-                  text="For some reason, init data is missing. It is the most likely that the application was launched improperly"
-                />
-              }
-            >
-              {$rawInitData => {
-                // Error occurred during application loading.
-                const [$error, setError] = createSignal<TypedErrorStatusPageError>();
+      <Switch>
+        <Match when={$error.ok() && $error()}>
+          {$$error => (
+            <TypedErrorStatusPage error={['config-invalid', $$error()]}/>
+          )}
+        </Match>
+        <Match when={$options.ok() && $options()}>
+          {$opts => (
+            <GqlProvider endpoint={$opts().apiBaseURL}>
+              <Show
+                when={props.rawInitData}
+                fallback={<TypedErrorStatusPage error={['init-data-missing']}/>}
+              >
+                {$rawInitData => {
+                  // Error occurred during application loading.
+                  const [$loaderError, setLoaderError] = createSignal<TypedErrorStatusPageError>();
 
-                // Compute fallback URL in case something went wrong with Platformer.
-                const $fallbackURL = createMemo(() => {
-                  const { fallbackURL } = $opts();
-                  return fallbackURL
-                    ? computeFallbackURL(fallbackURL, props.rawLaunchParams)
-                    : undefined;
-                });
-                const $securedRawLaunchParams = createMemo(() => {
-                  // We are sanitizing the "hash" property for security purposes, so Platformer
-                  // could not use this init data to impersonate user. Instead, Platformer uses the
-                  // "signature" property allowing third parties to validate the init data.
-                  const initDataQuery = new URLSearchParams($rawInitData());
-                  initDataQuery.set('hash', '');
+                  // Compute fallback URL in case something went wrong with Platformer.
+                  const $fallbackURL = createMemo(() => {
+                    const { fallbackURL } = $opts();
+                    return fallbackURL
+                      ? computeFallbackURL(fallbackURL, props.rawLaunchParams)
+                      : undefined;
+                  });
+                  const $securedRawLaunchParams = createMemo(() => {
+                    // We are sanitizing the "hash" property for security purposes, so Platformer
+                    // could not use this init data to impersonate user. Instead, Platformer uses the
+                    // "signature" property allowing third parties to validate the init data.
+                    const initDataQuery = new URLSearchParams($rawInitData());
+                    initDataQuery.set('hash', '');
 
-                  const launchParamsQuery = new URLSearchParams(props.rawLaunchParams);
-                  launchParamsQuery.set('tgWebAppData', initDataQuery.toString());
-                  return launchParamsQuery.toString();
-                });
+                    const launchParamsQuery = new URLSearchParams(props.rawLaunchParams);
+                    launchParamsQuery.set('tgWebAppData', initDataQuery.toString());
+                    return launchParamsQuery.toString();
+                  });
 
-                return (
-                  <Switch>
-                    <Match when={$error()}>
-                      {$err => <TypedErrorStatusPage error={$err()}/>}
-                    </Match>
-                    <Match when>
-                      <Show when={!$loaderReady()}>
-                        <StatusPage state="loading"/>
-                      </Show>
-                      <AppLoader
-                        {...pickProps(
-                          $opts(),
-                          ['apiBaseURL', 'appID', 'initTimeout', 'loadTimeout'],
+                  return (
+                    <Switch>
+                      <Match when={$loaderError()}>
+                        {$$loaderError => (
+                          <TypedErrorStatusPage
+                            error={$$loaderError()}
+                            onRetry={() => {
+                              setRetrySeed($retrySeed() + 1);
+                            }}
+                          />
                         )}
-                        {...pickProps(props, ['rawLaunchParams'])}
-                        fallbackURL={$fallbackURL()}
-                        securedRawLaunchParams={$securedRawLaunchParams()}
-                        onError={(error, fallbackURL) => {
-                          fallbackURL && console.error('Fallback URL failed to load:', fallbackURL);
-                          setError(error);
-                          setLoaderReady(true);
-                        }}
-                        onReady={(fallbackURL) => {
-                          fallbackURL && console.warn(
-                            'Platformer failed to load. Used fallback:',
-                            fallbackURL,
-                          );
-                          setLoaderReady(true);
-                        }}
-                      />
-                    </Match>
-                  </Switch>
-                );
-              }}
-            </Show>
-          </GqlProvider>
-        )}
-      </Show>
+                      </Match>
+                      <Match when>
+                        <Show when={!$loaderReady()}>
+                          {/*todo: step*/}
+                          <StatusPage state="loading"/>
+                        </Show>
+                        <AppLoader
+                          {...pickProps(
+                            $opts(),
+                            ['apiBaseURL', 'appID', 'initTimeout', 'loadTimeout'],
+                          )}
+                          {...pickProps(props, ['rawLaunchParams'])}
+                          fallbackURL={$fallbackURL()}
+                          securedRawLaunchParams={$securedRawLaunchParams()}
+                          onError={(error, fallbackURL) => {
+                            fallbackURL && console.error('Fallback URL failed to load:', fallbackURL);
+                            setLoaderError(error);
+                            setLoaderReady(true);
+                          }}
+                          onReady={(fallbackURL) => {
+                            fallbackURL && console.warn(
+                              'Platformer failed to load. Used fallback:',
+                              fallbackURL,
+                            );
+                            setLoaderReady(true);
+                          }}
+                          retrySeed={$retrySeed()}
+                        />
+                      </Match>
+                    </Switch>
+                  );
+                }}
+              </Show>
+            </GqlProvider>
+          )}
+        </Match>
+      </Switch>
     </main>
   );
 }
@@ -139,7 +153,11 @@ function Inner(props: InnerProps) {
 export function Root(props: RootProps) {
   return (
     <MainProvider {...pickProps(props, ['platform', 'initialColors', 'logger', 'locale'])}>
-      <ErrorBoundary fallback={error => <TypedErrorStatusPage error={['unknown', error]}/>}>
+      <ErrorBoundary
+        fallback={(error, reset) => (
+          <TypedErrorStatusPage error={error} onRetry={reset}/>
+        )}
+      >
         <Inner {...props}/>
       </ErrorBoundary>
     </MainProvider>
