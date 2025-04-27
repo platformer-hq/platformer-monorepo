@@ -12,10 +12,10 @@ import {
   themeParamsState,
   emitEvent,
   themeParamsBackgroundColor,
-  miniAppHeaderColor,
   mountMiniAppSync,
   mountThemeParamsSync,
   mountMainButton,
+  miniAppHeaderColor,
   miniAppBackgroundColorRGB,
   miniAppBottomBarColorRGB,
   bridgeLogger,
@@ -90,16 +90,16 @@ export async function init({ debug, ...options }: {
   }
   if (mountViewport.isAvailable()) {
     await mountViewport();
-    bindViewportCssVars(formatViewportCssVar)
+    bindViewportCssVars(formatViewportCssVar);
   }
   mountMainButton.ifAvailable();
   mountMiniAppSync.ifAvailable();
 
-  const initialColors: [
-    header: MiniAppHeaderColor,
-    background: BackgroundColor,
-    bottomBar: BottomBarColor
-  ] = [miniAppHeaderColor(), miniAppBackgroundColor(), miniAppBottomBarColor()];
+  const initialColors: InitialColorsTuple = [
+    miniAppHeaderColor(),
+    miniAppBackgroundColorRGB(),
+    miniAppBottomBarColorRGB(),
+  ];
 
   const desiredColor = themeParamsBackgroundColor();
   if (desiredColor) {

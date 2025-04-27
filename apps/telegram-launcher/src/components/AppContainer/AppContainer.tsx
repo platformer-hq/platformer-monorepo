@@ -1,10 +1,16 @@
 import { onCleanup, onMount } from 'solid-js';
-import { isRGB, MethodName, postEvent } from '@telegram-apps/sdk-solid';
+import {
+  isRGB,
+  type MethodName,
+  postEvent,
+  setMiniAppBackgroundColor,
+  setMiniAppBottomBarColor,
+  setMiniAppHeaderColor,
+} from '@telegram-apps/sdk-solid';
 import { looseObject, optional, parse, string, unknown } from 'valibot';
 import { createEventListener } from 'solid-utils';
 
-import { useMainContext } from '@/providers/MainProvider.js';
-import type { InitialColorsTuple } from '@/types/common.js';
+import { useLogger, useMainContext } from '@/providers/MainProvider.js';
 
 import './AppContainer.scss';
 
@@ -35,11 +41,11 @@ export function AppContainer(props: {
   url: string;
 }) {
   const { initialColors } = useMainContext();
-  const { log } = useLogger();
+  const { log, forceError } = useLogger();
 
   // List of collected Mini Apps events along with their parameters, which are related to the
-  // UI updates.
-  const collectedUIEvents: [string, unknown][] = [];
+  // UI mutations.
+  const collectedUIMutatingEvents: [string, unknown][] = [];
   let isContainerReady = false;
   let iframe!: HTMLIFrameElement;
 
@@ -53,7 +59,7 @@ export function AppContainer(props: {
   onMount(() => {
     const { contentWindow } = iframe;
     if (!contentWindow) {
-      console.error('contentWindow is missing');
+      forceError('contentWindow is missing');
       return;
     }
 
@@ -71,7 +77,7 @@ export function AppContainer(props: {
       }
       if (source !== contentWindow) {
         // The event was sent from the Telegram application. Pass it to the wrapped mini app.
-        // TODO: Set target origin?
+        // TODO: Set target origin equal to the iframe's domain?
         return contentWindow.postMessage(data, '*');
       }
       const { eventType, eventData } = payload;
@@ -88,24 +94,22 @@ export function AppContainer(props: {
         log('The app is ready. Going to call previously collected events');
         isContainerReady = true;
 
-        const uiColorsToSet: Partial<InitialColorsTuple> = [...initialColors];
-        const uiMethods = [
-          'web_app_set_header_color',
-          'web_app_set_background_color',
-          'web_app_set_bottom_bar_color',
-        ];
-        collectedUIEvents.forEach(([method, payload]: [string, any]) => {
+        const uiMethodsMeta = [
+          ['web_app_set_header_color', initialColors[0], setMiniAppHeaderColor],
+          ['web_app_set_background_color', initialColors[1], setMiniAppBackgroundColor],
+          ['web_app_set_bottom_bar_color', initialColors[2], setMiniAppBottomBarColor],
+        ] as [MethodName, string | undefined, (color: string) => void][];
+        collectedUIMutatingEvents.forEach(([method, payload]: [string, any]) => {
           // As long the launcher mutates UI colors, we need to restore them as long the wrapped
-          // application expects them to be initial ones. Nevertheless, we don't have to call UI
-          // updates in case, the app already did it.
-          const index = uiMethods.indexOf(method);
-          index >= 0 && (uiColorsToSet[index] = undefined);
+          // application expects them to be initial ones, set by itself. Nevertheless, we don't
+          // have to call UI updates in case, the app already have a target color.
+          const meta = uiMethodsMeta.find(tuple => tuple[0] === method);
+          meta && (meta[1] = undefined);
 
           // Call collected UI event.
           (postEvent as any)(method, payload);
         });
-        uiMethods.forEach((method, idx) => {
-          const color = uiColorsToSet[idx];
+        uiMethodsMeta.forEach(([method, color], idx) => {
           if (color) {
             log('Restoring UI color using', { method, color });
             (postEvent as any)(
@@ -135,7 +139,7 @@ export function AppContainer(props: {
         ] satisfies MethodName[] as string[]).includes(eventType)
       ) {
         log('Delaying call until the app is ready:', payload);
-        collectedUIEvents.push([eventType, eventData]);
+        collectedUIMutatingEvents.push([eventType, eventData]);
         return;
       }
 
