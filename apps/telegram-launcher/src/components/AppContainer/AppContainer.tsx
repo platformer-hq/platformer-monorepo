@@ -34,7 +34,8 @@ export function AppContainer(props: {
    */
   url: string;
 }) {
-  const { initialColors, logger: { log, group, groupEnd } } = useMainContext();
+  const { initialColors } = useMainContext();
+  const { log } = useLogger();
 
   // List of collected Mini Apps events along with their parameters, which are related to the
   // UI updates.
@@ -84,11 +85,7 @@ export function AppContainer(props: {
       // UI-related methods that were collected before this moment. We do it to prevent
       // accidental appearance of UI components during the launcher waiting the app to be ready.
       if (eventType === 'web_app_ready') {
-        group('The app is ready. Going to call previously collected events:');
-        collectedUIEvents.forEach(event => {
-          console.log(event);
-        });
-        groupEnd();
+        log('The app is ready. Going to call previously collected events');
         isContainerReady = true;
 
         const uiColorsToSet: Partial<InitialColorsTuple> = [...initialColors];

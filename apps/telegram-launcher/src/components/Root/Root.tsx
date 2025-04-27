@@ -13,12 +13,12 @@ import { GqlProvider } from 'shared';
 
 import { AppLoader } from '@/components/AppLoader/AppLoader.js';
 import { StatusPage } from '@/components/StatusPage/StatusPage.js';
-import { MainProvider, useMainContext } from '@/providers/MainProvider.js';
+import { MainProvider, useLogger, useMainContext } from '@/providers/MainProvider.js';
 import {
   ErrorStatusPage,
   type ErrorStatusPageError,
 } from '@/components/ErrorStatusPage/ErrorStatusPage.js';
-import type { InitialColorsTuple, Locale } from '@/types/common.js';
+import type { InitialColorsTuple, Locale, Logger } from '@/types/common.js';
 
 import { useLauncherOptions } from './useLauncherOptions.js';
 import { computeFallbackURL } from './utils.js';
@@ -34,18 +34,19 @@ interface InnerProps {
 interface RootProps extends InnerProps {
   initialColors: InitialColorsTuple;
   locale: Locale;
-  logger: Pick<Console, 'log' | 'group' | 'groupEnd'>;
+  logger: Logger;
   platform: Platform;
 }
 
 function Inner(props: InnerProps) {
   const [$options, $error] = useLauncherOptions();
   const context = useMainContext();
+  const logger = useLogger();
   const $platform = accessor(context, 'platform');
   const [$loaderReady, setLoaderReady] = createSignal(false);
 
   createEffect(() => {
-    $loaderReady() && context.logger.log('Removing the loader');
+    $loaderReady() && logger.log('Removing the loader');
   });
 
   return (

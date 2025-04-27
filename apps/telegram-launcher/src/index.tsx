@@ -33,15 +33,11 @@ init({
   .then(({ initialColors }) => {
     const rawLaunchParams = retrieveRawLaunchParams();
     const rawInitData = retrieveRawInitData();
-    const noop = () => {
-    };
-    const logger = debug
-      ? createLogger('@platformer / Launcher', ['white', 'chocolate'])
-      : {
-        log: noop,
-        group: noop,
-        groupEnd: noop,
-      };
+    const logger = createLogger('Launcher (Platformer)', {
+      textColor: 'white',
+      bgColor: 'chocolate',
+      shouldLog: debug,
+    });
 
     let locale: Locale = 'en';
     const { language_code: lang } = (retrieveLaunchParams().tgWebAppData || {}).user || {};

@@ -13,14 +13,14 @@ import {
   emitEvent,
   themeParamsBackgroundColor,
   miniAppHeaderColor,
-  miniAppBackgroundColor,
-  miniAppBottomBarColor,
-  type MiniAppHeaderColor,
-  type BackgroundColor,
-  type BottomBarColor,
   mountMiniAppSync,
   mountThemeParamsSync,
   mountMainButton,
+  miniAppBackgroundColorRGB,
+  miniAppBottomBarColorRGB,
+  bridgeLogger,
+  sdkLogger,
+  createLogger,
 } from '@telegram-apps/sdk-solid';
 import { formatThemeParamsCssVar, formatViewportCssVar } from 'shared';
 import { lazySentryInit, lazyErudaInit } from 'utils';
@@ -32,14 +32,24 @@ import type { InitialColorsTuple } from '@/types/common.js';
  * Initializes the SDK.
  * @param options - execution options.
  */
-export async function init(options: {
+export async function init({ debug, ...options }: {
   debug: boolean;
   eruda: boolean;
   mockForMacOS: boolean;
   mockForWebK: boolean;
   sentry: BrowserOptions;
 }): Promise<{ initialColors: InitialColorsTuple }> {
-  setDebug(options.debug);
+  setDebug(debug);
+  bridgeLogger.set(createLogger('Bridge (Platformer)', {
+    textColor: 'white',
+    bgColor: '#00bddf',
+    shouldLog: debug,
+  }));
+  sdkLogger.set(createLogger('SDK (Platformer)', {
+    textColor: 'white',
+    bgColor: '#6700c8',
+    shouldLog: debug,
+  }));
   initSDK();
 
   // Init Sentry and eruda.
