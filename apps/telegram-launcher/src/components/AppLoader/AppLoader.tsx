@@ -10,17 +10,33 @@ import { GraphQLError } from 'solid-gql';
 import { accessor, pickProps } from 'solid-utils';
 import { useGqlQuery } from 'shared';
 import { isTimeoutError } from 'better-promises';
+import { translator } from '@solid-primitives/i18n';
 
 import {
   TypedErrorStatusPage,
   type TypedErrorStatusPageError,
 } from '@/components/TypedErrorStatusPage/TypedErrorStatusPage.js';
-import { AppNoURL } from '@/components/AppNoURL/AppNoURL.js';
-import { AppNotFound } from '@/components/AppNotFound/AppNotFound.js';
 import { AppContainer } from '@/components/AppContainer/AppContainer.js';
+import { StatusPage } from '@/components/StatusPage/StatusPage.js';
 import { createTimeoutSignal } from '@/async/createTimeoutSignal.js';
+import { useMainContext } from '@/providers/MainProvider.js';
 
 import { GetAppUrl } from './operations.js';
+
+const translations = {
+  en: {
+    notFoundTitle: 'App not found',
+    notFoundText: 'This application was not found',
+    noAccessTitle: 'Nothing here',
+    noAccessText: 'The application is inaccessible on your device',
+  },
+  ru: {
+    notFoundTitle: 'Приложение не найден',
+    notFoundText: 'Это приложение не было найдено',
+    noAccessTitle: 'Тут пусто',
+    noAccessText: 'Приложение недоступно на Вашем устройстве',
+  },
+};
 
 function BootstrappedContainer(props: {
   loadTimeout: number;
@@ -65,6 +81,8 @@ export function AppLoader(props: {
   rawLaunchParams: string;
   securedRawLaunchParams: string;
 }) {
+  const { locale } = useMainContext();
+  const t = translator(() => translations[locale]);
   const [$error, setError] = createSignal<TypedErrorStatusPageError>();
   const $timeout = accessor(props, 'initTimeout');
   const $timeoutSignal = createTimeoutSignal($timeout);
@@ -161,11 +179,12 @@ export function AppLoader(props: {
                 onMount(() => {
                   props.onReady();
                 });
-
+                const $isFound = () => $status() === 'found';
                 return (
-                  <Show when={$status() === 'found'} fallback={<AppNotFound/>}>
-                    <AppNoURL/>
-                  </Show>
+                  <StatusPage
+                    title={t($isFound() ? 'noAccessTitle' : 'notFoundTitle')}
+                    text={t($isFound() ? 'noAccessText' : 'notFoundText')}
+                  />
                 );
               }}
             </Match>
