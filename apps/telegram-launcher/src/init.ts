@@ -21,6 +21,7 @@ import {
   bridgeLogger,
   sdkLogger,
   createLogger,
+  setMainButtonParams,
 } from '@telegram-apps/sdk-solid';
 import { formatThemeParamsCssVar, formatViewportCssVar } from 'shared';
 import { lazySentryInit, lazyErudaInit } from 'utils';
@@ -92,7 +93,10 @@ export async function init({ debug, ...options }: {
     await mountViewport();
     bindViewportCssVars(formatViewportCssVar);
   }
-  mountMainButton.ifAvailable();
+  if (mountMainButton.isAvailable()) {
+    mountMainButton();
+    setMainButtonParams({ isVisible: false });
+  }
   mountMiniAppSync.ifAvailable();
 
   const initialColors: InitialColorsTuple = [
