@@ -36,7 +36,7 @@ init({
     const noop = () => {
     };
     const logger = debug
-      ? createLogger('@platformer / Launcher', { textColor: 'white', bgColor: 'chocolate' })
+      ? createLogger('@platformer / Launcher', ['white', 'chocolate'])
       : {
         log: noop,
         group: noop,

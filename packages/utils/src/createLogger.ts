@@ -3,18 +3,14 @@
  */
 export type LogLevel = 'log' | 'error' | 'group';
 
-export interface LoggerOptions {
-  bgColor?: string;
-  textColor?: string;
-}
+export type LoggerOptions = [textColor: string, bgColor: string];
 
 /*@__NO_SIDE_EFFECTS__*/
-export function createLogger(scope: string, options?: LoggerOptions): Pick<
-  Console,
-  'log' | 'error' | 'group' | 'groupEnd'
-> {
-  options ||= {};
-  const { textColor, bgColor } = options;
+export function createLogger(
+  scope: string,
+  options?: LoggerOptions,
+): Pick<Console, 'log' | 'error'> {
+  const [textColor, bgColor] = options || [];
 
   /**
    * Prints a message into the console.
@@ -22,7 +18,7 @@ export function createLogger(scope: string, options?: LoggerOptions): Pick<
    * @param args - arguments.
    */
   function print(level: LogLevel, ...args: any[]): void {
-    const commonCss = 'font-weight:bold;padding:0 5px;border-radius:5px';
+    const commonCss = 'font-weight:bold;padding:0 3px;border-radius:5px';
     console[level](
       `%c${
         Intl
@@ -45,7 +41,5 @@ export function createLogger(scope: string, options?: LoggerOptions): Pick<
   return {
     log: print.bind(undefined, 'log'),
     error: print.bind(undefined, 'error'),
-    group: print.bind(undefined, 'group'),
-    groupEnd: console.groupEnd.bind(console),
   };
 }

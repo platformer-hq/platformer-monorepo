@@ -131,9 +131,7 @@ export function createSWRStore<D, P extends any[], E = unknown>(
     ? () => _retryInterval
     : _retryInterval || ((_, retriesPerformed) => Math.pow(2, retriesPerformed - 1) * 100);
 
-  const { log: _log } = logger === 'default'
-    ? createLogger('swr', { bgColor: 'purple', textColor: 'white' })
-    : {};
+  const { log: _log } = logger === 'default' ? createLogger('swr', ['white', 'purple']) : {};
 
   function log(...args: any[]) {
     _log && _log(...args);
