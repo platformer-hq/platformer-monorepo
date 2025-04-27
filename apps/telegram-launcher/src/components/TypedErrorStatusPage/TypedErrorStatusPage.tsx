@@ -1,118 +1,176 @@
-import { createMemo, Match, Show, Switch } from 'solid-js';
-import { resolveTemplate, translator } from '@solid-primitives/i18n';
+import { createEffect, createMemo, Match, onCleanup, Show, Switch } from 'solid-js';
 import { type UseGqlError, GraphQLError } from 'solid-gql';
 import { TypographyIos } from 'ui';
-import { is, looseObject, string } from 'valibot';
+import { is, looseObject, string, ValiError } from 'valibot';
+import { onMainButtonClick, setMainButtonParams } from '@telegram-apps/sdk-solid';
 
-import { ErrorStatusPage } from '@/components/ErrorStatusPage/ErrorStatusPage.jsx';
-import { useMainContext } from '@/providers/MainProvider.js';
+import { useTranslator } from '@/providers/MainProvider.js';
+import { StatusPage, type StatusPageProps } from '@/components/StatusPage/StatusPage.js';
 
 export type TypedErrorStatusPageError =
   | UseGqlError
+  | ['server', UseGqlError]
   | ['init', timeout: number]
   | ['iframe', timeout?: boolean]
-  | ['unknown', unknown];
+  | ['init-data-missing']
+  | ['config-invalid', error: ValiError<any>];
 
-const translations = {
-  en: {
-    apiTimeout: 'Couldn\'t get information about the app (timed out {{time}}ms)',
-    appUnknownError: 'An unknown error occurred while loading the application',
-    loadTimeout: 'The app took too long to load',
-    title: 'Something went wrong',
-    unknownError: 'Unknown error occurred{{ error }}',
-  },
-  ru: {
-    apiTimeout: 'Не удалось получить информацию о приложении (тайм-аут {{time}}мс)',
-    appUnknownError: 'Произошла неизвестная ошибка при загрузке приложения',
-    loadTimeout: 'Загрузка приложения оказалась слишком долгой',
-    title: 'Что-то пошло не так',
-    unknownError: 'Произошла неизвестная ошибка{{ error }}',
-  },
-};
+function ErrorStatusPage(props: Pick<StatusPageProps, 'title' | 'text'>) {
+  return <StatusPage state="error" {...props} />;
+}
 
 /**
- * Used to handle all kinds of errors.
+ * Component used to handle all kinds of errors.
  */
-export function TypedErrorStatusPage(props: { error: TypedErrorStatusPageError }) {
-  function withError<T>(
-    fn: (
-      err:
-        | ['init', timeout: number]
-        | ['gql', UseGqlError]
-        | ['iframe', timeout?: boolean]
-        | ['unknown', unknown],
-    ) => T,
-  ) {
-    return () => {
-      const { error } = props;
-      return fn(Array.isArray(error) ? error : ['gql', error]);
-    };
+export function TypedErrorStatusPage(props: {
+  error: TypedErrorStatusPageError;
+  onRetry?: () => void;
+}) {
+  function withError<T>(fn: (
+    err:
+      | ['server', UseGqlError]
+      | ['init', timeout: number]
+      | ['iframe', timeout?: boolean]
+      | ['init-data-missing']
+      | ['unknown', error: Error]
+      | ['config-invalid', error: ValiError<any>],
+  ) => T): T {
+    const { error } = props;
+    return fn(Array.isArray(error)
+      ? error
+      : GraphQLError.is(error)
+        ? ['server', error]
+        : ['unknown', error]);
   }
 
-  const { locale } = useMainContext();
-  const t = translator(() => translations[locale], resolveTemplate);
-  const title = t('title');
+  const t = useTranslator({
+    en: {
+      apiMessage: 'Server returned error: {{error}}',
+      apiTimeoutMessage: 'Couldn\'t get information about the app (timed out {{time}}ms)',
+      appUnknownMessage: 'An unknown error occurred while loading the application',
+      configInvalidTitle: 'Launcher config invalid',
+      defaultMessage: 'Unknown error occurred{{ error }}',
+      defaultTitle: 'Something went wrong',
+      initDataMissingMessage: 'It is the most likely that the application was launched improperly',
+      initDataMissingTitle: 'Init data is missing',
+      loadTimeoutMessage: 'The app took too long to load',
+      requestMessage: 'Sneding request error: {{error}}',
+      tryAgain: 'Try again',
+    },
+    ru: {
+      apiMessage: 'Сервер вернул ошибку: {{error}}',
+      apiTimeoutMessage: 'Не удалось получить информацию о приложении (тайм-аут {{time}}мс)',
+      appUnknownMessage: 'Произошла неизвестная ошибка при загрузке приложения',
+      configInvalidTitle: 'Конфигурация лаунчера некорректна',
+      defaultMessage: 'Произошла неизвестная ошибка{{ error }}',
+      defaultTitle: 'Что-то пошло не так',
+      initDataMissingMessage: 'Скорее всего приложение было запущено некорректно',
+      initDataMissingTitle: 'Данные инициализации отсутствуют',
+      loadTimeoutMessage: 'Загрузка приложения оказалась слишком долгой',
+      requestMessage: 'Ошибка отправки запроса: {{error}}',
+      tryAgain: 'Попробовать снова',
+    },
+  });
+  const defaultTitle = t('defaultTitle');
+
+  createEffect(() => {
+    const { onRetry } = props;
+    if (onRetry) {
+      setMainButtonParams({ isVisible: true, text: t('tryAgain') });
+      const offClick = onMainButtonClick(onRetry);
+      onCleanup(() => {
+        setMainButtonParams({ isVisible: false });
+        offClick();
+      });
+    }
+  });
 
   return (
     <Switch>
-      {/* GraphQL error */}
-      <Match when={withError(e => {
-        return e[0] === 'gql' && GraphQLError.is(e[1]) ? e[1] : false;
-      })()}>
-        {$error => {
-          const $code = createMemo(() => {
-            const { extensions } = $error();
-            return is(looseObject({ errorData: looseObject({ code: string() }) }), extensions)
-              ? extensions.errorData.code
-              : false;
-          });
-
-          return (
-            <ErrorStatusPage
-              title={title}
-              text={
-                <>
-                  Server returned error:{' '}
-                  {$error().message}
-                  <Show when={$code()}>
-                    &nbsp;
-                    <TypographyIos component="span" weight="semibold">
-                      ({$code()})
-                    </TypographyIos>
-                  </Show>
-                </>
-              }
-            />
-          );
-        }}
-      </Match>
-
-      {/* Init error */}
-      <Match when={withError(e => e[0] === 'init' ? e[1] : false)()}>
-        {$timeout => (
-          <ErrorStatusPage title={title} text={t('apiTimeout', { time: $timeout() })}/>
+      {/* Invalid config */}
+      <Match when={withError(e => e[0] === 'config-invalid' ? e[1] : false)}>
+        {$err => (
+          <ErrorStatusPage title={t('configInvalidTitle')} text={$err().message}/>
         )}
       </Match>
 
-      {/* Application error */}
-      <Match when={withError(e => e[0] === 'iframe' ? [e[1]] : false)()}>
+      {/* Init data missing */}
+      <Match when={withError(e => e[0] === 'init-data-missing')}>
+        <ErrorStatusPage title={t('initDataMissingTitle')} text={t('initDataMissingMessage')}/>
+      </Match>
+
+      {/* Server error */}
+      <Match when={withError(e => e[0] === 'server' ? e[1] : false)}>
+        {$error => (
+          <Show
+            when={(() => {
+              const e = $error();
+              return GraphQLError.is(e) ? e : false;
+            })()}
+            fallback={
+              <ErrorStatusPage
+                title={defaultTitle}
+                text={t('requestMessage', { error: $error().message })}
+              />
+            }
+          >
+            {$$error => {
+              const $code = createMemo(() => {
+                const { extensions } = $$error();
+                return is(looseObject({ errorData: looseObject({ code: string() }) }), extensions)
+                  ? extensions.errorData.code
+                  : false;
+              });
+
+              return (
+                <ErrorStatusPage
+                  title={defaultTitle}
+                  text={
+                    <>
+                      {t('apiMessage', { error: $$error().message })}
+                      <Show when={$code()}>
+                        &nbsp;
+                        <TypographyIos component="span" weight="semibold">
+                          ({$code()})
+                        </TypographyIos>
+                      </Show>
+                    </>
+                  }
+                />
+              );
+            }}
+          </Show>
+        )}
+      </Match>
+
+      {/* Init error */}
+      <Match when={withError(e => e[0] === 'init' ? e[1] : false)}>
+        {$timeout => (
+          <ErrorStatusPage
+            title={defaultTitle}
+            text={t('apiTimeoutMessage', { time: $timeout() })}
+          />
+        )}
+      </Match>
+
+      {/* Application load error */}
+      <Match when={withError(e => e[0] === 'iframe' ? [e[1]] : false)}>
         {$tuple => (
-          <ErrorStatusPage title={title} text={t($tuple()[0] ? 'loadTimeout' : 'appUnknownError')}/>
+          <ErrorStatusPage
+            title={defaultTitle}
+            text={t($tuple()[0] ? 'loadTimeoutMessage' : 'appUnknownMessage')}
+          />
         )}
       </Match>
 
       {/* Unknown error */}
-      <Match
-        when={withError(e => {
-          return e[0] === 'unknown' || (e[0] === 'gql' && !GraphQLError.is(e[0])) ? e[1] : false;
-        })()}
-      >
+      <Match when={withError(e => e[0] === 'unknown' ? e[1] : false)}>
         {$error => {
           const message = () => {
             const error = $error();
-            return t('unknownError', { error: error instanceof Error ? `: ${error.message}` : '' });
+            return t('defaultMessage', { error: error instanceof Error ? `: ${error.message}` : '' });
           };
-          return <ErrorStatusPage title={title} text={message()}/>;
+          return <ErrorStatusPage title={defaultTitle} text={message()}/>;
         }}
       </Match>
     </Switch>
