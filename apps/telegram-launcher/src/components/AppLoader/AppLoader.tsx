@@ -71,7 +71,7 @@ export function AppLoader(props: {
       noAccessText: 'The application is inaccessible on your device',
     },
     ru: {
-      notFoundTitle: 'Приложение не найден',
+      notFoundTitle: 'Приложение не найдено',
       notFoundText: 'Это приложение не было найдено',
       noAccessTitle: 'Тут пусто',
       noAccessText: 'Приложение недоступно на Вашем устройстве',
