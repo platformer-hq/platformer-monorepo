@@ -20,6 +20,7 @@ import {
   type BottomBarColor,
   mountMiniAppSync,
   mountThemeParamsSync,
+  mountMainButton,
 } from '@telegram-apps/sdk-solid';
 import { formatThemeParamsCssVar, formatViewportCssVar } from 'shared';
 import { lazySentryInit, lazyErudaInit } from 'utils';
@@ -81,6 +82,7 @@ export async function init(options: {
     await mountViewport();
     bindViewportCssVars(formatViewportCssVar)
   }
+  mountMainButton.ifAvailable();
   mountMiniAppSync.ifAvailable();
 
   const initialColors: [
