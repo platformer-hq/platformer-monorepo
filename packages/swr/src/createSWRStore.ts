@@ -7,15 +7,18 @@ export interface KeyStatePending<D> {
   status: 'pending',
   data: Promise<D>;
 }
+
 export interface KeyStateSuccess<D> {
   status: 'success';
   data: D;
 }
+
 export interface KeyStateError<D, E> {
   status: 'error';
   error: E;
   latestData?: D;
 }
+
 export type KeyState<D, E = unknown> =
   | KeyStatePending<D>
   | KeyStateSuccess<D>
@@ -52,6 +55,7 @@ export type CreateSWRStoreKey<P extends any[]> =
   | SWRStoreKeyValue
   | ((...args: P) => SWRStoreKeyValue);
 export type CreateSWRStoreFetcher<D, P extends any[]> = (...args: P) => Promise<D>;
+
 export interface CreateSWRStoreOptions<D, E> {
   dataCache?: DataCache<D>;
   freshAge?: number;
@@ -79,6 +83,7 @@ export interface CreateSWRStoreOptions<D, E> {
   shouldRetry?: boolean | ((error: E) => boolean);
   staleAge?: number;
 }
+
 export type SWRStoreMutateFnData<D> =
   | undefined
   | null
@@ -115,7 +120,7 @@ export function createSWRStore<D, P extends any[], E = unknown>(
   const {
     freshAge = 5000,
     staleAge = 30000,
-    logger,
+    logger: _logger,
     retries = 3,
     retryInterval: _retryInterval,
     shouldRetry: _shouldRetry,
@@ -131,11 +136,11 @@ export function createSWRStore<D, P extends any[], E = unknown>(
     ? () => _retryInterval
     : _retryInterval || ((_, retriesPerformed) => Math.pow(2, retriesPerformed - 1) * 100);
 
-  const { log: _log } = logger === 'default' ? createLogger('swr', ['white', 'purple']) : {};
-
-  function log(...args: any[]) {
-    _log && _log(...args);
-  }
+  const { log } = createLogger('swr', {
+    bgColor: 'purple',
+    textColor: 'white',
+    shouldLog: _logger === 'default'
+  });
 
   // Guaranteed returns an observable for the specified key.
   const observableByKey = (key: string): Observable<KeyState<D, E>> => {
