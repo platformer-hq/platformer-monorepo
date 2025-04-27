@@ -13,7 +13,7 @@ $errorIconShift: translate(20%, 20%);
   flex-direction: column;
   position: absolute;
   background: var(--theme-bg-color);
-  padding: calc(var(--sum-inset-top) + 16px) calc(var(--sum-inset-right) + 16px) calc(var(--sum-inset-top) + 16px) calc(var(--sum-inset-top) + 16px);
+  padding: calc(var(--sum-inset-top) + 8px) calc(var(--sum-inset-right) + 16px) calc(var(--sum-inset-bottom) + 8px) calc(var(--sum-inset-left) + 16px);
 
   &__image {
     margin-bottom: 16px;
