@@ -10,33 +10,16 @@ import { GraphQLError } from 'solid-gql';
 import { accessor, pickProps } from 'solid-utils';
 import { useGqlQuery } from 'shared';
 import { isTimeoutError } from 'better-promises';
-import { translator } from '@solid-primitives/i18n';
 
-import {
-  TypedErrorStatusPage,
-  type TypedErrorStatusPageError,
+import type {
+  TypedErrorStatusPageError,
 } from '@/components/TypedErrorStatusPage/TypedErrorStatusPage.js';
 import { AppContainer } from '@/components/AppContainer/AppContainer.js';
 import { StatusPage } from '@/components/StatusPage/StatusPage.js';
 import { createTimeoutSignal } from '@/async/createTimeoutSignal.js';
-import { useMainContext } from '@/providers/MainProvider.js';
+import { useTranslator } from '@/providers/MainProvider.js';
 
 import { GetAppUrl } from './operations.js';
-
-const translations = {
-  en: {
-    notFoundTitle: 'App not found',
-    notFoundText: 'This application was not found',
-    noAccessTitle: 'Nothing here',
-    noAccessText: 'The application is inaccessible on your device',
-  },
-  ru: {
-    notFoundTitle: 'Приложение не найден',
-    notFoundText: 'Это приложение не было найдено',
-    noAccessTitle: 'Тут пусто',
-    noAccessText: 'Приложение недоступно на Вашем устройстве',
-  },
-};
 
 function BootstrappedContainer(props: {
   loadTimeout: number;
@@ -79,10 +62,23 @@ export function AppLoader(props: {
   onError: (error: TypedErrorStatusPageError, fallbackURL?: string) => void;
   onReady: (fallbackURL?: string) => void;
   rawLaunchParams: string;
+  retrySeed: number;
   securedRawLaunchParams: string;
 }) {
-  const { locale } = useMainContext();
-  const t = translator(() => translations[locale]);
+  const t = useTranslator({
+    en: {
+      notFoundTitle: 'App not found',
+      notFoundText: 'This application was not found',
+      noAccessTitle: 'Nothing here',
+      noAccessText: 'The application is inaccessible on your device',
+    },
+    ru: {
+      notFoundTitle: 'Приложение не найден',
+      notFoundText: 'Это приложение не было найдено',
+      noAccessTitle: 'Тут пусто',
+      noAccessText: 'Приложение недоступно на Вашем устройстве',
+    },
+  });
   const [$error, setError] = createSignal<TypedErrorStatusPageError>();
   const $timeout = accessor(props, 'initTimeout');
   const $timeoutSignal = createTimeoutSignal($timeout);
@@ -91,10 +87,12 @@ export function AppLoader(props: {
   const [$appData, setAppData] = createSignal<[appFound: boolean, url?: Maybe<string>]>();
   useGqlQuery(
     GetAppUrl,
-    () => [[{
-      appID: $appID(),
-      launchParams: props.securedRawLaunchParams,
-    }, { signal: $timeoutSignal() }]],
+    () => props.retrySeed
+      ? [[{
+        appID: $appID(),
+        launchParams: props.securedRawLaunchParams,
+      }, { signal: $timeoutSignal() }]]
+      : undefined,
     {
       freshAge: 0,
       onReady(_, data) {
@@ -129,7 +127,7 @@ export function AppLoader(props: {
               onMount(() => {
                 props.onError($err());
               });
-              return <TypedErrorStatusPage error={$err()}/>;
+              return null;
             })()}
           >
             {$fallbackURL => (
