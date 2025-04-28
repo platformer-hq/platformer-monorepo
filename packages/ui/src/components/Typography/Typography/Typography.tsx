@@ -16,13 +16,25 @@ export type TypographyProps<C extends ValidComponent> =
   & DynamicProps<C>
   & WithOptionalClasses<TypographyElementKey, TypographyProps<C>>
   & {
-  strikethrough?: boolean;
-  caps?: boolean;
+  /**
+   * Text alignment.
+   */
   align?: TypographyAlign;
+  /**
+   * Should all letters be upper-cased.
+   */
+  caps?: boolean;
+  /**
+   * Draw a strikethrough line.
+   */
+  strikethrough?: boolean;
 };
 
 const [b] = bem('tgui-typography');
 
+/**
+ * Represents a basic component used to render a text.
+ */
 export function Typography<C extends ValidComponent>(props: TypographyProps<C>) {
   const $cn = cnCreate(
     props as TypographyProps<ValidComponent>, {
@@ -32,20 +44,23 @@ export function Typography<C extends ValidComponent>(props: TypographyProps<C>) 
       ],
     },
   );
-  const $computedProps = () => {
-    const propsNoClasses = omitClasses(props);
-    return mergeProps(
-      typeof props.component === 'function'
-        // If a component was passed, we are reneding it along with the computed classname.
-        ? propsNoClasses
-        // If an intrinsic element was passed, we omit every Typography-specific property.
-        : omitProps(propsNoClasses, ['caps', 'strikethrough']),
-      {
-        get class() {
-          return $cn().root;
-        },
-      },
-    );
-  };
-  return <Dynamic {...$computedProps() as any}/>;
+  return (
+    <Dynamic
+      {...(() => {
+        const propsNoClasses = omitClasses(props);
+        return mergeProps(
+          typeof props.component === 'function'
+            // If a component was passed, we are rendering it along with the computed classname.
+            ? propsNoClasses
+            // If an intrinsic element was passed, we omit every Typography-specific property.
+            : omitProps(propsNoClasses, ['caps', 'strikethrough', 'align']),
+          {
+            get class() {
+              return $cn().root;
+            },
+          },
+        );
+      })() as any}
+    />
+  );
 }
