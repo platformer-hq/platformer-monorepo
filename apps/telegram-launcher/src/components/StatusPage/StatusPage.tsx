@@ -3,13 +3,13 @@ import {
   Xmark28,
   LoadingIndicatorIos,
   LoadingIndicatorAndroid,
-  TypographyIos,
 } from 'ui';
 import { bem } from 'utils';
 import { accessor } from 'solid-utils';
 
 import { useMainContext } from '@/providers/MainProvider.js';
 import { Disclaimer } from '@/components/Disclaimer/Disclaimer.js';
+import { Typography } from '@/components/Typography/Typography.js';
 
 import './StatusPage.scss';
 
@@ -67,14 +67,14 @@ export function StatusPage(props: StatusPageProps) {
         </div>
         <div class={e('content')}>
           <Show when={$title()}>
-            <TypographyIos class={e('title')} variant="title1">
+            <Typography class={e('title')} variant="heading">
               {$title()}
-            </TypographyIos>
+            </Typography>
           </Show>
           <Show when={$text()}>
-            <TypographyIos class={e('text')} variant="body">
+            <Typography class={e('text')}>
               {$text()}
-            </TypographyIos>
+            </Typography>
           </Show>
         </div>
         <Show when={props.state === 'loading'}>

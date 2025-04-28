@@ -1,11 +1,11 @@
 import { createEffect, createMemo, Match, onCleanup, Show, Switch } from 'solid-js';
 import { type UseGqlError, GraphQLError } from 'solid-gql';
-import { TypographyIos } from 'ui';
 import { is, looseObject, string, ValiError } from 'valibot';
 import { onMainButtonClick, setMainButtonParams } from '@telegram-apps/sdk-solid';
 
 import { useTranslator } from '@/providers/MainProvider.js';
 import { StatusPage, type StatusPageProps } from '@/components/StatusPage/StatusPage.js';
+import { Typography } from '@/components/Typography/Typography.js';
 
 export type ErrorStatusPageError =
   | UseGqlError
@@ -130,9 +130,9 @@ export function ErrorStatusPage(props: {
                       {t('apiMessage', { error: $$error().message })}
                       <Show when={$code()}>
                         &nbsp;
-                        <TypographyIos component="span" weight="semibold">
+                        <Typography component="span" weight="semibold">
                           ({$code()})
-                        </TypographyIos>
+                        </Typography>
                       </Show>
                     </>
                   }
