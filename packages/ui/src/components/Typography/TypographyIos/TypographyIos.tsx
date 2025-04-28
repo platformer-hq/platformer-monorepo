@@ -32,10 +32,25 @@ export type TypographyIosProps<C extends ValidComponent> =
   & PartialBy<OmitClasses<TypographyProps<C>>, 'component'>
   & WithOptionalClasses<TypographyElementKey, TypographyIosProps<C>>
   & {
+  /**
+   * Use monospace font.
+   */
   mono?: boolean;
+  /**
+   * Use monospace numbers font.
+   */
   monoNumbers?: boolean;
+  /**
+   * Use rounded font.
+   */
   rounded?: boolean;
+  /**
+   * A specific font settings variation.
+   */
   variant?: TypographyIosVariant;
+  /**
+   * Font weight.
+   */
   weight?: TypographyIosWeight;
 };
 
@@ -53,29 +68,29 @@ export function TypographyIos<C extends ValidComponent>(props: TypographyIosProp
       ),
     ],
   });
-
-  const $computedProps = () => mergeProps(
-    omitProps(omitClasses(props), [
-      'mono',
-      'monoNumbers',
-      'rounded',
-      'weight',
-      'variant',
-    ]),
-    {
-      get component() {
-        const variant = props.variant || 'body';
-        return props.component || ({
-          title1: 'h1',
-          title2: 'h2',
-          title3: 'h3',
-        } as Partial<Record<TypographyIosVariant, string>>)[variant] || 'p';
-      },
-      get class() {
-        return $cn().root;
-      },
-    },
+  return (
+    <Typography
+      {...mergeProps(
+        omitProps(omitClasses(props), [
+          'mono',
+          'monoNumbers',
+          'rounded',
+          'weight',
+          'variant',
+        ]),
+        {
+          get component() {
+            return props.component || ({
+              title1: 'h1',
+              title2: 'h2',
+              title3: 'h3',
+            } as Partial<Record<TypographyIosVariant, string>>)[props.variant || 'body'] || 'p';
+          },
+          get class() {
+            return $cn().root;
+          },
+        },
+      ) as any}
+    />
   );
-
-  return <Typography {...$computedProps() as any}/>;
 }
