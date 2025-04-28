@@ -9,10 +9,6 @@
     text-transform: uppercase;
   }
 
-  &--align-left {
-    text-align: left;
-  }
-
   @each $align in [left, center, right] {
     &--align-#{$align} {
       text-align: $align;
