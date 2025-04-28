@@ -1,5 +1,10 @@
 import { type JSXElement, Show } from 'solid-js';
-import { Xmark28, LoadingIndicatorIos, TypographyIos } from 'ui';
+import {
+  Xmark28,
+  LoadingIndicatorIos,
+  LoadingIndicatorAndroid,
+  TypographyIos,
+} from 'ui';
 import { bem } from 'utils';
 import { accessor } from 'solid-utils';
 
@@ -60,37 +65,22 @@ export function StatusPage(props: StatusPageProps) {
             <Xmark28 class={e('error-icon')}/>
           </Show>
         </div>
-        <Show
-          when={$title() || $text()}
-          fallback={
-            <div class={e('loader', $platform())}>
-              <Show
-                when={$platform() === 'ios'}
-                fallback={
-                  <svg class={e('loader-base-root')}>
-                    <circle
-                      cx="50%"
-                      cy="50%"
-                      r="50%"
-                      stroke-linecap="round"
-                      stroke="currentcolor"
-                    />
-                  </svg>
-                }
-              >
-                <LoadingIndicatorIos size={28}/>
-              </Show>
-            </div>
-          }
-        >
-          <div class={e('content')}>
+        <div class={e('content')}>
+          <Show when={$title()}>
             <TypographyIos class={e('title')} variant="title1">
               {$title()}
             </TypographyIos>
-            <Show when={$text()}>
-              <TypographyIos class={e('text')} variant="body">
-                {$text()}
-              </TypographyIos>
+          </Show>
+          <Show when={$text()}>
+            <TypographyIos class={e('text')} variant="body">
+              {$text()}
+            </TypographyIos>
+          </Show>
+        </div>
+        <Show when={props.state === 'loading'}>
+          <div class={e('loader', $platform())}>
+            <Show when={$platform() === 'ios'} fallback={<LoadingIndicatorAndroid size={28}/>}>
+              <LoadingIndicatorIos size={28}/>
             </Show>
           </div>
         </Show>

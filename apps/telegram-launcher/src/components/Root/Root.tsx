@@ -15,7 +15,12 @@ import { bem } from 'utils';
 
 import { AppLoader } from '@/components/AppLoader/AppLoader.js';
 import { StatusPage } from '@/components/StatusPage/StatusPage.js';
-import { MainProvider, useLogger, useMainContext } from '@/providers/MainProvider.js';
+import {
+  MainProvider,
+  useLogger,
+  useMainContext,
+  useTranslator,
+} from '@/providers/MainProvider.js';
 import {
   ErrorStatusPage,
   type ErrorStatusPageError,
@@ -73,6 +78,18 @@ function Inner(props: InnerProps) {
                   const logger = useLogger();
                   const [$loaderError, setLoaderError] = createSignal<ErrorStatusPageError>();
                   const [$loaderReady, setLoaderReady] = createSignal(false);
+                  const [$currentStep, setCurrentStep] = createSignal<'getting-data' | 'waiting-load'>(
+                    'getting-data');
+                  const t = useTranslator({
+                    en: {
+                      gettingData: 'Getting app data',
+                      waitingLoad: 'Waiting for the app to be ready',
+                    },
+                    ru: {
+                      gettingData: 'Получаем информацию о приложении',
+                      waitingLoad: 'Ожидаем загрузки приложения',
+                    },
+                  });
 
                   createEffect(() => {
                     $loaderReady() && logger.log('Removing the loader');
@@ -106,6 +123,7 @@ function Inner(props: InnerProps) {
                             onRetry={() => {
                               setLoaderReady(false);
                               setLoaderError();
+                              setCurrentStep('getting-data');
                             }}
                           />
                         )}
@@ -121,8 +139,10 @@ function Inner(props: InnerProps) {
                             .then(done);
                         }}>
                           <Show when={!$loaderReady()}>
-                            {/*todo: step*/}
-                            <StatusPage state="loading"/>
+                            <StatusPage
+                              state="loading"
+                              text={t($currentStep() === 'getting-data' ? 'gettingData' : 'waitingLoad')}
+                            />
                           </Show>
                         </Transition>
                         <AppLoader
@@ -147,6 +167,9 @@ function Inner(props: InnerProps) {
                               fallbackURL,
                             );
                             setLoaderReady(true);
+                          }}
+                          onAppDataRetrieved={() => {
+                            setCurrentStep('waiting-load');
                           }}
                         />
                       </Match>

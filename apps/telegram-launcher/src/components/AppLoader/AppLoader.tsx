@@ -57,6 +57,7 @@ export function AppLoader(props: {
   fallbackURL?: Maybe<string>;
   initTimeout: number;
   loadTimeout: number;
+  onAppDataRetrieved: () => void;
   onError: (error: ErrorStatusPageError, fallbackURL?: string) => void;
   onReady: (fallbackURL?: string) => void;
   rawLaunchParams: string;
@@ -92,6 +93,7 @@ export function AppLoader(props: {
       freshAge: 0,
       onReady(_, data) {
         setAppData([true, data.appTelegramURL]);
+        props.onAppDataRetrieved();
       },
       onErrored(_, error) {
         if (GraphQLError.is(error) && error.isOfType('ERR_APP_NOT_FOUND')) {

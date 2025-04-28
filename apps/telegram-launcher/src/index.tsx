@@ -1,4 +1,6 @@
 /* @refresh reload */
+// TODO: Optimize used CSS. The last we had the following CSS bundle size:
+//  dist/assets/index-D6kFVHBQ.css       16.69 kB │ gzip:   3.58 kB
 import 'ui/index.css';
 
 import { render } from 'solid-js/web';
