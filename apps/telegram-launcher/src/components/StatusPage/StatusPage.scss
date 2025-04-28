@@ -58,6 +58,7 @@ $errorIconShift: translate(20%, 20%);
 
   &__content {
     text-align: center;
+    text-wrap: balance;
     animation: status-page-content-appear 200ms ease forwards;
   }
 
