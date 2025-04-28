@@ -7,9 +7,11 @@ import {
   Show,
   Switch,
 } from 'solid-js';
+import { Transition } from 'solid-transition-group';
 import type { Platform } from '@telegram-apps/sdk-solid';
 import { pickProps } from 'solid-utils';
 import { GqlProvider } from 'shared';
+import { bem } from 'utils';
 
 import { AppLoader } from '@/components/AppLoader/AppLoader.js';
 import { StatusPage } from '@/components/StatusPage/StatusPage.js';
@@ -38,20 +40,21 @@ interface RootProps extends InnerProps {
   platform: Platform;
 }
 
+const [b] = bem('root');
+
 function Inner(props: InnerProps) {
   const [$options, $error] = useLauncherOptions();
   const context = useMainContext();
 
   return (
     <main
-      classList={{
-        'root': true,
-        'root--mobile': ([
+      class={b(
+        ([
           'android',
           'android_x',
           'ios',
-        ] satisfies Platform[]).includes(context.platform),
-      }}
+        ] satisfies Platform[]).includes(context.platform) && 'mobile',
+      )}
     >
       <Switch>
         <Match when={$error.ok() && $error()}>
@@ -84,8 +87,8 @@ function Inner(props: InnerProps) {
                   });
                   const $securedRawLaunchParams = createMemo(() => {
                     // We are sanitizing the "hash" property for security purposes, so Platformer
-                    // could not use this init data to impersonate user. Instead, Platformer uses the
-                    // "signature" property allowing third parties to validate the init data.
+                    // could not use this init data to impersonate user. Instead, Platformer uses
+                    // the "signature" property allowing third parties to validate the init data.
                     const initDataQuery = new URLSearchParams($rawInitData());
                     initDataQuery.set('hash', '');
 
@@ -108,10 +111,20 @@ function Inner(props: InnerProps) {
                         )}
                       </Match>
                       <Match when>
-                        <Show when={!$loaderReady()}>
-                          {/*todo: step*/}
-                          <StatusPage state="loading"/>
-                        </Show>
+                        <Transition onExit={(el, done) => {
+                          return el
+                            .animate([
+                              { opacity: 1, transform: 'scale(1)' },
+                              { opacity: 0, transform: 'scale(1.1)' },
+                            ], { duration: 100 })
+                            .finished
+                            .then(done);
+                        }}>
+                          <Show when={!$loaderReady()}>
+                            {/*todo: step*/}
+                            <StatusPage state="loading"/>
+                          </Show>
+                        </Transition>
                         <AppLoader
                           {...pickProps(
                             $opts(),
@@ -121,7 +134,10 @@ function Inner(props: InnerProps) {
                           fallbackURL={$fallbackURL()}
                           securedRawLaunchParams={$securedRawLaunchParams()}
                           onError={(error, fallbackURL) => {
-                            fallbackURL && logger.forceError('Fallback URL failed to load:', fallbackURL);
+                            fallbackURL && logger.forceError(
+                              'Fallback URL failed to load:',
+                              fallbackURL,
+                            );
                             setLoaderError(error);
                             setLoaderReady(true);
                           }}

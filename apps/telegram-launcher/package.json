@@ -28,6 +28,7 @@
     "shared": "workspace:*",
     "solid-gql": "workspace:*",
     "solid-js": "^1.9.3",
+    "solid-transition-group": "^0.3.0",
     "solid-utils": "workspace:*",
     "ui": "workspace:*",
     "utils": "workspace:*",
