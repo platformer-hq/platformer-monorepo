@@ -1,0 +1,44 @@
+@use "sass:map" as map;
+@use "sass:list" as list;
+
+.tgui-loading-indicator-android {
+  color: var(--tgui-loading-indicator-android-color, currentcolor);
+  display: inline-block;
+
+  &__icon {
+    fill: transparent;
+    overflow: visible;
+    display: block;
+    animation: 1.4s ease-in-out infinite tgui-loading-indicator-android-running,
+    1.4s linear infinite tgui-loading-indicator-android-rotate;
+    stroke-width: 9%;
+  }
+}
+
+@keyframes tgui-loading-indicator-android-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes tgui-loading-indicator-android-running {
+  $settings: (
+    "0%": [#{1, 500%}, 0],
+    "50%": [#{250%, 500%}, -37.5%],
+    "100%": [#{250%, 500%}, -312.5%],
+  );
+
+  @each $percentage in ["0%", "50%", "100%"] {
+    $stroke-settings: map.get($settings, $percentage);
+
+    #{$percentage} {
+      stroke: {
+        dasharray: list.nth($stroke-settings, 1);
+        dashoffset: list.nth($stroke-settings, 2);
+      }
+    }
+  }
+}
