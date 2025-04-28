@@ -25,7 +25,7 @@ export default defineConfig(({ mode }) => {
       emptyOutDir: true,
       sourcemap: true,
       rollupOptions: {
-        external: ['solid-js', 'solid-utils'],
+        external: ['solid-js', 'solid-utils', 'solid-transition-group'],
       },
       lib: {
         entry: 'src/index.ts',
