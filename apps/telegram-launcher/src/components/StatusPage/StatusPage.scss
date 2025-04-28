@@ -45,7 +45,7 @@ $errorIconShift: translate(20%, 20%);
   }
 
   &__loader {
-    padding: 16px 16px 0;
+    padding-top: 16px;
     color: var(--theme-hint-color);
   }
 
@@ -62,12 +62,10 @@ $errorIconShift: translate(20%, 20%);
   }
 
   &__title {
-    padding: 0 16px;
     margin: 0 0 4px;
   }
 
   &__text {
-    padding: 0 16px;
     margin: 0;
     color: var(--theme-subtitle-text-color);
   }
