@@ -1,4 +1,4 @@
-import { mergeProps, ValidComponent } from 'solid-js';
+import type { ValidComponent } from 'solid-js';
 
 import {
   Typography,
@@ -46,6 +46,7 @@ export type TypographyIosProps<C extends ValidComponent> =
   rounded?: boolean;
   /**
    * A specific font settings variation.
+   * @default "body"
    */
   variant?: TypographyIosVariant;
   /**
@@ -70,27 +71,19 @@ export function TypographyIos<C extends ValidComponent>(props: TypographyIosProp
   });
   return (
     <Typography
-      {...mergeProps(
-        omitProps(omitClasses(props), [
-          'mono',
-          'monoNumbers',
-          'rounded',
-          'weight',
-          'variant',
-        ]),
-        {
-          get component() {
-            return props.component || ({
-              title1: 'h1',
-              title2: 'h2',
-              title3: 'h3',
-            } as Partial<Record<TypographyIosVariant, string>>)[props.variant || 'body'] || 'p';
-          },
-          get class() {
-            return $cn().root;
-          },
-        },
-      ) as any}
+      {...omitProps(omitClasses(props), [
+        'mono',
+        'monoNumbers',
+        'rounded',
+        'weight',
+        'variant',
+      ]) as any}
+      component={props.component || ({
+        title1: 'h1',
+        title2: 'h2',
+        title3: 'h3',
+      } as Partial<Record<TypographyIosVariant, string>>)[props.variant || 'body'] || 'p'}
+      class={$cn().root}
     />
   );
 }

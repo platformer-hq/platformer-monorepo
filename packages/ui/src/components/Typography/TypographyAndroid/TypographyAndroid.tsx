@@ -1,4 +1,4 @@
-import { mergeProps, ValidComponent } from 'solid-js';
+import type { ValidComponent } from 'solid-js';
 
 import {
   Typography,
@@ -32,9 +32,19 @@ export type TypographyAndroidProps<C extends ValidComponent> =
   & PartialBy<OmitClasses<TypographyProps<C>>, 'component'>
   & WithOptionalClasses<TypographyElementKey, TypographyAndroidProps<C>>
   & {
+  /**
+   * Use monospace font.
+   */
   mono?: boolean;
-  weight?: TypographyAndroidWeight;
+  /**
+   * A specific font settings variation.
+   * @default "body1"
+   */
   variant?: TypographyAndroidVariant;
+  /**
+   * Font weight.
+   */
+  weight?: TypographyAndroidWeight;
 };
 
 const [b] = bem('tgui-typography-android');
@@ -46,22 +56,15 @@ export function TypographyAndroid<C extends ValidComponent>(props: TypographyAnd
       b(pickProps(v, ['mono']), v.weight, v.variant || 'body1'),
     ],
   });
-  const $computedProps = () => mergeProps(
-    omitProps(omitClasses(props), ['mono', 'weight', 'variant']),
-    {
-      get component() {
-        const variant = props.variant || 'body1';
-        return props.component || ({
-          headline5: 'h1',
-          headline6: 'h2',
-          headline7: 'h3',
-        } as Partial<Record<TypographyAndroidVariant, string>>)[variant] || 'p';
-      },
-      get class() {
-        return $cn().root;
-      },
-    },
+  return (
+    <Typography
+      {...omitProps(omitClasses(props), ['mono', 'weight', 'variant']) as any}
+      component={props.component || ({
+        headline5: 'h1',
+        headline6: 'h2',
+        headline7: 'h3',
+      } as Partial<Record<TypographyAndroidVariant, string>>)[props.variant || 'body1'] || 'p'}
+      class={$cn().root}
+    />
   );
-
-  return <Typography {...$computedProps() as any}/>;
 }

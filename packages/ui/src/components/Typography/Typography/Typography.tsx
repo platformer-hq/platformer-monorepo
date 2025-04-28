@@ -1,4 +1,4 @@
-import { mergeProps, type ValidComponent } from 'solid-js';
+import type { ValidComponent } from 'solid-js';
 import { Dynamic, type DynamicProps } from 'solid-js/web';
 
 import type { WithOptionalClasses } from '@/css/types.js';
@@ -44,23 +44,15 @@ export function Typography<C extends ValidComponent>(props: TypographyProps<C>) 
       ],
     },
   );
+  const propsNoClasses = omitClasses(props);
   return (
     <Dynamic
-      {...(() => {
-        const propsNoClasses = omitClasses(props);
-        return mergeProps(
-          typeof props.component === 'function'
-            // If a component was passed, we are rendering it along with the computed classname.
-            ? propsNoClasses
-            // If an intrinsic element was passed, we omit every Typography-specific property.
-            : omitProps(propsNoClasses, ['caps', 'strikethrough', 'align']),
-          {
-            get class() {
-              return $cn().root;
-            },
-          },
-        );
-      })() as any}
+      {...typeof props.component === 'function'
+        // If a component was passed, we are rendering it along with the computed classname.
+        ? propsNoClasses
+        // If an intrinsic element was passed, we omit every Typography-specific property.
+        : omitProps(propsNoClasses, ['caps', 'strikethrough', 'align']) as any}
+      class={$cn().root}
     />
   );
 }
