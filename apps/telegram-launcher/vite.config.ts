@@ -37,7 +37,7 @@ export default defineConfig({
   publicDir: './public',
   server: {
     proxy: {
-      '/gql': 'http://localhost:10000',
+      '/gql': 'https://mini-apps.store',
     },
     // Exposes your dev server and makes it accessible for the devices in the same network.
     host: true,
