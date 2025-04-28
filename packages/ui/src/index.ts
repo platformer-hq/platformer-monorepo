@@ -6,6 +6,7 @@ export * from './components/LoadingIndicator/exports.js';
 export * from './components/SearchField/exports.js';
 export * from './components/Switch/exports.js';
 export * from './components/SwitchPlatform/exports.js';
+export * from './components/Tappable/exports.js';
 export * from './components/TextField/exports.js';
 export * from './components/Typography/exports.js';
 //#endregion
