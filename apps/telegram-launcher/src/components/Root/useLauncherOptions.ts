@@ -38,7 +38,7 @@ export function useLauncherOptions() {
                   string(),
                   transform(v => new URL(v, window.location.origin).toString()),
                 ),
-                'https://mini-apps.store/gql',
+                import.meta.env.DEV ? '/gql' : 'https://mini-apps.store/gql',
               ),
               fallback_url: optional(string()),
               init_timeout: optional(positiveIntFromStr(), '5000'),
