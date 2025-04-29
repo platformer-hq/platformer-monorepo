@@ -47,7 +47,14 @@ export function Tappable<T extends ValidComponent>(props: TappableProps<T>) {
       {...props}
       class={$cn().root}
       onPointerDown={composeHandlers<T, PointerEvent>(props.onPointerDown, e => {
-        setRipples(prev => [...prev, [e.offsetX, e.offsetY]]);
+        const { currentTarget } = e;
+        if (currentTarget instanceof HTMLElement) {
+          const rect = currentTarget.getBoundingClientRect();
+          setRipples(prev => [...prev, [
+            e.clientX - rect.left,
+            e.clientY - rect.top,
+          ]]);
+        }
         setIsHolding(true);
       })}
       onPointerUp={composeHandlers<T, PointerEvent>(props.onPointerUp, () => {
