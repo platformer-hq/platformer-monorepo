@@ -10,7 +10,6 @@ import { e } from '../bem.js';
 import './ListIosItemBodyLeftLabel.scss';
 
 export type ListIosItemBodyLeftLabelElementKey = 'root';
-export type ListIosItemBodyLeftLabelVariant = 'regular' | 'accent' | 'destructive' | 'placeholder';
 export type ListIosItemBodyLeftLabelProps =
   & JSXIntrinsicElementAttrs<'p'>
   & WithOptionalClasses<ListIosItemBodyLeftLabelElementKey, ListIosItemBodyLeftLabelProps>
@@ -20,19 +19,15 @@ export type ListIosItemBodyLeftLabelProps =
    * @default false
    */
   medium?: boolean;
-  /**
-   * Label visual variant.
-   */
-  variant?: ListIosItemBodyLeftLabelVariant;
 };
 
 export function ListIosItemBodyLeftLabel(props: ListIosItemBodyLeftLabelProps) {
   const $cn = cnCreate(props, {
-    root: v => [v.class, e('item-body-left-label', v.variant || 'regular')],
+    root: v => [v.class, e('item-body-left-label')],
   });
   return (
     <TypographyIos
-      {...omitProps(omitClasses(props), ['medium', 'variant'])}
+      {...omitProps(omitClasses(props), ['medium'])}
       variant="body"
       component="p"
       class={$cn().root}
