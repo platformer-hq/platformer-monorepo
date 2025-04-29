@@ -25,7 +25,7 @@ $variants: (
 $weights: (regular: 400, medium: 500);
 
 .tgui-typography-android {
-  font-family: Roboto, sans-serif;
+  font-family: Roboto, "Segoe UI", "Helvetica Neue", sans-serif;
 
   @each $variant, $settings in $variants {
     &--#{$variant} {
