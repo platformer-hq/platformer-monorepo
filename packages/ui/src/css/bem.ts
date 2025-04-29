@@ -1,4 +1,4 @@
-import { classNames, isRecord } from '@/css/classnames.js';
+import { classNames, isRecord } from './classnames.js';
 
 export interface BlockFn {
   (...mods: any): string;
@@ -6,6 +6,10 @@ export interface BlockFn {
 
 export interface ElemFn {
   (elem: string, ...mods: any): string;
+}
+
+export interface ElemGenFn {
+  (elemBase: string): (elem?: string, ...mods: any) => string;
 }
 
 /**
@@ -40,9 +44,16 @@ function computeClassnames(element: string, ...mods: any): string {
  * block, the second one generates classnames for its elements.
  * @param block - BEM block name.
  */
-export function bem(block: string): [BlockFn, ElemFn] {
+export function bem(block: string): [BlockFn, ElemFn, ElemGenFn] {
+  const elemFn: ElemFn = (elem, ...mods) => {
+    return computeClassnames(`${block}__${elem}`, mods);
+  };
   return [
     (...mods) => computeClassnames(block, mods),
-    (elem, ...mods) => computeClassnames(`${block}__${elem}`, mods),
+    elemFn,
+    elemBase => (elem, ...mods) => elemFn(
+      `${elemBase}${elem ? `-${elem}` : ''}`,
+      mods,
+    ),
   ];
 }
