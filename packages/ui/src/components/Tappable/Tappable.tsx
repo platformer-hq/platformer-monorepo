@@ -4,6 +4,7 @@ import { createEffect, createSignal, For, type ValidComponent } from 'solid-js';
 
 import { bem } from '@/css/bem.js';
 import { composeHandlers } from '@/helpers/composeHandlers.js';
+import { cnCreate } from '@/css/cnCreate.js';
 import type { WithOptionalClasses } from '@/css/types.js';
 
 import './Tappable.scss';
@@ -18,6 +19,11 @@ const [b, e] = bem('tgui-tappable');
 export function Tappable<T extends ValidComponent>(props: TappableProps<T>) {
   const [$ripples, setRipples] = createSignal<[x: number, y: number, canDestroy?: boolean][]>([]);
   const [$isHolding, setIsHolding] = createSignal(false);
+  const $cn = cnCreate(props as TappableProps<ValidComponent>, {
+    root: v => [v.class, b()],
+    ripples: e('ripples'),
+    ripple: e('ripple'),
+  });
 
   createEffect(() => {
     const r = $ripples();
@@ -39,7 +45,7 @@ export function Tappable<T extends ValidComponent>(props: TappableProps<T>) {
   return (
     <Dynamic
       {...props}
-      class={b()}
+      class={$cn().root}
       onPointerDown={composeHandlers<T, PointerEvent>(props.onPointerDown, e => {
         setRipples(prev => [...prev, [e.offsetX, e.offsetY]]);
         setIsHolding(true);
@@ -52,7 +58,7 @@ export function Tappable<T extends ValidComponent>(props: TappableProps<T>) {
       })}
     >
       {props.children}
-      <span class={e('ripples')}>
+      <span class={$cn().ripples}>
         <TransitionGroup
           onEnter={(el, done) => {
             return el
@@ -87,7 +93,7 @@ export function Tappable<T extends ValidComponent>(props: TappableProps<T>) {
         >
           <For each={$ripples()}>
             {ripple => (
-              <span class={e('ripple')} style={`left:${ripple[0]}px; top:${ripple[1]}px`}/>
+              <span class={$cn().ripple} style={`left:${ripple[0]}px; top:${ripple[1]}px`}/>
             )}
           </For>
         </TransitionGroup>
