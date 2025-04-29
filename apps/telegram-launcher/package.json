@@ -21,6 +21,7 @@
   "dependencies": {
     "@sentry/solid": "^9.1.0",
     "@solid-primitives/i18n": "^2.2.0",
+    "@telegram-apps/bridge": "^2.8.2",
     "@telegram-apps/sdk-solid": "^3.0.23",
     "api": "workspace:*",
     "better-promises": "^0.4.1",

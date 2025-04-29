@@ -2,11 +2,11 @@ import { onCleanup, onMount } from 'solid-js';
 import {
   isRGB,
   type MethodName,
-  postEvent,
   setMiniAppBackgroundColor,
   setMiniAppBottomBarColor,
   setMiniAppHeaderColor,
 } from '@telegram-apps/sdk-solid';
+import { postEvent } from '@telegram-apps/bridge';
 import { looseObject, optional, parse, string, unknown } from 'valibot';
 import { createEventListener } from 'solid-utils';
 
