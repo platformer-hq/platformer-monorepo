@@ -1,0 +1,35 @@
+@use "../../../../scss/mixins";
+
+@mixin variant($name, $color) {
+  &--#{$name} {
+    color: var(--tgui-list-android-item-#{$name}-text-color, $color);
+  }
+}
+
+.tgui-list-android__item {
+  display: block;
+  height: 50px;
+
+  &--large {
+    height: 64px;
+  }
+
+  &-inner {
+    appearance: none;
+    border: none;
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+    padding: 0 0 0 20px;
+    background: transparent;
+    text-align: left;
+    color: inherit;
+  }
+
+  @include variant("regular", #222222);
+  @include variant("accent", #1C93E3);
+  @include variant("destructive", #CC2929);
+  @include variant("placeholder", #82868A);
+}

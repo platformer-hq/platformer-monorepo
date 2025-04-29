@@ -1,0 +1,12 @@
+.tgui-list-android__item-body-right-counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1000px;
+  color: var(--tgui-list-android-item-body-right-counter-text-color, white);
+  background: var(--tgui-list-android-item-body-right-counter-bg, #CC2929);
+  min-width: 24px;
+  height: 24px;
+  box-sizing: border-box;
+  padding: 0 7px;
+}
