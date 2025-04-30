@@ -1,0 +1,63 @@
+@use "../../../scss/mixins";
+
+.search-field-android {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  position: relative;
+  background: var(--tgui-search-field-android-bg, #7474801F);
+  padding: 0 16px 0 12px;
+
+  &__search-icon {
+    flex: 0 0 auto;
+    color: var(--tgui-search-field-android-icon-color, #8E8E93);
+    width: 20px;
+  }
+
+  &__input {
+    height: 100%;
+    flex: 1 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    &-element {
+      border: none;
+      background: transparent;
+      appearance: none;
+      height: 100%;
+      padding: 0;
+      outline: none;
+      font-family: SF Pro, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 17px;
+      line-height: 22px;
+      flex: 1 0 auto;
+      color: var(--tgui-search-field-android-text-color, black);
+    }
+  }
+
+  &__placeholder {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.8;
+    color: var(--tgui-search-field-android-placeholder-color, #8E8E93);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  &__clear {
+    display: flex;
+    align-items: center;
+    color: var(--tgui-search-field-android-clear-color, #8E8E93);
+    box-sizing: border-box;
+    flex: 0 0 auto;
+    @include mixins.clickable;
+
+    &-icon {
+      display: block;
+      width: 20px;
+    }
+  }
+}
