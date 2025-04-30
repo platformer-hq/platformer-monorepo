@@ -3,6 +3,7 @@ import {
   Xmark28,
   LoadingIndicatorIos,
   LoadingIndicatorAndroid,
+  classNames,
 } from 'ui';
 import { bem } from 'utils';
 import { accessor } from 'solid-utils';
@@ -17,6 +18,7 @@ export interface StatusPageProps {
   state?: 'error' | 'loading';
   text?: JSXElement;
   title?: string;
+  class?: string;
 }
 
 const [b, e] = bem('status-page');
@@ -30,7 +32,7 @@ export function StatusPage(props: StatusPageProps) {
   const $text = accessor(props, 'text');
 
   return (
-    <div class={b()}>
+    <div class={classNames(props.class, b())}>
       <div/>
       <div class={e('main')}>
         <div class={e('image')}>

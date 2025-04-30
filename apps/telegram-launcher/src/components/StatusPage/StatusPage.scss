@@ -13,7 +13,8 @@ $errorIconShift: translate(20%, 20%);
   flex-direction: column;
   position: absolute;
   background: var(--theme-bg-color);
-  padding: calc(var(--sum-inset-top) + 8px) calc(var(--sum-inset-right) + 16px) calc(var(--sum-inset-bottom) + 8px) calc(var(--sum-inset-left) + 16px);
+  padding-top: calc(var(--sum-inset-top) + 8px);
+  padding-bottom: calc(var(--sum-inset-bottom) + 8px);
 
   &__image {
     margin-bottom: 16px;
@@ -54,6 +55,8 @@ $errorIconShift: translate(20%, 20%);
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding-right: calc(var(--sum-inset-right) + 16px);
+    padding-left: calc(var(--sum-inset-left) + 16px);
   }
 
   &__content {
