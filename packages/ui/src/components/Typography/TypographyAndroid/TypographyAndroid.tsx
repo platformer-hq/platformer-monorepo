@@ -53,7 +53,7 @@ export function TypographyAndroid<C extends ValidComponent>(props: TypographyAnd
   const $cn = cnCreate<TypographyAndroidProps<ValidComponent>>(props, {
     root: v => [
       v.class,
-      b(pickProps(v, ['mono']), v.weight, v.variant || 'body1'),
+      b(pickProps(v, ['mono']), v.weight, v.variant),
     ],
   });
   return (
