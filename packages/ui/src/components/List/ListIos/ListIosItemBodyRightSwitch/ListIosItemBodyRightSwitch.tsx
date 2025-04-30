@@ -10,6 +10,8 @@ import { e } from '../bem.js';
 export type ListIosItemBodyRightSwitchElementKey = SwitchIosElementKey;
 export type ListIosItemBodyRightSwitchProps = SwitchIosProps;
 
+import './ListIosItemBodyRightSwitch.scss';
+
 const StyledSwitch = styled(SwitchIos, { root: e('item-body-right-switch') });
 
 export function ListIosItemBodyRightSwitch(props: SwitchIosProps) {
