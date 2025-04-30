@@ -7,6 +7,8 @@ import { styled } from '@/css/styled.js';
 
 import { e } from '../bem.js';
 
+import './ListAndroidItemBodyRightSwitch.scss';
+
 export type ListAndroidItemBodyRightSwitchElementKey = SwitchAndroidElementKey;
 export type ListAndroidItemBodyRightSwitchProps = SwitchAndroidProps;
 
