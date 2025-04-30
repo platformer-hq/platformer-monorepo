@@ -45,7 +45,7 @@ interface RootProps extends InnerProps {
   platform: Platform;
 }
 
-const [b] = bem('root');
+const [b, e] = bem('root');
 
 function Inner(props: InnerProps) {
   const [$options, $error] = useLauncherOptions();
@@ -129,17 +129,22 @@ function Inner(props: InnerProps) {
                         )}
                       </Match>
                       <Match when>
-                        <Transition onExit={(el, done) => {
-                          return el
-                            .animate([
-                              { opacity: 1, transform: 'scale(1)' },
-                              { opacity: 0, transform: 'scale(1.1)' },
-                            ], { duration: 100 })
-                            .finished
-                            .then(done);
-                        }}>
+                        <Transition
+                          onExit={(el, done) => {
+                            return el
+                              .animate({
+                                clipPath: ['circle(100% at 50% 50%)', 'circle(20% at 50% 50%)'],
+                                opacity: [1, 0],
+                                transform: ['scale(1)', 'scale(1.05)'],
+                                backgroundSize: ['100% 111%', '100% 100%', '100% 100%'],
+                              }, { duration: 200, easing: 'ease-out' })
+                              .finished
+                              .then(done);
+                          }}
+                        >
                           <Show when={!$loaderReady()}>
                             <StatusPage
+                              class={e('status')}
                               state="loading"
                               text={t($currentStep() === 'getting-data' ? 'gettingData' : 'waitingLoad')}
                             />
