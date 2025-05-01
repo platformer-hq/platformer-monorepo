@@ -77,6 +77,10 @@ export type {
   ListAndroidItemBodyRightCounterProps,
   ListAndroidItemBodyRightCounterElementKey,
 } from './ListAndroid/ListAndroidItemBodyRightCounter/ListAndroidItemBodyRightCounter.js';
+export type {
+  ListAndroidItemBodyRightClearProps,
+  ListAndroidItemBodyRightClearElementKey,
+} from './ListAndroid/ListAndroidItemBodyRightClear/ListAndroidItemBodyRightClear.js';
 export {
   ListAndroidItem,
   ListAndroidItemLeft,
