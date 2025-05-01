@@ -6,13 +6,18 @@ import type {
 import type { TextFieldIosInputProps } from './TextFieldIosInput/TextFieldIosInput.js';
 import type { TextFieldIosClearProps } from './TextFieldIosClear/TextFieldIosClear.js';
 
-const [Box, filterBox] = slotGen<{
+const [Slot, filterBox] = slotGen<{
   input: TextFieldIosInputProps;
   placeholder: TextFieldIosPlaceholderProps;
   clear: TextFieldIosClearProps;
 }>();
 
+/*@__NO_SIDE_EFFECTS__*/
+function PureSlot<S extends Parameters<typeof Slot>[0]>(name: S) {
+  return Slot(name);
+}
+
 export { filterBox };
-export const TextFieldIosInput = Box('input');
-export const TextFieldIosClear = Box('clear');
-export const TextFieldIosPlaceholder = Box('placeholder');
+export const TextFieldIosInput = PureSlot('input');
+export const TextFieldIosClear = PureSlot('clear');
+export const TextFieldIosPlaceholder = PureSlot('placeholder');

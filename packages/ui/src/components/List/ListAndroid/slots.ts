@@ -74,22 +74,27 @@ const [Slot, filterSlots] = slotGen<{
   root: ListAndroidItemProps;
 }>();
 
+/*@__NO_SIDE_EFFECTS__*/
+function PureSlot<S extends Parameters<typeof Slot>[0]>(name: S) {
+  return Slot(name);
+}
+
 export { filterSlots };
-export const ListAndroidItem = Slot('root');
-export const ListAndroidItemLeft = Slot('left');
-export const ListAndroidItemLeftCheckbox = Slot('leftCheckbox');
-export const ListAndroidItemLeftIcon = Slot('leftIcon');
-export const ListAndroidItemLeftLabel = Slot('leftLabel');
-export const ListAndroidItemBody = Slot('body');
-export const ListAndroidItemBodyLeft = Slot('bodyLeft');
-export const ListAndroidItemBodyLeftLabel = Slot('bodyLeftLabel');
-export const ListAndroidItemBodyLeftSubtitle = Slot('bodyLeftSubtitle');
-export const ListAndroidItemBodyRight = Slot('bodyRight');
-export const ListAndroidItemBodyRightChevron = Slot('bodyRightChevron');
-export const ListAndroidItemBodyRightLabel = Slot('bodyRightLabel');
-export const ListAndroidItemBodyRightCheckmark = Slot('bodyRightCheckmark');
-export const ListAndroidItemBodyRightClear = Slot('bodyRightClear');
-export const ListAndroidItemBodyRightSwitch = Slot('bodyRightSwitch');
-export const ListAndroidItemBodyRightRadio = Slot('bodyRightRadio');
-export const ListAndroidItemBodyInput = Slot('bodyInput');
-export const ListAndroidItemRightCounter = Slot('bodyRightCounter');
+export const ListAndroidItem = PureSlot('root');
+export const ListAndroidItemLeft = PureSlot('left');
+export const ListAndroidItemLeftCheckbox = PureSlot('leftCheckbox');
+export const ListAndroidItemLeftIcon = PureSlot('leftIcon');
+export const ListAndroidItemLeftLabel = PureSlot('leftLabel');
+export const ListAndroidItemBody = PureSlot('body');
+export const ListAndroidItemBodyLeft = PureSlot('bodyLeft');
+export const ListAndroidItemBodyLeftLabel = PureSlot('bodyLeftLabel');
+export const ListAndroidItemBodyLeftSubtitle = PureSlot('bodyLeftSubtitle');
+export const ListAndroidItemBodyRight = PureSlot('bodyRight');
+export const ListAndroidItemBodyRightChevron = PureSlot('bodyRightChevron');
+export const ListAndroidItemBodyRightLabel = PureSlot('bodyRightLabel');
+export const ListAndroidItemBodyRightCheckmark = PureSlot('bodyRightCheckmark');
+export const ListAndroidItemBodyRightClear = PureSlot('bodyRightClear');
+export const ListAndroidItemBodyRightSwitch = PureSlot('bodyRightSwitch');
+export const ListAndroidItemBodyRightRadio = PureSlot('bodyRightRadio');
+export const ListAndroidItemBodyInput = PureSlot('bodyInput');
+export const ListAndroidItemRightCounter = PureSlot('bodyRightCounter');

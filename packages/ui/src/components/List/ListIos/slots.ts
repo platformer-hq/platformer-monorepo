@@ -66,22 +66,27 @@ const [Slot, filterSlots] = slotGen<{
   root: ListIosItemProps;
 }>();
 
+/*@__NO_SIDE_EFFECTS__*/
+function PureSlot<S extends Parameters<typeof Slot>[0]>(name: S) {
+  return Slot(name);
+}
+
 export { filterSlots };
-export const ListIosItem = Slot('root');
-export const ListIosItemLeft = Slot('left');
-export const ListIosItemLeftCheckbox = Slot('leftCheckbox');
-export const ListIosItemLeftIcon = Slot('leftIcon');
-export const ListIosItemLeftLabel = Slot('leftLabel');
-export const ListIosItemBody = Slot('body');
-export const ListIosItemBodyLeft = Slot('bodyLeft');
-export const ListIosItemBodyLeftLabel = Slot('bodyLeftLabel');
-export const ListIosItemBodyLeftSubtitle = Slot('bodyLeftSubtitle');
-export const ListIosItemBodyRight = Slot('bodyRight');
-export const ListIosItemBodyRightChevron = Slot('bodyRightChevron');
-export const ListIosItemBodyRightLabel = Slot('bodyRightLabel');
-export const ListIosItemBodyRightCheckmark = Slot('bodyRightCheckmark');
-export const ListIosItemBodyRightClear = Slot('bodyRightClear');
-export const ListIosItemBodyRightSwitch = Slot('bodyRightSwitch');
-export const ListIosItemBodyRightRadio = Slot('bodyRightRadio');
-export const ListIosItemBodyInput = Slot('bodyInput');
-export const ListIosItemRightCounter = Slot('bodyRightCounter');
+export const ListIosItem = PureSlot('root');
+export const ListIosItemLeft = PureSlot('left');
+export const ListIosItemLeftCheckbox = PureSlot('leftCheckbox');
+export const ListIosItemLeftIcon = PureSlot('leftIcon');
+export const ListIosItemLeftLabel = PureSlot('leftLabel');
+export const ListIosItemBody = PureSlot('body');
+export const ListIosItemBodyLeft = PureSlot('bodyLeft');
+export const ListIosItemBodyLeftLabel = PureSlot('bodyLeftLabel');
+export const ListIosItemBodyLeftSubtitle = PureSlot('bodyLeftSubtitle');
+export const ListIosItemBodyRight = PureSlot('bodyRight');
+export const ListIosItemBodyRightChevron = PureSlot('bodyRightChevron');
+export const ListIosItemBodyRightLabel = PureSlot('bodyRightLabel');
+export const ListIosItemBodyRightCheckmark = PureSlot('bodyRightCheckmark');
+export const ListIosItemBodyRightClear = PureSlot('bodyRightClear');
+export const ListIosItemBodyRightSwitch = PureSlot('bodyRightSwitch');
+export const ListIosItemBodyRightRadio = PureSlot('bodyRightRadio');
+export const ListIosItemBodyInput = PureSlot('bodyInput');
+export const ListIosItemRightCounter = PureSlot('bodyRightCounter');
