@@ -1,3 +1,5 @@
+@use "../../../scss/mixins";
+
 .tgui-switch-android {
   appearance: none;
   display: inline-block;
@@ -7,7 +9,7 @@
   background: var(--tgui-switch-android-bg, #A8A8A8);
   position: relative;
   transition: background 200ms ease;
-  cursor: pointer;
+  @include mixins.clickable;
 
   &--disabled {
     cursor: default;
