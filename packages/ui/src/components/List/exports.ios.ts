@@ -70,6 +70,10 @@ export type {
   ListIosItemBodyRightSwitchElementKey,
 } from './ListIos/ListIosItemBodyRightSwitch/ListIosItemBodyRightSwitch.js';
 export type {
+  ListIosItemBodyRightRadioProps,
+  ListIosItemBodyRightRadioElementKey,
+} from './ListIos/ListIosItemBodyRightRadio/ListIosItemBodyRightRadio.js';
+export type {
   ListIosItemBodyRightCounterProps,
   ListIosItemBodyRightCounterElementKey,
 } from './ListIos/ListIosItemBodyRightCounter/ListIosItemBodyRightCounter.js';
@@ -87,6 +91,7 @@ export {
   ListIosItemBodyRight,
   ListIosItemBodyRightChevron,
   ListIosItemBodyRightSwitch,
+  ListIosItemBodyRightRadio,
   ListIosItemBodyRightLabel,
   ListIosItemBodyRightClear,
   ListIosItemBodyRightCheckmark,

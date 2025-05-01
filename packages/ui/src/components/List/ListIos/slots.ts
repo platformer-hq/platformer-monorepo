@@ -18,6 +18,9 @@ import type {
 import type {
   ListIosItemBodyLeftSubtitleProps,
 } from './ListIosItemBodyLeftSubtitle/ListIosItemBodyLeftSubtitle.js';
+import type {
+  ListIosItemLeftCheckboxProps,
+} from './ListIosItemLeftCheckbox/ListIosItemLeftCheckbox.js';
 
 import type { ListIosItemBodyRightProps } from './ListIosItemBodyRight/ListIosItemBodyRight.js';
 import type {
@@ -35,12 +38,12 @@ import type {
 import type {
   ListIosItemBodyRightSwitchProps,
 } from './ListIosItemBodyRightSwitch/ListIosItemBodyRightSwitch.js';
+import {
+  ListIosItemBodyRightRadioProps
+} from './ListIosItemBodyRightRadio/ListIosItemBodyRightRadio.js';
 import type {
   ListIosItemBodyRightClearProps,
 } from './ListIosItemBodyRightClear/ListIosItemBodyRightClear.js';
-import type {
-  ListIosItemLeftCheckboxProps,
-} from './ListIosItemLeftCheckbox/ListIosItemLeftCheckbox.js';
 
 const [Slot, filterSlots] = slotGen<{
   body: ListIosItemBodyProps;
@@ -55,6 +58,7 @@ const [Slot, filterSlots] = slotGen<{
   bodyRightCounter: ListIosItemBodyRightCounterProps;
   bodyRightLabel: ListIosItemBodyRightLabelProps;
   bodyRightSwitch: ListIosItemBodyRightSwitchProps;
+  bodyRightRadio: ListIosItemBodyRightRadioProps;
   left: ListIosItemLeftProps;
   leftCheckbox: ListIosItemLeftCheckboxProps;
   leftIcon: ListIosItemLeftIconProps;
@@ -78,5 +82,6 @@ export const ListIosItemBodyRightLabel = Slot('bodyRightLabel');
 export const ListIosItemBodyRightCheckmark = Slot('bodyRightCheckmark');
 export const ListIosItemBodyRightClear = Slot('bodyRightClear');
 export const ListIosItemBodyRightSwitch = Slot('bodyRightSwitch');
+export const ListIosItemBodyRightRadio = Slot('bodyRightRadio');
 export const ListIosItemBodyInput = Slot('bodyInput');
 export const ListIosItemRightCounter = Slot('bodyRightCounter');
