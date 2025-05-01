@@ -1,5 +1,5 @@
 .tgui-list-ios__item-body-right-radio {
   @each $part in ["border-color", "checked-color", "icon-color"] {
-    --tgui-radio-ios-#{$part}: var(--tgui-list-android-item-body-right-radio-#{$part});
+    --tgui-radio-ios-#{$part}: var(--tgui-list-ios-item-body-right-radio-#{$part});
   }
 }

@@ -18,7 +18,11 @@
     }
   },
   "scripts": {
-    "build": "tsc --noEmit -p tsconfig.build.json && vite build",
+    "build:all": "cross-env PLATFORM=all vite build",
+    "build:ios": "cross-env PLATFORM=ios vite build",
+    "build:android": "cross-env PLATFORM=android vite build",
+    "build": "concurrently \"pnpm run build:all\" \"pnpm run build:ios\" \"pnpm run build:android\"",
+    "rollout": "pnpm run typecheck && pnpm run build",
     "icons:build": "node scripts/build-icons.js && eslint --fix src/icons/index.ts",
     "lint": "eslint src",
     "lint:fix": "pnpm run lint --fix",
@@ -38,6 +42,8 @@
     "@storybook/addon-viewport": "^8.6.0-beta.0",
     "@storybook/blocks": "^8.6.0-beta.0",
     "@storybook/types": "^8.6.0-beta.0",
+    "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3",
     "sass": "^1.71.1",
     "storybook": "^8.6.0-beta.0",
     "storybook-solidjs": "1.0.0-beta.6",

@@ -1,10 +1,2 @@
-export {
-  SearchFieldAndroid,
-  type SearchFieldAndroidProps,
-  type SearchFieldAndroidElementKey,
-} from './SearchFieldAndroid/SearchFieldAndroid.js';
-export {
-  SearchFieldIos,
-  type SearchFieldIosProps,
-  type SearchFieldIosElementKey,
-} from './SearchFieldIos/SearchFieldIos.js';
+export * from './exports.ios.js';
+export * from './exports.android.js';
