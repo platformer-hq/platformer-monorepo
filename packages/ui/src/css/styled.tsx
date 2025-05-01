@@ -26,6 +26,7 @@ export type StyledClasses<Props extends WithOptionalClasses<any, any>> =
  *   ...
  * });
  */
+/*@__NO_SIDE_EFFECTS__*/
 export function styled<Props extends WithOptionalClasses<any, any>>(
   Component: Component<Props>,
   classes: StyledClasses<Props>,

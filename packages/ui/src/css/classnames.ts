@@ -13,6 +13,7 @@ export function isRecord(v: unknown): v is Record<string, unknown> {
  * @param values - values array.
  * @returns Final class name.
  */
+/*@__NO_SIDE_EFFECTS__*/
 export function classNames(...values: any[]): string {
   return values
     .map((value) => {
