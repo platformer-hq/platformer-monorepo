@@ -5,6 +5,7 @@ import { createEventListenerMap } from 'solid-utils';
  * @return A tuple containing an accessor with true if the element is considered active,
  * and a handler that resetting this state.
  */
+/*@__NO_SIDE_EFFECTS__*/
 export function useActiveStateHandler(): [
   active: Accessor<boolean>,
   onPointerDown: () => void
