@@ -71,10 +71,10 @@ export function Tappable<T extends ValidComponent>(props: TappableProps<T>) {
             return el
               .animate(
                 {
-                  transform: ['scale(0) translate(-50%,-50%)', 'scale(1) translate(-50%,-50%)'],
-                  opacity: [0.1, 0.15],
+                  width: ['0', '220%'],
+                  opacity: [0, 0.1, 0.1],
                 },
-                { duration: 550, easing: 'ease-in-out', fill: 'forwards' },
+                { duration: 300, easing: 'ease', fill: 'forwards' },
               )
               .finished
               .then(done)
@@ -93,7 +93,7 @@ export function Tappable<T extends ValidComponent>(props: TappableProps<T>) {
           }}
           onExit={(el, done) => {
             return el
-              .animate({ opacity: [0.15, 0] }, { duration: 400 })
+              .animate({ opacity: [0.1, 0] }, { duration: 200 })
               .finished
               .then(done);
           }}
