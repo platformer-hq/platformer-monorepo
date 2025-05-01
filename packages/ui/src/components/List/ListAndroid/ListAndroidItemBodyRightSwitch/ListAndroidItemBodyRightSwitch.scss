@@ -2,5 +2,4 @@
   @each $part in ["bg", "checked-bg", "thumb-border-bg", "thumb-bg", "border-checked-bg"] {
     --tgui-switch-android-#{$part}: var(--tgui-list-android-item-body-right-switch-#{$part});
   }
-  color: red;
 }
