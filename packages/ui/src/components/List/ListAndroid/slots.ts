@@ -43,6 +43,9 @@ import type {
 import type {
   ListAndroidItemBodyRightSwitchProps,
 } from './ListAndroidItemBodyRightSwitch/ListAndroidItemBodyRightSwitch.js';
+import {
+  ListAndroidItemBodyRightRadioProps
+} from './ListAndroidItemBodyRightRadio/ListAndroidItemBodyRightRadio.js';
 import type {
   ListAndroidItemBodyRightClearProps,
 } from './ListAndroidItemBodyRightClear/ListAndroidItemBodyRightClear.js';
@@ -63,6 +66,7 @@ const [Slot, filterSlots] = slotGen<{
   bodyRightCounter: ListAndroidItemBodyRightCounterProps;
   bodyRightLabel: ListAndroidItemBodyRightLabelProps;
   bodyRightSwitch: ListAndroidItemBodyRightSwitchProps;
+  bodyRightRadio: ListAndroidItemBodyRightRadioProps;
   left: ListAndroidItemLeftProps;
   leftCheckbox: ListAndroidItemLeftCheckboxProps;
   leftIcon: ListAndroidItemLeftIconProps;
@@ -86,5 +90,6 @@ export const ListAndroidItemBodyRightLabel = Slot('bodyRightLabel');
 export const ListAndroidItemBodyRightCheckmark = Slot('bodyRightCheckmark');
 export const ListAndroidItemBodyRightClear = Slot('bodyRightClear');
 export const ListAndroidItemBodyRightSwitch = Slot('bodyRightSwitch');
+export const ListAndroidItemBodyRightRadio = Slot('bodyRightRadio');
 export const ListAndroidItemBodyInput = Slot('bodyInput');
 export const ListAndroidItemRightCounter = Slot('bodyRightCounter');

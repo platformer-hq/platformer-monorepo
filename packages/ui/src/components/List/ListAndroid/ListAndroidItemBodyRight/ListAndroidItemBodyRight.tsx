@@ -16,13 +16,18 @@ import {
 import {
   ListAndroidItemBodyRightLabel,
 } from '../ListAndroidItemBodyRightLabel/ListAndroidItemBodyRightLabel.js';
-import { ListAndroidItemBodyRightCounter } from '@/components/List/ListAndroid/ListAndroidItemBodyRightCounter/ListAndroidItemBodyRightCounter.js';
+import {
+  ListAndroidItemBodyRightCounter,
+} from '../ListAndroidItemBodyRightCounter/ListAndroidItemBodyRightCounter.js';
 import {
   ListAndroidItemBodyRightSwitch,
-} from '@/components/List/ListAndroid/ListAndroidItemBodyRightSwitch/ListAndroidItemBodyRightSwitch.js';
+} from '../ListAndroidItemBodyRightSwitch/ListAndroidItemBodyRightSwitch.js';
 import {
   ListAndroidItemBodyRightClear,
-} from '@/components/List/ListAndroid/ListAndroidItemBodyRightClear/ListAndroidItemBodyRightClear.js';
+} from '../ListAndroidItemBodyRightClear/ListAndroidItemBodyRightClear.js';
+import {
+  ListAndroidItemBodyRightRadio,
+} from '../ListAndroidItemBodyRightRadio/ListAndroidItemBodyRightRadio.js';
 
 import './ListAndroidItemBodyRight.scss';
 
@@ -46,6 +51,9 @@ export function ListAndroidItemBodyRight(props: ListAndroidItemBodyRightProps) {
       </Show>
       <Show when={filterSlots(props, 'bodyRightSwitch')}>
         {$box => <ListAndroidItemBodyRightSwitch {...$box()}/>}
+      </Show>
+      <Show when={filterSlots(props, 'bodyRightRadio')}>
+        {$box => <ListAndroidItemBodyRightRadio {...$box()}/>}
       </Show>
       <Show when={filterSlots(props, 'bodyRightCheckmark')}>
         {$box => <ListAndroidItemBodyRightCheckmark {...$box()}/>}
