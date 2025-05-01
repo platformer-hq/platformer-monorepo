@@ -3,18 +3,36 @@
   "version": "0.0.1",
   "author": "Vladislav Kibenko <wolfram.deus@gmail.com>",
   "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/dts/index.d.ts",
+  "main": "./dist/all/index.cjs",
+  "module": "./dist/all/index.js",
+  "types": "./dist/dts/index.all.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/dts/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "types": "./dist/dts/index.all.d.ts",
+      "import": "./dist/all/index.js",
+      "require": "./dist/all/index.cjs"
     },
     "./index.css": {
-      "import": "./dist/index.css",
-      "require": "./dist/index.css"
+      "import": "./dist/all/index.css",
+      "require": "./dist/all/index.css"
+    },
+    "./android": {
+      "types": "./dist/dts/index.android.d.ts",
+      "import": "./dist/android/index.js",
+      "require": "./dist/android/index.cjs"
+    },
+    "./android/index.css": {
+      "import": "./dist/android/index.css",
+      "require": "./dist/android/index.css"
+    },
+    "./ios": {
+      "types": "./dist/dts/index.ios.d.ts",
+      "import": "./dist/ios/index.js",
+      "require": "./dist/ios/index.cjs"
+    },
+    "./ios/index.css": {
+      "import": "./dist/ios/index.css",
+      "require": "./dist/ios/index.css"
     }
   },
   "scripts": {
