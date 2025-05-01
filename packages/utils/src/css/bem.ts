@@ -44,6 +44,7 @@ function computeClassnames(element: string, ...mods: any): string {
  * block, the second one generates classnames for its elements.
  * @param block - BEM block name.
  */
+/*@__NO_SIDE_EFFECTS__*/
 export function bem(block: string): [BlockFn, ElemFn, ElemGenFn] {
   const elemFn: ElemFn = (elem, ...mods) => {
     return computeClassnames(`${block}__${elem}`, mods);
