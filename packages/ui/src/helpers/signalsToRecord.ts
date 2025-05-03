@@ -9,6 +9,7 @@ export type SignalsToRecordResult<T extends Record<string, Accessor<any>>> = {
  * only getters.
  * @param record - a record to convert.
  */
+//@__NO_SIDE_EFFECTS__
 export function signalsToRecord<T extends Record<string, Accessor<any>>>(record: T): SignalsToRecordResult<T> {
   return Object.entries(record).reduce<SignalsToRecordResult<T>>((acc, [k, accessor]) => {
     Object.defineProperty(acc, k, {
