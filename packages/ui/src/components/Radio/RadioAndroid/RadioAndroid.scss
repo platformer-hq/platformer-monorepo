@@ -1,0 +1,35 @@
+@use "../../../scss/mixins";
+
+$component: "tgui-radio-android";
+
+.#{$component} {
+  --unchecked-color: var(--tgui-radio-android-color, #C8C7CC);
+  --checked-color: var(--tgui-radio-android-checked-color, #007AFF);
+  @include mixins.clickable;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--unchecked-color);
+  position: relative;
+  box-sizing: border-box;
+
+  &--initially-checked {
+    padding: 2px;
+    border-color: var(--checked-color);
+  }
+
+  &__input {
+    display: none;
+  }
+
+  &__inner {
+    display: block;
+    border-radius: 50%;
+    height: 100%;
+
+    &--initially-checked {
+      box-shadow: 0 0 0 6px var(--checked-color) inset;
+    }
+  }
+}

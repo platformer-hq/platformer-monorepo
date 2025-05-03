@@ -18,18 +18,9 @@ import { ListIosItemBody } from '../ListIosItemBody/ListIosItemBody.js';
 import { ListIosItemLeft } from '../ListIosItemLeft/ListIosItemLeft.js';
 
 export type ListIosItemElementKey = 'root' | 'body' | 'inner';
+export type ListIosItemVariant = 'regular' | 'accent' | 'destructive' | 'placeholder';
 export type ListIosItemProps =
   & JSXIntrinsicElementAttrs<'li'>
-  & {
-  /**
-   * True if the element is clickable. This will add some additional visual changes to the element.
-   */
-  clickable?: boolean;
-  /**
-   * True if the item has a large size.
-   */
-  large?: boolean;
-}
   & WithOptionalClasses<ListIosItemElementKey, ListIosItemProps & {
   /**
    * True if the element is currently active.
@@ -39,7 +30,21 @@ export type ListIosItemProps =
    * True if this item is the first one in the list.
    */
   first: boolean;
-}>;
+}>
+  & {
+  /**
+   * True if the element is clickable. This will add some additional visual changes to the element.
+   */
+  clickable?: boolean;
+  /**
+   * True if the item has a large size.
+   */
+  large?: boolean;
+  /**
+   * Visual variant.
+   */
+  variant?: ListIosItemVariant;
+};
 
 import './ListIosItem.scss';
 
@@ -48,7 +53,10 @@ export function ListIosItem(props: ListIosItemProps & { first: boolean }) {
   const $cn = cnCreate(
     mergeProps(props, signalsToRecord({ active: $active })),
     {
-      root: v => [v.class, e('item', pickProps(v, ['large']))],
+      root: v => [
+        v.class,
+        e('item', pickProps(v, ['large']), props.variant || 'regular'),
+      ],
       inner: v => e('item-inner', pickProps(v, ['clickable', 'active'])),
     },
   );

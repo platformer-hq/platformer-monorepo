@@ -16,10 +16,15 @@ import {
 import {
   ListIosItemBodyRightLabel,
 } from '../ListIosItemBodyRightLabel/ListIosItemBodyRightLabel.js';
-import { ListIosItemBodyRightCounter } from '../ListIosItemBodyRightCounter/ListIosItemBodyRightCounter.js';
+import {
+  ListIosItemBodyRightCounter,
+} from '../ListIosItemBodyRightCounter/ListIosItemBodyRightCounter.js';
 import {
   ListIosItemBodyRightSwitch,
 } from '../ListIosItemBodyRightSwitch/ListIosItemBodyRightSwitch.js';
+import {
+  ListIosItemBodyRightRadio,
+} from '../ListIosItemBodyRightRadio/ListIosItemBodyRightRadio.js';
 import {
   ListIosItemBodyRightClear,
 } from '../ListIosItemBodyRightClear/ListIosItemBodyRightClear.js';
@@ -46,6 +51,9 @@ export function ListIosItemBodyRight(props: ListIosItemBodyRightProps) {
       </Show>
       <Show when={filterSlots(props, 'bodyRightSwitch')}>
         {$box => <ListIosItemBodyRightSwitch {...$box()}/>}
+      </Show>
+      <Show when={filterSlots(props, 'bodyRightRadio')}>
+        {$box => <ListIosItemBodyRightRadio {...$box()}/>}
       </Show>
       <Show when={filterSlots(props, 'bodyRightCheckmark')}>
         {$box => <ListIosItemBodyRightCheckmark {...$box()}/>}

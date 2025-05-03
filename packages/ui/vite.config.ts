@@ -7,9 +7,14 @@ export default defineConfig(({ mode }) => {
   const tsconfigPath = mode === 'development'
     ? 'tsconfig.storybook.json'
     : 'tsconfig.build.json';
+  const platform = process.env.PLATFORM;
+  if (!['all', 'ios', 'android'].includes(platform)) {
+    throw new Error(`Unknown platform: ${platform}`);
+  }
+
   return {
     plugins: [
-      dts({ outDir: 'dist/dts', tsconfigPath }),
+      dts({ outDir: `dist/dts`, tsconfigPath }),
       tsconfigPaths({ projects: [tsconfigPath] }),
       solidPlugin(),
     ],
@@ -21,16 +26,16 @@ export default defineConfig(({ mode }) => {
       },
     },
     build: {
-      outDir: 'dist',
+      outDir: `dist/${platform}`,
       emptyOutDir: true,
       sourcemap: true,
-      rollupOptions: {
-        external: ['solid-js', 'solid-utils', 'solid-transition-group'],
-      },
       lib: {
-        entry: 'src/index.ts',
+        entry: `src/index.${platform}.ts`,
         formats: ['es', 'cjs'],
         fileName: 'index',
+      },
+      rollupOptions: {
+        external: ['solid-js', 'solid-utils', 'solid-transition-group'],
       },
     },
   };

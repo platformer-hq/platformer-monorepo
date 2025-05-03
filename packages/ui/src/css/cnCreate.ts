@@ -83,6 +83,7 @@ function createClasses<ElementKey extends string, HookValue>(
  * @param props - value passed to the classes' hooks.
  * @param classes - list of classes to merge.
  */
+//@__NO_SIDE_EFFECTS__
 export function cnCreate<Props extends WithOptionalClasses<any, any>>(
   props: Props | Accessor<Props>,
   ...classes: (

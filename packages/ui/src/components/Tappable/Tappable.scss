@@ -17,11 +17,9 @@
   &__ripple {
     display: block;
     aspect-ratio: 1;
-    min-height: 200%;
-    min-width: 200%;
     position: absolute;
     background: currentColor;
     border-radius: 50%;
-    transform-origin: left top;
+    transform: translate(-50%,-50%);
   }
 }

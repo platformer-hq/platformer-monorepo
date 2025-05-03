@@ -11,6 +11,7 @@ export interface SlotBox<Type, Props> {
   props: Props;
 }
 
+/*@__NO_SIDE_EFFECTS__*/
 export function slotGen<PropsMap extends Record<string, any>>() {
   const id = Symbol('SlotBox');
 
@@ -43,12 +44,12 @@ export function slotGen<PropsMap extends Record<string, any>>() {
   }
 
   return [
-    <T extends keyof PropsMap>(type: T): Component<PropsMap[T]> => {
+    /* @__PURE__ */ <T extends keyof PropsMap>(type: T): Component<PropsMap[T]> => {
       return props => {
         // We trick TypeScript on purpose, so JSX boxes could properly be returned in components.
         return { type, props, id } satisfies SlotBox<T, PropsMap[T]> as unknown as JSXElement;
       };
     },
-    filter,
+    /* @__PURE__ */ filter,
   ] as const;
 }
