@@ -71,9 +71,10 @@ export async function init({ debug, ...options }: {
         if (mockForMacOS && event[0] === 'web_app_request_theme') {
           return emitEvent('theme_changed', { theme_params: themeParamsState() });
         }
-        if (mockForWebK && event[0] === 'web_app_request_content_safe_area') {
+        if (event[0] === 'web_app_request_content_safe_area') {
           return emitEvent('content_safe_area_changed', noInsets);
         }
+        // TODO: Remove for macOS. The have fixed this problem eventually.
         if (event[0] === 'web_app_request_safe_area') {
           return emitEvent('safe_area_changed', noInsets);
         }
@@ -90,7 +91,7 @@ export async function init({ debug, ...options }: {
     bindThemeParamsCssVars(formatThemeParamsCssVar);
   }
   if (mountViewport.isAvailable()) {
-    await mountViewport();
+    await mountViewport({ timeout: 3000 });
     bindViewportCssVars(formatViewportCssVar);
   }
   if (mountMainButton.isAvailable()) {
