@@ -31,13 +31,30 @@ import type { InitialColorsTuple } from '@/types/common.js';
 
 /**
  * Initializes the SDK.
- * @param options - execution options.
  */
 export async function init({ debug, ...options }: {
+  /**
+   * Should the debug mode be enabled.
+   */
   debug: boolean;
+  /**
+   * Should eruda be enabled.
+   *
+   * Enabling this option, to make sure, that all logs were captured, the launcher will wait for
+   * eruda to be downloaded, and then the app will be rendered.
+   */
   eruda: boolean;
+  /**
+   * Applies some mocks related to incorrect Telegram for macOS client behavior.
+   */
   mockForMacOS: boolean;
+  /**
+   * Applies some mocks related to incorrect Telegram Web K client behavior.
+   */
   mockForWebK: boolean;
+  /**
+   * Sentry options.
+   */
   sentry: BrowserOptions;
 }): Promise<{ initialColors: InitialColorsTuple }> {
   setDebug(debug);
@@ -55,7 +72,7 @@ export async function init({ debug, ...options }: {
 
   // Init Sentry and eruda.
   void lazySentryInit(options.sentry);
-  options.eruda && void lazyErudaInit();
+  options.eruda && await lazyErudaInit();
 
   // Telegram for macOS has a ton of bugs, including cases, when the client doesn't
   // even response to the "web_app_request_theme" method. It also generates an incorrect
@@ -86,13 +103,13 @@ export async function init({ debug, ...options }: {
   // Initialize required components.
   restoreInitData();
 
-  if (mountThemeParamsSync.isAvailable()) {
-    mountThemeParamsSync();
-    bindThemeParamsCssVars(formatThemeParamsCssVar);
-  }
   if (mountViewport.isAvailable()) {
     await mountViewport({ timeout: 3000 });
     bindViewportCssVars(formatViewportCssVar);
+  }
+  if (mountThemeParamsSync.isAvailable()) {
+    mountThemeParamsSync();
+    bindThemeParamsCssVars(formatThemeParamsCssVar);
   }
   if (mountMainButton.isAvailable()) {
     mountMainButton();
