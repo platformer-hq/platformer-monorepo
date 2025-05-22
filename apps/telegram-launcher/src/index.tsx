@@ -20,11 +20,13 @@ import './mockEnv.js';
 
 const launchParams = retrieveLaunchParams();
 const { tgWebAppPlatform: platform } = launchParams;
-const debug = (launchParams.tgWebAppStartParam || '').includes('platformer_debug') || import.meta.env.DEV;
+const startParam = launchParams.tgWebAppStartParam || '';
+const debug = ['platformer_debug', 'p-debug'].some(v => startParam.includes(v)) || import.meta.env.DEV;
+const eruda = startParam.includes('p-eruda') || import.meta.env.DEV;
 
 init({
   debug,
-  eruda: debug && ['ios', 'android'].includes(platform),
+  eruda,
   mockForWebK: platform === 'web',
   mockForMacOS: platform === 'macos',
   sentry: {
