@@ -6,6 +6,7 @@ import type {
 import type { NearOperationFileConfig } from '@graphql-codegen/near-operation-file-preset';
 import { DocumentMode } from '@graphql-codegen/visitor-plugin-common';
 
+// @ts-expect-error We are not using any tsconfig for it.
 import config from './graphql.config.json';
 
 const scalars = {
