@@ -18,6 +18,6 @@ export function lazySentryInit(options: BrowserOptions) {
 export function lazyErudaInit() {
   return import('eruda').then(({ default: eruda }) => {
     eruda.init();
-    eruda.position({ x: window.innerWidth - 50, y: 0 });
+    eruda.position({ x: window.innerWidth - 50, y: window.innerHeight / 2 });
   });
 }
