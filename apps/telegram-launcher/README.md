@@ -16,6 +16,27 @@ query parameters to the launcher's base URL.
 | `init_timeout` | `number` | _Optional_. Time in milliseconds to load data from Platformer. If the timeout is reached, the launcher uses the `fallback_url` to display the application. If the fallback URL is not specified, the load error page will be displayed. Defaults to `5000` (5 seconds). |
 | `load_timeout` | `number` | _Optional_. Time in milliseconds for **your** application to load. If the specified time runs out, the launcher displays a load error. Defaults to `10000` (10 seconds).                                                                                                |
 
+## Debugging
+
+The launcher allows enabling debug features using the Telegram Mini
+Apps [start parameter](https://docs.telegram-mini-apps.com/platform/start-parameter).
+
+| Name      | Description                                                                                                                                                                                                       |
+|-----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `p-debug` | Enables debug mode outputting useful logs into the console.                                                                                                                                                       |
+| `p-eruda` | Displays the [eruda](http://npmjs.com/package/eruda) console. Note, that enabling it will lead to downloading eruda first, and then the whole application. So, use it for development or debugging purposes only. |
+
+The launcher just checks if there are strings specified above in the start parameter, so you can pass them in any
+format preferred.
+
+Here is a complete example of a valid link enabling all features:
+
+```
+https://t.me/bot/app?start=p-debug_p-eruda
+// or
+https://t.me/bot?startapp=p-debug_p-eruda
+```
+
 ## Usage
 
 To start using the launcher, take its base URL (`https://tgl.mini-apps.store/`) and append the
