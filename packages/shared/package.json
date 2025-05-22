@@ -9,6 +9,7 @@
     "access": "public"
   },
   "peerDependencies": {
+    "@solid-primitives/utils": "^6.0.0",
     "@telegram-apps/sdk-solid": "^3.0.0",
     "solid-js": "^1.0.0"
   },

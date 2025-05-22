@@ -1,6 +1,6 @@
 import { type Accessor, createEffect, createSignal, onCleanup } from 'solid-js';
 import { TimeoutError } from 'better-promises';
-import { type MaybeAccessor, access } from 'solid-utils';
+import { type MaybeAccessor, access } from '@solid-primitives/utils';
 
 /**
  * Creates a new self-cleaning-up abort signal.

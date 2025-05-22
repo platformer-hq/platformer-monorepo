@@ -6,13 +6,9 @@ import {
   type KeyState,
   type SWRStoreMutateFn,
 } from 'swr';
-import {
-  access,
-  createExecutionResource,
-  type MaybeAccessor,
-  type ExecutionResource,
-} from 'solid-utils';
+import { createExecutionResource, type ExecutionResource } from 'solid-utils';
 import { createEffect, createSignal, onCleanup } from 'solid-js';
+import { access, type MaybeAccessor } from '@solid-primitives/utils';
 import { createWritableMemo } from '@solid-primitives/memo';
 
 export type UseSWROptionsArgs<P> = MaybeAccessor<[params: P, shouldRevalidate?: boolean] | undefined | null | false>;

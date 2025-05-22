@@ -50,6 +50,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.build.json"
   },
   "peerDependencies": {
+    "@solid-primitives/utils": "^6.0.0",
     "solid-js": "^1.0.0"
   },
   "devDependencies": {

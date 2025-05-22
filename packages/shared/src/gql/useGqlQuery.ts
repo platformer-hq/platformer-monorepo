@@ -6,7 +6,7 @@ import {
   type UseGqlError,
   type RequestOptions,
 } from 'solid-gql';
-import { access } from 'solid-utils';
+import { access } from '@solid-primitives/utils';
 
 import { useGqlContext } from './GqlProvider.js';
 
