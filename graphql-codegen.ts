@@ -6,13 +6,16 @@ import type {
 import type { NearOperationFileConfig } from '@graphql-codegen/near-operation-file-preset';
 import { DocumentMode } from '@graphql-codegen/visitor-plugin-common';
 
+import config from './graphql.config.json';
+
 const scalars = {
-  Date: 'string',
+  Time: 'string',
+  ID: 'number',
 };
 
 export default {
   overwrite: true,
-  schema: 'https://mini-apps.store/gql',
+  schema: config.schema,
   generates: {
     'apps/': {
       documents: [`apps/*/src/**/*.gql`],
