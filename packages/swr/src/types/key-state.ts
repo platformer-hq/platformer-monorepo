@@ -1,8 +1,18 @@
 import type { CachedData } from './cache.js';
 
-export interface KeyLatestData<D> extends CachedData<D> {
-  state: 'fresh' | 'stale' | 'expired';
+export type KeyStateState = 'fresh' | 'stale' | 'expired';
+
+interface CreateKeyLatestState<D, S extends KeyStateState> extends CachedData<D> {
+  state: S;
 }
+
+export type KeyLatestDataFresh<D> = CreateKeyLatestState<D, 'fresh'>;
+export type KeyLatestDataStale<D> = CreateKeyLatestState<D, 'stale'>;
+export type KeyLatestDataExpired<D> = CreateKeyLatestState<D, 'expired'>;
+export type KeyLatestData<D> =
+  | KeyLatestDataFresh<D>
+  | KeyLatestDataStale<D>
+  | KeyLatestDataExpired<D>;
 
 export interface KeyStatePending<D> {
   status: 'pending',
