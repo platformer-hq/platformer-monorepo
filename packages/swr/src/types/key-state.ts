@@ -14,28 +14,23 @@ export type KeyLatestData<D> =
   | KeyLatestDataStale<D>
   | KeyLatestDataExpired<D>;
 
-export interface KeyStatePending<D> {
-  status: 'pending',
-  data: Promise<D>;
-  latestData?: KeyLatestData<D>;
-}
-
-export interface KeyStateRevalidating<D> {
-  status: 'revalidating';
-  data: Promise<D>;
-  latestData?: KeyLatestData<D>;
-}
-
-export interface KeyStateSuccess<D> extends CachedData<D> {
-  status: 'success';
-}
-
-export interface KeyStateError<D, E> {
-  status: 'error';
+interface CreateKeyState<S, D, E, LD> {
+  data: D;
   error: E;
-  latestData?: KeyLatestData<D>;
+  latestData: LD;
+  status: S;
 }
 
+export type KeyStatePending<D> = CreateKeyState<
+  'pending', Promise<D>, undefined, KeyLatestData<D> | undefined
+>;
+export type KeyStateRevalidating<D> = CreateKeyState<
+  'revalidating', Promise<D>, undefined, KeyLatestData<D>
+>;
+export type KeyStateSuccess<D> = CreateKeyState<'success', D, undefined, KeyLatestData<D>>;
+export type KeyStateError<D, E> = CreateKeyState<
+  'error', undefined, E, KeyLatestData<D> | undefined
+>;
 export type KeyState<D, E = unknown> =
   | KeyStatePending<D>
   | KeyStateRevalidating<D>
