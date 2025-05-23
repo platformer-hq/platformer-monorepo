@@ -1,59 +1,20 @@
 import { dequal } from 'dequal/lite';
 import { createLogger } from 'utils';
 
-import { type ObservableListener, type Observable, observable } from './observable.js';
-
-export interface KeyStatePending<D> {
-  status: 'pending',
-  data: Promise<D>;
-}
-
-export interface KeyStateSuccess<D> {
-  status: 'success';
-  data: D;
-}
-
-export interface KeyStateError<D, E> {
-  status: 'error';
-  error: E;
-  latestData?: D;
-}
-
-export type KeyState<D, E = unknown> =
-  | KeyStatePending<D>
-  | KeyStateSuccess<D>
-  | KeyStateError<D, E>;
-
-export interface CachedData<D> {
-  /**
-   * Cache creation timestamp.
-   */
-  timestamp: number;
-  /**
-   * Cached data.
-   */
-  data: D;
-}
-
-export interface DataCache<D> {
-  get: (key: string) => CachedData<D> | undefined | null;
-  set: (key: string, value: CachedData<D>) => void;
-}
-
-export interface RevalidationCache<D> {
-  get: (key: string) => Promise<D> | undefined | null;
-  set: (key: string, value: Promise<D>) => void;
-  delete: (key: string) => void;
-}
-
-export interface ObserversCache<D, E> {
-  get: (key: string) => Observable<KeyState<D, E>>;
-  set: (key: string, value: Observable<KeyState<D, E>>) => void;
-}
+import { observable } from './observable.js';
+import type {
+  CachedData,
+  DataCache,
+  KeyState, KeyStateError, KeyStateSuccess, Observable,
+  ObservableListener,
+  ObserversCache,
+  RevalidationCache,
+} from './types/index.js';
 
 export type CreateSWRStoreKey<P extends any[]> =
   | SWRStoreKeyValue
   | ((...args: P) => SWRStoreKeyValue);
+
 export type CreateSWRStoreFetcher<D, P extends any[]> = (...args: P) => Promise<D>;
 
 export interface CreateSWRStoreOptions<D, E> {
@@ -105,32 +66,76 @@ export interface CreateSWRStoreOptions<D, E> {
   staleAge?: number;
 }
 
+/**
+ * List of types that could be used to compute the cache key.
+ */
+export type SWRStoreKeyValue = string | number | (string | number)[];
+
+/**
+ * Data returned from a data mutation function. Returning something rather than an array with
+ * a single value will lead to mutation skipping.
+ */
 export type SWRStoreMutateFnData<D> =
   | undefined
   | null
   | false
   | [D];
+
+/**
+ * Function used to retrieve a value from the store.
+ */
 export type SWRStoreGetFn<D, P, E> = (
   params: P,
   shouldRevalidate?: boolean,
 ) => KeyState<D, E>;
-export type SWRStoreMutateFn<D, P> = (
-  params: P,
-  data?: SWRStoreMutateFnData<D> | ((current?: D) => SWRStoreMutateFnData<D>),
-  shouldRevalidate?: boolean,
-) => void;
+
+/**
+ * Function used to mutate a store key.
+ */
+export interface SWRStoreMutateFn<D, P> {
+  (
+    params: P,
+    data: SWRStoreMutateFnData<D> | ((current?: D) => SWRStoreMutateFnData<D>) | undefined,
+    shouldRevalidate: false,
+  ): void;
+  (
+    params: P,
+    data?: SWRStoreMutateFnData<D> | ((current?: D) => SWRStoreMutateFnData<D>),
+    shouldRevalidate?: true,
+  ): Promise<D>;
+}
 export type SWRStoreSubscribeFn<D, P, E> = (
   params: P,
   listener: ObservableListener<KeyState<D, E>>,
 ) => VoidFunction;
 
 export interface SWRStore<D, P, E = unknown> {
+  /**
+   * Retrieves the value by its key.
+   * @param params - list of parameters to use to compute the key.
+   * @shouldRevalidate - should revalidation be performed. Default is `true`.
+   */
   get: SWRStoreGetFn<D, P, E>;
+  /**
+   * Mutates the data, stored in the key.
+   * @param params - list of parameters to use to compute the key.
+   * @param data - data to store. Passing `undefined`, `null` or `false`, will lead to skipping
+   * the mutation. In order to save the data, specify an array with the only one element containing
+   * data to save. You can also pass a function receiving the current value and returning the same
+   * values described previously.
+   * @shouldRevalidate - should revalidation be performed. Default is `true`.
+   * @returns A promise with retrieved data if `shouldRevalidate` is `undefined` or `true`.
+   * Nothing otherwise.
+   */
   mutate: SWRStoreMutateFn<D, P>;
+  /**
+   * Subscribes to a specific key.
+   * @param params - list of parameters to use to compute the key.
+   * @param listener - data listener.
+   * @returns A function to remove the bound listener.
+   */
   subscribe: SWRStoreSubscribeFn<D, P, E>;
 }
-
-export type SWRStoreKeyValue = string | number | (string | number)[];
 
 export function createSWRStore<D, P extends any[], E = unknown>(
   key: CreateSWRStoreKey<P>,
@@ -160,7 +165,7 @@ export function createSWRStore<D, P extends any[], E = unknown>(
   const { log } = createLogger('swr', {
     bgColor: 'purple',
     textColor: 'white',
-    shouldLog: _logger === 'default'
+    shouldLog: _logger === 'default',
   });
 
   // Guaranteed returns an observable for the specified key.
@@ -183,10 +188,10 @@ export function createSWRStore<D, P extends any[], E = unknown>(
     dataCache.set(key, cachedValue);
   };
 
-  // Returns at least stale cached data.
-  const getAtLeastStale = (key: string): CachedData<D> | undefined => {
+  // Returns cached data in case it is fresh or stale at least.
+  const getFreshOrStale = (key: string): CachedData<D> | undefined => {
     const cachedData = dataCache.get(key);
-    return cachedData && cachedData.timestamp + freshAge + staleAge > Date.now()
+    return cachedData && Date.now() < cachedData.timestamp + freshAge + staleAge
       ? cachedData
       : undefined;
   };
@@ -232,7 +237,7 @@ export function createSWRStore<D, P extends any[], E = unknown>(
             lastError = e as E;
           }
         }
-        const cachedData = getAtLeastStale(k);
+        const cachedData = getFreshOrStale(k);
         return {
           status: 'error',
           error: lastError!,
@@ -257,6 +262,7 @@ export function createSWRStore<D, P extends any[], E = unknown>(
             cacheValue(k, keyState.data);
             return keyState.data;
           }
+           
           // eslint-disable-next-line @typescript-eslint/only-throw-error
           throw keyState.error;
         })
@@ -302,7 +308,7 @@ export function createSWRStore<D, P extends any[], E = unknown>(
     mutate(params, data, shouldRevalidate = true) {
       log('@mutate()', { params, data, shouldRevalidate });
       const k = computeKey(params);
-      const cachedData = getAtLeastStale(k);
+      const cachedData = getFreshOrStale(k);
       const finalData = typeof data === 'function'
         ? data(cachedData ? cachedData.data : undefined)
         : data;
