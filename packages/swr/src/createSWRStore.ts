@@ -5,7 +5,11 @@ import { observable } from './observable.js';
 import type {
   CachedData,
   DataCache,
-  KeyState, KeyStateError, KeyStateSuccess, Observable,
+  KeyLatestData,
+  KeyState,
+  KeyStateError,
+  KeyStateSuccess,
+  Observable,
   ObservableListener,
   ObserversCache,
   RevalidationCache,
@@ -288,19 +292,33 @@ export function createSWRStore<D, P extends any[], E = unknown>(
   return {
     get(params, shouldRevalidate) {
       log('@get()', { params, shouldRevalidate });
+      const now = Date.now();
+      let latestData: KeyLatestData<D> | undefined;
       const cachedData = dataCache.get(computeKey(params));
+      if (cachedData) {
+        const { timestamp } = cachedData;
+        latestData = {
+          ...cachedData,
+          state: now < timestamp + freshAge
+            ? 'fresh'
+            : now < timestamp + freshAge + staleAge
+              ? 'stale'
+              : 'expired',
+        };
+      }
 
       // A new item or item with expired lifetime.
-      if (!cachedData || cachedData.timestamp + freshAge + staleAge < Date.now()) {
-        return { status: 'pending', data: revalidate(params) };
+      if (!latestData || latestData.state === 'expired') {
+        return { status: 'pending', data: revalidate(params), latestData };
       }
 
       // Stale item or revalidation required. In this case we create a new request and expect
       // it to call required subscribers.
-      if (cachedData.timestamp + freshAge < Date.now() || shouldRevalidate) {
-        void revalidateMuted(params);
+      const { state } = latestData;
+      if (state === 'fresh' || state === 'stale' || shouldRevalidate) {
+        return { status: 'revalidating', latestData, data: revalidate(params) };
       }
-      return { status: 'success', data: cachedData.data };
+      return { status: 'success', ...latestData };
     },
     subscribe(params, listener) {
       return observableByKey(computeKey(params)).sub(listener);
