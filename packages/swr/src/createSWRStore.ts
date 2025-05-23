@@ -141,7 +141,13 @@ export interface SWRStore<D, P, E = unknown> {
    */
   subscribe: SWRStoreSubscribeFn<D, P, E>;
 }
-
+/**
+ * Creates a new store.
+ * @param key - a key to use.
+ * @param fetcher - function to retrieve the key value.
+ * @param options - list of additional options.
+ * @returns A new store.
+ */
 export function createSWRStore<D, P extends any[], E = unknown>(
   key: CreateSWRStoreKey<P>,
   fetcher: CreateSWRStoreFetcher<D, P>,
