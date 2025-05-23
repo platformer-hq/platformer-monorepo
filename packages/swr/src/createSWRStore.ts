@@ -333,20 +333,7 @@ export function createSWRStore<D, P extends any[], E = unknown>(
   return {
     get(params, shouldRevalidate) {
       log('@get()', { params, shouldRevalidate });
-      const now = Date.now();
-      let latestData: KeyLatestData<D> | undefined;
-      const cachedData = dataCache.get(computeKey(params));
-      if (cachedData) {
-        const { timestamp } = cachedData;
-        latestData = {
-          ...cachedData,
-          state: now < timestamp + freshAge
-            ? 'fresh'
-            : now < timestamp + freshAge + staleAge
-              ? 'stale'
-              : 'expired',
-        };
-      }
+      const latestData = getLatest(computeKey(params));
 
       // A new item or item with expired lifetime.
       if (!latestData || latestData.state === 'expired') {
