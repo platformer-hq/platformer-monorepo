@@ -20,6 +20,19 @@ export type CreateSWRStoreKey<P extends any[]> =
   | SWRStoreKeyValue
   | ((...args: P) => SWRStoreKeyValue);
 
+interface CreateMutateFn<D, P, L> {
+  (
+    params: P,
+    data: SWRStoreMutateFnData<D> | ((latestData?: L) => SWRStoreMutateFnData<D>) | undefined,
+    shouldRevalidate: false,
+  ): void;
+  (
+    params: P,
+    data?: SWRStoreMutateFnData<D> | ((latestData?: L) => SWRStoreMutateFnData<D>),
+    shouldRevalidate?: true,
+  ): Promise<D>;
+}
+
 export type CreateSWRStoreFetcher<D, P extends any[]> = (...args: P) => Promise<D>;
 
 export interface CreateSWRStoreOptions<D, E> {
@@ -91,24 +104,8 @@ export type SWRStoreMutateFnData<D> =
  */
 export type SWRStoreGetFn<D, P, E> = (params: P, shouldRevalidate?: boolean) => KeyState<D, E>;
 
-/**
- * Function used to mutate a store key.
- */
-export interface SWRStoreMutateFn<D, P> {
-  (
-    params: P,
-    data:
-      SWRStoreMutateFnData<D>
-      | ((latestData?: KeyLatestData<D>) => SWRStoreMutateFnData<D>)
-      | undefined,
-    shouldRevalidate: false,
-  ): void;
-  (
-    params: P,
-    data?: SWRStoreMutateFnData<D> | ((latestData?: KeyLatestData<D>) => SWRStoreMutateFnData<D>),
-    shouldRevalidate?: true,
-  ): Promise<D>;
-}
+export type SWRStoreMutateFn<D, P> = CreateMutateFn<D, P, KeyLatestData<D>>;
+export type SWRStoreMutateWithLatestFn<D, P> = CreateMutateFn<D, P, D>;
 export type SWRStoreSubscribeFn<D, P, E> = (
   params: P,
   listener: ObservableListener<KeyState<D, E>>,
@@ -118,7 +115,7 @@ export interface SWRStore<D, P, E = unknown> {
   /**
    * Retrieves the value by its key.
    * @param params - list of parameters to use to compute the key.
-   * @shouldRevalidate - should revalidation be performed. Default is `true`.
+   * @param shouldRevalidate - should revalidation be performed. Default is `true`.
    */
   get: SWRStoreGetFn<D, P, E>;
   /**
@@ -126,13 +123,25 @@ export interface SWRStore<D, P, E = unknown> {
    * @param params - list of parameters to use to compute the key.
    * @param data - data to store. Passing `undefined`, `null` or `false`, will lead to skipping
    * the mutation. In order to save the data, specify an array with the only one element containing
-   * data to save. You can also pass a function receiving the current value and returning the same
-   * values described previously.
-   * @shouldRevalidate - should revalidation be performed. Default is `true`.
+   * data to save. You can also pass a function receiving the latest data state and returning the
+   * same values described previously.
+   * @param shouldRevalidate - should revalidation be performed. Default is `true`.
    * @returns A promise with retrieved data if `shouldRevalidate` is `undefined` or `true`.
    * Nothing otherwise.
    */
   mutate: SWRStoreMutateFn<D, P>;
+  /**
+   * Mutates the data, stored in the key.
+   * @param params - list of parameters to use to compute the key.
+   * @param data - data to store. Passing `undefined`, `null` or `false`, will lead to skipping
+   * the mutation. In order to save the data, specify an array with the only one element containing
+   * data to save. You can also pass a function receiving the latest data and returning the
+   * same values described previously.
+   * @param shouldRevalidate - should revalidation be performed. Default is `true`.
+   * @returns A promise with retrieved data if `shouldRevalidate` is `undefined` or `true`.
+   * Nothing otherwise.
+   */
+  mutateWithLatest: SWRStoreMutateWithLatestFn<D, P>;
   /**
    * Subscribes to a specific key.
    * @param params - list of parameters to use to compute the key.
@@ -141,6 +150,7 @@ export interface SWRStore<D, P, E = unknown> {
    */
   subscribe: SWRStoreSubscribeFn<D, P, E>;
 }
+
 /**
  * Creates a new store.
  * @param key - a key to use.
@@ -308,6 +318,18 @@ export function createSWRStore<D, P extends any[], E = unknown>(
     return pendingPromise;
   };
 
+  const mutate = ((params, data, shouldRevalidate = true) => {
+    log('@mutate()', { params, data, shouldRevalidate });
+    const k = computeKey(params);
+    const latestData = getFreshOrStale(k);
+    const finalData = typeof data === 'function'
+      ? data(latestData ? latestData : undefined)
+      : data;
+
+    finalData && cacheValue(k, finalData[0], Date.now());
+    return shouldRevalidate ? revalidate(params) : undefined;
+  }) as SWRStoreMutateFn<D, P>;
+
   return {
     get(params, shouldRevalidate) {
       log('@get()', { params, shouldRevalidate });
@@ -342,16 +364,13 @@ export function createSWRStore<D, P extends any[], E = unknown>(
     subscribe(params, listener) {
       return observableByKey(computeKey(params)).sub(listener);
     },
-    mutate: ((params, data, shouldRevalidate = true) => {
-      log('@mutate()', { params, data, shouldRevalidate });
-      const k = computeKey(params);
-      const latestData = getFreshOrStale(k);
-      const finalData = typeof data === 'function'
-        ? data(latestData ? latestData : undefined)
-        : data;
-
-      finalData && cacheValue(k, finalData[0], Date.now());
-      return shouldRevalidate ? revalidate(params) : undefined;
-    }) as SWRStoreMutateFn<D, P>,
+    mutate,
+    mutateWithLatest: ((params, data, shouldRevalidate) => {
+      return mutate(params, latestData => {
+        return typeof data === 'function'
+          ? data(latestData && latestData.state !== 'expired' ? latestData.data : undefined)
+          : data;
+      }, shouldRevalidate as any);
+    }) as SWRStoreMutateWithLatestFn<D, P>,
   };
 }
