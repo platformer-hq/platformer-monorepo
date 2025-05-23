@@ -9,6 +9,8 @@ import {
   KeyLatestDataStale,
   KeyState,
   KeyStateError,
+  KeyStatePending,
+  KeyStateRevalidating,
   KeyStateSuccess,
   Observable,
   ObservableListener,
@@ -151,6 +153,39 @@ export interface SWRStore<D, P, E = unknown> {
   subscribe: SWRStoreSubscribeFn<D, P, E>;
 }
 
+function createKeyState<D>(
+  status: 'pending',
+  data: Promise<D>,
+  error: undefined,
+  latestData: KeyLatestData<D> | undefined,
+): KeyStatePending<D>;
+function createKeyState<D>(
+  status: 'revalidating',
+  data: Promise<D>,
+  error: undefined,
+  latestData: KeyLatestData<D>,
+): KeyStateRevalidating<D>;
+function createKeyState<D>(
+  status: 'success',
+  data: D,
+  error: undefined,
+  latestData: KeyLatestData<D>,
+): KeyStateSuccess<D>;
+function createKeyState<D, E>(
+  status: 'error',
+  data: undefined,
+  error: E,
+  latestData: KeyLatestData<D> | undefined,
+): KeyStateError<D, E>;
+function createKeyState(
+  status: any,
+  data: any,
+  error: any,
+  latestData: any,
+): any {
+  return { status, data, latestData, error };
+}
+
 /**
  * Creates a new store.
  * @param key - a key to use.
@@ -268,21 +303,23 @@ export function createSWRStore<D, P extends any[], E = unknown>(
 
           try {
             // If the call was successful, return its result.
-            return {
-              status: 'success',
-              data: await fetcher(...params),
+            const data = await fetcher(...params);
+            return createKeyState('success', data, undefined, {
+              data,
               timestamp: Date.now(),
-            } satisfies KeyStateSuccess<D>;
+              state: 'fresh',
+            }) satisfies KeyStateSuccess<D>;
           } catch (e) {
             // Otherwise memoize the error.
             lastError = e as E;
           }
         }
-        return {
-          status: 'error',
-          error: lastError!,
-          latestData: getLatest(k),
-        } satisfies KeyStateError<D, E>;
+        return createKeyState<D, E>(
+          'error',
+          undefined,
+          lastError!,
+          getLatest(k),
+        ) satisfies KeyStateError<D, E>;
       })()
         .then(keyState => {
           const cachedData = dataCache.get(k);
@@ -299,7 +336,7 @@ export function createSWRStore<D, P extends any[], E = unknown>(
 
           // If the request was successful, actualize the cache.
           if (keyState.status === 'success') {
-            cacheValue(k, keyState.data, keyState.timestamp);
+            cacheValue(k, keyState.data, keyState.latestData.timestamp);
             return keyState.data;
           }
 
@@ -311,7 +348,7 @@ export function createSWRStore<D, P extends any[], E = unknown>(
           revalidationCache.delete(k);
         });
       revalidationCache.set(k, pendingPromise);
-      emitKeyStateUpdate(k, { status: 'pending', data: pendingPromise });
+      emitKeyStateUpdate(k, createKeyState('pending', pendingPromise, undefined, getLatest(k)));
     } else {
       log('@revalidate: pending promise found');
     }
@@ -337,16 +374,16 @@ export function createSWRStore<D, P extends any[], E = unknown>(
 
       // A new item or item with expired lifetime.
       if (!latestData || latestData.state === 'expired') {
-        return { status: 'pending', data: revalidate(params), latestData };
+        return createKeyState('pending', revalidate(params), undefined, latestData);
       }
 
       // Stale item or revalidation required. In this case we create a new request and expect
       // it to call required subscribers.
       const { state } = latestData;
       if (state === 'stale' || shouldRevalidate) {
-        return { status: 'revalidating', latestData, data: revalidate(params) };
+        return createKeyState('revalidating', revalidate(params), undefined, latestData);
       }
-      return { status: 'success', ...latestData };
+      return createKeyState('success', latestData.data, undefined, latestData);
     },
     subscribe(params, listener) {
       return observableByKey(computeKey(params)).sub(listener);
