@@ -2,10 +2,11 @@ import { dequal } from 'dequal/lite';
 import { createLogger } from 'utils';
 
 import { observable } from './observable.js';
-import type {
-  CachedData,
+import {
   DataCache,
   KeyLatestData,
+  KeyLatestDataFresh,
+  KeyLatestDataStale,
   KeyState,
   KeyStateError,
   KeyStateSuccess,
@@ -88,10 +89,7 @@ export type SWRStoreMutateFnData<D> =
 /**
  * Function used to retrieve a value from the store.
  */
-export type SWRStoreGetFn<D, P, E> = (
-  params: P,
-  shouldRevalidate?: boolean,
-) => KeyState<D, E>;
+export type SWRStoreGetFn<D, P, E> = (params: P, shouldRevalidate?: boolean) => KeyState<D, E>;
 
 /**
  * Function used to mutate a store key.
@@ -99,12 +97,15 @@ export type SWRStoreGetFn<D, P, E> = (
 export interface SWRStoreMutateFn<D, P> {
   (
     params: P,
-    data: SWRStoreMutateFnData<D> | ((current?: D) => SWRStoreMutateFnData<D>) | undefined,
+    data:
+      SWRStoreMutateFnData<D>
+      | ((latestData?: KeyLatestData<D>) => SWRStoreMutateFnData<D>)
+      | undefined,
     shouldRevalidate: false,
   ): void;
   (
     params: P,
-    data?: SWRStoreMutateFnData<D> | ((current?: D) => SWRStoreMutateFnData<D>),
+    data?: SWRStoreMutateFnData<D> | ((latestData?: KeyLatestData<D>) => SWRStoreMutateFnData<D>),
     shouldRevalidate?: true,
   ): Promise<D>;
 }
@@ -186,18 +187,36 @@ export function createSWRStore<D, P extends any[], E = unknown>(
   };
 
   // Caches a value for the specified key.
-  const cacheValue = (key: string, data: D) => {
-    const cachedValue = { timestamp: Date.now(), data };
+  const cacheValue = (key: string, data: D, timestamp: number) => {
+    const cachedValue = { timestamp, data };
     log('@cacheValue()', { key, cachedValue });
     dataCache.set(key, cachedValue);
   };
 
-  // Returns cached data in case it is fresh or stale at least.
-  const getFreshOrStale = (key: string): CachedData<D> | undefined => {
+  // Gets the latest data for the specified key.
+  const getLatest = (key: string): KeyLatestData<D> | undefined => {
+    const now = Date.now();
     const cachedData = dataCache.get(key);
-    return cachedData && Date.now() < cachedData.timestamp + freshAge + staleAge
-      ? cachedData
-      : undefined;
+    if (cachedData) {
+      const { timestamp } = cachedData;
+      return {
+        ...cachedData,
+        state: now < timestamp + freshAge
+          ? 'fresh'
+          : now < timestamp + freshAge + staleAge
+            ? 'stale'
+            : 'expired',
+      };
+    }
+  };
+
+  // Returns cached data in case it is fresh or stale at least.
+  const getFreshOrStale = (key: string):
+    | KeyLatestDataFresh<D>
+    | KeyLatestDataStale<D>
+    | undefined => {
+    const latest = getLatest(key);
+    return latest && latest.state !== 'expired' ? latest : undefined;
   };
 
   // Computes key for the specified parameters.
@@ -206,6 +225,7 @@ export function createSWRStore<D, P extends any[], E = unknown>(
     return (Array.isArray(value) ? value : [value]).join(',');
   };
 
+  // Revalidate the key.
   const revalidate = (params: P): Promise<D> => {
     log('@revalidate()', { params });
     const k = computeKey(params);
@@ -235,17 +255,17 @@ export function createSWRStore<D, P extends any[], E = unknown>(
             return {
               status: 'success',
               data: await fetcher(...params),
+              timestamp: Date.now(),
             } satisfies KeyStateSuccess<D>;
           } catch (e) {
             // Otherwise memoize the error.
             lastError = e as E;
           }
         }
-        const cachedData = getFreshOrStale(k);
         return {
           status: 'error',
           error: lastError!,
-          latestData: cachedData ? cachedData.data : undefined,
+          latestData: getLatest(k),
         } satisfies KeyStateError<D, E>;
       })()
         .then(keyState => {
@@ -263,10 +283,10 @@ export function createSWRStore<D, P extends any[], E = unknown>(
 
           // If the request was successful, actualize the cache.
           if (keyState.status === 'success') {
-            cacheValue(k, keyState.data);
+            cacheValue(k, keyState.data, keyState.timestamp);
             return keyState.data;
           }
-           
+
           // eslint-disable-next-line @typescript-eslint/only-throw-error
           throw keyState.error;
         })
@@ -280,13 +300,6 @@ export function createSWRStore<D, P extends any[], E = unknown>(
       log('@revalidate: pending promise found');
     }
     return pendingPromise;
-  };
-
-  // Performs revalidation and mutes the error.
-  const revalidateMuted = (params: P): Promise<D | void> => {
-    return revalidate(params).catch(() => {
-      // TODO: onError?
-    });
   };
 
   return {
@@ -315,7 +328,7 @@ export function createSWRStore<D, P extends any[], E = unknown>(
       // Stale item or revalidation required. In this case we create a new request and expect
       // it to call required subscribers.
       const { state } = latestData;
-      if (state === 'fresh' || state === 'stale' || shouldRevalidate) {
+      if (state === 'stale' || shouldRevalidate) {
         return { status: 'revalidating', latestData, data: revalidate(params) };
       }
       return { status: 'success', ...latestData };
@@ -323,16 +336,16 @@ export function createSWRStore<D, P extends any[], E = unknown>(
     subscribe(params, listener) {
       return observableByKey(computeKey(params)).sub(listener);
     },
-    mutate(params, data, shouldRevalidate = true) {
+    mutate: ((params, data, shouldRevalidate = true) => {
       log('@mutate()', { params, data, shouldRevalidate });
       const k = computeKey(params);
-      const cachedData = getFreshOrStale(k);
+      const latestData = getFreshOrStale(k);
       const finalData = typeof data === 'function'
-        ? data(cachedData ? cachedData.data : undefined)
+        ? data(latestData ? latestData : undefined)
         : data;
 
-      finalData && cacheValue(k, finalData[0]);
-      shouldRevalidate && void revalidateMuted(params);
-    },
+      finalData && cacheValue(k, finalData[0], Date.now());
+      return shouldRevalidate ? revalidate(params) : undefined;
+    }) as SWRStoreMutateFn<D, P>,
   };
 }
