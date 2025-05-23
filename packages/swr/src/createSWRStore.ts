@@ -57,9 +57,21 @@ export type CreateSWRStoreKey<P extends any[]> =
 export type CreateSWRStoreFetcher<D, P extends any[]> = (...args: P) => Promise<D>;
 
 export interface CreateSWRStoreOptions<D, E> {
+  /**
+   * Cache where all retrieved data is stored.
+   */
   dataCache?: DataCache<D>;
+  /**
+   * Time in milliseconds determining for how long the received data is considered fresh and
+   * can be used without revalidation.
+   * @default 5000
+   */
   freshAge?: number;
   logger?: 'default';
+  /**
+   * Cached used to store keys' observers. Observers are special values enabling its value
+   * changes tracking.
+   */
   observersCache?: ObserversCache<D, E>;
   /**
    * Count of retries to perform.
@@ -74,6 +86,9 @@ export interface CreateSWRStoreOptions<D, E> {
    *   backoff is used.
    */
   retryInterval?: number | ((error: E, attemptsPerformed: number) => number);
+  /**
+   * Cache used to store revalidation promises.
+   */
   revalidationCache?: RevalidationCache<D>;
   /**
    * @returns True if the retry should be applied.
@@ -81,6 +96,12 @@ export interface CreateSWRStoreOptions<D, E> {
    * @param error - error received during the last attempt.
    */
   shouldRetry?: boolean | ((error: E) => boolean);
+  /**
+   * Time in milliseconds determining for how long the data is considered stale, after the
+   * `freshAge` has expired. Stale data is the data that still can be used, but accessing this
+   * kind of data will lead to calling revalidation.
+   * @default 30000
+   */
   staleAge?: number;
 }
 
