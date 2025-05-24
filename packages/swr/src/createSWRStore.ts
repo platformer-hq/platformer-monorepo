@@ -21,6 +21,44 @@ export type CreateSWRStoreKey<P extends any[]> =
 
 export type CreateSWRStoreFetcher<D, P extends any[]> = (...args: P) => Promise<D>;
 
+export interface SWRStoreOnSuccessPayload<D, P> {
+  /**
+   * True, if the specified data was taken from cache.
+   */
+  cached?: boolean;
+  /**
+   * Retrieved data.
+   */
+  data: D;
+  /**
+   * True, if the specified data was received in the result of calling mutation.
+   */
+  mutation?: boolean;
+  /**
+   * Parameters used to compute the key value.
+   */
+  params: P;
+}
+
+export interface SWRStoreOnSuccessFn<D, P> {
+  (payload: SWRStoreOnSuccessPayload<D, P>): void;
+}
+
+export interface SWRStoreOnErrorPayload<P, E> {
+  /**
+   * Received error.
+   */
+  error: E;
+  /**
+   * Parameters used to compute the key value.
+   */
+  params: P;
+}
+
+export interface SWRStoreOnErrorFn<P, E> {
+  (payload: SWRStoreOnErrorPayload<P, E>): void;
+}
+
 export interface CreateSWRStoreOptions<D, P, E> {
   /**
    * Cache where all retrieved data is stored.
@@ -41,38 +79,12 @@ export interface CreateSWRStoreOptions<D, P, E> {
    * Hook that is being called whenever the fetch operation failed.
    * @param context - call payload.
    */
-  onError?: (context: {
-    /**
-     * Received error.
-     */
-    error: E;
-    /**
-     * Parameters used to compute the key value.
-     */
-    params: P;
-  }) => void;
+  onError?: SWRStoreOnErrorFn<P, E>;
   /**
    * Hook that is being called whenever the key value was retrieved.
    * @param context - call payload.
    */
-  onSuccess?: (context: {
-    /**
-     * True, if the specified data was taken from cache.
-     */
-    cached?: boolean;
-    /**
-     * Retrieved data.
-     */
-    data: D;
-    /**
-     * True, if the specified data was received in the result of calling mutation.
-     */
-    mutation?: boolean;
-    /**
-     * Parameters used to compute the key value.
-     */
-    params: P;
-  }) => void;
+  onSuccess?: SWRStoreOnSuccessFn<D, P>;
   /**
    * Count of retries to perform.
    * @default 3
