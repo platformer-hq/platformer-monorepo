@@ -9,6 +9,7 @@ import {
   type KeyStateRevalidating,
   type KeyStateSuccess,
   type SWRStoreMutateFn,
+  type SWRStoreRevalidateFn,
 } from 'swr';
 import { createEffect, createMemo, createSignal, onCleanup } from 'solid-js';
 import { access, type MaybeAccessor } from '@solid-primitives/utils';
@@ -37,6 +38,10 @@ export interface UseSWRSuspenselessResultUtils<D, P> {
    * @see SWRStore.mutate
    */
   mutate: SWRStoreMutateFn<D, P>;
+  /**
+   * @see SWRStore.revalidate
+   */
+  revalidate: SWRStoreRevalidateFn<D, P>;
 }
 
 type WithGetters<T, D, L, R, E> = T & {
@@ -90,9 +95,7 @@ export function useSWRSuspenseless<D, P extends any[], E = unknown>(
   const store = createSWRStore<D, P, E>(key, fetcher, options);
 
   // List of the tracked arguments.
-  const [$trackedArgs, setTrackedArgs] = createWritableMemo(() => {
-    return access(options.args);
-  });
+  const [$trackedArgs, setTrackedArgs] = createWritableMemo(() => access(options.args));
   const initialArgs = $trackedArgs();
   const [$keyState, setKeyState] = createSignal<UseSWRKeyState<D, E>>(
     initialArgs ? store.get(...initialArgs) : { status: 'unresolved' },
@@ -161,7 +164,7 @@ export function useSWRSuspenseless<D, P extends any[], E = unknown>(
       // "get" just switches the hooks arguments context.
       setTrackedArgs([params, shouldRevalidate]);
     },
-    // TODO: Should probably refactor mutate functions.
+    revalidate: store.revalidate,
     mutate: ((params, data, shouldRevalidate) => {
       // "mutate" performs a mutation and then switches the context.
       const maybePromise = store.mutate(params, data, shouldRevalidate as any);

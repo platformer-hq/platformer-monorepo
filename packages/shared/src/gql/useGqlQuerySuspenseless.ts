@@ -42,7 +42,7 @@ export interface UseGqlQuerySuspenselessOptions<D, V extends object> extends Pic
 export type UseGqlQuerySuspenselessResult<D, V extends object> =
   UseSWRSuspenselessResult<D, UseGqlQuerySuspenselessParams<V>, UseGqlSuspenselessError>;
 
-export type UseGqlQueryArgs<V extends object> = UseSWRSuspenselessOptionsArgs<UseGqlQuerySuspenselessParams<V>>;
+export type UseGqlQuerySuspenselessArgs<V extends object> = UseSWRSuspenselessOptionsArgs<UseGqlQuerySuspenselessParams<V>>;
 
 function rewireHook<D, V extends object, F extends UseGqlQuerySuspenselessOnSuccessFn<D, V>>(
   fn: F,
@@ -98,7 +98,7 @@ function createArgs<D, V extends object>(
 
 export function useGqlQuerySuspenseless<D, V extends object>(
   query: DocumentNode<D, V>,
-  args?: UseGqlQueryArgs<V>,
+  args?: UseGqlQuerySuspenselessArgs<V>,
   options?: UseGqlQuerySuspenselessOptions<D, V>,
 ): UseGqlQuerySuspenselessResult<D, V> {
   options ||= {};
@@ -124,6 +124,9 @@ export function useGqlQuerySuspenseless<D, V extends object>(
   return [resource, {
     get(variables, shouldRevalidate) {
       utils.get(createArguments(variables), shouldRevalidate);
+    },
+    revalidate(variables) {
+      return utils.revalidate(createArguments(variables));
     },
     mutate(variables, ...rest) {
       return utils.mutate(createArguments(variables), ...rest as any);

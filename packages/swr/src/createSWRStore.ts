@@ -167,6 +167,8 @@ export interface SWRStoreMutateFn<D, P> {
   ): Promise<D>;
 }
 
+export type SWRStoreRevalidateFn<D, P> = (params: P) => Promise<D>;
+
 export type SWRStoreSubscribeFn<D, P, E> = (
   params: P,
   listener: ObservableListener<KeyState<D, E>>,
@@ -191,6 +193,11 @@ export interface SWRStore<D, P, E = unknown> {
    * Nothing otherwise.
    */
   mutate: SWRStoreMutateFn<D, P>;
+  /**
+   * Revalidate the specified key.
+   * @param params - list of parameters to use to compute the key.
+   */
+  revalidate: SWRStoreRevalidateFn<D, P>;
   /**
    * Subscribes to a specific key.
    * @param params - list of parameters to use to compute the key.
@@ -389,6 +396,7 @@ export function createSWRStore<D, P extends any[], E = unknown>(
       onSuccess && onSuccess({ params, data: latestData.data, cached: true });
       return createKeyState('success', latestData.data, undefined, latestData);
     },
+    revalidate,
     subscribe(params, listener) {
       // TODO: We probably want to create a separate method subscribeData subscribing to data
       //  changes only as long this one will re-trigger subscribers even when data didn't change.
