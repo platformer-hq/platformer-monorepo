@@ -1,5 +1,3 @@
-import { dequal } from 'dequal/lite';
-
 import { observable } from './observable.js';
 import {
   DataCache,
@@ -351,17 +349,7 @@ export function createSWRStore<D, P extends any[], E = unknown>(
         ) satisfies KeyStateError<D, E>;
       })()
         .then(keyState => {
-          const cachedData = dataCache.get(k);
-          if (
-            // Error received.
-            keyState.status !== 'success'
-            // No cached data found.
-            || !cachedData
-            // Or cached data differs from the received one.
-            || !dequal(cachedData.data, keyState.data)
-          ) {
-            emitKeyStateUpdate(k, keyState);
-          }
+          emitKeyStateUpdate(k, keyState);
 
           // If the request was successful, actualize the cache.
           if (keyState.status === 'success') {
@@ -402,6 +390,8 @@ export function createSWRStore<D, P extends any[], E = unknown>(
       return createKeyState('success', latestData.data, undefined, latestData);
     },
     subscribe(params, listener) {
+      // TODO: We probably want to create a separate method subscribeData subscribing to data
+      //  changes only as long this one will re-trigger subscribers even when data didn't change.
       return observableByKey(computeKey(params)).sub(listener);
     },
     mutate: ((params, data, shouldRevalidate = true) => {
