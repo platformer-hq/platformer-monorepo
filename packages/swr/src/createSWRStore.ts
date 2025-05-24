@@ -65,7 +65,7 @@ export interface CreateSWRStoreOptions<D, P, E> {
   /**
    * Time in milliseconds determining for how long the received data is considered fresh and
    * can be used without revalidation.
-   * @default 5000
+   * @default 20_000
    */
   freshAge?: number;
   /**
@@ -110,7 +110,7 @@ export interface CreateSWRStoreOptions<D, P, E> {
    * Time in milliseconds determining for how long the data is considered stale, after the
    * `freshAge` has expired. Stale data is the data that still can be used, but accessing this
    * kind of data will lead to calling revalidation.
-   * @default 30000
+   * @default 600_000
    */
   staleAge?: number;
 }
@@ -247,8 +247,8 @@ export function createSWRStore<D, P extends any[], E = unknown>(
 ): SWRStore<D, P, E> {
   options ||= {};
   const {
-    freshAge = 5000,
-    staleAge = 30000,
+    freshAge = 20_000,
+    staleAge = 600_000,
     retries = 3,
     retryInterval: _retryInterval,
     shouldRetry: _shouldRetry,
