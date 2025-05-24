@@ -100,24 +100,17 @@ export function useSWRSuspenseless<D, P extends any[], E = unknown>(
   const [$keyState, setKeyState] = createSignal<UseSWRKeyState<D, E>>(
     initialArgs ? store.get(...initialArgs) : { status: 'unresolved' },
   );
-  const initialKeyState = $keyState();
 
   // The first set should be skipped if we had some initial arguments. In this case $keyState will
   // have some value set initially, as well as some pending operations in the store will
   // start proceeding. Not skipping this set will lead to unnecessary re-render as long
   // as store.get will return a new object with the same properties.
-  // let shouldSkipSet = !initialArgs;
   createEffect(() => {
     const trackedArgs = $trackedArgs();
     if (trackedArgs) {
       // Whenever we have some arguments set, we should track their related key value changes.
       onCleanup(store.subscribe(trackedArgs[0], setKeyState));
-      // !shouldSkipSet && setKeyState(store.get(...args));
-      setKeyState(v => {
-        // To prevent unnecessary re-renders we check if the current value is the initial one set.
-        // In case it is, we return it. Otherwise, call store.get and return a new value.
-        return v && v === initialKeyState ? v : store.get(...trackedArgs);
-      });
+      store.get(...trackedArgs);
     }
   });
 
