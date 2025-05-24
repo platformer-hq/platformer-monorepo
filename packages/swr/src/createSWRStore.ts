@@ -39,10 +39,18 @@ export interface CreateSWRStoreOptions<D, P, E> {
   observersCache?: ObserversCache<D, E>;
   /**
    * Hook that is being called whenever the fetch operation failed.
-   * @param params - parameters to compute the key value.
-   * @param err - received error.
+   * @param context - call payload.
    */
-  onError?: (params: P, err: E) => void;
+  onError?: (context: {
+    /**
+     * Received error.
+     */
+    error: E;
+    /**
+     * Parameters used to compute the key value.
+     */
+    params: P;
+  }) => void;
   /**
    * Hook that is being called whenever the key value was retrieved.
    * @param context - call payload.
@@ -53,15 +61,15 @@ export interface CreateSWRStoreOptions<D, P, E> {
      */
     cached?: boolean;
     /**
-     * True, if the specified data was received in the result of calling mutation.
-     */
-    mutation?: boolean;
-    /**
      * Retrieved data.
      */
     data: D;
     /**
-     * Parameters to compute the key value.
+     * True, if the specified data was received in the result of calling mutation.
+     */
+    mutation?: boolean;
+    /**
+     * Parameters used to compute the key value.
      */
     params: P;
   }) => void;
@@ -350,7 +358,7 @@ export function createSWRStore<D, P extends any[], E = unknown>(
             return keyState.data;
           }
 
-          onError && onError(params, keyState.error);
+          onError && onError({ params, error: keyState.error });
           // eslint-disable-next-line @typescript-eslint/only-throw-error
           throw keyState.error;
         })
