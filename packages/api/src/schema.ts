@@ -51,5 +51,5 @@ export type InputAppUrl = {
   /** Platform identifier. */
   platformID: Scalars['ID']['input'];
   /** URL to set. */
-  url: Scalars['String']['input'];
+  url?: InputMaybe<Scalars['String']['input']>;
 };
