@@ -118,6 +118,7 @@ export function useSWRSuspenseless<D, P extends any[], E = unknown>(
     }
   });
 
+  const $status = createMemo(() => $keyState().status);
   const $anyData = createMemo(() => {
     const { latestData } = $keyState();
     return latestData ? latestData.data : undefined;
@@ -127,7 +128,6 @@ export function useSWRSuspenseless<D, P extends any[], E = unknown>(
     return ks.status === 'error' ? ks.error : undefined;
   });
   const $errored = createMemo(() => $status() === 'error');
-  const $status = createMemo(() => $keyState().status);
   const $loading = createMemo(() => ['pending', 'revalidating'].includes($status()));
   const $ready = createMemo(() => ['success', 'revalidating'].includes($status()));
 
