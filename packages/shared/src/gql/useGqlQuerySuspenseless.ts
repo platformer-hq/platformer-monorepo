@@ -27,7 +27,7 @@ export type UseGqlQuerySuspenselessOnSuccessFn<D, V> = SWRStoreOnSuccessFn<D, V>
 
 export interface UseGqlQuerySuspenselessOptions<D, V extends object> extends Pick<
   UseGqlSuspenselessOptions<D, V>,
-  'freshAge' | 'retries' | 'retryInterval' | 'revalidationCache' | 'shouldRetry' | 'staleAge'
+  'freshAge' | 'retries' | 'retryInterval' | 'revalidationCache' | 'shouldRetry' | 'staleAge' | 'key'
 > {
   /**
    * @see CreateSWRStoreOptions.onError
