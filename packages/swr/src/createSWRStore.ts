@@ -1,5 +1,4 @@
 import { dequal } from 'dequal/lite';
-import { createLogger } from 'utils';
 
 import { observable } from './observable.js';
 import {
@@ -33,7 +32,6 @@ export interface CreateSWRStoreOptions<D, P, E> {
    * @default 5000
    */
   freshAge?: number;
-  logger?: 'default';
   /**
    * Cached used to store keys' observers. Observers are special values enabling its value
    * changes tracking.
@@ -233,7 +231,6 @@ export function createSWRStore<D, P extends any[], E = unknown>(
   const {
     freshAge = 5000,
     staleAge = 30000,
-    logger: _logger,
     retries = 3,
     retryInterval: _retryInterval,
     shouldRetry: _shouldRetry,
@@ -251,12 +248,6 @@ export function createSWRStore<D, P extends any[], E = unknown>(
     ? () => _retryInterval
     : _retryInterval || ((_, retriesPerformed) => Math.pow(2, retriesPerformed - 1) * 100);
 
-  const { log } = createLogger('swr', {
-    bgColor: 'purple',
-    textColor: 'white',
-    shouldLog: _logger === 'default',
-  });
-
   // Guaranteed returns an observable for the specified key.
   const observableByKey = (key: string): Observable<KeyState<D, E>> => {
     const value = observersCache.get(key) || observable();
@@ -266,15 +257,12 @@ export function createSWRStore<D, P extends any[], E = unknown>(
 
   // Emits a new state for the specified key.
   const emitKeyStateUpdate = (key: string, state: KeyState<D, E>) => {
-    log('@emitKeyStateUpdate()', { key, state });
     observableByKey(key).emit(state);
   };
 
   // Caches a value for the specified key.
   const cacheValue = (key: string, data: D, timestamp: number) => {
-    const cachedValue = { timestamp, data };
-    log('@cacheValue()', { key, cachedValue });
-    dataCache.set(key, cachedValue);
+    dataCache.set(key, { timestamp, data });
   };
 
   // Gets the latest data for the specified key.
@@ -302,15 +290,12 @@ export function createSWRStore<D, P extends any[], E = unknown>(
 
   // Revalidate the key.
   const revalidate = (params: P): Promise<D> => {
-    log('@revalidate()', { params });
     const k = computeKey(params);
     let pendingPromise = revalidationCache.get(k);
 
     // If there is no pending promise, we should create a new one and notify subscribers about
     // state change.
     if (!pendingPromise) {
-      log('@revalidate: pending promise missing. Fetching..');
-
       pendingPromise = (async () => {
         // Perform N + 1 calls, where N is a number of retries.
         let lastError: E;
@@ -375,15 +360,12 @@ export function createSWRStore<D, P extends any[], E = unknown>(
         });
       revalidationCache.set(k, pendingPromise);
       emitKeyStateUpdate(k, createKeyState('pending', pendingPromise, undefined, getLatest(k)));
-    } else {
-      log('@revalidate: pending promise found');
     }
     return pendingPromise;
   };
 
   return {
     get(params, shouldRevalidate) {
-      log('@get()', { params, shouldRevalidate });
       const latestData = getLatest(computeKey(params));
 
       // A new item or item with expired lifetime.
@@ -403,7 +385,6 @@ export function createSWRStore<D, P extends any[], E = unknown>(
       return observableByKey(computeKey(params)).sub(listener);
     },
     mutate: ((params, data, shouldRevalidate = true) => {
-      log('@mutate()', { params, data, shouldRevalidate });
       const k = computeKey(params);
       const latestData = getLatest(k);
       const finalData = typeof data === 'function'
