@@ -381,20 +381,26 @@ export function createSWRStore<D, P extends any[], E = unknown>(
 
   return {
     get(params, shouldRevalidate) {
-      const latestData = getLatest(computeKey(params));
+      let keyState: KeyState<D, E>;
+      const key = computeKey(params);
+      const latestData = getLatest(key);
 
-      // A new item or item with expired lifetime.
       if (!latestData || latestData.state === 'expired') {
-        return createKeyState('pending', revalidate(params), undefined, latestData);
+        // A new item or item with expired lifetime.
+        keyState = createKeyState('pending', revalidate(params), undefined, latestData);
       }
-
-      // Stale item or revalidation required. In this case we create a new request and expect
-      // it to call required subscribers.
-      if (latestData.state === 'stale' || shouldRevalidate) {
-        return createKeyState('revalidating', revalidate(params), undefined, latestData);
+      else if (latestData.state === 'stale' || shouldRevalidate) {
+        // Stale item or revalidation required. In this case we create a new request and expect
+        // it to call required subscribers.
+        keyState = createKeyState('revalidating', revalidate(params), undefined, latestData);
+      } else {
+        keyState = createKeyState('success', latestData.data, undefined, latestData);
       }
-      onSuccess && onSuccess({ params, data: latestData.data, cached: true });
-      return createKeyState('success', latestData.data, undefined, latestData);
+      if (keyState.status === 'success') {
+        onSuccess && onSuccess({ params, data: keyState.data, cached: true });
+      }
+      emitKeyStateUpdate(key, keyState);
+      return keyState;
     },
     revalidate,
     subscribe(params, listener) {
