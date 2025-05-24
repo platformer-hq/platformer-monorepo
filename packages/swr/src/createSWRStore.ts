@@ -420,8 +420,15 @@ export function createSWRStore<D, P extends any[], E = unknown>(
         : data;
 
       if (finalData) {
-        cacheValue(k, finalData[0], Date.now());
-        onSuccess && onSuccess({ params, data: finalData[0], mutation: true });
+        const [realData] = finalData;
+        const timestamp = Date.now();
+        cacheValue(k, realData, timestamp);
+        emitKeyStateUpdate(k, createKeyState('success', realData, undefined, {
+          data: realData,
+          timestamp,
+          state: 'fresh',
+        }));
+        onSuccess && onSuccess({ params, data: realData, mutation: true });
       }
       return shouldRevalidate ? revalidate(params) : undefined;
     }) as SWRStoreMutateFn<D, P>,
