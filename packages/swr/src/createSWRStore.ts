@@ -313,49 +313,49 @@ export function createSWRStore<D, P extends any[], E = unknown>(
     return (Array.isArray(value) ? value : [value]).join(',');
   };
 
-  // Revalidate the key.
-  const revalidate = (params: P): Promise<D> => {
+  // Fetches data for the specified set of parameters.
+  const fetchData = async (params: P): Promise<[true, D] | [false, E]> => {
+    // Perform N + 1 calls, where N is a number of retries.
+    let lastError: E;
+    for (let i = 0; i < retries + 1; i++) {
+      // If it is not the first attempt, we should apply additional retry-related checks.
+      if (i) {
+        // 1. Check if we should retry at all.
+        if (!shouldRetry(lastError!)) {
+          break;
+        }
+        // 2. Wait for a specific amount of time.
+        await new Promise(r => setTimeout(r, retryInterval(lastError, i)));
+      }
+
+      try {
+        // If the call was successful, return its result.
+        return [true, await fetcher(...params)];
+      } catch (e) {
+        // Otherwise memoize the error.
+        lastError = e as E;
+      }
+    }
+    return [false, lastError!];
+  };
+
+  // Revalidates the key.
+  const revalidate = (params: P, emit?: boolean): Promise<D> => {
     const k = computeKey(params);
     let pendingPromise = revalidationCache.get(k);
 
     // If there is no pending promise, we should create a new one and notify subscribers about
     // state change.
     if (!pendingPromise) {
-      pendingPromise = (async () => {
-        // Perform N + 1 calls, where N is a number of retries.
-        let lastError: E;
-        for (let i = 0; i < retries + 1; i++) {
-          // If it is not the first attempt, we should apply additional retry-related checks.
-          if (i) {
-            // 1. Check if we should retry at all.
-            if (!shouldRetry(lastError!)) {
-              break;
-            }
-            // 2. Wait for a specific amount of time.
-            await new Promise(r => setTimeout(r, retryInterval(lastError, i)));
-          }
-
-          try {
-            // If the call was successful, return its result.
-            const data = await fetcher(...params);
-            return createKeyState('success', data, undefined, {
-              data,
+      pendingPromise = fetchData(params)
+        .then(tuple => {
+          const keyState = tuple[0]
+            ? createKeyState('success', tuple[1], undefined, {
+              data: tuple[1],
               timestamp: Date.now(),
               state: 'fresh',
-            }) satisfies KeyStateSuccess<D>;
-          } catch (e) {
-            // Otherwise memoize the error.
-            lastError = e as E;
-          }
-        }
-        return createKeyState<D, E>(
-          'error',
-          undefined,
-          lastError!,
-          getLatest(k),
-        ) satisfies KeyStateError<D, E>;
-      })()
-        .then(keyState => {
+            })
+            : createKeyState('error', undefined, tuple[1], getLatest(k));
           emitKeyStateUpdate(k, keyState);
 
           // If the request was successful, actualize the cache.
@@ -373,8 +373,14 @@ export function createSWRStore<D, P extends any[], E = unknown>(
           // Remember to remove pending promise, so we could call fetch again.
           revalidationCache.delete(k);
         });
+
       revalidationCache.set(k, pendingPromise);
-      emitKeyStateUpdate(k, createKeyState('pending', pendingPromise, undefined, getLatest(k)));
+      if (emit) {
+        const latest = getLatest(k);
+        emitKeyStateUpdate(k, latest
+          ? createKeyState('revalidating', pendingPromise, undefined, latest)
+          : createKeyState('pending', pendingPromise, undefined, latest));
+      }
     }
     return pendingPromise;
   };
@@ -388,8 +394,7 @@ export function createSWRStore<D, P extends any[], E = unknown>(
       if (!latestData || latestData.state === 'expired') {
         // A new item or item with expired lifetime.
         keyState = createKeyState('pending', revalidate(params), undefined, latestData);
-      }
-      else if (latestData.state === 'stale' || shouldRevalidate) {
+      } else if (latestData.state === 'stale' || shouldRevalidate) {
         // Stale item or revalidation required. In this case we create a new request and expect
         // it to call required subscribers.
         keyState = createKeyState('revalidating', revalidate(params), undefined, latestData);
@@ -402,7 +407,9 @@ export function createSWRStore<D, P extends any[], E = unknown>(
       emitKeyStateUpdate(key, keyState);
       return keyState;
     },
-    revalidate,
+    revalidate(params) {
+      return revalidate(params, true);
+    },
     subscribe(params, listener) {
       // TODO: We probably want to create a separate method subscribeData subscribing to data
       //  changes only as long this one will re-trigger subscribers even when data didn't change.
@@ -436,7 +443,7 @@ export function createSWRStore<D, P extends any[], E = unknown>(
         }));
         onSuccess && onSuccess({ params, data: realData, mutation: true });
       }
-      return shouldRevalidate ? revalidate(params) : undefined;
+      return shouldRevalidate ? revalidate(params, true) : undefined;
     }) as SWRStoreMutateFn<D, P>,
   };
 }
