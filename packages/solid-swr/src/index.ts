@@ -1,2 +1,2 @@
-export * from './useSWRSuspenseless.js';
+export * from './useSWR.js';
 export * from 'swr';

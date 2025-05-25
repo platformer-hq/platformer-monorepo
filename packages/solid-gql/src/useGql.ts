@@ -5,10 +5,10 @@ import {
 } from '@solid-primitives/graphql';
 import type { DocumentNode } from 'api';
 import {
-  useSWRSuspenseless,
+  useSWR,
   type CreateSWRStoreKey,
-  type UseSWRSuspenselessOptions,
-  type UseSWRSuspenselessResult,
+  type UseSWROptions,
+  type UseSWRResult,
 } from 'solid-swr';
 
 import { GraphQLError } from './GraphQLError.js';
@@ -20,23 +20,21 @@ export type GqlRequestParameters<D, V extends object> = [
   options?: GqlRequestOptions<V>
 ];
 
-export type UseGqlSuspenselessError = GraphQLError | Error;
-export interface UseGqlSuspenselessOptions<D, V extends object>
-  extends UseSWRSuspenselessOptions<D, GqlRequestParameters<D, V>, UseGqlSuspenselessError> {
+export type UseGqlError = GraphQLError | Error;
+export interface UseGqlOptions<D, V extends object>
+  extends UseSWROptions<D, GqlRequestParameters<D, V>, UseGqlError> {
   /**
    * Custom key to be used instead of the default generated one.
    */
   key?: CreateSWRStoreKey<GqlRequestParameters<D, V>>;
 }
-export type UseGqlSuspenselessResult<D, V extends object> =
-  UseSWRSuspenselessResult<D, GqlRequestParameters<D, V>, UseGqlSuspenselessError>;
+export type UseGqlResult<D, V extends object> =
+  UseSWRResult<D, GqlRequestParameters<D, V>, UseGqlError>;
 
-export function useGqlSuspenseless<D, V extends object>(
-  options?: UseGqlSuspenselessOptions<D, V>,
-): UseGqlSuspenselessResult<D, V> {
+export function useGql<D, V extends object>(options?: UseGqlOptions<D, V>): UseGqlResult<D, V> {
   options ||= {};
   const { key } = options;
-  return useSWRSuspenseless<D, GqlRequestParameters<D, V>, UseGqlSuspenselessError>(
+  return useSWR<D, GqlRequestParameters<D, V>, UseGqlError>(
     key || ((endpoint, query, options) => {
       return JSON.stringify([endpoint, query, (options || {}).variables]);
     }),

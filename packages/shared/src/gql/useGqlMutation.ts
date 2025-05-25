@@ -1,23 +1,23 @@
 import type { DocumentNode } from 'api';
-import type { UseSWRKeyStateWrapped, UseSWRSuspenselessResultUtils } from 'solid-swr';
+import type { UseSWRKeyStateWrapped, UseSWRResultUtils } from 'solid-swr';
 import { hapticFeedbackNotificationOccurred } from '@telegram-apps/sdk-solid';
 
 import {
-  useGqlQuerySuspenseless,
-  type UseGqlQuerySuspenselessOptions,
-  UseGqlQuerySuspenselessParams,
-} from './useGqlQuerySuspenseless.js';
-import type { UseGqlSuspenselessError } from 'solid-gql';
+  useGqlQuery,
+  type UseGqlQueryOptions,
+  UseGqlQueryParams,
+} from './useGqlQuery.js';
+import type { UseGqlError } from 'solid-gql';
 
-export type UseGqlMutationSuspenselessOptions<D extends object, V extends object> =
-  Omit<UseGqlQuerySuspenselessOptions<D, V>, 'freshAge' | 'staleAge'>;
+export type UseGqlMutationOptions<D extends object, V extends object> =
+  Omit<UseGqlQueryOptions<D, V>, 'freshAge' | 'staleAge'>;
 
 export interface UseGqlMutationSuspenselessTriggerFn<D, V> {
   (variables: V): Promise<D>;
 }
 
 export interface UseGqlMutationSuspenselessResultUtils<D, V extends object>
-  extends Pick<UseSWRSuspenselessResultUtils<D, UseGqlQuerySuspenselessParams<V>>, 'mutate'> {
+  extends Pick<UseSWRResultUtils<D, UseGqlQueryParams<V>>, 'mutate'> {
   /**
    * Triggers the mutation.
    */
@@ -25,17 +25,17 @@ export interface UseGqlMutationSuspenselessResultUtils<D, V extends object>
 }
 
 export type UseGqlMutationSuspenselessResult<D, V extends object> = [
-  UseSWRKeyStateWrapped<D, UseGqlSuspenselessError>,
+  UseSWRKeyStateWrapped<D, UseGqlError>,
   UseGqlMutationSuspenselessResultUtils<D, V>
 ];
 
-export function useGqlMutationSuspenseless<D extends object, V extends object>(
+export function useGqlMutation<D extends object, V extends object>(
   query: DocumentNode<D, V>,
-  options?: UseGqlMutationSuspenselessOptions<D, V>,
+  options?: UseGqlMutationOptions<D, V>,
 ): UseGqlMutationSuspenselessResult<D, V> {
   options ||= {};
   const { onSuccess } = options;
-  const [keyState, { mutate }] = useGqlQuerySuspenseless<D, V>(query, undefined, {
+  const [keyState, { mutate }] = useGqlQuery<D, V>(query, undefined, {
     ...options,
     onSuccess(...args) {
       hapticFeedbackNotificationOccurred('success');

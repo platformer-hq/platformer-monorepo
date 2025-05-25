@@ -4,13 +4,13 @@ import type {
   SWRStoreOnErrorPayload,
   SWRStoreOnSuccessFn,
   SWRStoreOnSuccessPayload,
-  UseSWRSuspenselessOptionsArgs,
-  UseSWRSuspenselessResult,
+  UseSWROptionsArgs,
+  UseSWRResult,
 } from 'solid-swr';
 import {
-  useGqlSuspenselessScoped,
-  type UseGqlSuspenselessOptions,
-  type UseGqlSuspenselessError,
+  useGqlScoped,
+  type UseGqlOptions,
+  type UseGqlError,
   type GqlRequestOptions,
   type GqlRequestParameters,
 } from 'solid-gql';
@@ -19,42 +19,42 @@ import { access } from '@solid-primitives/utils';
 import { useGqlContext } from './GqlProvider.js';
 import { hapticFeedbackNotificationOccurred } from '@telegram-apps/sdk-solid';
 
-export type UseGqlQuerySuspenselessParams<V extends object> =
-  | V
-  | [variables: V, options?: Omit<GqlRequestOptions, 'variables'>];
-export type UseGqlQuerySuspenselessOnErroredFn<V> = SWRStoreOnErrorFn<V, UseGqlSuspenselessError>;
-export type UseGqlQuerySuspenselessOnSuccessFn<D, V> = SWRStoreOnSuccessFn<D, V>;
+export type UseGqlQueryParams<V extends object> = V | [
+  variables: V,
+  options?: Omit<GqlRequestOptions, 'variables'>
+];
+export type UseGqlQueryOnErroredFn<V> = SWRStoreOnErrorFn<V, UseGqlError>;
+export type UseGqlQueryOnSuccessFn<D, V> = SWRStoreOnSuccessFn<D, V>;
 
-export interface UseGqlQuerySuspenselessOptions<D, V extends object> extends Pick<
-  UseGqlSuspenselessOptions<D, V>,
+export interface UseGqlQueryOptions<D, V extends object> extends Pick<
+  UseGqlOptions<D, V>,
   'freshAge' | 'retries' | 'retryInterval' | 'revalidationCache' | 'shouldRetry' | 'staleAge' | 'key'
 > {
   /**
    * @see CreateSWRStoreOptions.onError
    */
-  onError?: UseGqlQuerySuspenselessOnErroredFn<V>;
+  onError?: UseGqlQueryOnErroredFn<V>;
   /**
    * @see CreateSWRStoreOptions.onSuccess
    */
-  onSuccess?: UseGqlQuerySuspenselessOnSuccessFn<D, V>;
+  onSuccess?: UseGqlQueryOnSuccessFn<D, V>;
 }
 
-export type UseGqlQuerySuspenselessResult<D, V extends object> =
-  UseSWRSuspenselessResult<D, UseGqlQuerySuspenselessParams<V>, UseGqlSuspenselessError>;
+export type UseGqlQueryResult<D, V extends object> = UseSWRResult<D, UseGqlQueryParams<V>, UseGqlError>;
 
-export type UseGqlQuerySuspenselessArgs<V extends object> = UseSWRSuspenselessOptionsArgs<UseGqlQuerySuspenselessParams<V>>;
+export type UseGqlQueryArgs<V extends object> = UseSWROptionsArgs<UseGqlQueryParams<V>>;
 
-function rewireHook<D, V extends object, F extends UseGqlQuerySuspenselessOnSuccessFn<D, V>>(
+function rewireHook<D, V extends object, F extends UseGqlQueryOnSuccessFn<D, V>>(
   fn: F,
 ): SWRStoreOnSuccessFn<D, GqlRequestParameters<D, V>>;
-function rewireHook<D, V extends object, E, F extends UseGqlQuerySuspenselessOnErroredFn<V>>(
+function rewireHook<D, V extends object, E, F extends UseGqlQueryOnErroredFn<V>>(
   fn: F,
   error: true,
 ): SWRStoreOnErrorFn<GqlRequestParameters<D, V>, E>;
 function rewireHook(
   fn:
-    | UseGqlQuerySuspenselessOnSuccessFn<any, any>
-    | UseGqlQuerySuspenselessOnErroredFn<any>,
+    | UseGqlQueryOnSuccessFn<any, any>
+    | UseGqlQueryOnErroredFn<any>,
 ) {
   return ((
     payload:
@@ -96,11 +96,11 @@ function createArgs<D, V extends object>(
   }];
 }
 
-export function useGqlQuerySuspenseless<D, V extends object>(
+export function useGqlQuery<D, V extends object>(
   query: DocumentNode<D, V>,
-  args?: UseGqlQuerySuspenselessArgs<V>,
-  options?: UseGqlQuerySuspenselessOptions<D, V>,
-): UseGqlQuerySuspenselessResult<D, V> {
+  args?: UseGqlQueryArgs<V>,
+  options?: UseGqlQueryOptions<D, V>,
+): UseGqlQueryResult<D, V> {
   options ||= {};
   const context = useGqlContext();
   const createArguments = (createArgs<D, V>).bind(
@@ -111,7 +111,7 @@ export function useGqlQuerySuspenseless<D, V extends object>(
   );
 
   const { onError, onSuccess } = options;
-  const [resource, utils] = useGqlSuspenselessScoped<D, V>({
+  const [resource, utils] = useGqlScoped<D, V>({
     ...options,
     onSuccess: onSuccess ? rewireHook(onSuccess) : undefined,
     onError: onError ? rewireHook(onError, true) : undefined,

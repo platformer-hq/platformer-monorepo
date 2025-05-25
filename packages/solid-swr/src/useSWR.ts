@@ -15,21 +15,21 @@ import { createEffect, createMemo, createSignal, onCleanup } from 'solid-js';
 import { access, type MaybeAccessor } from '@solid-primitives/utils';
 import { createWritableMemo } from '@solid-primitives/memo';
 
-export type UseSWRSuspenselessOptionsArgs<P> = MaybeAccessor<
+export type UseSWROptionsArgs<P> = MaybeAccessor<
   | [params: P, shouldRevalidate?: boolean]
   | undefined
   | null
   | false
 >;
 
-export interface UseSWRSuspenselessOptions<D, P, E> extends CreateSWRStoreOptions<D, P, E> {
+export interface UseSWROptions<D, P, E> extends CreateSWRStoreOptions<D, P, E> {
   /**
    * List of arguments passed to the fetcher.
    */
-  args?: UseSWRSuspenselessOptionsArgs<P>;
+  args?: UseSWROptionsArgs<P>;
 }
 
-export interface UseSWRSuspenselessResultUtils<D, P> {
+export interface UseSWRResultUtils<D, P> {
   /**
    * @see SWRStore.get
    */
@@ -79,16 +79,16 @@ export type UseSWRKeyStateWrapped<D, E> =
   | (WithGetters<KeyStateError<D, E>, D, false, false, true>)
   | (WithGetters<{ status: 'unresolved' }, D, false, false, false>);
 
-export type UseSWRSuspenselessResult<D, P, E> = [
+export type UseSWRResult<D, P, E> = [
   UseSWRKeyStateWrapped<D, E>,
-  UseSWRSuspenselessResultUtils<D, P>
+  UseSWRResultUtils<D, P>
 ];
 
-export function useSWRSuspenseless<D, P extends any[], E = unknown>(
+export function useSWR<D, P extends any[], E = unknown>(
   key: CreateSWRStoreKey<P>,
   fetcher: CreateSWRStoreFetcher<D, P>,
-  options?: UseSWRSuspenselessOptions<D, P, E>,
-): UseSWRSuspenselessResult<D, P, E> {
+  options?: UseSWROptions<D, P, E>,
+): UseSWRResult<D, P, E> {
   options ||= {};
 
   // Create an underlying SWR store.
