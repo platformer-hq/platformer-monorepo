@@ -8,7 +8,7 @@ import {
 } from 'solid-js';
 import { GraphQLError } from 'solid-gql';
 import { accessor, pickProps } from 'solid-utils';
-import { useGqlQuery } from 'shared';
+import { useGqlQuerySuspenseless } from 'shared';
 import { isTimeoutError } from 'better-promises';
 
 import type { ErrorStatusPageError } from '@/components/ErrorStatusPage/ErrorStatusPage.js';
@@ -83,7 +83,7 @@ export function AppLoader(props: {
   const $appID = accessor(props, 'appID');
 
   const [$appData, setAppData] = createSignal<[appFound: boolean, url?: Maybe<string>]>();
-  useGqlQuery(
+  useGqlQuerySuspenseless(
     GetAppUrl,
     () => [[{
       appID: $appID(),
@@ -91,11 +91,11 @@ export function AppLoader(props: {
     }, { signal: $timeoutSignal() }]],
     {
       freshAge: 0,
-      onReady(_, data) {
+      onSuccess({ data }) {
         setAppData([true, data.appTelegramURL]);
         props.onAppDataRetrieved();
       },
-      onErrored(_, error) {
+      onError({ error }) {
         if (GraphQLError.is(error) && error.isOfType('ERR_APP_NOT_FOUND')) {
           setAppData([false]);
         } else {
