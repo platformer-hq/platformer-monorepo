@@ -8,7 +8,7 @@ import {
 } from 'solid-js';
 import { GraphQLError } from 'solid-gql';
 import { accessor, pickProps } from 'solid-utils';
-import { useGqlQuerySuspenseless } from 'shared';
+import { useGqlQuery } from 'shared';
 import { isTimeoutError } from 'better-promises';
 
 import type { ErrorStatusPageError } from '@/components/ErrorStatusPage/ErrorStatusPage.js';
@@ -83,7 +83,7 @@ export function AppLoader(props: {
   const $appID = accessor(props, 'appID');
 
   const [$appData, setAppData] = createSignal<[appFound: boolean, url?: Maybe<string>]>();
-  useGqlQuerySuspenseless(
+  useGqlQuery(
     GetAppUrl,
     () => [[{
       appID: $appID(),
