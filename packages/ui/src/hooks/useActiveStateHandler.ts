@@ -1,5 +1,5 @@
 import { type Accessor, createSignal } from 'solid-js';
-import { createEventListenerMap } from 'solid-utils';
+import { createEventListenerMap } from '@solid-primitives/event-listener';
 
 /**
  * @return A tuple containing an accessor with true if the element is considered active,

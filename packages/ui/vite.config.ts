@@ -35,7 +35,14 @@ export default defineConfig(({ mode }) => {
         fileName: 'index',
       },
       rollupOptions: {
-        external: ['solid-js', 'solid-utils', 'solid-transition-group'],
+        external: [
+          'solid-js',
+          'solid-utils',
+          '@solid-primitives/event-listener',
+          '@solid-primitives/memo',
+          '@solid-primitives/utils',
+          'solid-transition-group',
+        ],
       },
     },
   };

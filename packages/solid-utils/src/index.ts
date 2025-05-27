@@ -9,7 +9,3 @@ export * from './pickChildren.js';
 export * from './pickProps.js';
 export * from './signalsToRecord.js';
 export * from './slots.js';
-
-export * from '@solid-primitives/event-listener';
-export * from '@solid-primitives/timer';
-export * from '@solid-primitives/memo';
