@@ -4,9 +4,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vite';
 
 export default defineConfig(({ mode }) => {
-  const tsconfigPath = mode === 'development'
-    ? 'tsconfig.storybook.json'
-    : 'tsconfig.build.json';
+  const tsconfigPath = 'tsconfig.build.json';
   const platform = process.env.PLATFORM;
   if (!['all', 'ios', 'android'].includes(platform)) {
     throw new Error(`Unknown platform: ${platform}`);
