@@ -7,12 +7,12 @@ export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> =
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string; }
+  ID: { input: number; output: number; }
   String: { input: string; output: string; }
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  Date: { input: string; output: string; }
+  Time: { input: string; output: string; }
 };
 
 export enum AppManagementInviteRole {
@@ -38,9 +38,18 @@ export enum AppRole {
   Owner = 'OWNER'
 }
 
+export enum AppUrlSimpleExplanationKind {
+  /** Application is private and the current user has no access to it. */
+  AccessNotAllowed = 'ACCESS_NOT_ALLOWED',
+  /** Application is public and everybody can open it. */
+  AppIsPublic = 'APP_IS_PUBLIC',
+  /** Application is private and the current user is its manager. */
+  UserIsManager = 'USER_IS_MANAGER'
+}
+
 export type InputAppUrl = {
   /** Platform identifier. */
-  platformID: Scalars['Int']['input'];
+  platformID: Scalars['ID']['input'];
   /** URL to set. */
-  url: Scalars['String']['input'];
+  url?: InputMaybe<Scalars['String']['input']>;
 };

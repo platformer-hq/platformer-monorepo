@@ -1,5 +1,5 @@
 import { createSignal, mergeProps, Show } from 'solid-js';
-import { createWritableMemo } from 'solid-utils';
+import { createWritableMemo } from '@solid-primitives/memo';
 
 import { bem } from '@/css/bem.js';
 import { cnCreate } from '@/css/cnCreate.js';

@@ -1,8 +1,4 @@
-export type ObservableListener<D> = (data: D) => void;
-export type Observable<D> = {
-  emit: (data: D) => void,
-  sub: (listener: ObservableListener<D>) => VoidFunction,
-};
+import type { Observable, ObservableListener } from './types/index.js';
 
 export function observable<D>(): Observable<D> {
   const listeners: ObservableListener<D>[] = [];

@@ -4,9 +4,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vite';
 
 export default defineConfig(({ mode }) => {
-  const tsconfigPath = mode === 'development'
-    ? 'tsconfig.storybook.json'
-    : 'tsconfig.build.json';
+  const tsconfigPath = 'tsconfig.build.json';
   const platform = process.env.PLATFORM;
   if (!['all', 'ios', 'android'].includes(platform)) {
     throw new Error(`Unknown platform: ${platform}`);
@@ -31,11 +29,18 @@ export default defineConfig(({ mode }) => {
       sourcemap: true,
       lib: {
         entry: `src/index.${platform}.ts`,
-        formats: ['es', 'cjs'],
+        formats: ['es'],
         fileName: 'index',
       },
       rollupOptions: {
-        external: ['solid-js', 'solid-utils', 'solid-transition-group'],
+        external: [
+          'solid-js',
+          'solid-utils',
+          '@solid-primitives/event-listener',
+          '@solid-primitives/memo',
+          '@solid-primitives/utils',
+          'solid-transition-group',
+        ],
       },
     },
   };

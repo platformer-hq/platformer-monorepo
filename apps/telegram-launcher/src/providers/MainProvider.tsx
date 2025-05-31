@@ -1,6 +1,7 @@
 import type { Platform } from '@telegram-apps/sdk-solid';
 import { createContext, type FlowProps, useContext } from 'solid-js';
-import { omitProps, access } from 'solid-utils';
+import { omitProps } from 'solid-utils';
+import { access } from '@solid-primitives/utils';
 import { type BaseRecordDict, translator, resolveTemplate } from '@solid-primitives/i18n';
 
 import { InitialColorsTuple, Locale, type Logger } from '@/types/common.js';

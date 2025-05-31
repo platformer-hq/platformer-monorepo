@@ -1,5 +1,5 @@
 import { createMemo, mergeProps, Show } from 'solid-js';
-import { createWritableMemo } from 'solid-utils';
+import { createWritableMemo } from '@solid-primitives/memo';
 
 import { cnCreate } from '@/css/cnCreate.js';
 import { TypographyIos } from '@/components/Typography/TypographyIos/TypographyIos.jsx';
@@ -33,7 +33,7 @@ export type ListIosItemBodyInputProps =
 
 export function ListIosItemBodyInput(props: ListIosItemBodyInputProps) {
   const [$value, setValue] = createWritableMemo(() => props.value || '');
-  const $clearShown = createMemo(() => props.type !== 'number' && !!$value());
+  const $clearShown = createMemo(() => props.type !== 'number' && !!$value() && !props.disabled);
   const $cn = cnCreate(
     mergeProps(props, signalsToRecord({ clearShown: $clearShown })),
     {

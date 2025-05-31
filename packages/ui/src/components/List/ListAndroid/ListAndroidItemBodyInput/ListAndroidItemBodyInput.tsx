@@ -1,5 +1,5 @@
 import { createMemo, createSignal, mergeProps, Show } from 'solid-js';
-import { createWritableMemo } from 'solid-utils';
+import { createWritableMemo } from '@solid-primitives/memo';
 
 import { cnCreate } from '@/css/cnCreate.js';
 import { TypographyAndroid } from '@/components/Typography/TypographyAndroid/TypographyAndroid.jsx';
@@ -39,7 +39,7 @@ const e = eGen('item-body-input');
 export function ListAndroidItemBodyInput(props: ListAndroidItemBodyInputProps) {
   const [$value, setValue] = createWritableMemo(() => props.value || '');
   const [$focused, setFocused] = createSignal(false);
-  const $clearShown = createMemo(() => props.type !== 'number' && !!$value());
+  const $clearShown = createMemo(() => props.type !== 'number' && !!$value() && !props.disabled);
   const $cn = cnCreate(
     mergeProps(props, signalsToRecord({
       clearShown: $clearShown,

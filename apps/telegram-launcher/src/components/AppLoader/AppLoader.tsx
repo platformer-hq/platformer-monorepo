@@ -91,11 +91,11 @@ export function AppLoader(props: {
     }, { signal: $timeoutSignal() }]],
     {
       freshAge: 0,
-      onReady(_, data) {
+      onSuccess({ data }) {
         setAppData([true, data.appTelegramURL]);
         props.onAppDataRetrieved();
       },
-      onErrored(_, error) {
+      onError({ error }) {
         if (GraphQLError.is(error) && error.isOfType('ERR_APP_NOT_FOUND')) {
           setAppData([false]);
         } else {

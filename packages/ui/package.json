@@ -39,13 +39,15 @@
     "build:all": "cross-env PLATFORM=all vite build",
     "build:ios": "cross-env PLATFORM=ios vite build",
     "build:android": "cross-env PLATFORM=android vite build",
+    "build:all:watch": "cross-env PLATFORM=all vite build --watch",
+    "build:ios:watch": "cross-env PLATFORM=ios vite build --watch",
+    "build:android:watch": "cross-env PLATFORM=android vite build --watch",
     "build": "concurrently \"pnpm run build:all\" \"pnpm run build:ios\" \"pnpm run build:android\"",
+    "build:watch": "concurrently \"pnpm run build:all:watch\" \"pnpm run build:ios:watch\" \"pnpm run build:android:watch\"",
     "rollout": "pnpm run typecheck && pnpm run build",
     "icons:build": "node scripts/build-icons.js && eslint --fix src/icons/index.ts",
     "lint": "eslint src",
     "lint:fix": "pnpm run lint --fix",
-    "storybook": "storybook dev -p 6006",
-    "storybook:build": "storybook build",
     "test": "vitest --run",
     "typecheck": "tsc --noEmit -p tsconfig.build.json"
   },
@@ -53,26 +55,18 @@
     "solid-js": "^1.0.0"
   },
   "devDependencies": {
-    "@storybook/addon-controls": "^8.6.0-beta.0",
-    "@storybook/addon-essentials": "^8.6.0-beta.0",
-    "@storybook/addon-interactions": "^8.6.0-beta.0",
-    "@storybook/addon-links": "^8.6.0-beta.0",
-    "@storybook/addon-viewport": "^8.6.0-beta.0",
-    "@storybook/blocks": "^8.6.0-beta.0",
-    "@storybook/types": "^8.6.0-beta.0",
     "concurrently": "^9.1.2",
     "cross-env": "^7.0.3",
     "sass": "^1.71.1",
-    "storybook": "^8.6.0-beta.0",
-    "storybook-solidjs": "1.0.0-beta.6",
-    "storybook-solidjs-vite": "1.0.0-beta.6",
     "svgo": "^3.3.2"
   },
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "@storybook/test": "^8.6.0-beta.0",
+    "@solid-primitives/event-listener": "^2.4.0",
+    "@solid-primitives/memo": "^1.4.1",
+    "@solid-primitives/utils": "^6.3.0",
     "solid-transition-group": "^0.3.0",
     "solid-utils": "workspace:*"
   }
