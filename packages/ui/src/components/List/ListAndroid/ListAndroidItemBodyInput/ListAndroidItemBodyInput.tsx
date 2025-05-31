@@ -39,7 +39,9 @@ const e = eGen('item-body-input');
 export function ListAndroidItemBodyInput(props: ListAndroidItemBodyInputProps) {
   const [$value, setValue] = createWritableMemo(() => props.value || '');
   const [$focused, setFocused] = createSignal(false);
-  const $clearShown = createMemo(() => props.type !== 'number' && !!$value() && !props.disabled);
+  const $clearShown = createMemo(() => {
+    return props.type !== 'number' && !!$value() && !!props.onClear;
+  });
   const $cn = cnCreate(
     mergeProps(props, signalsToRecord({
       clearShown: $clearShown,

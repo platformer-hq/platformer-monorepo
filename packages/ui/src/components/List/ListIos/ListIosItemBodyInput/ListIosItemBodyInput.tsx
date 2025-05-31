@@ -33,7 +33,9 @@ export type ListIosItemBodyInputProps =
 
 export function ListIosItemBodyInput(props: ListIosItemBodyInputProps) {
   const [$value, setValue] = createWritableMemo(() => props.value || '');
-  const $clearShown = createMemo(() => props.type !== 'number' && !!$value() && !props.disabled);
+  const $clearShown = createMemo(() => {
+    return props.type !== 'number' && !!$value() && !!props.onClear;
+  });
   const $cn = cnCreate(
     mergeProps(props, signalsToRecord({ clearShown: $clearShown })),
     {
