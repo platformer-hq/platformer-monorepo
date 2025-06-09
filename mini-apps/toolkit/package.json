@@ -1,0 +1,50 @@
+{
+  "name": "@mini-apps/toolkit",
+  "version": "1.0.0",
+  "description": "Internal toolkit used in the @mini-apps packages.",
+  "author": "Vladislav Kibenko <wolfram.deus@gmail.com>",
+  "homepage": "https://github.com/platformer-hq/platformer-monorepo#readme",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:platformer-hq/platformer-monorepo.git",
+    "directory": "packages/toolkit"
+  },
+  "bugs": {
+    "url": "https://github.com/platformer-hq/platformer-monorepo/issues"
+  },
+  "keywords": [
+    "telegram-mini-apps",
+    "typescript"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/dts/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/dts/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "test": "vitest --run",
+    "lint": "cd ../.. && eslint packages/toolkit/src --ignore-pattern **/*.test.ts",
+    "lint:fix": "pnpm run lint --fix",
+    "typecheck": "tsc --noEmit -p tsconfig.build.json",
+    "build": "vite build -c vite.config.ts"
+  },
+  "devDependencies": {
+    "test-utils": "workspace:*",
+    "tsconfig": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
