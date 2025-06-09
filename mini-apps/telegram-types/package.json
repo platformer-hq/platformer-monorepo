@@ -1,0 +1,43 @@
+{
+  "name": "@mini-apps/telegram-types",
+  "version": "1.0.0",
+  "description": "Telegram Mini Apps related TypeScript types.",
+  "author": "Vladislav Kibenko <wolfram.deus@gmail.com>",
+  "homepage": "https://github.com/platformer-hq/platformer-monorepo#readme",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:platformer-hq/platformer-monorepo.git",
+    "directory": "mini-apps/telegram-types"
+  },
+  "bugs": {
+    "url": "https://github.com/platformer-hq/platformer-monorepo/issues"
+  },
+  "keywords": [
+    "telegram-mini-apps",
+    "typescript",
+    "types",
+    "platformer"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "types": "./dist/dts/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/dts/index.d.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.build.json",
+    "build": "vite build -c vite.config.ts"
+  },
+  "devDependencies": {
+    "tsconfig": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
