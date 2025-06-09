@@ -32,7 +32,8 @@ export function useLauncherOptions() {
           union([instance(URLSearchParams), string()]),
           transformQueryUsing(
             looseObject({
-              app_id: positiveIntFromStr(),
+              // app_id: positiveIntFromStr(),
+              app_id: optional(positiveIntFromStr(), '1'),
               api_base_url: optional(
                 pipe(
                   string(),
