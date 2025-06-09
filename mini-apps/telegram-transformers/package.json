@@ -1,0 +1,55 @@
+{
+  "name": "@mini-apps/telegram-transformers",
+  "version": "1.0.0",
+  "description": "Transformation utilities we use in the @mini-apps/telegram-* packages.",
+  "author": "Vladislav Kibenko <wolfram.deus@gmail.com>",
+  "homepage": "https://github.com/platformer-hq/platformer-monorepo#readme",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:platformer-hq/platformer-monorepo.git",
+    "directory": "mini-apps/telegram-transformers"
+  },
+  "bugs": {
+    "url": "https://github.com/platformer-hq/platformer-monorepo/issues"
+  },
+  "keywords": [
+    "telegram-mini-apps",
+    "typescript"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/dts/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/dts/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "test": "vitest --run",
+    "lint": "cd ../.. && eslint packages/transformers/src --ignore-pattern **/*.test.ts",
+    "lint:fix": "pnpm run lint --fix",
+    "typecheck": "tsc --noEmit -p tsconfig.build.json",
+    "build": "vite build -c vite.config.ts"
+  },
+  "dependencies": {
+    "@mini-apps/toolkit": "workspace:^",
+    "@mini-apps/telegram-types": "workspace:^",
+    "valibot": "^1.1.0"
+  },
+  "devDependencies": {
+    "test-utils": "workspace:*",
+    "tsconfig": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
