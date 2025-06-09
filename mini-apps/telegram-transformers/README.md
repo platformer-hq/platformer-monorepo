@@ -4,7 +4,7 @@
 
 [docs-badge]: https://img.shields.io/badge/documentation-blue?logo=gitbook&logoColor=white
 
-[link]: https://github.com/platformer-hq/platformer-monorepo/tree/master/packages/transformers
+[link]: https://github.com/platformer-hq/platformer-monorepo/tree/master/mini-apps/transformers
 
 [docs-link]: https://docs.mini-apps.store/packages/mini-apps-telegram-transformers
 

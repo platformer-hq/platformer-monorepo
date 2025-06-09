@@ -7,7 +7,7 @@
   "repository": {
     "type": "git",
     "url": "git@github.com:platformer-hq/platformer-monorepo.git",
-    "directory": "packages/toolkit"
+    "directory": "mini-apps/toolkit"
   },
   "bugs": {
     "url": "https://github.com/platformer-hq/platformer-monorepo/issues"
@@ -35,7 +35,7 @@
   },
   "scripts": {
     "test": "vitest --run",
-    "lint": "cd ../.. && eslint packages/toolkit/src --ignore-pattern **/*.test.ts",
+    "lint": "cd ../.. && eslint mini-apps/toolkit/src --ignore-pattern **/*.test.ts",
     "lint:fix": "pnpm run lint --fix",
     "typecheck": "tsc --noEmit -p tsconfig.build.json",
     "build": "vite build -c vite.config.ts"
