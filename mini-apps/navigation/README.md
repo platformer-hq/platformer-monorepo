@@ -6,7 +6,7 @@
 
 [link]: https://github.com/platformer-monorepo/platformer-monorepo/tree/master/mini-apps/navigation
 
-[//]: # ([docs-link]: https://docs.telegram-mini-apps.com/packages/telegram-apps-sdk)
+[//]: # ([docs-link]: https://docs.telegram-mini-apps.com/packages/mini-apps-telegram-sdk)
 
 [npm-link]: https://npmjs.com/package/@mini-apps/navigation
 

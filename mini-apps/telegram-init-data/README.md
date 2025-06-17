@@ -6,7 +6,7 @@
 
 [code-link]: https://github.com/platformer-hq/platformer-monorepo/tree/master/mini-apps/telegram-init-data
 
-[docs-link]: https://docs.mini-apps.store/packages/telegram/mini-apps-telegram-init-data
+[docs-link]: https://docs.mini-apps.store/packages/mini-apps-telegram-init-data
 
 [npm-link]: https://npmjs.com/package/@mini-apps/telegram-init-data
 

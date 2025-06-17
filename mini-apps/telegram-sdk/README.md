@@ -6,7 +6,7 @@
 
 [link]: https://github.com/platformer-hq/platformer-monorepo/tree/master/mini-apps/telegram-sdk
 
-[docs-link]: https://docs.mini-apps.store/packages/telegram/mini-apps-telegram-sdk
+[docs-link]: https://docs.mini-apps.store/packages/mini-apps-telegram-sdk
 
 [npm-link]: https://npmjs.com/package/@mini-apps/telegram-sdk
 

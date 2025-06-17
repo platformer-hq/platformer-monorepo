@@ -4,7 +4,7 @@
 
 [docs-badge]: https://img.shields.io/badge/documentation-blue?logo=gitbook&logoColor=white
 
-[link]: https://github.com/platformer-hq/platformer-monorepo/tree/master/packages/bridge
+[link]: https://github.com/platformer-hq/platformer-monorepo/tree/master/mini-apps/telegram-bridge
 
 [docs-link]: https://docs.mini-apps.store/packages/mini-apps-telegram-bridge
 
@@ -24,7 +24,7 @@ The lowest level communication layer with Telegram Mini Apps.
 This package provides fundamental utilities and types for developing applications on the Telegram Mini Apps platform.
 
 While a developer can use this package alone, it's recommended to use a higher-level package
-like [@mini-apps/telegram-sdk](https://docs.mini-apps.store/packages/mini-apps-sdk).
+like [@mini-apps/telegram-sdk](https://docs.mini-apps.store/packages/mini-apps-telegram-sdk).
 
 ## Installation
 
