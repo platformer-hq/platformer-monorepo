@@ -20,7 +20,7 @@
     "solid-swr": "workspace:*",
     "solid-utils": "workspace:*",
     "utils": "workspace:*",
-    "valibot": "1.0.0-rc.3"
+    "valibot": "^1.1.0"
   },
   "devDependencies": {
     "tsconfig": "workspace:*"

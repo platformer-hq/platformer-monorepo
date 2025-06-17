@@ -12,7 +12,7 @@
     "@solid-primitives/graphql": "^2.2.0",
     "solid-utils": "workspace:*",
     "solid-swr": "workspace:*",
-    "valibot": "^1.0.0"
+    "valibot": "^1.1.0"
   },
   "devDependencies": {
     "tsconfig": "workspace:*"

@@ -3,9 +3,22 @@
   "scripts": {
     "ci:admin-panel:build": "turbo run build --filter=\"./apps/admin-panel\"",
     "ci:admin-panel:deploy": "turbo run ci:deploy --filter=\"./apps/admin-panel\"",
+    "ci:mini-apps:build": "pnpm run mini-apps:build",
+    "ci:mini-apps:deps": "pnpm i --filter=\"./mini-apps/*\"",
+    "ci:mini-apps:lint": "pnpm run mini-apps:lint",
+    "ci:mini-apps:rollout": "pnpm run ci:mini-apps:deps && pnpm run ci:mini-apps:build && pnpm run ci:mini-apps:lint && pnpm run ci:mini-apps:typecheck && pnpm run ci:mini-apps:test",
+    "ci:mini-apps:test": "vitest --run",
+    "ci:mini-apps:typecheck": "pnpm run mini-apps:typecheck",
     "ci:telegram-launcher:build": "turbo run build --filter=\"./apps/telegram-launcher\"",
     "codegen": "graphql-codegen --config graphql-codegen.ts",
-    "codegen:watch": "graphql-codegen --config graphql-codegen.ts --watch"
+    "codegen:watch": "graphql-codegen --config graphql-codegen.ts --watch",
+    "docs:dev": "turbo run dev --filter=\"./apps/docs\"",
+    "mini-apps:build": "turbo run build --filter=\"./mini-apps/*\"",
+    "mini-apps:lint": "turbo run lint --filter=\"./mini-apps/*\"",
+    "mini-apps:lint:fix": "turbo run lint:fix --filter=\"./mini-apps/*\"",
+    "mini-apps:test": "vitest --run --retry 3",
+    "mini-apps:typecheck": "turbo run typecheck --filter=\"./mini-apps/*\"",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.10",
@@ -20,8 +33,8 @@
     "@types/eslint__js": "^8.42.3",
     "@typescript-eslint/eslint-plugin": "^7.8.0",
     "@typescript-eslint/parser": "^8.28.0",
-    "@vitest/coverage-v8": "^2.1.6",
-    "@vitest/ui": "^2.1.6",
+    "@vitest/coverage-v8": "^3.2.3",
+    "@vitest/ui": "^3.2.3",
     "autoprefixer": "^10.4.21",
     "commitizen": "^4.3.1",
     "cross-env": "^7.0.3",
@@ -41,7 +54,7 @@
     "vite-plugin-mkcert": "^1.17.8",
     "vite-plugin-solid": "^2.11.6",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.1.2"
+    "vitest": "^3.2.3"
   },
   "type": "module",
   "packageManager": "pnpm@10.7.0",

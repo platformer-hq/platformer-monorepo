@@ -1,6 +1,7 @@
 packages:
   - apps/*
   - packages/*
+  - mini-apps/*
 onlyBuiltDependencies:
   - '@parcel/watcher'
   - core-js-pure

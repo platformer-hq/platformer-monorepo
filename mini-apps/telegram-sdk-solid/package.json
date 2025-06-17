@@ -1,0 +1,54 @@
+{
+  "name": "@mini-apps/telegram-sdk-solid",
+  "version": "1.0.0",
+  "description": "Solid JS bindings for Mini Apps client SDK.",
+  "author": "Vladislav Kibenko <wolfram.deus@gmail.com>",
+  "homepage": "https://github.com/platformer-hq/platformer-monorepo#readme",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:platformer-hq/platformer-monorepo.git",
+    "directory": "mini-apps/telegram-sdk-solid"
+  },
+  "bugs": {
+    "url": "https://github.com/platformer-hq/platformer-monorepo/issues"
+  },
+  "keywords": [
+    "telegram-mini-apps",
+    "typescript",
+    "sdk",
+    "solidjs"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/dts/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/dts/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@mini-apps/telegram-sdk": "workspace:^"
+  },
+  "peerDependencies": {
+    "solid-js": "^1.0.0"
+  },
+  "devDependencies": {
+    "tsconfig": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
