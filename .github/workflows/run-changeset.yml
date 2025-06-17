@@ -1,0 +1,44 @@
+name: Run changeset
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "master"
+    paths:
+      - ".changeset/**.md"
+
+jobs:
+  run-changeset:
+    name: Run changeset
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        id: pnpm-install
+        with:
+          version: 10.7.0
+          run_install: true
+
+      - name: Rollout
+        run: pnpm run ci:rollout
+
+      - name: Run changeset
+        uses: changesets/action@v1
+        with:
+          publish: pnpm changeset publish
+          commit: 'chore(packages): version packages'
+          title: 'chore(packages): version packages'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
