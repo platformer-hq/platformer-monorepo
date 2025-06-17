@@ -102,7 +102,7 @@ describe('mount', () => {
       mockPageReload();
     });
 
-    it('should use value from session storage key "tapps/mainButton"', () => {
+    it('should use value from session storage key "mini-apps/mainButton"', () => {
       const spy = mockSessionStorageGetItem(() => JSON.stringify({
         backgroundColor: '#123456',
         isActive: true,
@@ -113,7 +113,7 @@ describe('mount', () => {
       }));
       mount();
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith('tapps/mainButton');
+      expect(spy).toHaveBeenCalledWith('mini-apps/mainButton');
       expect(state()).toStrictEqual({
         backgroundColor: '#123456',
         isActive: true,
@@ -124,12 +124,12 @@ describe('mount', () => {
       });
     });
 
-    it('should preserve state if session storage key "tapps/mainButton" not presented', () => {
+    it('should preserve state if session storage key "mini-apps/mainButton" not presented', () => {
       const s = state();
       const spy = mockSessionStorageGetItem(() => null);
       mount();
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith('tapps/mainButton');
+      expect(spy).toHaveBeenCalledWith('mini-apps/mainButton');
       expect(s).toStrictEqual(state());
     });
   });
@@ -177,7 +177,7 @@ describe('offClick', () => {
 describe('setParams', () => {
   beforeEach(setAvailable);
 
-  it('should save the state in storage key tapps/mainButton', () => {
+  it('should save the state in storage key mini-apps/mainButton', () => {
     internalState.set({
       backgroundColor: '#123456',
       hasShineEffect: true,
@@ -195,7 +195,7 @@ describe('setParams', () => {
 
     // Should call retrieveLaunchParams + save component state.
     expect(spy).toHaveBeenCalledTimes(2);
-    expect(spy).toHaveBeenNthCalledWith(2, 'tapps/mainButton', '{"backgroundColor":"#111111","hasShineEffect":true,"isEnabled":true,"isLoaderVisible":true,"isVisible":true,"text":"TEXT","textColor":"#789abc"}');
+    expect(spy).toHaveBeenNthCalledWith(2, 'mini-apps/mainButton', '{"backgroundColor":"#111111","hasShineEffect":true,"isEnabled":true,"isLoaderVisible":true,"isVisible":true,"text":"TEXT","textColor":"#789abc"}');
   });
 
   it('should call "web_app_setup_main_button" only if text is not empty', () => {

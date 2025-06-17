@@ -77,7 +77,7 @@ describe.each([
     expect(spy).toBeCalledWith('web_app_setup_settings_button', { is_visible: value });
   });
 
-  it(`should call sessionStorage.setItem with "tapps/settingsButton" and "${value}" if value changed`, () => {
+  it(`should call sessionStorage.setItem with "mini-apps/settingsButton" and "${value}" if value changed`, () => {
     _isVisible.set(value);
     const spy = mockSessionStorageSetItem();
     fn();
@@ -90,7 +90,7 @@ describe.each([
     fn();
     // Should call retrieveLaunchParams + save component state.
     expect(spy).toHaveBeenCalledTimes(2);
-    expect(spy).toHaveBeenNthCalledWith(2, 'tapps/settingsButton', String(value));
+    expect(spy).toHaveBeenNthCalledWith(2, 'mini-apps/settingsButton', String(value));
   });
 });
 
@@ -115,19 +115,19 @@ describe('mount', () => {
       mockPageReload();
     });
 
-    it('should use value from session storage key "tapps/settingsButton"', () => {
+    it('should use value from session storage key "mini-apps/settingsButton"', () => {
       const spy = mockSessionStorageGetItem(() => 'true');
       mount();
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith('tapps/settingsButton');
+      expect(spy).toHaveBeenCalledWith('mini-apps/settingsButton');
       expect(isVisible()).toBe(true);
     });
 
-    it('should set isVisible false if session storage key "tapps/settingsButton" not presented', () => {
+    it('should set isVisible false if session storage key "mini-apps/settingsButton" not presented', () => {
       const spy = mockSessionStorageGetItem(() => null);
       mount();
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith('tapps/settingsButton');
+      expect(spy).toHaveBeenCalledWith('mini-apps/settingsButton');
       expect(isVisible()).toBe(false);
     });
   });

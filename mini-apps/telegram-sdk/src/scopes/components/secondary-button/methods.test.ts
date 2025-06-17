@@ -112,7 +112,7 @@ describe('mount', () => {
       mockPageReload();
     });
 
-    it('should use value from session storage key "tapps/secondaryButton"', () => {
+    it('should use value from session storage key "mini-apps/secondaryButton"', () => {
       const spy = mockSessionStorageGetItem(() => JSON.stringify({
         backgroundColor: '#123456',
         isActive: true,
@@ -123,7 +123,7 @@ describe('mount', () => {
       }));
       mount();
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith('tapps/secondaryButton');
+      expect(spy).toHaveBeenCalledWith('mini-apps/secondaryButton');
       expect(state()).toStrictEqual({
         backgroundColor: '#123456',
         isActive: true,
@@ -134,12 +134,12 @@ describe('mount', () => {
       });
     });
 
-    it('should preserve state if session storage key "tapps/secondaryButton" not presented', () => {
+    it('should preserve state if session storage key "mini-apps/secondaryButton" not presented', () => {
       const s = state();
       const spy = mockSessionStorageGetItem(() => null);
       mount();
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith('tapps/secondaryButton');
+      expect(spy).toHaveBeenCalledWith('mini-apps/secondaryButton');
       expect(s).toStrictEqual(state());
     });
   });
@@ -187,7 +187,7 @@ describe('offClick', () => {
 describe('setParams', () => {
   beforeEach(setAvailable);
 
-  it('should save the state in storage key tapps/secondaryButton', () => {
+  it('should save the state in storage key mini-apps/secondaryButton', () => {
     internalState.set({
       backgroundColor: '#123456',
       hasShineEffect: true,
@@ -206,7 +206,7 @@ describe('setParams', () => {
 
     // Should call retrieveLaunchParams + save component state.
     expect(spy).toHaveBeenCalledTimes(2);
-    expect(spy).toHaveBeenNthCalledWith(2, 'tapps/secondaryButton', '{"backgroundColor":"#111111","hasShineEffect":true,"isEnabled":true,"isLoaderVisible":true,"isVisible":true,"text":"TEXT","textColor":"#789abc","position":"left"}');
+    expect(spy).toHaveBeenNthCalledWith(2, 'mini-apps/secondaryButton', '{"backgroundColor":"#111111","hasShineEffect":true,"isEnabled":true,"isLoaderVisible":true,"isVisible":true,"text":"TEXT","textColor":"#789abc","position":"left"}');
   });
 
   it('should call "web_app_setup_secondary_button" only if text is not empty', () => {

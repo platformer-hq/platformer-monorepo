@@ -45,7 +45,7 @@ describe('is safe', () => {
       mockPageReload();
     });
 
-    it('should use values from session storage key "tapps/viewport"', async () => {
+    it('should use values from session storage key "mini-apps/viewport"', async () => {
       const storageState = {
         contentSafeAreaInsets: {
           bottom: 331,
@@ -71,24 +71,24 @@ describe('is safe', () => {
 
       await mount();
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith('tapps/viewport');
+      expect(spy).toHaveBeenCalledWith('mini-apps/viewport');
       expect(state()).toEqual(storageState);
     });
 
-    it('should set isFullscreen false if session storage key "tapps/viewport" is not present', async () => {
+    it('should set isFullscreen false if session storage key "mini-apps/viewport" is not present', async () => {
       const spy = mockSessionStorageGetItem(() => null);
 
       await mount();
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith('tapps/viewport');
+      expect(spy).toHaveBeenCalledWith('mini-apps/viewport');
       expect(isFullscreen()).toBe(false);
     });
 
-    it('should set isExpanded true if session storage key "tapps/viewport" is not present', async () => {
+    it('should set isExpanded true if session storage key "mini-apps/viewport" is not present', async () => {
       const spy = mockSessionStorageGetItem(() => null);
       await mount();
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith('tapps/viewport');
+      expect(spy).toHaveBeenCalledWith('mini-apps/viewport');
       expect(isExpanded()).toBe(true);
     });
   });

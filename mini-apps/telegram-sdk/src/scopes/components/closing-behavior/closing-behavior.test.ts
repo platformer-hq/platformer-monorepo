@@ -69,7 +69,7 @@ describe.each([
     expect(spy).toBeCalledWith('web_app_setup_closing_behavior', { need_confirmation: value });
   });
 
-  it(`should call sessionStorage.setItem with "tapps/closingBehavior" and "${value}" if value changed`, () => {
+  it(`should call sessionStorage.setItem with "mini-apps/closingBehavior" and "${value}" if value changed`, () => {
     _isConfirmationEnabled.set(value);
     const spy = mockSessionStorageSetItem();
     fn();
@@ -82,7 +82,7 @@ describe.each([
     fn();
     // Should call retrieveLaunchParams + save component state.
     expect(spy).toHaveBeenCalledTimes(2);
-    expect(spy).toHaveBeenNthCalledWith(2, 'tapps/closingBehavior', String(value));
+    expect(spy).toHaveBeenNthCalledWith(2, 'mini-apps/closingBehavior', String(value));
   });
 });
 
@@ -103,19 +103,19 @@ describe('mount', () => {
       mockPageReload();
     });
 
-    it('should use value from session storage key "tapps/closingBehavior"', () => {
+    it('should use value from session storage key "mini-apps/closingBehavior"', () => {
       const spy = mockSessionStorageGetItem(() => 'true');
       mount();
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith('tapps/closingBehavior');
+      expect(spy).toHaveBeenCalledWith('mini-apps/closingBehavior');
       expect(isConfirmationEnabled()).toBe(true);
     });
 
-    it('should set isConfirmationEnabled false if session storage key "tapps/closingBehavior" not presented', () => {
+    it('should set isConfirmationEnabled false if session storage key "mini-apps/closingBehavior" not presented', () => {
       const spy = mockSessionStorageGetItem(() => null);
       mount();
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith('tapps/closingBehavior');
+      expect(spy).toHaveBeenCalledWith('mini-apps/closingBehavior');
       expect(isConfirmationEnabled()).toBe(false);
     });
   });
