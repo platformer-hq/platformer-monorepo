@@ -15,6 +15,9 @@
         "^build"
       ]
     },
+    "rollout": {
+      "cache": true
+    },
     "dev": {
       "cache": false,
       "persistent": true
