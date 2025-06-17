@@ -10,8 +10,7 @@ on:
   push:
     branches: [ 'master' ]
     paths:
-      - "./apps/admin-panel"
-      - "./apps/admin-panel/**/*"
+      - "./apps/admin-panel/package.json"
 
 jobs:
   build:
