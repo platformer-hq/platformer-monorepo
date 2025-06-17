@@ -45,7 +45,7 @@ jobs:
           run_install: true
 
       - name: Build
-        run: pnpm run ci:telegram-launcher:build
+        run: pnpm run ci:telegram-launcher:rollout
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
