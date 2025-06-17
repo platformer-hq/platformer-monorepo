@@ -1,5 +1,6 @@
 {
   "name": "ui",
+  "private": true,
   "version": "0.0.1",
   "author": "Vladislav Kibenko <wolfram.deus@gmail.com>",
   "type": "module",
@@ -59,9 +60,6 @@
     "cross-env": "^7.0.3",
     "sass": "^1.71.1",
     "svgo": "^3.3.2"
-  },
-  "publishConfig": {
-    "access": "public"
   },
   "dependencies": {
     "@solid-primitives/event-listener": "^2.4.0",

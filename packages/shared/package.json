@@ -5,9 +5,6 @@
   "version": "0.0.1",
   "type": "module",
   "main": "src/index.ts",
-  "publishConfig": {
-    "access": "public"
-  },
   "peerDependencies": {
     "@solid-primitives/utils": "^6.0.0",
     "@telegram-apps/sdk-solid": "^3.0.0",

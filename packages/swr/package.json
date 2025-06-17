@@ -1,13 +1,11 @@
 {
   "name": "swr",
+  "private": true,
   "version": "0.0.1",
   "author": "Vladislav Kibenko <wolfram.deus@gmail.com>",
   "license": "MIT",
   "type": "module",
   "main": "./src/index.ts",
-  "publishConfig": {
-    "access": "public"
-  },
   "dependencies": {
     "utils": "workspace:*"
   },

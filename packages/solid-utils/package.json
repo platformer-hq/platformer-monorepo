@@ -12,9 +12,6 @@
       "import": "./src/immutable.ts"
     }
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "devDependencies": {
     "tsconfig": "workspace:*"
   },
