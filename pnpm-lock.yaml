@@ -278,11 +278,126 @@ importers:
         specifier: workspace:*
         version: link:../../packages/tsconfig
 
+  mini-apps/navigation:
+    devDependencies:
+      test-utils:
+        specifier: workspace:*
+        version: link:../../packages/test-utils
+      tsconfig:
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
+
   mini-apps/signals:
     devDependencies:
       test-utils:
         specifier: workspace:*
         version: link:../../packages/test-utils
+      tsconfig:
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
+
+  mini-apps/telegram-bridge:
+    dependencies:
+      '@mini-apps/signals':
+        specifier: workspace:^
+        version: link:../signals
+      '@mini-apps/telegram-transformers':
+        specifier: workspace:^
+        version: link:../telegram-transformers
+      '@mini-apps/telegram-types':
+        specifier: workspace:^
+        version: link:../telegram-types
+      '@mini-apps/toolkit':
+        specifier: workspace:^
+        version: link:../toolkit
+      better-promises:
+        specifier: ^0.4.1
+        version: 0.4.1
+      error-kid:
+        specifier: ^0.0.7
+        version: 0.0.7
+      mitt:
+        specifier: ^3.0.1
+        version: 3.0.1
+      valibot:
+        specifier: 1.0.0
+        version: 1.0.0(typescript@5.8.3)
+    devDependencies:
+      test-utils:
+        specifier: workspace:*
+        version: link:../../packages/test-utils
+      tsconfig:
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
+
+  mini-apps/telegram-init-data:
+    dependencies:
+      '@mini-apps/telegram-transformers':
+        specifier: workspace:^
+        version: link:../telegram-transformers
+      '@mini-apps/telegram-types':
+        specifier: workspace:^
+        version: link:../telegram-types
+      error-kid:
+        specifier: ^0.0.7
+        version: 0.0.7
+    devDependencies:
+      '@types/node':
+        specifier: ^22.9.0
+        version: 22.13.0
+      test-utils:
+        specifier: workspace:*
+        version: link:../../packages/test-utils
+      tsconfig:
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
+
+  mini-apps/telegram-sdk:
+    dependencies:
+      '@mini-apps/navigation':
+        specifier: workspace:^
+        version: link:../navigation
+      '@mini-apps/signals':
+        specifier: workspace:^
+        version: link:../signals
+      '@mini-apps/telegram-bridge':
+        specifier: workspace:^
+        version: link:../telegram-bridge
+      '@mini-apps/telegram-transformers':
+        specifier: workspace:^
+        version: link:../telegram-transformers
+      '@mini-apps/telegram-types':
+        specifier: workspace:^
+        version: link:../telegram-types
+      '@mini-apps/toolkit':
+        specifier: workspace:^
+        version: link:../toolkit
+      better-promises:
+        specifier: ^0.4.1
+        version: 0.4.1
+      error-kid:
+        specifier: ^0.0.7
+        version: 0.0.7
+      valibot:
+        specifier: 1.0.0
+        version: 1.0.0(typescript@5.8.3)
+    devDependencies:
+      test-utils:
+        specifier: workspace:*
+        version: link:../../packages/test-utils
+      tsconfig:
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
+
+  mini-apps/telegram-sdk-solid:
+    dependencies:
+      '@mini-apps/telegram-sdk':
+        specifier: workspace:^
+        version: link:../telegram-sdk
+      solid-js:
+        specifier: ^1.0.0
+        version: 1.9.4
+    devDependencies:
       tsconfig:
         specifier: workspace:*
         version: link:../../packages/tsconfig
@@ -2692,9 +2807,6 @@ packages:
 
   '@types/node@12.20.55':
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
-
-  '@types/node@20.17.16':
-    resolution: {integrity: sha512-vOTpLduLkZXePLxHiHsBLp98mHGnl8RptV4YAO3HfKO5UHjDvySGbxKtpYfy8Sx5+WKcgc45qNreJJRVM3L6mw==}
 
   '@types/node@22.13.0':
     resolution: {integrity: sha512-ClIbNe36lawluuvq3+YYhnIN2CELi+6q8NpnM7PYp4hBn/TatfboPgVSm2rwKRfnV2M+Ty9GWDFI64KEe+kysA==}
@@ -5901,9 +6013,6 @@ packages:
   unc-path-regex@0.1.2:
     resolution: {integrity: sha512-eXL4nmJT7oCpkZsHZUOJo8hcX3GbsiDOa0Qu9F646fi8dT3XuSVopVqAcEiVzSKKH7UoDti23wNX3qGFxcW5Qg==}
     engines: {node: '>=0.10.0'}
-
-  undici-types@6.19.8:
-    resolution: {integrity: sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw==}
 
   undici-types@6.20.0:
     resolution: {integrity: sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg==}
@@ -9241,7 +9350,7 @@ snapshots:
 
   '@types/conventional-commits-parser@5.0.1':
     dependencies:
-      '@types/node': 20.17.16
+      '@types/node': 22.13.0
     optional: true
 
   '@types/css-font-loading-module@0.0.7': {}
@@ -9262,7 +9371,7 @@ snapshots:
   '@types/glob@7.2.0':
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 20.17.16
+      '@types/node': 22.13.0
 
   '@types/inquirer@6.5.0':
     dependencies:
@@ -9279,23 +9388,19 @@ snapshots:
 
   '@types/node@12.20.55': {}
 
-  '@types/node@20.17.16':
-    dependencies:
-      undici-types: 6.19.8
-
   '@types/node@22.13.0':
     dependencies:
       undici-types: 6.20.0
 
   '@types/through@0.0.33':
     dependencies:
-      '@types/node': 20.17.16
+      '@types/node': 22.13.0
 
   '@types/tinycolor2@1.4.6': {}
 
   '@types/ws@8.18.0':
     dependencies:
-      '@types/node': 20.17.16
+      '@types/node': 22.13.0
 
   '@typescript-eslint/eslint-plugin@7.18.0(@typescript-eslint/parser@8.28.0(eslint@9.19.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.19.0(jiti@2.4.2))(typescript@5.8.3)':
     dependencies:
@@ -12762,8 +12867,6 @@ snapshots:
     optional: true
 
   unc-path-regex@0.1.2: {}
-
-  undici-types@6.19.8: {}
 
   undici-types@6.20.0: {}
 
