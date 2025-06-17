@@ -34,7 +34,7 @@ export const [
     [
       'Unable to retrieve launch parameters from any known source. Perhaps, you have opened your app outside Telegram?',
       '📖 Refer to docs for more information:',
-      'https://docs.telegram-mini-apps.com/packages/telegram-apps-bridge/environment',
+      'https://docs.mini-apps.store/packages/mini-apps-telegram-bridge/environment',
       '',
       'Collected errors:',
       ...errors.map(([source, error]) => {

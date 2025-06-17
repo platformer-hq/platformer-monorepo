@@ -31,7 +31,7 @@ describe('first navigation entry contains launch params', () => {
 });
 
 describe('session storage contains launch params', () => {
-  it('should return launch parameters from the session storage tapps/launchParams key. If data is missing or invalid, throw an error', () => {
+  it('should return launch parameters from the session storage mini-apps/launchParams key. If data is missing or invalid, throw an error', () => {
     const spy = vi
       .spyOn(sessionStorage, 'getItem')
       .mockImplementationOnce(() => '');
