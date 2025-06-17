@@ -1,9 +1,11 @@
 {
   "extends": "tsconfig/esnext.json",
   "compilerOptions": {
-    "outDir": "dist"
+    "composite": true
   },
   "include": [
-    "src"
+    "./tools",
+    "vite.config.ts",
+    "vite.iife.config.ts"
   ]
 }
