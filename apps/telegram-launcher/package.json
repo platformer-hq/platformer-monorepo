@@ -6,14 +6,16 @@
   "main": "index.js",
   "homepage": "https://platformer-hq.github.io/platformer-monorepo",
   "scripts": {
+    "build": "tsc --noEmit && vite build",
     "deploy": "gh-pages -d dist",
     "dev": "vite",
     "dev:https": "cross-env HTTPS=1 vite",
-    "build": "tsc --noEmit && vite build",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "lint:fix": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
+    "lint": "eslint src --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint src --report-unused-disable-directives --max-warnings 0 --fix",
+    "predeploy": "pnpm run build",
     "preview": "vite preview",
-    "predeploy": "pnpm run build"
+    "rollout": "pnpm run typecheck && pnpm run lint && pnpm run build",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "publishConfig": {
     "access": "public"
