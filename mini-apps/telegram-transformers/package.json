@@ -38,7 +38,8 @@
     "lint": "cd ../.. && eslint mini-apps/telegram-transformers/src --ignore-pattern **/*.test.ts",
     "lint:fix": "pnpm run lint --fix",
     "typecheck": "tsc --noEmit -p tsconfig.build.json",
-    "build": "vite build -c vite.config.ts"
+    "build": "vite build -c vite.config.ts",
+    "rollout": "pnpm run typecheck && pnpm run lint && pnpm run build && pnpm run test"
   },
   "dependencies": {
     "@mini-apps/toolkit": "workspace:^",

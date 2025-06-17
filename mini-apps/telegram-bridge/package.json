@@ -42,7 +42,8 @@
     "typecheck": "tsc --noEmit -p tsconfig.build.json",
     "build": "rimraf dist && pnpm run build:default && pnpm run build:iife",
     "build:default": "vite build -c vite.config.ts",
-    "build:iife": "vite build -c vite.iife.config.ts"
+    "build:iife": "vite build -c vite.iife.config.ts",
+    "rollout": "pnpm run typecheck && pnpm run lint && pnpm run build && pnpm run test"
   },
   "dependencies": {
     "@mini-apps/signals": "workspace:^",

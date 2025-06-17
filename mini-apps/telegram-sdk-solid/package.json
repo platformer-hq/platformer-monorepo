@@ -37,7 +37,8 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "build": "vite build"
+    "build": "vite build",
+    "rollout": "pnpm run typecheck && pnpm run build"
   },
   "dependencies": {
     "@mini-apps/telegram-sdk": "workspace:^"

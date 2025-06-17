@@ -48,7 +48,8 @@
     "typecheck": "tsc --noEmit",
     "build:node": "vite build --ssr src/entries/node.ts",
     "build:web": "vite build --ssr src/entries/web.ts",
-    "build": "rimraf dist && pnpm run build:node && pnpm run build:web"
+    "build": "rimraf dist && pnpm run build:node && pnpm run build:web",
+    "rollout": "pnpm run typecheck && pnpm run lint && pnpm run build && pnpm run test"
   },
   "devDependencies": {
     "@types/node": "^22.9.0",

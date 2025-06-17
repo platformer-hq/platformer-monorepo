@@ -32,7 +32,8 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.build.json",
-    "build": "vite build -c vite.config.ts"
+    "build": "vite build -c vite.config.ts",
+    "rollout": "pnpm run typecheck && pnpm run build"
   },
   "devDependencies": {
     "tsconfig": "workspace:*"
