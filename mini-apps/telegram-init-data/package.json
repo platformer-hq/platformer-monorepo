@@ -1,0 +1,66 @@
+{
+  "name": "@mini-apps/telegram-init-data",
+  "version": "1.0.0",
+  "description": "TypeScript Node library to operate with Telegram init data.",
+  "author": "Vladislav Kibenko <wolfram.deus@gmail.com>",
+  "homepage": "https://github.com/platformer-hq/platformer-monorepo#readme",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:platformer-hq/platformer-monorepo.git",
+    "directory": "mini-apps/telegram-init-data"
+  },
+  "bugs": {
+    "url": "https://github.com/platformer-hq/platformer-monorepo/issues"
+  },
+  "keywords": [
+    "telegram-mini-apps",
+    "init-data",
+    "node",
+    "typescript"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/entries/node.cjs",
+  "module": "./dist/entries/node.js",
+  "types": "./dist/entries/node.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/entries/node.d.ts",
+      "import": "./dist/entries/node.js",
+      "require": "./dist/entries/node.cjs",
+      "default": "./dist/entries/node.cjs"
+    },
+    "./web": {
+      "types": "./dist/entries/web.d.ts",
+      "import": "./dist/entries/web.js",
+      "require": "./dist/entries/web.cjs",
+      "default": "./dist/entries/web.cjs"
+    }
+  },
+  "scripts": {
+    "test": "vitest --run",
+    "lint": "cd ../.. && eslint mini-apps/telegram-init-data/src --ignore-pattern **/*.test.ts",
+    "lint:fix": "pnpm run lint --fix",
+    "typecheck": "tsc --noEmit",
+    "build:node": "vite build --ssr src/entries/node.ts",
+    "build:web": "vite build --ssr src/entries/web.ts",
+    "build": "rimraf dist && pnpm run build:node && pnpm run build:web"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "test-utils": "workspace:*",
+    "tsconfig": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@mini-apps/telegram-transformers": "workspace:^",
+    "@mini-apps/telegram-types": "workspace:^",
+    "error-kid": "^0.0.7"
+  }
+}
