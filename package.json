@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "ci:admin-panel:deploy": "turbo run deploy --filter=\"./apps/admin-panel\"",
     "ci:admin-panel:rollout": "turbo run rollout --filter=\"./apps/telegram-launcher\"",
     "ci:rollout": "turbo run rollout --filter=\"./{mini-apps,apps}/*\"",
     "ci:telegram-launcher:rollout": "turbo run rollout --filter=\"./apps/telegram-launcher\"",
