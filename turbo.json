@@ -26,7 +26,10 @@
       "cache": true
     },
     "rollout": {
-      "cache": true
+      "cache": true,
+      "dependsOn": [
+        "^rollout"
+      ]
     },
     "test": {
       "cache": true
