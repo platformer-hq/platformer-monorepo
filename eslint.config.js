@@ -15,7 +15,6 @@ export default tseslint.config(
     languageOptions: {
       parserOptions: {
         project: [
-          './mini-apps/*/tsconfig.json',
           './packages/*/tsconfig.json',
           './apps/*/tsconfig.json'
         ],
