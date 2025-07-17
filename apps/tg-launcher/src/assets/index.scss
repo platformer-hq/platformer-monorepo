@@ -1,0 +1,24 @@
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  margin: 0;
+
+  // These values are needed to prevent the application from hiding due to slide down.
+  // It also helps to prevent showing the bottom bar in mobile versions of Telegram.
+  height: 100vh;
+  overflow: hidden;
+
+  color: var(--theme-text-color);
+  --tgui-loading-indicator-ios-particle-color: var(--theme-subtitle-text-color);
+}
+
+#app {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+* {
+  box-sizing: border-box;
+}
