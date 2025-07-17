@@ -10,9 +10,14 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./index.css": {
+      "import": "./dist/index.css",
+      "require": "./dist/index.css"
     }
   },
   "scripts": {
+    "build": "vite build",
     "icons:build": "node scripts/build-icons.js && eslint --fix src/icons/index.ts"
   },
   "peerDependencies": {
