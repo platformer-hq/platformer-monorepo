@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "tsconfig/vue.json",
+  "include": [
+    "src"
+  ]
+}
