@@ -18,7 +18,7 @@
     "@telegram-apps/sdk-vue": "^2.0.30",
     "better-promises": "^0.4.1",
     "shared": "workspace:*",
-    "ui": "workspace:*",
+    "vue-ui": "workspace:*",
     "utils": "workspace:*",
     "valibot": "^1.1.0",
     "vue": "^3.5.17",
