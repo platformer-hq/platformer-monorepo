@@ -1,0 +1,20 @@
+{
+  "name": "vue-swr",
+  "private": true,
+  "version": "0.0.1",
+  "author": "Vladislav Kibenko <wolfram.deus@gmail.com>",
+  "type": "module",
+  "main": "./src/index.ts",
+  "scripts": {
+    "build": "vite build"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
+  "dependencies": {
+    "swr": "workspace:*"
+  },
+  "devDependencies": {
+    "tsconfig": "workspace:*"
+  }
+}
