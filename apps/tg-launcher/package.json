@@ -4,14 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "../tg-launcher-vue/node_modules/.bin/vite",
     "dev:https": "cross-env HTTPS=1 vite",
-    "build": "run-p type-check \"build-only {@}\" --",
-    "preview": "vite preview",
-    "test:unit": "vitest",
-    "build-only": "vite build",
-    "type-check": "vue-tsc --build",
-    "lint": "eslint . --fix"
+    "build": "../tg-launcher-vue/node_modules/.bin/run-p type-check \"build-only {@}\" --",
+    "preview": "../tg-launcher-vue/node_modules/.bin/vite preview",
+    "test:unit": "../tg-launcher-vue/node_modules/.bin/vitest",
+    "build-only": "../tg-launcher-vue/node_modules/.bin/vite build",
+    "type-check": "../tg-launcher-vue/node_modules/.bin/vue-tsc --build",
+    "lint": "../tg-launcher-vue/node_modules/.bin/eslint . --fix"
   },
   "dependencies": {
     "@sentry/vue": "^9.36.0",
