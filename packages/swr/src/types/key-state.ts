@@ -22,15 +22,28 @@ interface CreateKeyState<S, D, E, LD> {
 }
 
 export type KeyStatePending<D> = CreateKeyState<
-  'pending', Promise<D>, undefined, KeyLatestData<D> | undefined
+  'pending',
+  Promise<D>,
+  undefined,
+  KeyLatestData<D> | undefined
 >;
+
 export type KeyStateRevalidating<D> = CreateKeyState<
-  'revalidating', Promise<D>, undefined, KeyLatestData<D>
+  'revalidating',
+  Promise<D>,
+  undefined,
+  KeyLatestData<D>
 >;
+
 export type KeyStateSuccess<D> = CreateKeyState<'success', D, undefined, KeyLatestData<D>>;
+
 export type KeyStateError<D, E> = CreateKeyState<
-  'error', undefined, E, KeyLatestData<D> | undefined
+  'error',
+  undefined,
+  E,
+  KeyLatestData<D> | undefined
 >;
+
 export type KeyState<D, E = unknown> =
   | KeyStatePending<D>
   | KeyStateRevalidating<D>
