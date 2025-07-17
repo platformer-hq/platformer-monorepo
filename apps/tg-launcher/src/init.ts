@@ -22,7 +22,10 @@ import {
   sdkLogger,
   createLogger,
   setMainButtonParams,
-  viewportHeight, viewportWidth, isViewportExpanded, isViewportStable,
+  viewportHeight,
+  viewportWidth,
+  isViewportExpanded,
+  isViewportStable,
 } from '@telegram-apps/sdk-vue';
 import { formatThemeParamsCssVar, formatViewportCssVar } from 'shared';
 import { lazyErudaInit } from 'utils';
