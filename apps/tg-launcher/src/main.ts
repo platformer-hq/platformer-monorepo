@@ -58,7 +58,8 @@ try {
   // TODO: make it async
   sentryInit({
     app,
-    dsn: 'https://8888815a88eb8e06bd1ac55195df9ab0@o992980.ingest.us.sentry.io/4508812774473728',
+    enabled: !!import.meta.env.VITE_SENTRY_ENABLED,
+    dsn: import.meta.env.VITE_SENTRY_DSN,
     environment: import.meta.env.MODE,
   });
 
