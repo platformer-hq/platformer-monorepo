@@ -23,10 +23,6 @@ export default defineConfigWithVueTs(
   {
     rules: {
       'vue/multi-word-component-names': 0,
-      'vue/max-attributes-per-line': ['error', {
-        singleline: { max: 3 },
-        multiline: { max: 1 },
-      }],
       '@typescript-eslint/no-empty-object-type': 0,
       '@typescript-eslint/no-explicit-any': 0,
       '@typescript-eslint/no-unsafe-argument': 0,
