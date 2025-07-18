@@ -26,6 +26,7 @@ import {
   viewportWidth,
   isViewportExpanded,
   isViewportStable,
+  applyPolyfills,
 } from '@telegram-apps/sdk-vue';
 import { formatThemeParamsCssVar, formatViewportCssVar } from 'shared';
 import { lazyErudaInit } from 'utils';
@@ -56,6 +57,7 @@ export async function init({ debug, ...options }: {
    */
   mockForWebK: boolean;
 }): Promise<{ initialColors: InitialColorsTuple }> {
+  applyPolyfills();
   setDebug(debug);
   bridgeLogger.set(createLogger('Bridge (Platformer)', {
     textColor: 'white',
