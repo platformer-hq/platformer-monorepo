@@ -16,9 +16,16 @@ const { t } = useI18n({
 </script>
 
 <template>
-  <Text :class="b()" variant="footnote">
+  <Text
+    :class="b()"
+    variant="footnote"
+  >
     {{ t('prefix') }}
-    <a :class="e('link')" :href="link" @click.prevent="openTelegramLink(link)">
+    <a
+      :class="e('link')"
+      :href="link"
+      @click.prevent="openTelegramLink(link)"
+    >
       {{ t('suffix') }}
     </a>
   </Text>

@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { bem } from 'utils';
-import { Xmark28 } from 'vue-ui';
+import { Xmark28, LoadingIndicatorIos, LoadingIndicatorAndroid } from 'vue-ui';
 
 import Disclaimer from '@/components/Disclaimer.vue';
-import LoadingIndicatorIos from '@/components/LoadingIndicatorIos.vue';
-import LoadingIndicatorAndroid from '@/components/LoadingIndicatorAndroid.vue';
 import Text from '@/components/Text.vue';
 import platformerLogoSrc from '@/assets/platformer-logo.svg';
 import { injectGlobals } from '@/providers/global.ts';
@@ -23,8 +21,15 @@ const { platform } = injectGlobals();
     <div />
     <div :class="e('main')">
       <div :class="e('image')">
-        <img alt="" :class="e('logo')" :src="platformerLogoSrc">
-        <Xmark28 v-if="state === 'error'" :class="e('error-icon')" />
+        <img
+          alt=""
+          :class="e('logo')"
+          :src="platformerLogoSrc"
+        >
+        <Xmark28
+          v-if="state === 'error'"
+          :class="e('error-icon')"
+        />
       </div>
       <div :class="e('content')">
         <Text
@@ -35,13 +40,26 @@ const { platform } = injectGlobals();
         >
           {{ title }}
         </Text>
-        <Text v-if="$slots.default" :class="e('subtitle')" variant="body">
+        <Text
+          v-if="$slots.default"
+          :class="e('subtitle')"
+          variant="body"
+        >
           <slot />
         </Text>
       </div>
-      <div v-if="state === 'loading'" :class="e('loader', platform)">
-        <LoadingIndicatorIos v-if="platform === 'ios'" :size="28" />
-        <LoadingIndicatorAndroid v-else :size="28" />
+      <div
+        v-if="state === 'loading'"
+        :class="e('loader', platform)"
+      >
+        <LoadingIndicatorIos
+          v-if="platform === 'ios'"
+          :size="28"
+        />
+        <LoadingIndicatorAndroid
+          v-else
+          :size="28"
+        />
       </div>
     </div>
     <Disclaimer />

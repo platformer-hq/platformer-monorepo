@@ -10,7 +10,10 @@ const { as = 'p' } = defineProps<{
 </script>
 
 <template>
-  <component :is="as" :class="b(variant)">
+  <component
+    :is="as"
+    :class="b(variant)"
+  >
     <slot name="default" />
   </component>
 </template>
