@@ -6,13 +6,14 @@ const [b] = bem('text');
 const { as = 'p' } = defineProps<{
   as?: 'span' | 'p' | 'h1';
   variant?: 'heading' | 'footnote' | 'body';
+  weight?: 'semibold';
 }>();
 </script>
 
 <template>
   <component
     :is="as"
-    :class="b(variant)"
+    :class="b(variant, weight)"
   >
     <slot name="default" />
   </component>
@@ -35,6 +36,10 @@ const { as = 'p' } = defineProps<{
   &--heading {
     line-height: 28px;
     font-size: 24px;
+    font-weight: 500;
+  }
+
+  &--semibold {
     font-weight: 500;
   }
 }
