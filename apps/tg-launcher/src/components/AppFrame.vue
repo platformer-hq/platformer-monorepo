@@ -13,14 +13,18 @@ import { onMounted, onUnmounted, useTemplateRef } from 'vue';
 
 import { injectGlobals } from '@/providers/global.js';
 
-const { loadTimeout } = defineProps<{
+export interface AppFrameProps {
   loadTimeout: number;
   url: string;
-}>();
-const emit = defineEmits<{
+}
+
+export interface AppFrameEmits {
   error: [{ timeout?: boolean }];
   ready: [];
-}>();
+}
+
+const { loadTimeout } = defineProps<AppFrameProps>();
+const emit = defineEmits<AppFrameEmits>();
 
 const { initialColors, logger } = injectGlobals();
 const { log, forceError } = logger;
