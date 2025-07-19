@@ -24,9 +24,9 @@ export function extractLauncherOptions():
   | {
   ok: true,
   options: {
-    appID: number;
-    apiBaseURL: string;
-    fallbackURL?: string | null;
+    appId: number;
+    apiBaseUrl: string;
+    fallbackUrl?: string | null;
     initTimeout: number;
     loadTimeout: number;
   }
@@ -41,8 +41,8 @@ export function extractLauncherOptions():
         union([instance(URLSearchParams), string()]),
         transformQueryUsing(
           looseObject({
-            app_id: positiveIntFromStr(),
-            // app_id: optional(positiveIntFromStr(), '1'),
+            // app_id: positiveIntFromStr(),
+            app_id: optional(positiveIntFromStr(), '1'),
             api_base_url: optional(
               pipe(
                 string(),
@@ -65,9 +65,9 @@ export function extractLauncherOptions():
     return {
       ok: true,
       options: {
-        appID: argsObject.app_id,
-        apiBaseURL: argsObject.api_base_url,
-        fallbackURL: argsObject.fallback_url,
+        appId: argsObject.app_id,
+        apiBaseUrl: argsObject.api_base_url,
+        fallbackUrl: argsObject.fallback_url,
         initTimeout: argsObject.init_timeout,
         loadTimeout: argsObject.load_timeout,
       },
