@@ -12,13 +12,13 @@ import {
   type SWRStoreRevalidateFn,
 } from 'swr';
 import {
-  onWatcherCleanup,
-  toValue,
-  shallowRef,
-  watchEffect,
   computed,
   type MaybeRefOrGetter,
+  onWatcherCleanup,
   reactive,
+  shallowRef,
+  toValue,
+  watchEffect,
 } from 'vue';
 
 export type UseSWROptionsArgs<P> = MaybeRefOrGetter<
@@ -92,7 +92,6 @@ export function useSWR<D, P extends any[], E = unknown>(
   const keyState = shallowRef<UseSWRKeyState<D, E>>(
     initialArgs ? store.get(...initialArgs) : { status: 'unresolved' },
   );
-  const keyStateValue = () => keyState.value;
 
   watchEffect(() => {
     const { value: args } = trackedArgs;
@@ -104,24 +103,21 @@ export function useSWR<D, P extends any[], E = unknown>(
     }
   });
 
-  const status = computed(() => keyStateValue().status);
-  const statusValue = () => status.value;
-
   return [
     reactive({
       anyData: computed(() => {
-        const { latestData } = keyStateValue();
+        const { latestData } = keyState.value;
         return latestData ? latestData.data : undefined;
       }),
-      data: computed(() => keyStateValue().data),
+      data: computed(() => keyState.value.data),
       error: computed(() => {
-        const ks = keyStateValue();
+        const ks = keyState.value;
         return ks.status === 'error' ? ks.error : undefined;
       }),
-      errored: computed(() => statusValue() === 'error'),
-      latestData: computed(() => keyStateValue().latestData),
-      loading: computed(() => ['pending', 'revalidating'].includes(statusValue())),
-      ready: computed(() => ['success', 'revalidating'].includes(statusValue())),
+      errored: computed(() => keyState.value.status === 'error'),
+      latestData: computed(() => keyState.value.latestData),
+      loading: computed(() => ['pending', 'revalidating'].includes(keyState.value.status)),
+      ready: computed(() => ['success', 'revalidating'].includes(keyState.value.status)),
       status,
     }) as UseSWRKeyStateWrapped<D, E>,
     {
