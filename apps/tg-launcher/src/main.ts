@@ -3,19 +3,19 @@ import './mockDevEnv.ts';
 import 'vue-ui/index.css';
 import './assets/index.scss';
 
-import { createApp } from 'vue';
+import { init as sentryInit } from '@sentry/vue';
 import {
+  createLogger,
   retrieveLaunchParams,
   retrieveRawInitData,
   retrieveRawLaunchParams,
-  createLogger,
 } from '@telegram-apps/sdk-vue';
-import { init as sentryInit } from '@sentry/vue';
+import { createApp } from 'vue';
 import { createI18n } from 'vue-i18n';
 
 import { init } from '@/init.ts';
 
-import Root from '@/components/Root/Root.vue';
+import Root from '@/components/Root.vue';
 import type { Locale } from '@/types/common.ts';
 
 const launchParams = retrieveLaunchParams();
@@ -55,7 +55,7 @@ try {
     logger,
     locale,
   });
-  // TODO: make it async
+
   sentryInit({
     app,
     enabled: !!import.meta.env.VITE_SENTRY_ENABLED,
