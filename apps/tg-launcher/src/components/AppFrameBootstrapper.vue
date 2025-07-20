@@ -12,7 +12,7 @@ watchEffect(() => {
   // Web doesn't support loading iframes with an HTTP URL in the secure context. All we
   // can do is just to redirect to the URL.
   if (isHttp.value) {
-    // TODO: Show error in Web versions of Telegram. Show redirect message on all 
+    // TODO: Show error in Web versions of Telegram. Show redirect message on all
     // other platforms.
     window.location.href = url;
   }
@@ -21,7 +21,7 @@ watchEffect(() => {
 
 <template>
   <AppFrame
-    v-if="isHttp"
+    v-if="!isHttp"
     :load-timeout="loadTimeout"
     :url="url"
     @error="$emit('error', $event)"
