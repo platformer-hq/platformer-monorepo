@@ -5,5 +5,5 @@ export type Locale = 'en' | 'ru';
 export type InitialColorsTuple = [
   header: RGB | string,
   background: RGB | undefined,
-  bottomBar: RGB | undefined
+  bottomBar: RGB | undefined,
 ];

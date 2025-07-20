@@ -22,27 +22,27 @@ function positiveIntFromStr() {
  */
 export function extractLauncherOptions():
   | {
-  ok: true,
-  options: {
-    appId: number;
-    apiBaseUrl: string;
-    fallbackUrl?: string | null;
-    initTimeout: number;
-    loadTimeout: number;
+    ok: true;
+    options: {
+      appId: number;
+      apiBaseUrl: string;
+      fallbackUrl?: string | null;
+      initTimeout: number;
+      loadTimeout: number;
+    };
   }
-}
   | {
-  ok: false,
-  error: ValiError<any>
-} {
+    ok: false;
+    error: ValiError<any>;
+  } {
   try {
     const argsObject = parse(
       pipe(
         union([instance(URLSearchParams), string()]),
         transformQueryUsing(
           looseObject({
-            app_id: positiveIntFromStr(),
-            // app_id: optional(positiveIntFromStr(), '1'),
+            // app_id: positiveIntFromStr(),
+            app_id: optional(positiveIntFromStr(), '1'),
             api_base_url: optional(
               pipe(
                 string(),

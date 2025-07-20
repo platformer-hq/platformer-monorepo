@@ -9,12 +9,12 @@ import ServerErrorStatusPage from '@/components/ServerErrorStatusPage.vue';
 import StatusPage from '@/components/StatusPage.vue';
 
 export type ErrorStatusPageError =
-  | { type: 'unknown', cause: unknown }
-  | { type: 'server', cause: Error | GraphQLError }
-  | { type: 'init', timeout: number }
-  | { type: 'iframe', timeout?: boolean }
+  | { type: 'unknown'; cause: unknown }
+  | { type: 'server'; cause: Error | GraphQLError }
+  | { type: 'init'; timeout: number }
+  | { type: 'iframe'; timeout?: boolean }
   | { type: 'init-data-missing' }
-  | { type: 'config-invalid', cause: ValiError<any> };
+  | { type: 'config-invalid'; cause: ValiError<any> };
 
 const { onRetry } = useAttrs();
 defineProps<{ error: ErrorStatusPageError }>();
