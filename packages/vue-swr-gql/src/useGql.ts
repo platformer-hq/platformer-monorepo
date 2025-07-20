@@ -1,7 +1,7 @@
 import {
   ClientError,
   request,
-  type RequestExtendedOptions as GqlRequestOptions,
+  type RequestExtendedOptions,
 } from 'graphql-request';
 import {
   useSWR,
@@ -12,28 +12,27 @@ import {
 
 import { GraphQLError } from './GraphQLError.js';
 
-export type { GqlRequestOptions };
-export type GqlRequestParameters<D, V extends object> = [GqlRequestOptions<V, D>];
+export type GqlRequestOptions<D, V extends object> = RequestExtendedOptions<V, D>;
 export type UseGqlError = GraphQLError | Error;
 
 export interface UseGqlOptions<D, V extends object>
-  extends UseSWROptions<D, GqlRequestParameters<D, V>, UseGqlError> {
+  extends UseSWROptions<D, GqlRequestOptions<D, V>, UseGqlError> {
   /**
    * Custom key to be used instead of the default generated one.
    */
-  key?: CreateSWRStoreKey<GqlRequestParameters<D, V>>;
+  key?: CreateSWRStoreKey<GqlRequestOptions<D, V>>;
 }
 
 export type UseGqlResult<D, V extends object> = UseSWRResult<
   D,
-  GqlRequestParameters<D, V>,
+  GqlRequestOptions<D, V>,
   UseGqlError
 >;
 
 export function useGql<D, V extends object>(options?: UseGqlOptions<D, V>): UseGqlResult<D, V> {
   options ||= {};
   const { key } = options;
-  return useSWR<D, GqlRequestParameters<D, V>, UseGqlError>(
+  return useSWR<D, GqlRequestOptions<D, V>, UseGqlError>(
     key || (options => {
       return JSON.stringify([options.url, options.document, options.variables]);
     }),
