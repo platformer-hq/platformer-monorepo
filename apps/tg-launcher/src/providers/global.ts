@@ -1,5 +1,5 @@
+import type { Logger, Platform } from '@telegram-apps/sdk-vue';
 import { inject, type InjectionKey, provide } from 'vue';
-import type { Platform, Logger } from '@telegram-apps/sdk-vue';
 
 import type { InitialColorsTuple, Locale } from '@/types/common.ts';
 
@@ -25,3 +25,7 @@ export const [provideGlobals, injectGlobals] = createProviderTuple<{
   logger: Logger;
   locale: Locale;
 }>();
+
+export function injectLogger() {
+  return injectGlobals().logger;
+}
