@@ -1,32 +1,32 @@
 import {
-  setDebug,
-  restoreInitData,
-  init as initSDK,
+  applyPolyfills,
   bindThemeParamsCssVars,
-  mountViewport,
   bindViewportCssVars,
-  setMiniAppHeaderColor,
-  setMiniAppBottomBarColor,
-  setMiniAppBackgroundColor,
-  mockTelegramEnv,
-  themeParamsState,
-  emitEvent,
-  themeParamsBackgroundColor,
-  mountMiniAppSync,
-  mountThemeParamsSync,
-  mountMainButton,
-  miniAppHeaderColor,
-  miniAppBackgroundColorRGB,
-  miniAppBottomBarColorRGB,
   bridgeLogger,
-  sdkLogger,
   createLogger,
-  setMainButtonParams,
-  viewportHeight,
-  viewportWidth,
+  emitEvent,
+  init as initSDK,
   isViewportExpanded,
   isViewportStable,
-  applyPolyfills,
+  miniAppBackgroundColorRGB,
+  miniAppBottomBarColorRGB,
+  miniAppHeaderColor,
+  mockTelegramEnv,
+  mountMainButton,
+  mountMiniAppSync,
+  mountThemeParamsSync,
+  mountViewport,
+  restoreInitData,
+  sdkLogger,
+  setDebug,
+  setMainButtonParams,
+  setMiniAppBackgroundColor,
+  setMiniAppBottomBarColor,
+  setMiniAppHeaderColor,
+  themeParamsBackgroundColor,
+  themeParamsState,
+  viewportHeight,
+  viewportWidth,
 } from '@telegram-apps/sdk-vue';
 import { formatThemeParamsCssVar, formatViewportCssVar } from 'shared';
 import { lazyErudaInit } from 'utils';
@@ -59,14 +59,14 @@ export async function init({ debug, ...options }: {
 }): Promise<{ initialColors: InitialColorsTuple }> {
   applyPolyfills();
   setDebug(debug);
-  bridgeLogger.set(createLogger('Bridge (Platformer)', {
+  bridgeLogger.set(createLogger('🚀Bridge', {
     textColor: 'white',
-    bgColor: '#00bddf',
+    bgColor: '#7688FF',
     shouldLog: debug,
   }));
-  sdkLogger.set(createLogger('SDK (Platformer)', {
+  sdkLogger.set(createLogger('🚀SDK', {
     textColor: 'white',
-    bgColor: '#6700c8',
+    bgColor: '#7688FF',
     shouldLog: debug,
   }));
   initSDK();
