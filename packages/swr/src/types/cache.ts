@@ -1,5 +1,5 @@
-import type { Observable } from './observable.js';
 import type { KeyState } from './key-state.js';
+import type { Observable } from './observable.js';
 
 export interface CachedData<D> {
   /**
