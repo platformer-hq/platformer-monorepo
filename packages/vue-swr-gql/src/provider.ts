@@ -1,5 +1,5 @@
 import { inject, type InjectionKey, provide } from 'vue';
-import type { DataCache, RevalidationCache, ObserversCache } from 'vue-swr';
+import type { DataCache, ObserversCache, RevalidationCache } from 'vue-swr';
 
 export interface ProviderValue {
   dataCache: DataCache<unknown>;
@@ -25,5 +25,5 @@ export function provideSWRStoreOptions(value?: Partial<ProviderValue>): void {
 }
 
 export function injectSWRStoreOptions(): ProviderValue {
-  return inject(key) || globalStoreOptions;
+  return inject(key, globalStoreOptions);
 }
