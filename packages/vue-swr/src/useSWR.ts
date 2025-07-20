@@ -75,7 +75,7 @@ export type UseSWRKeyStateWrapped<D, E> =
 
 export type UseSWRResult<D, P, E> = [
   UseSWRKeyStateWrapped<D, E>,
-  UseSWRResultUtils<D, P>
+  UseSWRResultUtils<D, P>,
 ];
 
 export function useSWR<D, P extends any[], E = unknown>(
