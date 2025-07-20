@@ -25,7 +25,7 @@
     "vue": "^3.5.17",
     "vue-i18n": "^11.1.10",
     "vue-router": "^4.5.1",
-    "vue-swr-gql": "workspace:*",
+    "vue-swr-gql-shared": "workspace:*",
     "vue-ui": "workspace:*"
   }
 }
