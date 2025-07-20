@@ -21,8 +21,16 @@ import type { Locale } from '@/types/common.ts';
 const launchParams = retrieveLaunchParams();
 const { tgWebAppPlatform: platform } = launchParams;
 const startParam = launchParams.tgWebAppStartParam || '';
-const debug = ['platformer_debug', 'p-debug'].some(v => startParam.includes(v)) || import.meta.env.DEV;
+const debug = ['platformer_debug', 'p-debug'].some(v => startParam.includes(v))
+  || import.meta.env.DEV;
 const eruda = startParam.includes('p-eruda') || import.meta.env.DEV;
+
+const logger = createLogger('🚀Launcher', {
+  textColor: 'white',
+  bgColor: '#7688FF',
+  shouldLog: debug,
+});
+logger.forceLog('Logs prefixed with 🚀 are sent from the Platformer launcher');
 
 try {
   const { initialColors } = await init({
@@ -34,11 +42,6 @@ try {
 
   const rawLaunchParams = retrieveRawLaunchParams();
   const rawInitData = retrieveRawInitData();
-  const logger = createLogger('Platformer', {
-    textColor: 'white',
-    bgColor: 'chocolate',
-    shouldLog: debug,
-  });
 
   let locale: Locale = 'en';
   const { language_code: lang } = (retrieveLaunchParams().tgWebAppData || {}).user || {};
