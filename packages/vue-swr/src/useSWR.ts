@@ -1,4 +1,13 @@
 import {
+  computed,
+  type MaybeRefOrGetter,
+  onWatcherCleanup,
+  reactive,
+  shallowRef,
+  toValue,
+  watchEffect,
+} from 'vue';
+import {
   createSWRStore,
   type CreateSWRStoreFetcher,
   type CreateSWRStoreKey,
@@ -10,25 +19,17 @@ import {
   type KeyStateSuccess,
   type SWRStoreMutateFn,
   type SWRStoreRevalidateFn,
-} from 'swr';
-import {
-  computed,
-  type MaybeRefOrGetter,
-  onWatcherCleanup,
-  reactive,
-  shallowRef,
-  toValue,
-  watchEffect,
-} from 'vue';
+} from './swr/index.js';
 
-export type UseSWROptionsArgs<P> = MaybeRefOrGetter<
+export type UseSWROptionsArgs<P extends object> = MaybeRefOrGetter<
   | [params: P, shouldRevalidate?: boolean]
+  | P
   | false
   | undefined
   | null
 >;
 
-export interface UseSWROptions<D, P, E> extends CreateSWRStoreOptions<D, P, E> {
+export interface UseSWROptions<D, P extends object, E> extends CreateSWRStoreOptions<D, P, E> {
   /**
    * List of arguments to be passed to the fetcher.
    */
@@ -78,7 +79,7 @@ export type UseSWRResult<D, P, E> = [
   UseSWRResultUtils<D, P>,
 ];
 
-export function useSWR<D, P extends any[], E = unknown>(
+export function useSWR<D, P extends object, E = unknown>(
   key: CreateSWRStoreKey<P>,
   fetcher: CreateSWRStoreFetcher<D, P>,
   options?: UseSWROptions<D, P, E>,
@@ -87,8 +88,12 @@ export function useSWR<D, P extends any[], E = unknown>(
 
   const store = createSWRStore<D, P, E>(key, fetcher, options);
 
-  const initialArgs = toValue(options.args);
+  const initialArgsValue = toValue(options.args);
+  const initialArgs: [params: P, shouldRevalidate?: boolean] | undefined = initialArgsValue
+    ? Array.isArray(initialArgsValue) ? initialArgsValue : [initialArgsValue]
+    : undefined;
   const trackedArgs = shallowRef(initialArgs);
+
   const keyState = shallowRef<UseSWRKeyState<D, E>>(
     initialArgs ? store.get(...initialArgs) : { status: 'unresolved' },
   );
