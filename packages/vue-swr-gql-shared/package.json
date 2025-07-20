@@ -1,0 +1,17 @@
+{
+  "name": "vue-swr-gql-shared",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "main": "src/index.ts",
+  "dependencies": {
+    "vue-swr-gql": "workspace:*"
+  },
+  "devDependencies": {
+    "tsconfig": "workspace:*"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0",
+    "@telegram-apps/sdk-vue": "^2.0.0"
+  }
+}
