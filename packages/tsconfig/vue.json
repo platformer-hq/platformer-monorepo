@@ -1,6 +1,3 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "compilerOptions": {
-    "moduleResolution": "nodenext"
-  }
+  "extends": "@vue/tsconfig/tsconfig.dom.json"
 }
