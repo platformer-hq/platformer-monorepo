@@ -108,7 +108,9 @@ readdirSync(sourceDir).forEach(category => {
 writeFileSync(
   resolve(targetDir, 'index.ts'),
   '/* eslint-disable */\n'
-  + collectedComponents.map(([category, size, component]) => `export { default as ${component} } from './${category}/${size}/${component}.vue';\n`)
+  + collectedComponents.map(([category, size, component]) => {
+    return `export { default as ${component} } from './${category}/${size}/${component}.vue';\n`;
+  })
     .sort()
     .join('') + '\n',
 );
