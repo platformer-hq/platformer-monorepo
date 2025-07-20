@@ -4,7 +4,11 @@ defineProps<{ size: number }>();
 
 <template>
   <span class="root">
-    <svg class="icon" :width="size" :height="size">
+    <svg
+      class="icon"
+      :width="size"
+      :height="size"
+    >
       <circle
         cx="50%"
         cy="50%"

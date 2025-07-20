@@ -1,9 +1,9 @@
 // This script optimizes icons, placed in the "icons" folder.
 
-import { optimize } from 'svgo';
-import { readdirSync, readFileSync, writeFileSync, rmdirSync, mkdirSync, rmSync } from 'node:fs';
-import { resolve, dirname, parse } from 'node:path';
+import { mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { dirname, parse, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { optimize } from 'svgo';
 
 const sourceDir = resolve(dirname(fileURLToPath(import.meta.url)), '../icons');
 const targetDir = resolve(sourceDir, '../src/icons');
@@ -17,6 +17,7 @@ const collectedComponents = [];
 
 function getComponent(name, size, svg) {
   return `<script setup lang="ts">
+  /* eslint-disable */
 const { size = ${size} } = defineProps<{
   size?: string | number;
 }>();
@@ -53,10 +54,22 @@ readdirSync(sourceDir).forEach(category => {
               name: 'convertColors',
               params: {
                 currentColor: new RegExp(`(${[
-                  'black', '#FF3B30', '#007AFF', '#000', '#000000', '#FF9500', '#30B0C7',
-                  '#34C759', '#FF2D55', '#FC0', '#32ADE6', '#AF52DE', '#8E8E93', '#8E8E93',
+                  'black',
+                  '#FF3B30',
+                  '#007AFF',
+                  '#000',
+                  '#000000',
+                  '#FF9500',
+                  '#30B0C7',
+                  '#34C759',
+                  '#FF2D55',
+                  '#FC0',
+                  '#32ADE6',
+                  '#AF52DE',
+                  '#8E8E93',
+                  '#8E8E93',
                   '#AEAEB2',
-                ].join('|')})`)
+                ].join('|')})`),
               },
             },
           ],
@@ -94,7 +107,8 @@ readdirSync(sourceDir).forEach(category => {
 // Write Vue components index file.
 writeFileSync(
   resolve(targetDir, 'index.ts'),
-  collectedComponents.map(([category, size, component]) => `export { default as ${component} } from './${category}/${size}/${component}.vue';\n`)
+  '/* eslint-disable */\n'
+  + collectedComponents.map(([category, size, component]) => `export { default as ${component} } from './${category}/${size}/${component}.vue';\n`)
     .sort()
     .join('') + '\n',
 );

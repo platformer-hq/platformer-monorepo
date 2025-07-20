@@ -1,4 +1,5 @@
 <script setup lang="ts">
+/* eslint-disable */
 const { size = 24 } = defineProps<{
   size?: string | number;
 }>();

@@ -15,13 +15,13 @@ export function isRecord(v: unknown): v is Record<string, unknown> {
  */
 export function cn(...values: any[]): string {
   return values
-    .map((value) => {
+    .map(value => {
       if (typeof value === 'string') {
         return value;
       }
 
       if (isRecord(value)) {
-        return cn(Object.entries(value).map((entry) => entry[1] && entry[0]));
+        return cn(Object.entries(value).map(entry => entry[1] && entry[0]));
       }
 
       if (Array.isArray(value)) {

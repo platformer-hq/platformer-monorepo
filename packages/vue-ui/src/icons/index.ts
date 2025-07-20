@@ -1,3 +1,4 @@
+/* eslint-disable */
 export { default as Account30 } from './settings/30/Account30.vue';
 export { default as AdvancedSettings30 } from './settings/30/AdvancedSettings30.vue';
 export { default as Announcements30 } from './settings/30/Announcements30.vue';

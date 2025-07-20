@@ -3,7 +3,10 @@ defineProps<{ size: number }>();
 </script>
 
 <template>
-  <span class="root" :style="{ height: `${size}px` }">
+  <span
+    class="root"
+    :style="{ height: `${size}px` }"
+  >
     <span
       v-for="i in 8"
       :key="i"
