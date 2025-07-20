@@ -18,6 +18,7 @@
     "@graphql-codegen/typescript-operations": "^4.5.1",
     "@graphql-codegen/visitor-plugin-common": "^5.8.0",
     "@graphql-typed-document-node/core": "^3.2.0",
+    "@stylistic/eslint-plugin": "^5.2.0",
     "@tsconfig/node22": "^22.0.2",
     "@turbo/gen": "^2.3.3",
     "@types/eslint__js": "^8.42.3",
