@@ -6,7 +6,6 @@
   ],
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "moduleResolution": "node16",
     "paths": {
       "@/*": [
         "./src/*"
