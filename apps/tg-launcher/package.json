@@ -17,7 +17,6 @@
     "@sentry/vue": "^9.36.0",
     "@telegram-apps/sdk-vue": "^2.0.30",
     "@vueuse/core": "^13.5.0",
-    "api": "workspace:*",
     "better-promises": "^0.4.1",
     "shared": "workspace:*",
     "utils": "workspace:*",
@@ -25,7 +24,7 @@
     "vue": "^3.5.17",
     "vue-i18n": "^11.1.10",
     "vue-router": "^4.5.1",
-    "vue-swr-gql-shared": "workspace:*",
+    "vue-swr-shared": "workspace:*",
     "vue-ui": "workspace:*"
   }
 }
