@@ -137,6 +137,9 @@ importers:
       vite:
         specifier: ^7.0.5
         version: 7.0.5(@types/node@22.16.2)(jiti@2.4.2)(sass-embedded@1.86.0)(sass@1.83.4)(terser@5.39.0)(tsx@4.19.2)(yaml@2.7.0)
+      vite-bundle-analyzer:
+        specifier: ^1.1.0
+        version: 1.1.0
       vite-plugin-dts:
         specifier: ^4.5.3
         version: 4.5.3(@types/node@22.16.2)(rollup@4.40.0)(typescript@5.8.3)(vite@7.0.5(@types/node@22.16.2)(jiti@2.4.2)(sass-embedded@1.86.0)(sass@1.83.4)(terser@5.39.0)(tsx@4.19.2)(yaml@2.7.0))
@@ -337,9 +340,6 @@ importers:
       '@vueuse/core':
         specifier: ^13.5.0
         version: 13.5.0(vue@3.5.17(typescript@5.8.3))
-      api:
-        specifier: workspace:*
-        version: link:../../packages/api
       better-promises:
         specifier: ^0.4.1
         version: 0.4.1
@@ -361,9 +361,9 @@ importers:
       vue-router:
         specifier: ^4.5.1
         version: 4.5.1(vue@3.5.17(typescript@5.8.3))
-      vue-swr-gql:
+      vue-swr-shared:
         specifier: workspace:*
-        version: link:../../packages/vue-swr-gql
+        version: link:../../packages/vue-swr-shared
       vue-ui:
         specifier: workspace:*
         version: link:../../packages/vue-ui
@@ -579,6 +579,41 @@ importers:
       graphql-request:
         specifier: ^7.2.0
         version: 7.2.0(graphql@16.11.0)
+      valibot:
+        specifier: ^1.1.0
+        version: 1.1.0(typescript@5.8.3)
+      vue:
+        specifier: ^3.0.0
+        version: 3.5.17(typescript@5.8.3)
+      vue-swr:
+        specifier: workspace:*
+        version: link:../vue-swr
+    devDependencies:
+      tsconfig:
+        specifier: workspace:*
+        version: link:../tsconfig
+
+  packages/vue-swr-gql-shared:
+    dependencies:
+      '@telegram-apps/sdk-vue':
+        specifier: ^2.0.0
+        version: 2.0.30(typescript@5.8.3)(vue@3.5.17(typescript@5.8.3))
+      vue:
+        specifier: ^3.0.0
+        version: 3.5.17(typescript@5.8.3)
+      vue-swr-gql:
+        specifier: workspace:*
+        version: link:../vue-swr-gql
+    devDependencies:
+      tsconfig:
+        specifier: workspace:*
+        version: link:../tsconfig
+
+  packages/vue-swr-shared:
+    dependencies:
+      error-kid:
+        specifier: ^0.0.4
+        version: 0.0.4
       valibot:
         specifier: ^1.1.0
         version: 1.1.0(typescript@5.8.3)
@@ -6794,6 +6829,10 @@ packages:
   varint@6.0.0:
     resolution: {integrity: sha512-cXEIW6cfr15lFv563k4GuVuW/fiwjknytD37jIOLSdSWuOI6WnO/oKwmP2FQTU2l01LP8/M5TSAJpzUaGe3uWg==}
 
+  vite-bundle-analyzer@1.1.0:
+    resolution: {integrity: sha512-f/9m+6S5yPOHf/QS00rLOkyQ0icZeF67roM3O5LZZMPTOZFU1bHJTptNHCKMJc2yxXzj0Hunwcetrc+vM2LEQQ==}
+    hasBin: true
+
   vite-hot-client@2.1.0:
     resolution: {integrity: sha512-7SpgZmU7R+dDnSmvXE1mfDtnHLHQSisdySVR7lO8ceAXvM0otZeuQQ6C8LrS5d/aYyP/QZ0hI0L+dIPrm4YlFQ==}
     peerDependencies:
@@ -12259,6 +12298,11 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.2
 
+  fdir@6.4.6(picomatch@4.0.3):
+    optionalDependencies:
+      picomatch: 4.0.3
+    optional: true
+
   fetch-blob@3.2.0:
     dependencies:
       node-domexception: 1.0.0
@@ -14608,6 +14652,8 @@ snapshots:
 
   varint@6.0.0: {}
 
+  vite-bundle-analyzer@1.1.0: {}
+
   vite-hot-client@2.1.0(vite@7.0.5(@types/node@22.16.2)(jiti@2.4.2)(sass-embedded@1.86.0)(sass@1.83.4)(terser@5.39.0)(tsx@4.19.2)(yaml@2.7.0)):
     dependencies:
       vite: 7.0.5(@types/node@22.16.2)(jiti@2.4.2)(sass-embedded@1.86.0)(sass@1.83.4)(terser@5.39.0)(tsx@4.19.2)(yaml@2.7.0)
@@ -14750,8 +14796,8 @@ snapshots:
   vite@6.3.3(@types/node@22.16.2)(jiti@2.4.2)(sass-embedded@1.86.0)(sass@1.83.4)(terser@5.39.0)(tsx@4.19.2)(yaml@2.7.0):
     dependencies:
       esbuild: 0.25.1
-      fdir: 6.4.6(picomatch@4.0.2)
-      picomatch: 4.0.2
+      fdir: 6.4.6(picomatch@4.0.3)
+      picomatch: 4.0.3
       postcss: 8.5.6
       rollup: 4.40.0
       tinyglobby: 0.2.14
