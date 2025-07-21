@@ -142,14 +142,14 @@ onMounted(() => {
 <template>
   <iframe
     ref="iframe"
-    class="app-container"
+    class="app-frame"
     :src="url"
     @error="onError"
   />
 </template>
 
 <style>
-.app-container {
+.app-frame {
   display: block;
   border: none;
   height: 100%;
