@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { provideGqlOptions } from 'vue-swr-gql-shared';
 
 import { extractLauncherOptions } from '@/helpers/extractLauncherOptions.ts';
 import { injectLogger } from '@/providers/global';
@@ -21,8 +20,6 @@ const initError = ref<ErrorStatusPageError>();
 const opts = extractLauncherOptions();
 if (!opts.ok) {
   forceError('Launcher options are corrupted:', opts.error);
-} else {
-  provideGqlOptions({ endpoint: opts.options.apiBaseUrl });
 }
 if (!rawInitData) {
   forceError('Init data is missing');
@@ -59,6 +56,7 @@ const onError = ({ error, fallbackUrl }: {
     <AppInitializer
       v-else
       :app-id="opts.options.appId"
+      :api-base-url="opts.options.apiBaseUrl"
       :fallback-url="opts.options.fallbackUrl"
       :init-timeout="opts.options.initTimeout"
       :load-timeout="opts.options.loadTimeout"
