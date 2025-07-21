@@ -1,26 +1,9 @@
-<script lang="ts">
-import type * as Types from 'api';
-
-import { gql, type TypedDocumentNode } from 'vue-swr-gql-shared';
-type GetAppUrlQueryVariables = Types.Exact<{
-  appID: Types.Scalars['ID']['input'];
-  launchParams: Types.Scalars['String']['input'];
-}>;
-
-export type GetAppUrlQuery = { __typename?: 'Query'; appTelegramURL?: string | null };
-
-export const GetAppUrl = gql`
-    query GetAppURL($appID: ID!, $launchParams: String!) {
-  appTelegramURL(appID: $appID, launchParams: $launchParams)
-}
-    ` as unknown as TypedDocumentNode<GetAppUrlQuery, GetAppUrlQueryVariables>;
-</script>
-
 <script setup lang="ts">
 import { isTimeoutError } from 'better-promises';
+import { looseObject, nullish, string } from 'valibot';
 import { onUnmounted, ref, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { GraphQLError, useGqlQuery } from 'vue-swr-gql-shared';
+import { fetchApi, isApiError, useSWR } from 'vue-swr-shared';
 
 import AppFrameBootstrapper from '@/components/AppFrameBootstrapper.vue';
 import type { ErrorStatusPageError } from '@/components/ErrorStatusPage.vue';
@@ -32,8 +15,16 @@ interface ErrorEvent {
   fallbackUrl?: string;
 }
 
-const { fallbackUrl, appId, securedRawLaunchParams, initTimeout, loadTimeout } = defineProps<{
+const {
+  fallbackUrl,
+  appId,
+  securedRawLaunchParams,
+  initTimeout,
+  loadTimeout,
+  apiBaseUrl,
+} = defineProps<{
   appId: number;
+  apiBaseUrl: string;
   fallbackUrl?: string | null;
   initTimeout: number;
   loadTimeout: number;
@@ -74,18 +65,28 @@ onUnmounted(() => {
   clearTimeout(timeoutId);
 });
 
-useGqlQuery(
-  GetAppUrl,
-  [{ appID: appId, launchParams: securedRawLaunchParams }, { signal }],
+useSWR<{ url?: string | null }, {
+  appId: number;
+  apiBaseUrl: string;
+  launchParams: string;
+  signal?: AbortSignal;
+}, Error>(
+  ({ appId, apiBaseUrl, launchParams }) => `app-url-${appId}-${apiBaseUrl}-${launchParams}`,
+  async ({ apiBaseUrl, appId, launchParams, signal }) => {
+    const url = new URL(`apps/${appId}/telegram-url`, apiBaseUrl);
+    url.searchParams.set('lp', launchParams);
+    return fetchApi(url, looseObject({ url: nullish(string()) }), { signal });
+  },
   {
+    args: { appId, apiBaseUrl, launchParams: securedRawLaunchParams, signal },
     freshAge: 0,
     onSuccess({ data }) {
-      appData.value = { found: true, url: data.appTelegramURL };
+      appData.value = { found: true, url: data.url };
       emit('appDataRetrieved');
     },
     onError({ error: err }) {
-      if (GraphQLError.is(err)) {
-        if (err.isOfType('ERR_APP_NOT_FOUND')) {
+      if (isApiError(err)) {
+        if (err.data.code === 'ERR_APP_NOT_FOUND') {
           appData.value = { found: false };
         } else {
           error.value = { type: 'server', cause: err };
@@ -97,9 +98,9 @@ useGqlQuery(
         : { type: 'unknown', cause: error };
     },
     shouldRetry(error) {
-      return (
-        !isTimeoutError(error)
-        && !(GraphQLError.is(error) && error.isOfType('ERR_APP_NOT_FOUND'))
+      return !isTimeoutError(error) && (
+        !isApiError(error)
+        || error.data.code !== 'ERR_APP_NOT_FOUND'
       );
     },
     staleAge: 0,
@@ -116,9 +117,11 @@ useGqlQuery(
       @error="$emit('error', { error, fallbackUrl })"
       @ready="$emit('ready', { fallbackUrl })"
     />
-    <template v-else>
-      @mounted="$emit('error', { error })"
-    </template>
+    <div
+      v-else
+      v-show="false"
+      @vue:mounted="$emit('error', { error })"
+    />
   </template>
   <template v-else-if="appData">
     <AppFrameBootstrapper
@@ -129,10 +132,10 @@ useGqlQuery(
       @ready="$emit('ready', {})"
     />
     <template v-else>
-      @mounted="$emit('ready', {})"
       <StatusPage
         :text="t(appData.found ? 'noAccessText' : 'notFoundText')"
         :title="t(appData.found ? 'noAccessTitle' : 'notFoundTitle')"
+        @vue:mounted="$emit('ready', {})"
       />
     </template>
   </template>
