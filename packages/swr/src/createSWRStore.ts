@@ -1,5 +1,5 @@
 import { observable } from './observable.js';
-import {
+import type {
   DataCache,
   KeyLatestData,
   KeyState,
