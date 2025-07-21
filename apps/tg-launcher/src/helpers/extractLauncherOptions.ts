@@ -41,14 +41,14 @@ export function extractLauncherOptions():
         union([instance(URLSearchParams), string()]),
         transformQueryUsing(
           looseObject({
-            // app_id: positiveIntFromStr(),
-            app_id: optional(positiveIntFromStr(), '1'),
+            app_id: positiveIntFromStr(),
+            // app_id: optional(positiveIntFromStr(), '1'),
             api_base_url: optional(
               pipe(
                 string(),
                 transform(v => new URL(v, window.location.origin).toString()),
               ),
-              import.meta.env.DEV ? '/gql' : 'https://mini-apps.store/gql',
+              import.meta.env.DEV ? '/api/' : 'https://mini-apps.store/api/',
             ),
             fallback_url: optional(string()),
             init_timeout: optional(positiveIntFromStr(), '5000'),
