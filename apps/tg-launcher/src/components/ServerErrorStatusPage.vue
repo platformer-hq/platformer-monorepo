@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { is, looseObject, string } from 'valibot';
 import { useI18n } from 'vue-i18n';
-import { GraphQLError } from 'vue-swr-gql';
+import { type ApiError, isApiError } from 'vue-swr-shared';
 
 import StatusPage from './StatusPage.vue';
 import Text from './Text.vue';
 
 const { error } = defineProps<{
-  error: Error | GraphQLError;
+  error: Error | InstanceType<typeof ApiError>;
 }>();
 
 const { t } = useI18n({
@@ -24,14 +23,6 @@ const { t } = useI18n({
     },
   },
 });
-
-let code: string | undefined;
-if (GraphQLError.is(error)) {
-  const { extensions } = error.response;
-  if (is(looseObject({ errorData: looseObject({ code: string() }) }), extensions)) {
-    code = extensions.errorData.code;
-  }
-}
 </script>
 
 <template>
@@ -39,15 +30,15 @@ if (GraphQLError.is(error)) {
     :title="t('title')"
     state="error"
   >
-    <template v-if="GraphQLError.is(error)">
+    <template v-if="isApiError(error)">
       {{ t('apiMessage', { error: error.message }) }}
-      <template v-if="code">
+      <template v-if="error.data.code">
         &nbsp;
         <Text
           as="span"
           weight="semibold"
         >
-          ({{ code }})
+          ({{ error.data.code }})
         </Text>
       </template>
     </template>
