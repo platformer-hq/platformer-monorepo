@@ -18,8 +18,9 @@ defineEmits<{
   error: [ErrorEvent];
 }>();
 
-const { fallbackUrl, rawLaunchParams, rawInitData, appId } = defineProps<{
+const { fallbackUrl, rawLaunchParams, rawInitData } = defineProps<{
   appId: number;
+  apiBaseUrl: string;
   fallbackUrl?: string | null;
   initTimeout: number;
   loadTimeout: number;
@@ -77,6 +78,7 @@ const onStatusPageExit = (el: Element, done: () => void) => {
   </Transition>
   <AppLoader
     :app-id="appId"
+    :api-base-url="apiBaseUrl"
     :init-timeout="initTimeout"
     :load-timeout="loadTimeout"
     :raw-launch-params="rawLaunchParams"
