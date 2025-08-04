@@ -31,7 +31,7 @@ const { t } = useI18n({
     state="error"
   >
     <template v-if="isApiError(error)">
-      {{ t('apiMessage', { error: error.message }) }}
+      {{ t('apiMessage', { error: error.data.message }) }}
       <template v-if="error.data.code">
         &nbsp;
         <Text

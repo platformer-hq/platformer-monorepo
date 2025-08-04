@@ -3,14 +3,14 @@ import { onMainButtonClick, setMainButtonParams } from '@telegram-apps/sdk-vue';
 import { ValiError } from 'valibot';
 import { onWatcherCleanup, useAttrs, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { GraphQLError } from 'vue-swr-gql';
+import type { ApiError } from 'vue-swr-shared';
 
 import ServerErrorStatusPage from '@/components/ServerErrorStatusPage.vue';
 import StatusPage from '@/components/StatusPage.vue';
 
 export type ErrorStatusPageError =
   | { type: 'unknown'; cause: unknown }
-  | { type: 'server'; cause: Error | GraphQLError }
+  | { type: 'server'; cause: Error | InstanceType<typeof ApiError> }
   | { type: 'init'; timeout: number }
   | { type: 'iframe'; timeout?: boolean }
   | { type: 'init-data-missing' }
