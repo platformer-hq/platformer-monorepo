@@ -6,7 +6,7 @@ export const [ApiError, isApiError] = errorClassWithData<
 >(
   'ApiError',
   (code, message) => ({ code, message }),
-  (code, message) => [`${code}${message ? `: ${message}` : ''}]`],
+  (code, message) => [`${code}${message ? `: ${message}` : ''}`],
 );
 
 export const [
