@@ -1,8 +1,8 @@
 import type {
-  ThemeParamsGetCssVarNameFn,
   MiniAppGetCssVarNameFn,
+  ThemeParamsGetCssVarNameFn,
   ViewportGetCSSVarNameFn,
-} from '@telegram-apps/sdk-solid';
+} from '@telegram-apps/sdk-vue';
 import { camelToKebab, snakeToKebab } from 'utils';
 
 /**

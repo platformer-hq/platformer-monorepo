@@ -6,16 +6,11 @@
   "type": "module",
   "main": "src/index.ts",
   "peerDependencies": {
-    "@solid-primitives/utils": "^6.0.0",
-    "@telegram-apps/sdk-solid": "^3.0.0",
-    "solid-js": "^1.0.0"
+    "@telegram-apps/sdk-vue": "^2.0.0"
   },
   "dependencies": {
     "api": "workspace:*",
     "better-promises": "^0.4.0",
-    "solid-gql": "workspace:*",
-    "solid-swr": "workspace:*",
-    "solid-utils": "workspace:*",
     "utils": "workspace:*",
     "valibot": "^1.1.0"
   },

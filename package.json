@@ -56,7 +56,6 @@
     "vite-bundle-analyzer": "^1.1.0",
     "vite-plugin-dts": "^4.5.3",
     "vite-plugin-mkcert": "^1.17.8",
-    "vite-plugin-solid": "^2.11.6",
     "vite-plugin-vue-devtools": "^7.7.7",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.2.4",
