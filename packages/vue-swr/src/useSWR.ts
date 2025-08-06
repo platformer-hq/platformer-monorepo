@@ -1,13 +1,4 @@
 import {
-  computed,
-  type MaybeRefOrGetter,
-  onWatcherCleanup,
-  reactive,
-  shallowRef,
-  toValue,
-  watchEffect,
-} from 'vue';
-import {
   createSWRStore,
   type CreateSWRStoreFetcher,
   type CreateSWRStoreKey,
@@ -19,7 +10,16 @@ import {
   type KeyStateSuccess,
   type SWRStoreMutateFn,
   type SWRStoreRevalidateFn,
-} from './swr/index.js';
+} from 'swr';
+import {
+  computed,
+  type MaybeRefOrGetter,
+  onWatcherCleanup,
+  reactive,
+  shallowRef,
+  toValue,
+  watchEffect,
+} from 'vue';
 
 export type UseSWROptionsArgs<P extends object> = MaybeRefOrGetter<
   | [params: P, shouldRevalidate?: boolean]
@@ -36,10 +36,10 @@ export interface UseSWROptions<D, P extends object, E> extends CreateSWRStoreOpt
   args?: UseSWROptionsArgs<P>;
 }
 
-export interface UseSWRResultUtils<D, P> {
+export interface UseSWRResultUtils<D, P, E> {
   get: (params: P, shouldRevalidate?: boolean) => void;
   mutate: SWRStoreMutateFn<D, P>;
-  revalidate: SWRStoreRevalidateFn<D, P>;
+  revalidate: SWRStoreRevalidateFn<D, P, E>;
 }
 
 type WithGetters<T, D, L, R, E> = T & {
@@ -68,15 +68,15 @@ export type UseSWRKeyState<D, E> = KeyState<D, E> | {
   latestData?: undefined;
 };
 export type UseSWRKeyStateWrapped<D, E> =
-  | (WithGetters<KeyStatePending<D>, D, true, false, false>)
-  | (WithGetters<KeyStateRevalidating<D>, D, true, true, false>)
+  | (WithGetters<KeyStatePending<D, E>, D, true, false, false>)
+  | (WithGetters<KeyStateRevalidating<D, E>, D, true, true, false>)
   | (WithGetters<KeyStateSuccess<D>, D, false, true, false>)
   | (WithGetters<KeyStateError<D, E>, D, false, false, true>)
   | (WithGetters<{ status: 'unresolved' }, D, false, false, false>);
 
 export type UseSWRResult<D, P, E> = [
   UseSWRKeyStateWrapped<D, E>,
-  UseSWRResultUtils<D, P>,
+  UseSWRResultUtils<D, P, E>,
 ];
 
 export function useSWR<D, P extends object, E = unknown>(
@@ -123,7 +123,7 @@ export function useSWR<D, P extends object, E = unknown>(
       latestData: computed(() => keyState.value.latestData),
       loading: computed(() => ['pending', 'revalidating'].includes(keyState.value.status)),
       ready: computed(() => ['success', 'revalidating'].includes(keyState.value.status)),
-      status,
+      status: computed(() => keyState.value.status),
     }) as UseSWRKeyStateWrapped<D, E>,
     {
       get(params, shouldRevalidate) {

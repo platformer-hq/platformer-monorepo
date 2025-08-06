@@ -1,2 +1,2 @@
-export * from './swr/index.js';
+export * from 'swr';
 export * from './useSWR.js';
