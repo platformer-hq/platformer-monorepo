@@ -1,7 +1,7 @@
 import { hapticFeedbackNotificationOccurred } from '@telegram-apps/sdk-vue';
 import { toValue, type MaybeRefOrGetter } from 'vue';
 import {
-  useGqlScoped,
+  useGql,
   type GqlRequestOptions,
   type SWRStoreOnErrorFn,
   type SWRStoreOnErrorPayload,
@@ -27,7 +27,6 @@ export interface UseGqlQueryOptions<D, V extends object> extends Pick<
   | 'freshAge'
   | 'retries'
   | 'retryInterval'
-  | 'revalidationCache'
   | 'shouldRetry'
   | 'staleAge'
   | 'key'
@@ -41,6 +40,8 @@ export interface UseGqlQueryOptions<D, V extends object> extends Pick<
    */
   onSuccess?: UseGqlQueryOnSuccessFn<D, V>;
 }
+
+export type UseGqlQueryDocument<D, V extends object> = MaybeRefOrGetter<TypedDocumentNode<D, V>>;
 
 export type UseGqlQueryResult<D, V extends object> = UseSWRResult<D, UseGqlQueryParams<V>, UseGqlError>;
 
@@ -74,19 +75,23 @@ function rewireHook(
 }
 
 function createRequestOpts<D, V extends object>(
-  url: string,
-  document: TypedDocumentNode<D, V>,
-  authToken: string | undefined,
-  variablesOrTuple: V | [variables: V, options?: GqlRequestSanitizedOptions],
+  url: MaybeRefOrGetter<string>,
+  document: MaybeRefOrGetter<TypedDocumentNode<D, V>>,
+  authToken: MaybeRefOrGetter<string | undefined>,
+  variablesOrTuple: MaybeRefOrGetter<V | [variables: V, options?: GqlRequestSanitizedOptions]>,
 ): GqlRequestOptions<D, V> {
   let variables: V;
   let options: GqlRequestSanitizedOptions = {};
-  if (Array.isArray(variablesOrTuple)) {
-    variables = variablesOrTuple[0];
-    options = variablesOrTuple[1] || {};
+  const variablesOrTupleValue = toValue(variablesOrTuple);
+
+  if (Array.isArray(variablesOrTupleValue)) {
+    variables = variablesOrTupleValue[0];
+    options = variablesOrTupleValue[1] || {};
   } else {
-    variables = variablesOrTuple;
+    variables = variablesOrTupleValue;
   }
+
+  const authTokenValue = toValue(authToken);
 
   return {
     ...options,
@@ -94,14 +99,14 @@ function createRequestOpts<D, V extends object>(
     document,
     variables,
     requestHeaders: {
-      Authorization: authToken ? `jwt ${authToken}` : '',
+      Authorization: authTokenValue ? `jwt ${authTokenValue}` : '',
       ...options.requestHeaders,
     },
   } as unknown as GqlRequestOptions<D, V>;
 }
 
 export function useGqlQuery<D, V extends object>(
-  document: TypedDocumentNode<D, V>,
+  document: UseGqlQueryDocument<D, V>,
   args?: UseGqlQueryArgs<V>,
   options?: UseGqlQueryOptions<D, V>,
 ): UseGqlQueryResult<D, V> {
@@ -115,7 +120,7 @@ export function useGqlQuery<D, V extends object>(
   );
 
   const { onError, onSuccess } = options;
-  const [state, utils] = useGqlScoped<D, V>({
+  const [state, utils] = useGql<D, V>({
     ...options,
     onSuccess: onSuccess ? rewireHook(onSuccess) : undefined,
     onError: onError ? rewireHook(onError, true) : undefined,

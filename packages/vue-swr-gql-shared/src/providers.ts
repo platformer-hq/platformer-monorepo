@@ -1,18 +1,19 @@
-import { inject, type InjectionKey, provide } from 'vue';
+import { injectLocal, provideLocal } from '@vueuse/core';
+import type { InjectionKey, MaybeRefOrGetter } from 'vue';
 
-interface ProvidedValue {
-  endpoint: string;
-  authToken?: string;
+export interface GqlStoreOptions {
+  endpoint: MaybeRefOrGetter<string>;
+  authToken?: MaybeRefOrGetter<string>;
 }
 
-const key = Symbol() as InjectionKey<ProvidedValue>;
+const key = Symbol() as InjectionKey<GqlStoreOptions>;
 
-export function provideGqlOptions(value: ProvidedValue): void {
-  provide(key, value);
+export function provideGqlOptions(value: GqlStoreOptions): void {
+  provideLocal(key, value);
 }
 
-export function injectGqlOptions(): ProvidedValue {
-  const injected = inject(key);
+export function injectGqlOptions(): GqlStoreOptions {
+  const injected = injectLocal(key);
   if (!injected) {
     throw new Error('Gql options not provided');
   }
