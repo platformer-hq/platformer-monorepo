@@ -12,6 +12,7 @@
   },
   "peerDependencies": {
     "vue": "^3.0.0",
+    "@vueuse/core": "^13.0.0",
     "@telegram-apps/sdk-vue": "^2.0.0"
   }
 }
