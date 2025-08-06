@@ -1,3 +1,0 @@
-query GetAppURL($appID: ID!, $launchParams: String!) {
-  appTelegramURL(appID: $appID, launchParams: $launchParams)
-}
