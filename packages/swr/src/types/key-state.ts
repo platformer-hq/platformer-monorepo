@@ -1,6 +1,8 @@
 import type { CachedData } from './cache.js';
 
 export type KeyStateState = 'fresh' | 'stale' | 'expired';
+export type KeyStatePromiseData<D, E> = { ok: true; data: D } | { ok: false; error: E };
+export type KeyStateDataPromise<D, E> = Promise<KeyStatePromiseData<D, E>>;
 
 interface CreateKeyLatestState<D, S extends KeyStateState> extends CachedData<D> {
   state: S;
@@ -21,31 +23,31 @@ interface CreateKeyState<S, D, E, LD> {
   status: S;
 }
 
-export type KeyStatePending<D> = CreateKeyState<
+export type KeyStatePending<D, E> = CreateKeyState<
   'pending',
-  Promise<D>,
-  undefined,
+  KeyStateDataPromise<D, E>,
+  never,
   KeyLatestData<D> | undefined
 >;
 
-export type KeyStateRevalidating<D> = CreateKeyState<
+export type KeyStateRevalidating<D, E> = CreateKeyState<
   'revalidating',
-  Promise<D>,
-  undefined,
+  KeyStateDataPromise<D, E>,
+  never,
   KeyLatestData<D>
 >;
 
-export type KeyStateSuccess<D> = CreateKeyState<'success', D, undefined, KeyLatestData<D>>;
+export type KeyStateSuccess<D> = CreateKeyState<'success', D, never, KeyLatestData<D>>;
 
 export type KeyStateError<D, E> = CreateKeyState<
   'error',
-  undefined,
+  never,
   E,
   KeyLatestData<D> | undefined
 >;
 
 export type KeyState<D, E = unknown> =
-  | KeyStatePending<D>
-  | KeyStateRevalidating<D>
+  | KeyStatePending<D, E>
+  | KeyStateRevalidating<D, E>
   | KeyStateSuccess<D>
   | KeyStateError<D, E>;

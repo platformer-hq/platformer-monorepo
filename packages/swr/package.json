@@ -6,9 +6,6 @@
   "license": "MIT",
   "type": "module",
   "main": "./src/index.ts",
-  "dependencies": {
-    "utils": "workspace:*"
-  },
   "devDependencies": {
     "tsconfig": "workspace:*"
   }
