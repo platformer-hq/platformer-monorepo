@@ -1,7 +1,12 @@
 import { ClientError } from 'graphql-request';
-import { looseObject, is, literal } from 'valibot';
+import { is, literal, looseObject } from 'valibot';
 
 export class GraphQLError extends ClientError {
+  constructor(...args: ConstructorParameters<typeof ClientError>) {
+    super(...args);
+    this.name = 'GraphQLError';
+  }
+
   static is(value: unknown): value is GraphQLError {
     return value instanceof GraphQLError;
   }
