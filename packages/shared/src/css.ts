@@ -3,7 +3,8 @@ import type {
   ThemeParamsGetCssVarNameFn,
   ViewportGetCSSVarNameFn,
 } from '@telegram-apps/sdk-vue';
-import { camelToKebab, snakeToKebab } from 'utils';
+
+import { camelToKebab, snakeToKebab } from './casing.js';
 
 /**
  * @returns Formatted viewport CSS variable name.

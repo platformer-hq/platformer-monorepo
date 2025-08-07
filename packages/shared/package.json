@@ -8,12 +8,6 @@
   "peerDependencies": {
     "@telegram-apps/sdk-vue": "^2.0.0"
   },
-  "dependencies": {
-    "api": "workspace:*",
-    "better-promises": "^0.4.0",
-    "utils": "workspace:*",
-    "valibot": "^1.1.0"
-  },
   "devDependencies": {
     "tsconfig": "workspace:*"
   }
