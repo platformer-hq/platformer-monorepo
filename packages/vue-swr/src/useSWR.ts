@@ -13,12 +13,12 @@ import {
 } from 'swr';
 import {
   computed,
-  type MaybeRefOrGetter,
   onWatcherCleanup,
   reactive,
   shallowRef,
   toValue,
   watchEffect,
+  type MaybeRefOrGetter,
 } from 'vue';
 
 export type UseSWROptionsArgs<P extends object> = MaybeRefOrGetter<
@@ -42,40 +42,58 @@ export interface UseSWRResultUtils<D, P, E> {
   revalidate: SWRStoreRevalidateFn<D, P, E>;
 }
 
-type WithGetters<T, D, L, R, E> = T & {
+type WithGetters<T, O extends {
   /**
-   * @returns Any available data. Effectively, this value is equal to the result of accessing
-   * the `latestData?.data` path.
+   * @returns Any available data to display. In a nutshell, this getter
+   * returns keyState.latestData?.data.
    */
-  get anyData(): D | undefined;
+  get anyData(): any;
   /**
-   * @returns True if the key is pending or revalidating.
+   * @returns True if the key status is "pending" or "revalidating".
    */
-  get loading(): L;
+  get loading(): boolean;
   /**
    * @returns True if the key is fresh or stale at least.
    */
-  get ready(): R;
-  /**
-   * @returns Error of the key is holding an error.
-   */
-  get errored(): E;
-};
-export type UseSWRKeyState<D, E> = KeyState<D, E> | {
-  status: 'unresolved';
-  error?: undefined;
-  data?: undefined;
-  latestData?: undefined;
-};
-export type UseSWRKeyStateWrapped<D, E> =
-  | (WithGetters<KeyStatePending<D, E>, D, true, false, false>)
-  | (WithGetters<KeyStateRevalidating<D, E>, D, true, true, false>)
-  | (WithGetters<KeyStateSuccess<D>, D, false, true, false>)
-  | (WithGetters<KeyStateError<D, E>, D, false, false, true>)
-  | (WithGetters<{ status: 'unresolved' }, D, false, false, false>);
+  get ready(): boolean;
+  // /**
+  //  * @returns Error of the key is holding an error.
+  //  */
+  // get errored(): boolean;
+}> = T & O;
+
+type WithStatus<S extends string> = { status: S };
+type WithKeyStateGetters<K extends KeyState<any, any>> = WithGetters<K, {
+  anyData: K extends WithStatus<'success'>
+    ? K['data']
+    : (
+      | Exclude<K['latestData'], undefined>['data']
+      | (undefined extends K['latestData'] ? undefined : never)
+    );
+  loading: K extends WithStatus<'pending' | 'revalidating'> ? true : false;
+  ready: K extends WithStatus<'success' | 'revalidating'> ? true : false;
+  // errored: K extends WithStatus<'error'> ? true : false;
+}>;
+
+export type UseSWRKeyStatePending<D, E> = WithKeyStateGetters<KeyStatePending<D, E>>;
+export type UseSWRKeyStateRevalidating<D, E> = WithKeyStateGetters<KeyStateRevalidating<D, E>>;
+export type UseSWRKeyStateSuccess<D> = WithKeyStateGetters<KeyStateSuccess<D>>;
+export type UseSWRKeyStateError<D, E> = WithKeyStateGetters<KeyStateError<D, E>>;
+export type UseSWRKeyStateUnresolved = WithGetters<{ status: 'unresolved' }, {
+  anyData: undefined;
+  loading: false;
+  ready: false;
+  // errored: false;
+}>;
+export type UseSWRKeyState<D, E> =
+  | UseSWRKeyStatePending<D, E>
+  | UseSWRKeyStateRevalidating<D, E>
+  | UseSWRKeyStateSuccess<D>
+  | UseSWRKeyStateError<D, E>
+  | UseSWRKeyStateUnresolved;
 
 export type UseSWRResult<D, P, E> = [
-  UseSWRKeyStateWrapped<D, E>,
+  UseSWRKeyState<D, E>,
   UseSWRResultUtils<D, P, E>,
 ];
 
@@ -94,7 +112,12 @@ export function useSWR<D, P extends object, E = unknown>(
     : undefined;
   const trackedArgs = shallowRef(initialArgs);
 
-  const keyState = shallowRef<UseSWRKeyState<D, E>>(
+  const keyState = shallowRef<KeyState<D, E> | {
+    status: 'unresolved';
+    error?: undefined;
+    data?: undefined;
+    latestData?: undefined;
+  }>(
     initialArgs ? store.get(...initialArgs) : { status: 'unresolved' },
   );
 
@@ -110,21 +133,18 @@ export function useSWR<D, P extends object, E = unknown>(
 
   return [
     reactive({
-      anyData: computed(() => {
-        const { latestData } = keyState.value;
-        return latestData ? latestData.data : undefined;
-      }),
+      anyData: computed(() => keyState.value.latestData?.data),
       data: computed(() => keyState.value.data),
       error: computed(() => {
         const ks = keyState.value;
         return ks.status === 'error' ? ks.error : undefined;
       }),
-      errored: computed(() => keyState.value.status === 'error'),
+      // errored: computed(() => keyState.value.status === 'error'),
       latestData: computed(() => keyState.value.latestData),
       loading: computed(() => ['pending', 'revalidating'].includes(keyState.value.status)),
       ready: computed(() => ['success', 'revalidating'].includes(keyState.value.status)),
       status: computed(() => keyState.value.status),
-    }) as UseSWRKeyStateWrapped<D, E>,
+    }) as UseSWRKeyState<D, E>,
     {
       get(params, shouldRevalidate) {
         // "get" just switches the tracked value.
