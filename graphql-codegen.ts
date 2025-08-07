@@ -1,12 +1,11 @@
 import type { CodegenConfig } from '@graphql-codegen/cli';
-import type { TypeScriptDocumentsPluginConfig } from '@graphql-codegen/typescript-operations';
+import type { NearOperationFileConfig } from '@graphql-codegen/near-operation-file-preset';
 import type {
   TypeScriptTypedDocumentNodesConfig,
 } from '@graphql-codegen/typed-document-node';
-import type { NearOperationFileConfig } from '@graphql-codegen/near-operation-file-preset';
+import type { TypeScriptDocumentsPluginConfig } from '@graphql-codegen/typescript-operations';
 import { DocumentMode } from '@graphql-codegen/visitor-plugin-common';
 
-// @ts-expect-error We are not using any tsconfig for it.
 import config from './graphql.config.json';
 
 const scalars = {
@@ -21,7 +20,7 @@ export default {
     'apps/': {
       documents: [`apps/*/src/**/*.gql`],
       preset: 'near-operation-file-preset',
-      presetConfig: { extension: '.ts', baseTypesPath: '~api' } satisfies NearOperationFileConfig,
+      presetConfig: { extension: '.ts', baseTypesPath: '~schema' } satisfies NearOperationFileConfig,
       plugins: [
         'typescript-operations',
         'typed-document-node',
@@ -36,8 +35,8 @@ export default {
         documentMode: DocumentMode.graphQLTag,
         // Remove `Document` suffix.
         documentVariableSuffix: '',
-        documentNodeImport: 'api#DocumentNode',
-        gqlImport: 'api#gql',
+        documentNodeImport: 'schema#TypedDocumentNode',
+        gqlImport: 'schema#gql',
         scalars,
       } satisfies TypeScriptDocumentsPluginConfig & TypeScriptTypedDocumentNodesConfig,
     },
