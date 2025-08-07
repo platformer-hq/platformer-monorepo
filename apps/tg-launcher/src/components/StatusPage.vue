@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { bem } from 'utils';
-import { Xmark28, LoadingIndicatorIos, LoadingIndicatorAndroid } from 'vue-ui';
+import { bem, LoadingIndicatorAndroid, LoadingIndicatorIos, Xmark28 } from 'vue-ui';
 
+import platformerLogoSrc from '@/assets/platformer-logo.svg';
 import Disclaimer from '@/components/Disclaimer.vue';
 import Text from '@/components/Text.vue';
-import platformerLogoSrc from '@/assets/platformer-logo.svg';
 import { injectGlobals } from '@/providers/global.ts';
 
 defineProps<{

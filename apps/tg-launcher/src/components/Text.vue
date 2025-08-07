@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { bem } from 'utils';
+import { bem } from 'vue-ui';
 
 const [b] = bem('text');
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import { type ApiError, isApiError } from 'vue-swr-shared';
 
+import { type ApiError, isApiError } from '@/api/errors.js';
 import StatusPage from './StatusPage.vue';
 import Text from './Text.vue';
 

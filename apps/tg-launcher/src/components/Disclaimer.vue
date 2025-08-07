@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { openTelegramLink } from '@telegram-apps/sdk-vue';
 import { useI18n } from 'vue-i18n';
-import { bem } from 'utils';
+import { bem } from 'vue-ui';
 
 import Text from '@/components/Text.vue';
 

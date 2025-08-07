@@ -29,7 +29,6 @@ import {
   viewportWidth,
 } from '@telegram-apps/sdk-vue';
 import { formatThemeParamsCssVar, formatViewportCssVar } from 'shared';
-import { lazyErudaInit } from 'utils';
 
 import type { InitialColorsTuple } from '@/types/common.js';
 
@@ -72,7 +71,10 @@ export async function init({ debug, ...options }: {
   initSDK();
 
   // Init eruda.
-  options.eruda && await lazyErudaInit();
+  options.eruda && await import('eruda').then(({ default: eruda }) => {
+    eruda.init();
+    eruda.position({ x: window.innerWidth - 50, y: window.innerHeight / 2 });
+  });
 
   // Telegram for macOS has a ton of bugs, including cases, when the client doesn't
   // even response to the "web_app_request_theme" method. It also generates an incorrect

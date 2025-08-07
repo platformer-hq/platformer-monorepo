@@ -3,8 +3,8 @@ import { onMainButtonClick, setMainButtonParams } from '@telegram-apps/sdk-vue';
 import { ValiError } from 'valibot';
 import { onWatcherCleanup, useAttrs, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { ApiError } from 'vue-swr-shared';
 
+import type { ApiError } from '@/api/errors.js';
 import ServerErrorStatusPage from '@/components/ServerErrorStatusPage.vue';
 import StatusPage from '@/components/StatusPage.vue';
 

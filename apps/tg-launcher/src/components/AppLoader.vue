@@ -3,8 +3,10 @@ import { isTimeoutError } from 'better-promises';
 import { looseObject, nullish, string } from 'valibot';
 import { onUnmounted, ref, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { fetchApi, isApiError, useSWR } from 'vue-swr-shared';
+import { useSWR } from 'vue-swr';
 
+import { isApiError } from '@/api/errors.js';
+import { fetchApi } from '@/api/fetchApi.js';
 import AppFrameBootstrapper from '@/components/AppFrameBootstrapper.vue';
 import type { ErrorStatusPageError } from '@/components/ErrorStatusPage.vue';
 import StatusPage from '@/components/StatusPage.vue';
@@ -72,7 +74,7 @@ useSWR<{ url?: string | null }, {
   signal?: AbortSignal;
 }, Error>(
   ({ appId, apiBaseUrl, launchParams }) => `app-url-${appId}-${apiBaseUrl}-${launchParams}`,
-  async ({ apiBaseUrl, appId, launchParams, signal }) => {
+  ({ apiBaseUrl, appId, launchParams, signal }) => {
     const url = new URL(`apps/${appId}/telegram-url`, apiBaseUrl);
     url.searchParams.set('lp', launchParams);
     return fetchApi(url, looseObject({ url: nullish(string()) }), { signal });
