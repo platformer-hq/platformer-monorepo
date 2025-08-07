@@ -95,7 +95,7 @@ export default defineConfigWithVueTs(
       '@stylistic/new-parens': ['error', 'always'],
       '@stylistic/newline-per-chained-call': ['error', { ignoreChainWithDepth: 2 }],
       '@stylistic/no-confusing-arrow': 'error',
-      '@stylistic/no-extra-parens': ['error', 'all'],
+      '@stylistic/no-extra-parens': 0,
       '@stylistic/no-extra-semi': 'error',
       '@stylistic/no-floating-decimal': 'error',
       '@stylistic/no-mixed-operators': 'error',
