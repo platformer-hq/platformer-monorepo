@@ -1,8 +1,10 @@
 <script setup lang="ts">
 /* eslint-disable */
-const { size = 30 } = defineProps<{
+export interface AdvancedSettings30Props {
   size?: string | number;
-}>();
+}
+
+const { size = 30 } = defineProps<AdvancedSettings30Props>();
 </script>
 
 <template>

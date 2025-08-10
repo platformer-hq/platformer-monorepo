@@ -1,8 +1,10 @@
 <script setup lang="ts">
 /* eslint-disable */
-const { size = 24 } = defineProps<{
+export interface ArrowLeftAndRightCircleFill24Props {
   size?: string | number;
-}>();
+}
+
+const { size = 24 } = defineProps<ArrowLeftAndRightCircleFill24Props>();
 </script>
 
 <template>

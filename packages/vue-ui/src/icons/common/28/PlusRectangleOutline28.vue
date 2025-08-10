@@ -1,8 +1,10 @@
 <script setup lang="ts">
 /* eslint-disable */
-const { size = 28 } = defineProps<{
+export interface PlusRectangleOutline28Props {
   size?: string | number;
-}>();
+}
+
+const { size = 28 } = defineProps<PlusRectangleOutline28Props>();
 </script>
 
 <template>

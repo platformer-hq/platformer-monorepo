@@ -1,8 +1,10 @@
 <script setup lang="ts">
 /* eslint-disable */
-const { size = 28 } = defineProps<{
+export interface CheckmarkAndroid28Props {
   size?: string | number;
-}>();
+}
+
+const { size = 28 } = defineProps<CheckmarkAndroid28Props>();
 </script>
 
 <template>

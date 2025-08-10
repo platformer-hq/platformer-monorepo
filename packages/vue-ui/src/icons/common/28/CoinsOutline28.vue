@@ -1,8 +1,10 @@
 <script setup lang="ts">
 /* eslint-disable */
-const { size = 28 } = defineProps<{
+export interface CoinsOutline28Props {
   size?: string | number;
-}>();
+}
+
+const { size = 28 } = defineProps<CoinsOutline28Props>();
 </script>
 
 <template>

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 /* eslint-disable */
-const { size = 28 } = defineProps<{
+export interface TONLogo28Props {
   size?: string | number;
-}>();
+}
+
+const { size = 28 } = defineProps<TONLogo28Props>();
 </script>
 
 <template>

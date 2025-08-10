@@ -1,8 +1,10 @@
 <script setup lang="ts">
 /* eslint-disable */
-const { size = 30 } = defineProps<{
+export interface RecoveryPhrase30Props {
   size?: string | number;
-}>();
+}
+
+const { size = 30 } = defineProps<RecoveryPhrase30Props>();
 </script>
 
 <template>

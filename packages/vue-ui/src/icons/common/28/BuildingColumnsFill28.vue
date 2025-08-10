@@ -1,8 +1,10 @@
 <script setup lang="ts">
 /* eslint-disable */
-const { size = 28 } = defineProps<{
+export interface BuildingColumnsFill28Props {
   size?: string | number;
-}>();
+}
+
+const { size = 28 } = defineProps<BuildingColumnsFill28Props>();
 </script>
 
 <template>

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 /* eslint-disable */
-const { size = 24 } = defineProps<{
+export interface GearShapeOutlineIOS24Props {
   size?: string | number;
-}>();
+}
+
+const { size = 24 } = defineProps<GearShapeOutlineIOS24Props>();
 </script>
 
 <template>

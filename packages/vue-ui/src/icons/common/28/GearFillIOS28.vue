@@ -1,8 +1,10 @@
 <script setup lang="ts">
 /* eslint-disable */
-const { size = 28 } = defineProps<{
+export interface GearFillIOS28Props {
   size?: string | number;
-}>();
+}
+
+const { size = 28 } = defineProps<GearFillIOS28Props>();
 </script>
 
 <template>

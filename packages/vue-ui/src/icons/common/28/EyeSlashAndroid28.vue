@@ -1,8 +1,10 @@
 <script setup lang="ts">
 /* eslint-disable */
-const { size = 28 } = defineProps<{
+export interface EyeSlashAndroid28Props {
   size?: string | number;
-}>();
+}
+
+const { size = 28 } = defineProps<EyeSlashAndroid28Props>();
 </script>
 
 <template>

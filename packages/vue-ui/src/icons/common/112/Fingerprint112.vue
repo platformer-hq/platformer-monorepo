@@ -1,8 +1,10 @@
 <script setup lang="ts">
 /* eslint-disable */
-const { size = 112 } = defineProps<{
+export interface Fingerprint112Props {
   size?: string | number;
-}>();
+}
+
+const { size = 112 } = defineProps<Fingerprint112Props>();
 </script>
 
 <template>

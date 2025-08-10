@@ -1,8 +1,10 @@
 <script setup lang="ts">
 /* eslint-disable */
-const { size = 28 } = defineProps<{
+export interface ListBulletOutline28Props {
   size?: string | number;
-}>();
+}
+
+const { size = 28 } = defineProps<ListBulletOutline28Props>();
 </script>
 
 <template>

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 /* eslint-disable */
-const { size = 28 } = defineProps<{
+export interface ArrowUpRight28Props {
   size?: string | number;
-}>();
+}
+
+const { size = 28 } = defineProps<ArrowUpRight28Props>();
 </script>
 
 <template>

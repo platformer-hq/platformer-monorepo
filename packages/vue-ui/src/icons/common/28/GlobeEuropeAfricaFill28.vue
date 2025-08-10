@@ -1,8 +1,10 @@
 <script setup lang="ts">
 /* eslint-disable */
-const { size = 28 } = defineProps<{
+export interface GlobeEuropeAfricaFill28Props {
   size?: string | number;
-}>();
+}
+
+const { size = 28 } = defineProps<GlobeEuropeAfricaFill28Props>();
 </script>
 
 <template>

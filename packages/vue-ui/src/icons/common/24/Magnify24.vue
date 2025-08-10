@@ -1,8 +1,10 @@
 <script setup lang="ts">
 /* eslint-disable */
-const { size = 24 } = defineProps<{
+export interface Magnify24Props {
   size?: string | number;
-}>();
+}
+
+const { size = 24 } = defineProps<Magnify24Props>();
 </script>
 
 <template>

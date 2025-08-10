@@ -17,10 +17,12 @@ const collectedComponents = [];
 
 function getComponent(name, size, svg) {
   return `<script setup lang="ts">
-  /* eslint-disable */
-const { size = ${size} } = defineProps<{
+/* eslint-disable */
+export interface ${name}Props {
   size?: string | number;
-}>();
+}
+
+const { size = ${size} } = defineProps<${name}Props>();
 </script>
 
 <template>
@@ -109,8 +111,8 @@ writeFileSync(
   resolve(targetDir, 'index.ts'),
   '/* eslint-disable */\n'
   + collectedComponents.map(([category, size, component]) => {
-    return `export { default as ${component} } from './${category}/${size}/${component}.vue';\n`;
+    return `export { default as ${component}, type ${component}Props } from './${category}/${size}/${component}.vue';\n`;
   })
     .sort()
-    .join('') + '\n',
+    .join('\n') + '\n',
 );

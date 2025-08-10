@@ -1,8 +1,10 @@
 <script setup lang="ts">
 /* eslint-disable */
-const { size = 30 } = defineProps<{
+export interface PaymentCard30Props {
   size?: string | number;
-}>();
+}
+
+const { size = 30 } = defineProps<PaymentCard30Props>();
 </script>
 
 <template>

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 /* eslint-disable */
-const { size = 28 } = defineProps<{
+export interface HammerFilled28Props {
   size?: string | number;
-}>();
+}
+
+const { size = 28 } = defineProps<HammerFilled28Props>();
 </script>
 
 <template>

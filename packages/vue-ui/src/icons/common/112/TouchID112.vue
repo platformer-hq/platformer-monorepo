@@ -1,8 +1,10 @@
 <script setup lang="ts">
 /* eslint-disable */
-const { size = 112 } = defineProps<{
+export interface TouchID112Props {
   size?: string | number;
-}>();
+}
+
+const { size = 112 } = defineProps<TouchID112Props>();
 </script>
 
 <template>

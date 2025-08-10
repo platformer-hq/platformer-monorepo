@@ -1,8 +1,10 @@
 <script setup lang="ts">
 /* eslint-disable */
-const { size = 28 } = defineProps<{
+export interface PlusCircleFill28Props {
   size?: string | number;
-}>();
+}
+
+const { size = 28 } = defineProps<PlusCircleFill28Props>();
 </script>
 
 <template>
