@@ -11,7 +11,9 @@ import {
   type UseGqlError,
   type UseGqlOptions,
   type UseSWRResult,
+  type UseSWRResultUtils,
 } from 'vue-swr-gql';
+
 import { injectGqlOptions } from './providers.js';
 
 export type GqlRequestSanitizedOptions = Omit<GqlRequestOptions<{}, {}>, 'variables' | 'url' | 'document'>;
@@ -43,7 +45,8 @@ export interface UseGqlQueryOptions<D, V extends object> extends Pick<
 
 export type UseGqlQueryDocument<D, V extends object> = MaybeRefOrGetter<TypedDocumentNode<D, V>>;
 
-export type UseGqlQueryResult<D, V extends object> = UseSWRResult<D, UseGqlQueryParams<V>, UseGqlError>;
+export type UseGqlQueryResult<D, V extends object> =
+  UseSWRResult<D, UseGqlQueryParams<V>, UseGqlError>;
 
 export type UseGqlQueryArgs<V extends object> = MaybeRefOrGetter<UseGqlQueryParams<V>>;
 
@@ -138,13 +141,18 @@ export function useGqlQuery<D, V extends object>(
 
   return [state, {
     get(variables, shouldRevalidate) {
-      utils.get(createRequestOptions(variables), shouldRevalidate);
+      return utils.get(createRequestOptions(variables), shouldRevalidate);
     },
     revalidate(variables) {
       return utils.revalidate(createRequestOptions(variables));
     },
-    mutate(variables, ...rest) {
-      return utils.mutate(createRequestOptions(variables), ...rest as any);
-    },
-  }];
+    mutate: ((variables, data, revalidate) => {
+      return utils.mutate(
+        createRequestOptions(variables),
+        data,
+        // @ts-expect-error It is ok.
+        revalidate,
+      );
+    }),
+  } as UseSWRResultUtils<D, UseGqlQueryParams<V>, UseGqlError>];
 }

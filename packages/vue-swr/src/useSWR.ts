@@ -3,26 +3,23 @@ import {
   type CreateSWRStoreFetcher,
   type CreateSWRStoreKey,
   type CreateSWRStoreOptions,
-  type KeyState,
   type KeyStateError,
   type KeyStatePending,
-  type KeyStateRevalidating,
   type KeyStateSuccess,
   type SWRStoreMutateFn,
-  type SWRStoreRevalidateFn,
 } from 'swr';
 import {
   computed,
   onWatcherCleanup,
-  reactive,
   shallowRef,
   toValue,
   watchEffect,
+  type ComputedRef,
   type MaybeRefOrGetter,
 } from 'vue';
 
 export type UseSWROptionsArgs<P extends object> = MaybeRefOrGetter<
-  | [params: P, shouldRevalidate?: boolean]
+  | [params: P, revalidate?: boolean]
   | P
   | false
   | undefined
@@ -37,64 +34,27 @@ export interface UseSWROptions<D, P extends object, E> extends CreateSWRStoreOpt
 }
 
 export interface UseSWRResultUtils<D, P, E> {
-  get: (params: P, shouldRevalidate?: boolean) => void;
-  mutate: SWRStoreMutateFn<D, P>;
-  revalidate: SWRStoreRevalidateFn<D, P, E>;
+  get: (params: P, revalidate?: boolean) => void;
+  mutate: SWRStoreMutateFn<D, P, E>;
+  revalidate: (params: P) => void;
 }
 
-type WithGetters<T, O extends {
-  /**
-   * @returns Any available data to display. In a nutshell, this getter
-   * returns keyState.latestData?.data.
-   */
-  get anyData(): any;
-  /**
-   * @returns True if the key status is "pending" or "revalidating".
-   */
-  get loading(): boolean;
-  /**
-   * @returns True if the key is fresh or stale at least.
-   */
-  get ready(): boolean;
-  // /**
-  //  * @returns Error of the key is holding an error.
-  //  */
-  // get errored(): boolean;
-}> = T & O;
+export type UseSWRResultUtilsGetFn<P> = UseSWRResultUtils<never, P, never>;
+export type UseSWRResultUtilsMutateFn<D, P, E> = UseSWRResultUtils<D, P, E>;
+export type UseSWRResultUtilsRevalidateFn<P> = UseSWRResultUtils<never, P, never>;
 
-type WithStatus<S extends string> = { status: S };
-type WithKeyStateGetters<K extends KeyState<any, any>> = WithGetters<K, {
-  anyData: K extends WithStatus<'success'>
-    ? K['data']
-    : (
-      | Exclude<K['latestData'], undefined>['data']
-      | (undefined extends K['latestData'] ? undefined : never)
-    );
-  loading: K extends WithStatus<'pending' | 'revalidating'> ? true : false;
-  ready: K extends WithStatus<'success' | 'revalidating'> ? true : false;
-  // errored: K extends WithStatus<'error'> ? true : false;
-}>;
-
-export type UseSWRKeyStatePending<D, E> = WithKeyStateGetters<KeyStatePending<D, E>>;
-export type UseSWRKeyStateRevalidating<D, E> = WithKeyStateGetters<KeyStateRevalidating<D, E>>;
-export type UseSWRKeyStateSuccess<D> = WithKeyStateGetters<KeyStateSuccess<D>>;
-export type UseSWRKeyStateError<D, E> = WithKeyStateGetters<KeyStateError<D, E>>;
-export type UseSWRKeyStateUnresolved = WithGetters<{ status: 'unresolved' }, {
-  anyData: undefined;
-  loading: false;
-  ready: false;
-  // errored: false;
-}>;
+export type UseSWRKeyStatePending<D, E> = KeyStatePending<D, E>;
+export type UseSWRKeyStateSuccess<D> = KeyStateSuccess<D>;
+export type UseSWRKeyStateError<E> = KeyStateError<E>;
 export type UseSWRKeyState<D, E> =
   | UseSWRKeyStatePending<D, E>
-  | UseSWRKeyStateRevalidating<D, E>
   | UseSWRKeyStateSuccess<D>
-  | UseSWRKeyStateError<D, E>
-  | UseSWRKeyStateUnresolved;
+  | UseSWRKeyStateError<E>
+  | { status: 'unresolved' };
 
 export type UseSWRResult<D, P, E> = [
-  UseSWRKeyState<D, E>,
-  UseSWRResultUtils<D, P, E>,
+  keyState: ComputedRef<UseSWRKeyState<D, E>>,
+  utils: UseSWRResultUtils<D, P, E>,
 ];
 
 export function useSWR<D, P extends object, E = unknown>(
@@ -105,20 +65,19 @@ export function useSWR<D, P extends object, E = unknown>(
   options ||= {};
 
   const store = createSWRStore<D, P, E>(key, fetcher, options);
+  const storeGet = (params: P, revalidate?: boolean) => {
+    // @ts-expect-error It is ok.
+    return store.get(params, revalidate);
+  };
 
   const initialArgsValue = toValue(options.args);
-  const initialArgs: [params: P, shouldRevalidate?: boolean] | undefined = initialArgsValue
+  const initialArgs: [params: P, revalidate?: boolean] | undefined = initialArgsValue
     ? Array.isArray(initialArgsValue) ? initialArgsValue : [initialArgsValue]
     : undefined;
   const trackedArgs = shallowRef(initialArgs);
 
-  const keyState = shallowRef<KeyState<D, E> | {
-    status: 'unresolved';
-    error?: undefined;
-    data?: undefined;
-    latestData?: undefined;
-  }>(
-    initialArgs ? store.get(...initialArgs) : { status: 'unresolved' },
+  const keyState = shallowRef<UseSWRKeyState<D, E>>(
+    initialArgs ? storeGet(...initialArgs) : { status: 'unresolved' },
   );
 
   watchEffect(() => {
@@ -127,38 +86,29 @@ export function useSWR<D, P extends object, E = unknown>(
       onWatcherCleanup(store.subscribe(args[0], newKeyState => {
         keyState.value = newKeyState;
       }));
-      store.get(...args);
+      storeGet(...args);
     }
   });
 
   return [
-    reactive({
-      anyData: computed(() => keyState.value.latestData?.data),
-      data: computed(() => keyState.value.data),
-      error: computed(() => {
-        const ks = keyState.value;
-        return ks.status === 'error' ? ks.error : undefined;
-      }),
-      // errored: computed(() => keyState.value.status === 'error'),
-      latestData: computed(() => keyState.value.latestData),
-      loading: computed(() => ['pending', 'revalidating'].includes(keyState.value.status)),
-      ready: computed(() => ['success', 'revalidating'].includes(keyState.value.status)),
-      status: computed(() => keyState.value.status),
-    }) as UseSWRKeyState<D, E>,
+    computed(() => keyState.value),
     {
-      get(params, shouldRevalidate) {
+      get(params, revalidate) {
         // "get" just switches the tracked value.
-        trackedArgs.value = [params, shouldRevalidate];
+        trackedArgs.value = [params, revalidate];
       },
-      revalidate: store.revalidate,
-      mutate: ((params, data, shouldRevalidate) => {
+      revalidate(params) {
+        store.revalidate(params);
+      },
+      mutate: ((params, data, revalidate) => {
         // "mutate" performs a mutation and then switches the context.
-        const maybePromise = store.mutate(params, data, shouldRevalidate as any);
-        // We don't pass shouldRevalidate here as long as it was applied in the mutation, so we
+        // @ts-expect-error We have some specific related to the mutate fn overrides.
+        const mutateResult = store.mutate(params, data, revalidate);
+        // We don't pass "revalidate" here as long as it was applied in the mutation, so we
         // don't need to revalidate again.
         trackedArgs.value = [params, false];
-        return maybePromise;
-      }) as SWRStoreMutateFn<D, P>,
+        return mutateResult;
+      }) as SWRStoreMutateFn<D, P, E>,
     },
   ];
 }

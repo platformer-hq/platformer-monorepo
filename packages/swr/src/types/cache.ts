@@ -1,10 +1,10 @@
 export interface CachedData<D> {
   /**
-   * Cache creation timestamp.
-   */
-  timestamp: number;
-  /**
    * Cached data.
    */
   data: D;
+  /**
+   * Cache creation timestamp.
+   */
+  timestamp: number;
 }

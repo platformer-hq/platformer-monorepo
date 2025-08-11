@@ -1,4 +1,4 @@
-import type { KeyLatestData, KeyState } from './key-state.js';
+import type { KeyState, KeyStatePending, KeyStateSuccess } from './key-state.js';
 import type { ObservableListener } from './observable.js';
 
 /**
@@ -11,80 +11,68 @@ export type SWRStoreKeyValue = string | number | (string | number)[];
  */
 export type SWRStoreMutateFnData<D> = D | undefined;
 
-/**
- * Function used to retrieve a value from the store.
- */
-export type SWRStoreGetFn<D, P, E> = (params: P, shouldRevalidate?: boolean) => KeyState<D, E>;
-
-export interface SWRStoreMutateContextData<D> {
-  /**
-   * Latest known data related to the specified parameters.
-   */
-  latestData?: KeyLatestData<D>;
-  /**
-   * True, if the item is fresh or stale at least.
-   */
-  get valid(): boolean;
-  /**
-   * Data if it is considered fresh or stale at least.
-   */
-  get validData(): D | undefined;
+export interface SWRStoreMutateFnDataHook<D> {
+  (context: SWRStoreMutateFnDataHookCtx<D>): SWRStoreMutateFnData<D>;
 }
 
-export interface SWRStoreMutateFn<D, P> {
-  (
-    params: P,
-    data:
-      | SWRStoreMutateFnData<D>
-      | ((context: SWRStoreMutateContextData<D>) => SWRStoreMutateFnData<D>)
-      | undefined,
-    shouldRevalidate: false,
-  ): void;
-  (
-    params: P,
-    data?:
-      | SWRStoreMutateFnData<D>
-      | ((context: SWRStoreMutateContextData<D>) => SWRStoreMutateFnData<D>),
-    shouldRevalidate?: true,
-  ): Promise<D>;
+export interface SWRStoreMutateFnDataHookCtx<D> {
+  /**
+   * @returns Fresh data if any is presented.
+   */
+  get freshData(): D | undefined;
 }
-
-export type SWRStoreRevalidateFn<D, P, E> = (params: P) => KeyState<D, E>;
-
-export type SWRStoreSubscribeFn<D, P, E> = (
-  params: P,
-  listener: ObservableListener<KeyState<D, E>>,
-) => VoidFunction;
 
 export interface SWRStore<D, P, E = unknown> {
   /**
    * Retrieves the value by its key.
    * @param params - list of parameters to use to compute the key.
-   * @param shouldRevalidate - should revalidation be performed. Default is `true`.
+   * @param revalidate - true if the cached value should be ignored.
    */
-  get: SWRStoreGetFn<D, P, E>;
+  get(params: P, revalidate?: false): KeyStatePending<D, E> | KeyStateSuccess<D>;
   /**
-   * Mutates the data, stored in the key.
+   * Retrieves the value by its key.
    * @param params - list of parameters to use to compute the key.
-   * @param data - data to store. Passing `undefined`, `null` or `false`, will lead to skipping
-   * the mutation. In order to save the data, specify an array with the only one element containing
-   * data to save. You can also pass a function receiving a specific context object and returning
-   * the same values described previously.
-   * @param shouldRevalidate - should revalidation be performed. Default is `true`.
-   * @returns A promise with retrieved data if `shouldRevalidate` is `undefined` or `true`.
-   * Nothing otherwise.
+   * @param revalidate - true if the cached value should be ignored.
    */
-  mutate: SWRStoreMutateFn<D, P>;
+  get(params: P, revalidate: true): KeyStatePending<D, E>;
   /**
-   * Revalidate the specified key.
+   * Mutates data, stored in the key.
    * @param params - list of parameters to use to compute the key.
+   * @param data - data to store. Specifying `undefined` will lead to skipping the mutation.
+   * @param revalidate - should revalidation be performed.
    */
-  revalidate: SWRStoreRevalidateFn<D, P, E>;
+  mutate(
+    params: P,
+    data?: SWRStoreMutateFnData<D> | SWRStoreMutateFnDataHook<D>,
+    revalidate?: false,
+  ): void;
+  /**
+   * Mutates data, stored in the key.
+   * @param params - list of parameters to use to compute the key.
+   * @param data - data to store. Specifying `undefined` will lead to skipping the mutation.
+   * @param revalidate - should revalidation be performed.
+   * @returns A pending key state.
+   */
+  mutate(
+    params: P,
+    data: SWRStoreMutateFnData<D> | SWRStoreMutateFnDataHook<D> | undefined,
+    revalidate: true,
+  ): KeyStatePending<D, E>;
+  /**
+   * Revalidates a key using specified parameters.
+   * @param params - parameters to use to revalidate.
+   */
+  revalidate(params: P): KeyStatePending<D, E>;
   /**
    * Subscribes to a specific key.
    * @param params - list of parameters to use to compute the key.
    * @param listener - data listener.
    * @returns A function to remove the bound listener.
    */
-  subscribe: SWRStoreSubscribeFn<D, P, E>;
+  subscribe(params: P, listener: ObservableListener<KeyState<D, E>>): VoidFunction;
 }
+
+export type SWRStoreGetFn<D, P, E> = SWRStore<D, P, E>['get'];
+export type SWRStoreMutateFn<D, P, E> = SWRStore<D, P, E>['mutate'];
+export type SWRStoreSubscribeFn<D, P, E> = SWRStore<D, P, E>['subscribe'];
+export type SWRStoreRevalidateFn<D, P, E> = SWRStore<D, P, E>['revalidate'];

@@ -1,27 +1,29 @@
-import { createKeyState } from './createKeyState.js';
 import { observable } from './observable.js';
 import type {
   CachedData,
   KeyLatestData,
   KeyState,
   KeyStateDataPromise,
+  KeyStateError,
+  KeyStatePending,
+  KeyStatePromiseData,
+  KeyStateSuccess,
   Observable,
   SWRStore,
+  SWRStoreGetFn,
   SWRStoreKeyValue,
-  SWRStoreMutateContextData,
   SWRStoreMutateFn,
   SWRStoreMutateFnData,
+  SWRStoreMutateFnDataHookCtx,
 } from './types/index.js';
 
-export type CreateSWRStoreKey<P> =
-  | SWRStoreKeyValue
-  | ((params: P) => SWRStoreKeyValue);
+export type CreateSWRStoreKey<P> = SWRStoreKeyValue | ((params: P) => SWRStoreKeyValue);
 
 export type CreateSWRStoreFetcher<D, P> = (params: P) => Promise<D>;
 
 export interface SWRStoreOnSuccessPayload<D, P> {
   /**
-   * True, if the specified data was taken from cache.
+   * True, if the specified data was taken from the cache.
    */
   cached?: boolean;
   /**
@@ -29,7 +31,7 @@ export interface SWRStoreOnSuccessPayload<D, P> {
    */
   data: D;
   /**
-   * True, if the specified data was received in the result of calling mutation.
+   * True, if the specified data was received in a result of calling a mutation.
    */
   mutation?: boolean;
   /**
@@ -107,7 +109,45 @@ const dataCache = new Map<string, CachedData<any>>();
 const revalidationCache = new Map<string, KeyStateDataPromise<any, any>>();
 
 /**
- * Creates a new store.
+ * @param key - cache key.
+ * @returns An observable for the specified key.
+ */
+function observableByKey<D, E>(key: string): Observable<KeyState<D, E>> {
+  const value = observersCache.get(key) || observable();
+  observersCache.set(key, value);
+  return value;
+}
+
+/**
+ * Emits a new state for the specified key.
+ * @param state - state to emit.
+ */
+function emitKeyStateUpdate<D, E>(state: KeyState<D, E>) {
+  observableByKey(state.key).emit(state);
+}
+
+/**
+ * Caches a value for the specified key.
+ * @param key - cache key.
+ * @param data - data to cache.
+ * @param timestamp - timestamp to use for the cache.
+ */
+function cacheValue<D>(key: string, data: D, timestamp: number) {
+  dataCache.set(key, { timestamp, data });
+}
+
+/**
+ * @param key - a function returning a key, or a key itself.
+ * @param params - list of store parameters.
+ * @returns A computed key value.
+ */
+function computeKey<P>(key: CreateSWRStoreKey<P>, params: P): string {
+  const value = typeof key === 'function' ? key(params) : key;
+  return (Array.isArray(value) ? value : [value]).join(',');
+}
+
+/**
+ * Creates a new SWR store.
  * @param key - a key to use.
  * @param fetcher - function to retrieve the key value.
  * @param options - list of additional options.
@@ -134,48 +174,30 @@ export function createSWRStore<D, P, E = unknown>(
   const shouldRetry = typeof _shouldRetry === 'boolean' ? () => _shouldRetry : _shouldRetry;
   const retryInterval = typeof _retryInterval === 'number' ? () => _retryInterval : _retryInterval;
 
-  // Guaranteed returns an observable for the specified key.
-  const observableByKey = (key: string): Observable<KeyState<D, E>> => {
-    const value = observersCache.get(key) || observable();
-    observersCache.set(key, value);
-    return value;
-  };
-
-  // Emits a new state for the specified key.
-  const emitKeyStateUpdate = (key: string, state: KeyState<D, E>) => {
-    observableByKey(key).emit(state);
-  };
-
-  // Caches a value for the specified key.
-  const cacheValue = (key: string, data: D, timestamp: number) => {
-    dataCache.set(key, { timestamp, data });
-  };
-
-  // Gets the latest data for the specified key.
-  const getLatest = (key: string): KeyLatestData<D> | undefined => {
+  /**
+   * @param key - cache key.
+   * @returns The latest data for the speicified key.
+   */
+  const getLatestData = (key: string): KeyLatestData<D> | undefined => {
     const now = Date.now();
     const cachedData = dataCache.get(key);
     if (cachedData) {
       const { timestamp } = cachedData;
       return {
         ...cachedData,
-        state: now < timestamp + freshAge
-          ? 'fresh'
-          : now < timestamp + freshAge + staleAge
-            ? 'stale'
-            : 'expired',
+        get state() {
+          return now < timestamp + freshAge
+            ? 'fresh'
+            : now < timestamp + freshAge + staleAge
+              ? 'stale'
+              : 'expired';
+        },
       };
     }
   };
 
-  // Computes key for the specified parameters.
-  const computeKey = (params: P): string => {
-    const value = typeof key === 'function' ? key(params) : key;
-    return (Array.isArray(value) ? value : [value]).join(',');
-  };
-
   // Fetches data for the specified set of parameters.
-  const fetchData = async (params: P): Promise<{ ok: true; data: D } | { ok: false; error: E }> => {
+  const fetchData = async (params: P): Promise<KeyStatePromiseData<D, E>> => {
     let error: E;
     for (let i = 0; i < retries + 1; i++) {
       if (i) {
@@ -193,91 +215,77 @@ export function createSWRStore<D, P, E = unknown>(
     return { ok: false, error: error! };
   };
 
-  const getKeyState = (params: P, shouldRevalidate?: boolean): KeyState<D, E> => {
-    const key = computeKey(params);
-    const latestData = getLatest(key);
+  const getKeyState = (
+    params: P,
+    revalidate: boolean,
+  ): KeyStatePending<D, E> | KeyStateSuccess<D> => {
+    const computedKey = computeKey(key, params);
+    const latestData = getLatestData(computedKey);
+    const withKey = { key: computedKey };
 
-    if (latestData && latestData.state === 'fresh' && !shouldRevalidate) {
-      return createKeyState('success', latestData.data, undefined, latestData);
+    if (latestData && latestData.state === 'fresh' && !revalidate) {
+      return { ...withKey, status: 'success', data: latestData.data };
     }
 
-    let promise = revalidationCache.get(key);
+    let promise: KeyStateDataPromise<D, E> | undefined = revalidationCache.get(computedKey);
     if (!promise) {
       promise = fetchData(params).then(result => {
-        revalidationCache.delete(key);
-        const keyState = result.ok
-          ? createKeyState('success', result.data, undefined, {
-            data: result.data,
-            timestamp: Date.now(),
-            state: 'fresh',
-          })
-          : createKeyState('error', undefined, result.error, latestData);
-
-        if (keyState.status === 'success') {
-          cacheValue(key, keyState.data, keyState.latestData.timestamp);
+        revalidationCache.delete(computedKey);
+        let keyState: KeyStateSuccess<D> | KeyStateError<E>;
+        if (result.ok) {
+          keyState = { ...withKey, status: 'success', data: result.data };
+          cacheValue(keyState.key, keyState.data, Date.now());
           onSuccess({ params, data: keyState.data });
         } else {
+          keyState = { ...withKey, status: 'error', error: result.error };
           onError({ params, error: keyState.error });
         }
-        emitKeyStateUpdate(key, keyState);
+        emitKeyStateUpdate(keyState);
         return result;
       });
-      revalidationCache.set(key, promise);
+      revalidationCache.set(computedKey, promise);
     }
-
-    return latestData
-      ? createKeyState('revalidating', promise, undefined, latestData)
-      : createKeyState('pending', promise);
+    return { ...withKey, status: 'pending', promise };
   };
 
-  const get = (params: P, shouldRevalidate?: boolean): KeyState<D, E> => {
-    const keyState = getKeyState(params, shouldRevalidate);
+  const get = ((params, revalidate) => {
+    const keyState = getKeyState(params, revalidate || false);
     if (keyState.status === 'success') {
       onSuccess({ params, data: keyState.data, cached: true });
     }
-    emitKeyStateUpdate(computeKey(params), keyState);
+    emitKeyStateUpdate(keyState);
     return keyState;
-  };
+  }) as SWRStoreGetFn<D, P, E>;
 
   return {
     get,
-    revalidate(params) {
+    revalidate(params: P) {
       return get(params, true);
     },
     subscribe(params, listener) {
       // TODO: We probably want to create a separate method subscribeData subscribing to data
       //  changes only as long this one will re-trigger subscribers even when data didn't change.
-      return observableByKey(computeKey(params)).sub(listener);
+      return observableByKey<D, E>(computeKey(key, params)).sub(listener);
     },
-    mutate: ((params, mutateData, shouldRevalidate = true) => {
-      const k = computeKey(params);
-      const latestData = getLatest(k);
+    mutate: ((params, mutateData, revalidate) => {
+      const computedKey = computeKey(key, params);
+      const latestData = getLatestData(computedKey);
       // TODO: We should somehow prevent developers from specifying function as D.
       const data = typeof mutateData === 'function'
-        ? (mutateData as (context: SWRStoreMutateContextData<D>) => SWRStoreMutateFnData<D>)({
-          latestData,
-          get valid() {
-            return !!latestData && latestData.state !== 'expired';
-          },
-          get validData() {
-            return latestData && latestData.state !== 'expired'
-              ? latestData.data
-              : undefined;
+        ? (mutateData as (context: SWRStoreMutateFnDataHookCtx<D>) => SWRStoreMutateFnData<D>)({
+          get freshData() {
+            return latestData && latestData.state === 'fresh' ? latestData.data : undefined;
           },
         })
         : mutateData;
 
-      if (data) {
+      if (data !== undefined) {
         const timestamp = Date.now();
-        cacheValue(k, data, timestamp);
-        emitKeyStateUpdate(k, createKeyState('success', data, undefined, {
-          data,
-          timestamp,
-          state: 'fresh',
-        }));
-        onSuccess && onSuccess({ params, data, mutation: true });
+        cacheValue(computedKey, data, timestamp);
+        emitKeyStateUpdate({ key: computedKey, status: 'success', data });
+        onSuccess({ params, data, mutation: true });
       }
-      return shouldRevalidate ? get(params, true) : undefined;
-    }) as SWRStoreMutateFn<D, P>,
+      return revalidate ? get(params, true) : undefined;
+    }) as SWRStoreMutateFn<D, P, E>,
   };
 }
