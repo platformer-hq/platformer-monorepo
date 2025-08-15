@@ -18,7 +18,7 @@
   },
   "scripts": {
     "build": "vite build",
-    "icons:build": "node scripts/build-icons.js && eslint --fix src/icons/index.ts"
+    "icons:build": "node scripts/build-icons.js"
   },
   "peerDependencies": {
     "vue": "^3.0.0"

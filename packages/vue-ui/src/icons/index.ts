@@ -1,3 +1,4 @@
+/* eslint-disable */
 export { default as Account30, type Account30Props } from './settings/30/Account30.vue';
 
 export { default as AdvancedSettings30, type AdvancedSettings30Props } from './settings/30/AdvancedSettings30.vue';
