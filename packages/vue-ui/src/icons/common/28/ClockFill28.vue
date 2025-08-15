@@ -1,7 +1,8 @@
 <script setup lang="ts">
 /* eslint-disable */
-export interface ClockFill28Props {
-  class?: string;
+import type { SVGAttributes } from 'vue';
+
+export interface ClockFill28Props extends /* @vue-ignore */ SVGAttributes {
   size?: string | number;
 }
 
@@ -9,5 +10,5 @@ const { size = 28 } = defineProps<ClockFill28Props>();
 </script>
 
 <template>
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 28 28" :width="size" :height="size" :class="class"><path fill="currentColor" fill-rule="evenodd" d="M14 25c6.075 0 11-4.925 11-11S20.075 3 14 3 3 7.925 3 14s4.925 11 11 11m.8-18a.8.8 0 0 0-1.6 0v7.2H8a.8.8 0 0 0 0 1.6h6a.8.8 0 0 0 .8-.8z" clip-rule="evenodd"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 28 28" :width="size" :height="size"><path fill="currentColor" fill-rule="evenodd" d="M14 25c6.075 0 11-4.925 11-11S20.075 3 14 3 3 7.925 3 14s4.925 11 11 11m.8-18a.8.8 0 0 0-1.6 0v7.2H8a.8.8 0 0 0 0 1.6h6a.8.8 0 0 0 .8-.8z" clip-rule="evenodd"/></svg>
 </template>

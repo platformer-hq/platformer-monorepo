@@ -18,8 +18,9 @@ const collectedComponents = [];
 function getComponent(name, size, svg) {
   return `<script setup lang="ts">
 /* eslint-disable */
-export interface ${name}Props {
-  class?: string;
+import type { SVGAttributes } from 'vue';
+
+export interface ${name}Props extends /* @vue-ignore */ SVGAttributes {
   size?: string | number;
 }
 
@@ -30,7 +31,7 @@ const { size = ${size} } = defineProps<${name}Props>();
   ${svg
     .replace(/([{}])/g, '{\'$1\'}')
     .replace(/<!--\s*([\s\S]*?)\s*-->/g, '{/* $1 */}')
-    .replace(/(<svg[^>]*)>/i, '$1 :width="size" :height="size" :class="class">')}
+    .replace(/(<svg[^>]*)>/i, '$1 :width="size" :height="size">')}
 </template>`;
 }
 
