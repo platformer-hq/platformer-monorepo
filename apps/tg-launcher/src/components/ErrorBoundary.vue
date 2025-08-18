@@ -7,16 +7,13 @@ const error = ref<Error | undefined>();
 onErrorCaptured(err => {
   error.value = err;
 });
-const resetError = () => {
-  error.value = undefined;
-};
 </script>
 
 <template>
   <ErrorStatusPage
     v-if="error"
     :error="{ type: 'unknown', cause: error }"
-    @retry="resetError"
+    @retry="error = undefined"
   />
   <slot v-else />
 </template>
