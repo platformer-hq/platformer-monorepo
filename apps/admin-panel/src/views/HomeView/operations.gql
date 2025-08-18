@@ -1,0 +1,11 @@
+query Invites {
+  currentUser {
+    id
+    managementInvites {
+      __typename
+    }
+    appTransferRequests {
+      __typename
+    }
+  }
+}

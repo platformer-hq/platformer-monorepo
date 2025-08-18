@@ -1,0 +1,22 @@
+query AppTgIntegrationViewData($appID: ID!) {
+  app(appID: $appID) {
+    currentUserRole
+    telegramBotID
+    telegramProxyLaunchParams
+  }
+}
+
+mutation UpdateAppTelegramData(
+  $appID: ID!,
+  $telegramBotID: Int,
+  $telegramProxyLaunchParams: Boolean!
+) {
+  updateApp(
+    appID: $appID,
+    telegramProxyLaunchParams: $telegramProxyLaunchParams,
+    telegramBotID: $telegramBotID
+  ) {
+    telegramProxyLaunchParams
+    telegramBotID
+  }
+}

@@ -1,0 +1,20 @@
+query Data {
+  currentUser {
+    managementInvites {
+      id
+      from {
+        id
+        name
+      }
+      role
+      app {
+        id
+        title
+      }
+    }
+  }
+}
+
+mutation Respond($inviteID: ID!, $accept: Boolean!) {
+  respondAppManagementInvite(inviteID: $inviteID, accept: $accept)
+}

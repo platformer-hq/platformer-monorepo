@@ -1,0 +1,16 @@
+query AppTestGroupsViewData($appID: ID!) {
+  app(appID: $appID) {
+    currentUserRole
+    testGroups {
+      id
+      title
+      users {
+        __typename
+      }
+      enabled
+      platforms {
+        __typename
+      }
+    }
+  }
+}

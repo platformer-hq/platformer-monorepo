@@ -1,0 +1,51 @@
+query AppManagersViewData($appID: ID!) {
+  app(appID: $appID) {
+    currentUserRole
+    managers {
+      role
+      user {
+        id
+        name
+      }
+    }
+    managementInvites {
+      id
+      from {
+        name
+      }
+      to {
+        id
+        name
+      }
+      role
+    }
+  }
+}
+
+mutation InviteManager($appID: ID!, $userID: ID!, $role: AppManagementInviteRole!) {
+  createAppManagementInvite(appID: $appID, userID: $userID, role: $role) {
+    id
+    role
+    from {
+      name
+    }
+    to {
+      id
+      name
+    }
+  }
+}
+
+mutation RevokeInvite($inviteID: ID!) {
+  revokeAppManagementInvite(inviteID: $inviteID)
+}
+
+mutation RemoveManager($appID: ID!, $userID: ID!) {
+  removeAppManager(appID: $appID, userID: $userID)
+}
+
+mutation UpdateManager($appID: ID!, $role: AppManagementInviteRole!, $userID: ID!) {
+  updateAppManagerRole(appID: $appID, role: $role, userID: $userID) {
+    __typename
+  }
+}

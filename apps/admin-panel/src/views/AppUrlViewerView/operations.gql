@@ -1,0 +1,17 @@
+query AppUrlViewerViewData($appID: ID!, $userID: ID!) {
+  userAppURLExplanations(appID: $appID, userID: $userID) {
+    url
+    platform {
+      completeTitle
+    }
+    explanation {
+      ...on AppURLSimpleExplanation {
+        kind
+      }
+      ...on AppURLTestGroupExplanation {
+        id
+        title
+      }
+    }
+  }
+}

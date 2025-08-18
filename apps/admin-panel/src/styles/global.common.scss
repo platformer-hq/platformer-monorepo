@@ -1,0 +1,41 @@
+:root {
+
+  // For each inset type, declare CSS variables.
+  @each $inset-type in ("top", "left", "right", "bottom") {
+    --sum-inset-#{$inset-type}: calc(var(--safe-area-inset-#{$inset-type}, 0px) + var(--content-safe-area-inset-#{$inset-type}, 0px));
+  }
+
+  $textColor: var(--theme-text-color);
+  $subtitleTextColor: var(--theme-subtitle-text-color);
+  $accentColor: var(--theme-accent-text-color);
+  $destructiveTextColor: var(--theme-destructive-text-color);
+
+  &[data-theme="dark"] {
+    --accent-orange: #FF9F0A;
+  }
+
+  &[data-theme="light"] {
+    --accent-orange: #FF9500;
+  }
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+  color: var(--theme-text-color, white);
+  background: var(--mini-app-bg-color, #111);
+}
+
+* {
+  box-sizing: border-box;
+  // There is no user selection in mobile applications. We are enabling this feature per case.
+  user-select: none;
+}
+
+#app {
+  height: 100%;
+  overflow: auto;
+}

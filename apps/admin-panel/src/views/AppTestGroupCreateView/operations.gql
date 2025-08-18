@@ -1,0 +1,31 @@
+mutation CreateAppTestGroup(
+  $appID: ID!,
+  $title: String!,
+  $enabled: Boolean!,
+  $url: String!,
+  $platformIDs: [ID!]!,
+  $userIDs: [ID!]!
+) {
+  createAppTestGroup(
+    title: $title,
+    enabled: $enabled,
+    appID: $appID,
+    url: $url,
+    platformIDs: $platformIDs,
+    userIDs: $userIDs,
+  ) {
+    id
+    title
+    platforms {
+      __typename
+      id
+    }
+    enabled
+    url
+    users {
+      __typename
+      id
+      name
+    }
+  }
+}

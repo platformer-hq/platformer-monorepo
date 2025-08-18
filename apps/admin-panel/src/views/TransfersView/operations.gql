@@ -1,0 +1,19 @@
+query Data {
+  currentUser {
+    appTransferRequests {
+      id
+      from {
+        id
+        name
+      }
+      app {
+        id
+        title
+      }
+    }
+  }
+}
+
+mutation Respond($requestID: ID!, $accept: Boolean!) {
+  respondAppTransferRequest(requestID: $requestID, accept: $accept)
+}

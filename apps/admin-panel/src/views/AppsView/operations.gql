@@ -1,0 +1,15 @@
+query Data {
+  currentUser {
+    limits {
+      maxOwnedAppsCount
+    }
+    apps {
+      app {
+        id
+        title
+        privacy
+      }
+      role
+    }
+  }
+}

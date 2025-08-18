@@ -1,0 +1,15 @@
+query AppGeneralViewData($appID: ID!) {
+  app(appID: $appID) {
+    currentUserRole
+    title
+    privacy
+    id
+  }
+}
+
+mutation UpdateApp($appID: ID!, $title: String, $privacy: AppPrivacy) {
+  updateApp(appID: $appID, title: $title, privacy: $privacy) {
+    title
+    privacy
+  }
+}

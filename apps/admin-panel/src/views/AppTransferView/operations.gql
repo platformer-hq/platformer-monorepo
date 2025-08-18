@@ -1,0 +1,30 @@
+mutation RevokeTransfer($requestID: ID!) {
+  revokeAppTransferRequest(requestID: $requestID)
+}
+
+mutation CreateTransferRequest($appID: ID!, $toUserID: ID!) {
+  createAppTransferRequest(appID: $appID, toUserID: $toUserID) {
+    id
+    from {
+      id
+      name
+    }
+    to {
+      id
+      name
+    }
+  }
+}
+
+query AppTransferViewData($appID: ID!) {
+  app(appID: $appID) {
+    currentUserRole
+    transferRequest {
+      to {
+        id
+        name
+      }
+      id
+    }
+  }
+}

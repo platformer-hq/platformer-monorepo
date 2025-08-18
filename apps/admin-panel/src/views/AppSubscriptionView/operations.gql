@@ -1,0 +1,16 @@
+query AppSubscriptionViewData($appId: ID!) {
+  app(appID: $appId) {
+    subscription {
+      autoRenewal
+      endsAt
+    }
+  }
+}
+
+mutation CreateSubInvoiceLink($appId: ID!) {
+  createAppSubTgInvoice(appID: $appId)
+}
+
+mutation UpdateAppSubAutoRenewal($appId: ID!, $autoRenew: Boolean!) {
+  updateAppSubAutoRenewal(appID: $appId, autoRenew: $autoRenew)
+}

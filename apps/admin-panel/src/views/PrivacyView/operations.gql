@@ -1,0 +1,10 @@
+query Permissions {
+  currentUser {
+    canAcceptAppTransfers
+    canBeInvitedToManage
+  }
+}
+
+mutation UpdatePermissions($canBeInvitedToManage: Boolean!, $canAcceptAppTransfers: Boolean!) {
+  updateCurrentUser(canBeInvitedToManage: $canBeInvitedToManage, canAcceptAppTransfers: $canAcceptAppTransfers)
+}

@@ -1,0 +1,46 @@
+{
+  "name": "admin-panel",
+  "version": "0.4.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:https": "cross-env HTTPS=1 vite",
+    "build": "run-p type-check \"build-only {@}\" --",
+    "preview": "vite preview",
+    "test:unit": "vitest",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --build",
+    "lint": "eslint . --fix"
+  },
+  "dependencies": {
+    "@graphql-typed-document-node/core": "^3.2.0",
+    "@sentry/vue": "^9.36.0",
+    "@tanstack/query-persist-client-core": "^5.85.3",
+    "@tanstack/vue-query": "^5.83.1",
+    "@telegram-apps/sdk-vue": "^2.0.30",
+    "@vueuse/core": "^13.5.0",
+    "eruda": "^3.4.3",
+    "graphql": "^16.11.0",
+    "graphql-request": "^7.2.0",
+    "immer": "^10.1.1",
+    "schema": "workspace:*",
+    "shared": "workspace:*",
+    "valibot": "^1.1.0",
+    "vue": "^3.5.17",
+    "vue-i18n": "^11.1.10",
+    "vue-router": "^4.5.1",
+    "vue-ui": "workspace:*"
+  },
+  "devDependencies": {
+    "@babel/generator": "^7.28.0",
+    "@babel/parser": "^7.28.0",
+    "@babel/traverse": "^7.28.0",
+    "@babel/types": "^7.28.2",
+    "@types/babel__generator": "^7.27.0",
+    "@types/babel__traverse": "^7.28.0",
+    "autoprefixer": "^10.4.21",
+    "browserslist-to-esbuild": "^2.1.1",
+    "cssnano": "^7.1.0"
+  }
+}

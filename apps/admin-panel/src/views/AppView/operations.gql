@@ -1,0 +1,18 @@
+query AppViewData($appID: ID!) {
+  app(appID: $appID) {
+    currentUserRole
+    id
+    title
+    urlsCacheResetAt
+  }
+}
+
+mutation DeleteApp($appID: ID!) {
+  deleteApp(appID: $appID)
+}
+
+mutation ResetAppCache($appID: ID!) {
+  updateApp(appID: $appID, urlsCacheReset: true) {
+    urlsCacheResetAt
+  }
+}

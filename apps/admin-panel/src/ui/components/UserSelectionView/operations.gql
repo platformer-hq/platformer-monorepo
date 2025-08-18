@@ -1,0 +1,18 @@
+query SearchUsers(
+  $input: String!,
+  $page: Int!,
+  $excludeUserIDs: [ID!],
+  $canReceiveAppTransferReq: Boolean!,
+  $canReceiveManagementInvite: Boolean!,
+) {
+  searchUsers(
+    text: $input,
+    page: $page,
+    excludeUserIDs: $excludeUserIDs,
+    canReceiveAppTransferReq: $canReceiveAppTransferReq,
+    canReceiveManagementInvite: $canReceiveManagementInvite
+  ) {
+    id
+    name
+  }
+}

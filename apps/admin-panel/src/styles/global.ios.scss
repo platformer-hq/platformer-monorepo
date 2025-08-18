@@ -1,0 +1,51 @@
+// FIXME:
+// @use "ui/ios/index.css" as ios-styles;
+// @use "./global.common.scss";
+
+:root[data-platform="ios"] {
+  $textColor: var(--theme-text-color);
+  $subtitleTextColor: var(--theme-subtitle-text-color);
+  $accentColor: var(--theme-accent-text-color);
+  $destructiveTextColor: var(--theme-destructive-text-color);
+
+  // Styles for Telegram UI components.
+  --tgui-loading-indicator-ios-particle-color: #{$subtitleTextColor};
+
+  --tgui-list-ios-title-color: var(--theme-section-header-text-color);
+  --tgui-list-ios-divider-color: var(--theme-section-separator-color, var(--theme-secondary-bg-color));
+  --tgui-list-ios-list-bg: var(--theme-section-bg-color);
+  --tgui-list-ios-footer-color: #{$subtitleTextColor};
+  --tgui-list-ios-item-left-label-color: #{$textColor};
+  --tgui-list-ios-item-body-left-subtitle-color: #{$subtitleTextColor};
+  --tgui-list-ios-item-body-left-label-regular-color: #{$textColor};
+  --tgui-list-ios-item-body-left-label-accent-color: #{$accentColor};
+  --tgui-list-ios-item-body-left-label-placeholder-color: #{$subtitleTextColor};
+  --tgui-list-ios-item-body-left-label-destructive-color: #{$destructiveTextColor};
+  --tgui-list-ios-item-body-input-text-color: #{$textColor};
+  --tgui-list-ios-item-body-input-clear-color: #{$subtitleTextColor};
+  --tgui-list-ios-item-body-input-placeholder-color: #{$subtitleTextColor};
+  --tgui-list-ios-item-body-right-counter-text-color: var(--theme-button-text-color);
+  --tgui-list-ios-item-body-right-counter-bg: #{$destructiveTextColor};
+  --tgui-list-ios-item-body-right-checkmark-color: #{$accentColor};
+  --tgui-list-ios-item-body-right-chevron-color: #{$subtitleTextColor};
+  --tgui-list-ios-item-body-right-clear-color: #{$subtitleTextColor};
+  --tgui-list-ios-item-body-right-label-color: #{$subtitleTextColor};
+  --tgui-list-ios-item-body-right-switch-checked-bg: #{$accentColor};
+
+  --tgui-checkbox-ios-border-color: #{$subtitleTextColor};
+  --tgui-checkbox-ios-checked-color: #{$accentColor};
+  --tgui-checkbox-ios-icon-color: #{$textColor};
+
+  --tgui-search-field-ios-icon-color: #{$subtitleTextColor};
+  --tgui-search-field-ios-placeholder-color: #{$subtitleTextColor};
+  --tgui-search-field-ios-text-color: #{$textColor};
+  --tgui-search-field-ios-clear-color: #{$subtitleTextColor};
+
+  &[data-theme="dark"] {
+    --tgui-list-ios-item-active-bg: #ffffff07;
+  }
+
+  &[data-theme="light"] {
+    --tgui-list-ios-item-active-bg: #00000007;
+  }
+}

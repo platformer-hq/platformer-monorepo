@@ -1,0 +1,54 @@
+query TestGroupViewData($appID: ID!, $testGroupID: ID!) {
+  app(appID: $appID) {
+    currentUserRole
+  }
+  appTestGroup(testGroupID: $testGroupID) {
+    id
+    title
+    platforms {
+      id
+    }
+    url
+    users {
+      id
+      name
+    }
+    enabled
+  }
+}
+
+mutation DeleteTestGroup($testGroupID: ID!) {
+  deleteAppTestGroup(testGroupID: $testGroupID)
+}
+
+mutation UpdateTestGroup(
+  $testGroupID: ID!,
+  $title: String!,
+  $enabled: Boolean!,
+  $url: String!,
+  $platformIDs: [ID!]!,
+  $userIDs: [ID!]!
+) {
+  updateAppTestGroup(
+    testGroupID: $testGroupID,
+    title: $title,
+    enabled: $enabled,
+    url: $url,
+    platformIDs: $platformIDs,
+    userIDs: $userIDs,
+  ) {
+    id
+    title
+    platforms {
+      __typename
+      id
+    }
+    enabled
+    url
+    users {
+      __typename
+      id
+      name
+    }
+  }
+}

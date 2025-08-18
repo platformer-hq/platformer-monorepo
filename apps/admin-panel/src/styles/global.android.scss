@@ -1,0 +1,60 @@
+// FIXME:
+// @use "ui/android/index.css" as android-styles;
+// @use "./global.common.scss";
+
+:root[data-platform="android"] {
+  $textColor: var(--theme-text-color);
+  $hintColor: var(--theme-hint-color);
+  $subtitleTextColor: var(--theme-subtitle-text-color);
+  $accentColor: var(--theme-accent-text-color);
+  $destructiveTextColor: var(--theme-destructive-text-color);
+  $sectionBgColor: var(--theme-section-bg-color);
+
+  // Styles for Telegram UI components.
+  --tgui-list-android-body-bg: #{$sectionBgColor};
+  --tgui-list-android-title-color: var(--theme-section-header-text-color);
+  --tgui-list-android-divider-color: var(--theme-section-separator-color, var(--theme-secondary-bg-color));
+  --tgui-list-android-footer-color: #{$subtitleTextColor};
+
+  --tgui-list-android-item-regular-text-color: #{$textColor};
+  --tgui-list-android-item-accent-text-color: #{$accentColor};
+  --tgui-list-android-item-placeholder-text-color: #{$subtitleTextColor};
+  --tgui-list-android-item-destructive-text-color: #{$destructiveTextColor};
+  --tgui-list-android-item-left-label-color: #{$textColor};
+  --tgui-list-android-item-body-left-subtitle-color: #{$subtitleTextColor};
+  --tgui-list-android-item-body-input-text-color: #{$textColor};
+  --tgui-list-android-item-body-input-clear-color: #{$subtitleTextColor};
+  --tgui-list-android-item-body-input-placeholder-color: #{$subtitleTextColor};
+  --tgui-list-android-item-body-right-counter-text-color: var(--theme-button-text-color);
+  --tgui-list-android-item-body-right-counter-bg: #{$destructiveTextColor};
+  --tgui-list-android-item-body-right-checkmark-color: #{$accentColor};
+  --tgui-list-android-item-body-right-chevron-color: #{$subtitleTextColor};
+  --tgui-list-android-item-body-right-clear-color: #{$subtitleTextColor};
+  --tgui-list-android-item-body-right-label-color: #{$subtitleTextColor};
+  --tgui-list-android-item-body-right-switch-bg: #{$hintColor};
+  --tgui-list-android-item-body-right-switch-border-checked-bg: #{$accentColor};
+  --tgui-list-android-item-body-right-switch-thumb-bg: #{$sectionBgColor};
+  --tgui-list-android-item-body-right-switch-thumb-border-bg: #{$hintColor};
+  --tgui-list-android-item-body-right-switch-thumb-border-checked-bg: #{$accentColor};
+  --tgui-list-android-item-body-right-radio-color: #{$hintColor};
+  --tgui-list-android-item-body-right-radio-checked-color: #{$accentColor};
+  --tgui-list-android-item-body-input-focused-border-color: #{$accentColor};
+  --tgui-list-android-item-body-input-errored-border-color: #{$destructiveTextColor};
+
+  --tgui-checkbox-android-border-color: #{$subtitleTextColor};
+  --tgui-checkbox-android-checked-color: #{$accentColor};
+  --tgui-checkbox-android-icon-color: #{$textColor};
+
+  --tgui-search-field-android-icon-color: #{$subtitleTextColor};
+  --tgui-search-field-android-placeholder-color: #{$subtitleTextColor};
+  --tgui-search-field-android-text-color: #{$textColor};
+  --tgui-search-field-android-clear-color: #{$subtitleTextColor};
+
+  &[data-theme="dark"] {
+    --tgui-list-android-item-active-bg: #ffffff07;
+  }
+
+  &[data-theme="light"] {
+    --tgui-list-android-item-active-bg: #00000007;
+  }
+}

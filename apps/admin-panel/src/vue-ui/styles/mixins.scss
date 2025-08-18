@@ -1,0 +1,8 @@
+@mixin no-highlight {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@mixin clickable {
+  @include no-highlight;
+  cursor: pointer;
+}
