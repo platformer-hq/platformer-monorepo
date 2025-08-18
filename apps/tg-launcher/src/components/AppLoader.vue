@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { useQuery } from '@tanstack/vue-query';
 import { hapticFeedbackNotificationOccurred } from '@telegram-apps/sdk-vue';
-import { isTimeoutError } from 'better-promises';
 import { looseObject, nullish, string } from 'valibot';
 import { onUnmounted, ref, shallowRef, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import { isApiError } from '@/api/errors.js';
+import { isApiError, isFetchError } from '@/api/errors.js';
 import { fetchApi } from '@/api/fetchApi.js';
 import AppFrameBootstrapper from '@/components/AppFrameBootstrapper.vue';
 import type { ErrorStatusPageError } from '@/components/ErrorStatusPage.vue';
@@ -37,6 +36,10 @@ const emit = defineEmits<{
   }];
   ready: [{ fallbackUrl?: string }];
 }>();
+
+const isTimeoutError = (e: unknown): boolean => {
+  return isFetchError(e) && e.cause instanceof AbortSignal;
+};
 
 const { t } = useI18n({
   messages: {
@@ -82,12 +85,9 @@ const { data: requestData, error: requestError } = useQuery<
     return fetchApi(url, looseObject({ url: nullish(string()) }), { signal: timeoutSignal });
   },
   staleTime: 0,
-  retry(_failureCount, error) {
-    return !isTimeoutError(error) && (
-      !isApiError(error)
-      || error.data.code !== 'ERR_APP_NOT_FOUND'
-    );
-  },
+  retry: (_failureCount, error) => (
+    !isTimeoutError(error) && !isApiError(error) && _failureCount < 4
+  ),
 });
 
 watchEffect(() => {
@@ -139,10 +139,11 @@ watchEffect(() => {
     />
     <template v-else>
       <StatusPage
-        :text="t(appData.found ? 'noAccessText' : 'notFoundText')"
         :title="t(appData.found ? 'noAccessTitle' : 'notFoundTitle')"
         @vue:mounted="$emit('ready', {})"
-      />
+      >
+        {{ t(appData.found ? 'noAccessText' : 'notFoundText') }}
+      </StatusPage>
     </template>
   </template>
 </template>

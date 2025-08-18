@@ -73,8 +73,9 @@ const onStatusPageExit = (el: Element, done: () => void) => {
       v-if="!ready"
       class="app-initializer__status"
       state="loading"
-      :text="t(step === 'getting-data' ? 'gettingData' : 'waitingLoad')"
-    />
+    >
+      {{ t(step === 'getting-data' ? 'gettingData' : 'waitingLoad') }}
+    </StatusPage>
   </Transition>
   <AppLoader
     :app-id="appId"

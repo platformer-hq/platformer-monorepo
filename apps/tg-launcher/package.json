@@ -18,7 +18,6 @@
     "@tanstack/vue-query": "^5.83.1",
     "@telegram-apps/sdk-vue": "^2.0.30",
     "@vueuse/core": "^13.5.0",
-    "better-promises": "^0.4.1",
     "error-kid": "^0.0.4",
     "eruda": "^3.4.3",
     "shared": "workspace:*",

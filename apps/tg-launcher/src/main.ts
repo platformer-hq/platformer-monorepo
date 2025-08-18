@@ -68,15 +68,7 @@ try {
   });
 
   app
-    .use(VueQueryPlugin, {
-      queryClientConfig: {
-        defaultOptions: {
-          queries: {
-            retry: 3,
-          },
-        },
-      },
-    })
+    .use(VueQueryPlugin)
     .use(createI18n({ locale, legacy: false }))
     .mount('#app');
 } catch (error) {
