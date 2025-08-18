@@ -3,3 +3,6 @@
 node_modules
 dist
 mate.yml
+vite.config.js
+vite.config.d.ts
+tsconfig.node.tsbuildinfo
