@@ -7,21 +7,9 @@ defineSlots<{
 </script>
 
 <template>
-  <div
-    v-if="$slots.icon || $slots.label || $slots.checkbox"
-    class="tgui-list-ios-item-left"
-  >
-    <slot
-      v-if="$slots.icon"
-      name="icon"
-    />
-    <slot
-      v-else-if="$slots.label"
-      name="label"
-    />
-    <slot
-      v-else-if="$slots.checkbox"
-      name="checkbox"
-    />
+  <div class="tgui-list-ios-item-left">
+    <slot name="icon" />
+    <slot name="label" />
+    <slot name="checkbox" />
   </div>
 </template>

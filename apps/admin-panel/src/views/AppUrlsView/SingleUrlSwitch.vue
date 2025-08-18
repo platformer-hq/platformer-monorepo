@@ -3,8 +3,8 @@ import { useI18n } from 'vue-i18n';
 
 import List from '@/ui/adapters/List';
 import ListItem from '@/ui/adapters/ListItem';
+import ListItemBodyLeftLabel from '@/ui/adapters/ListItemBodyLeftLabel';
 import ListItemBodyRightSwitch from '@/ui/adapters/ListItemBodyRightSwitch';
-import ListItemLeftLabel from '@/ui/adapters/ListItemLeftLabel';
 
 const checked = defineModel<boolean>('checked', { required: true });
 
@@ -19,10 +19,10 @@ const { t } = useI18n({
 <template>
   <List>
     <ListItem>
-      <template #leftLabel>
-        <ListItemLeftLabel>
+      <template #bodyLeftLabel>
+        <ListItemBodyLeftLabel>
           {{ t('title') }}
-        </ListItemLeftLabel>
+        </ListItemBodyLeftLabel>
       </template>
       <template #bodyRightSwitch>
         <ListItemBodyRightSwitch
