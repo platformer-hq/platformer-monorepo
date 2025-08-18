@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMainButtonClick, setMainButtonParams } from '@telegram-apps/sdk-vue';
 import { ValiError } from 'valibot';
-import { onWatcherCleanup, useAttrs, watchEffect } from 'vue';
+import { onWatcherCleanup, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import type { ApiError } from '@/api/errors.js';
@@ -16,8 +16,10 @@ export type ErrorStatusPageError =
   | { type: 'init-data-missing' }
   | { type: 'config-invalid'; cause: ValiError<any> };
 
-const { onRetry } = useAttrs();
-defineProps<{ error: ErrorStatusPageError }>();
+const { onRetry } = defineProps<{
+  error: ErrorStatusPageError;
+  onRetry?(): void;
+}>();
 const emit = defineEmits<{ retry: [] }>();
 
 const { t } = useI18n({
