@@ -7,7 +7,7 @@ on:
     branches: [ 'master' ]
     paths:
       # Only when the launcher version changes.
-      - "apps/telegram-launcher/package.json"
+      - "apps/tg-launcher/package.json"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -48,7 +48,7 @@ jobs:
           run_install: true
 
       - name: Build
-        run: pnpm run ci:telegram-launcher:rollout
+        run: pnpm run ci:tg-launcher:rollout
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -57,7 +57,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload dist repository
-          path: './apps/telegram-launcher/dist'
+          path: './apps/tg-launcher/dist'
 
       - name: Deploy to GitHub Pages
         id: deployment
