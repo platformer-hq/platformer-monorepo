@@ -261,9 +261,6 @@ importers:
       '@vueuse/core':
         specifier: ^13.5.0
         version: 13.5.0(vue@3.5.17(typescript@5.8.3))
-      better-promises:
-        specifier: ^0.4.1
-        version: 0.4.1
       error-kid:
         specifier: ^0.0.4
         version: 0.0.4
