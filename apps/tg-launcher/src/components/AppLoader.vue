@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import { useQuery } from '@tanstack/vue-query';
 import { isTimeoutError } from 'better-promises';
 import { looseObject, nullish, string } from 'valibot';
-import { onUnmounted, ref, shallowRef } from 'vue';
+import { onUnmounted, ref, shallowRef, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useSWR } from 'vue-swr';
 
 import { isApiError } from '@/api/errors.js';
 import { fetchApi } from '@/api/fetchApi.js';
@@ -11,11 +11,6 @@ import AppFrameBootstrapper from '@/components/AppFrameBootstrapper.vue';
 import type { ErrorStatusPageError } from '@/components/ErrorStatusPage.vue';
 import StatusPage from '@/components/StatusPage.vue';
 import { appendRawLaunchParams } from '@/helpers/appendRawLaunchParams.js';
-
-interface ErrorEvent {
-  error: ErrorStatusPageError;
-  fallbackUrl?: string;
-}
 
 const {
   fallbackUrl,
@@ -35,7 +30,10 @@ const {
 }>();
 const emit = defineEmits<{
   appDataRetrieved: [];
-  error: [ErrorEvent];
+  error: [{
+    error: ErrorStatusPageError;
+    fallbackUrl?: string;
+  }];
   ready: [{ fallbackUrl?: string }];
 }>();
 
@@ -59,7 +57,7 @@ const error = ref<ErrorStatusPageError>();
 const appData = shallowRef<{ found: boolean; url?: string | null }>();
 
 const controller = new AbortController();
-const { signal } = controller;
+const { signal: timeoutSignal } = controller;
 const timeoutId = setTimeout(() => {
   controller.abort();
 }, loadTimeout);
@@ -67,47 +65,50 @@ onUnmounted(() => {
   clearTimeout(timeoutId);
 });
 
-useSWR<{ url?: string | null }, {
-  appId: number;
-  apiBaseUrl: string;
-  launchParams: string;
-  signal?: AbortSignal;
-}, Error>(
-  ({ appId, apiBaseUrl, launchParams }) => `app-url-${appId}-${apiBaseUrl}-${launchParams}`,
-  ({ apiBaseUrl, appId, launchParams, signal }) => {
+const { data: requestData, error: requestError } = useQuery<
+  { url?: string | null },
+  unknown,
+  { url?: string | null },
+  readonly ['app-url', appId: number, apiBaseUrl: string, launchParams: string]
+>({
+  queryKey: ['app-url', appId, apiBaseUrl, securedRawLaunchParams],
+  queryFn({ signal, queryKey: [, appId, apiBaseUrl, launchParams] }) {
     const url = new URL(`apps/${appId}/telegram-url`, apiBaseUrl);
     url.searchParams.set('lp', launchParams);
-    return fetchApi(url, looseObject({ url: nullish(string()) }), { signal });
+    signal.onabort = reason => {
+      controller.abort(reason);
+    };
+    return fetchApi(url, looseObject({ url: nullish(string()) }), { signal: timeoutSignal });
   },
-  {
-    args: { appId, apiBaseUrl, launchParams: securedRawLaunchParams, signal },
-    freshAge: 0,
-    onSuccess({ data }) {
-      appData.value = { found: true, url: data.url };
-      emit('appDataRetrieved');
-    },
-    onError({ error: err }) {
-      if (isApiError(err)) {
-        if (err.data.code === 'ERR_APP_NOT_FOUND') {
-          appData.value = { found: false };
-        } else {
-          error.value = { type: 'server', cause: err };
-        }
-        return;
+  staleTime: 0,
+  retry(_failureCount, error) {
+    return !isTimeoutError(error) && (
+      !isApiError(error)
+      || error.data.code !== 'ERR_APP_NOT_FOUND'
+    );
+  },
+});
+
+watchEffect(() => {
+  if (requestData.value) {
+    appData.value = { found: true, url: requestData.value.url };
+    emit('appDataRetrieved');
+    return;
+  }
+  if (requestError.value) {
+    if (isApiError(requestError.value)) {
+      if (requestError.value.data.code === 'ERR_APP_NOT_FOUND') {
+        appData.value = { found: false };
+      } else {
+        error.value = { type: 'server', cause: requestError.value };
       }
-      error.value = isTimeoutError(error)
-        ? { type: 'init', timeout: initTimeout }
-        : { type: 'unknown', cause: error };
-    },
-    shouldRetry(error) {
-      return !isTimeoutError(error) && (
-        !isApiError(error)
-        || error.data.code !== 'ERR_APP_NOT_FOUND'
-      );
-    },
-    staleAge: 0,
-  },
-);
+      return;
+    }
+    error.value = isTimeoutError(requestError.value)
+      ? { type: 'init', timeout: initTimeout }
+      : { type: 'unknown', cause: requestError.value };
+  }
+});
 </script>
 
 <template>
