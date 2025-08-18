@@ -4,7 +4,7 @@
     "ci:admin-panel:deploy": "turbo run deploy --filter=\"./apps/admin-panel\"",
     "ci:admin-panel:rollout": "turbo run rollout --filter=\"./apps/admin-panel\"",
     "ci:rollout": "turbo run rollout --filter=\"./apps/*\"",
-    "ci:tg-launcher:rollout": "turbo run rollout --filter=\"./apps/tg-launcher\"",
+    "ci:tg-launcher:build": "turbo run build --filter=\"./apps/tg-launcher\"",
     "codegen": "graphql-codegen --config graphql-codegen.ts",
     "codegen:watch": "graphql-codegen --config graphql-codegen.ts --watch",
     "prepare": "husky"
