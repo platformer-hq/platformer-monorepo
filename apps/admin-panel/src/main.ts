@@ -38,7 +38,7 @@ init({
     }
 
     const app = createApp(Root, {
-      endpoint: import.meta.env.DEV ? '/gql' : 'https://mini-apps.store/api/gql',
+      endpoint: import.meta.env.DEV ? '/api/gql' : 'https://mini-apps.store/api/gql',
       platform,
       // TODO: Verify init data existence.
       initData: retrieveRawInitData()!,
