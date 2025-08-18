@@ -58,6 +58,9 @@ watchEffect(() => {
   onWatcherCleanup(onMainButtonClick(() => {
     emit('retry');
   }));
+  onWatcherCleanup(() => {
+    setMainButtonParams({ isVisible: false });
+  });
 });
 </script>
 
