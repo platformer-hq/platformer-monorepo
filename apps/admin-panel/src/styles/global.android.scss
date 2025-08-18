@@ -41,6 +41,8 @@
   --tgui-list-android-item-body-input-focused-border-color: #{$accentColor};
   --tgui-list-android-item-body-input-errored-border-color: #{$destructiveTextColor};
 
+  --tgui-loading-indicator-android-color: #{$hintColor};
+
   --tgui-checkbox-android-border-color: #{$subtitleTextColor};
   --tgui-checkbox-android-checked-color: #{$accentColor};
   --tgui-checkbox-android-icon-color: #{$textColor};
