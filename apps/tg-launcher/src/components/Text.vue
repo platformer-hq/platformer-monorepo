@@ -21,7 +21,15 @@ const { as = 'p' } = defineProps<{
 
 <style lang="scss">
 .text {
-  font-family: Roboto, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Ubuntu,
+    'Helvetica Neue',
+    sans-serif;
 
   &--footnote {
     font-size: 13px;
