@@ -1,3 +1,0 @@
-[submodule "apps/admin-panel"]
-    path = apps/admin-panel
-    url = git@github.com:platformer-hq/platformer-admin-panel.git
