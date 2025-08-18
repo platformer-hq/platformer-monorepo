@@ -1,6 +1,6 @@
 import { queryOptions } from '@tanstack/vue-query';
 
-import { createQueryDataRefetcher, createQueryDataSetter } from '@/queries/query-data.vue';
+import { createQueryDataRefetcher, createQueryDataSetter } from '@/queries/query-data.js';
 import { useGqlRequest } from '@/queries/useGqlRequest.js';
 
 import { Data, type DataQuery } from './operations.js';

@@ -6,8 +6,7 @@ export type AppGeneralViewDataQueryVariables = Types.Exact<{
   appID: Types.Scalars['ID']['input'];
 }>;
 
-
-export type AppGeneralViewDataQuery = { __typename?: 'Query', app?: { __typename?: 'App', currentUserRole: Types.AppRole, title: string, privacy: Types.AppPrivacy, id: number } | null };
+export type AppGeneralViewDataQuery = { __typename?: 'Query'; app?: { __typename?: 'App'; currentUserRole: Types.AppRole; title: string; privacy: Types.AppPrivacy; id: number } | null };
 
 export type UpdateAppMutationVariables = Types.Exact<{
   appID: Types.Scalars['ID']['input'];
@@ -15,9 +14,7 @@ export type UpdateAppMutationVariables = Types.Exact<{
   privacy?: Types.InputMaybe<Types.AppPrivacy>;
 }>;
 
-
-export type UpdateAppMutation = { __typename?: 'Mutation', updateApp: { __typename?: 'App', title: string, privacy: Types.AppPrivacy } };
-
+export type UpdateAppMutation = { __typename?: 'Mutation'; updateApp: { __typename?: 'App'; title: string; privacy: Types.AppPrivacy } };
 
 export const AppGeneralViewData = gql`
     query AppGeneralViewData($appID: ID!) {

@@ -3,7 +3,7 @@ import { queryOptions } from '@tanstack/vue-query';
 import {
   createQueryDataRefetcherDynamic,
   createQueryDataSetterDynamic,
-} from '@/queries/query-data.vue';
+} from '@/queries/query-data.js';
 import { useGqlRequest } from '@/queries/useGqlRequest.js';
 
 import { AppSubscriptionViewData, type AppSubscriptionViewDataQuery } from './operations.js';

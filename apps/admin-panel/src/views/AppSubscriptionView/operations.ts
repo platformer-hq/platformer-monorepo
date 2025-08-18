@@ -6,24 +6,20 @@ export type AppSubscriptionViewDataQueryVariables = Types.Exact<{
   appId: Types.Scalars['ID']['input'];
 }>;
 
-
-export type AppSubscriptionViewDataQuery = { __typename?: 'Query', app?: { __typename?: 'App', subscription?: { __typename?: 'AppSubscription', autoRenewal: boolean, endsAt: string } | null } | null };
+export type AppSubscriptionViewDataQuery = { __typename?: 'Query'; app?: { __typename?: 'App'; subscription?: { __typename?: 'AppSubscription'; autoRenewal: boolean; endsAt: string } | null } | null };
 
 export type CreateSubInvoiceLinkMutationVariables = Types.Exact<{
   appId: Types.Scalars['ID']['input'];
 }>;
 
-
-export type CreateSubInvoiceLinkMutation = { __typename?: 'Mutation', createAppSubTgInvoice: string };
+export type CreateSubInvoiceLinkMutation = { __typename?: 'Mutation'; createAppSubTgInvoice: string };
 
 export type UpdateAppSubAutoRenewalMutationVariables = Types.Exact<{
   appId: Types.Scalars['ID']['input'];
   autoRenew: Types.Scalars['Boolean']['input'];
 }>;
 
-
-export type UpdateAppSubAutoRenewalMutation = { __typename?: 'Mutation', updateAppSubAutoRenewal?: boolean | null };
-
+export type UpdateAppSubAutoRenewalMutation = { __typename?: 'Mutation'; updateAppSubAutoRenewal?: boolean | null };
 
 export const AppSubscriptionViewData = gql`
     query AppSubscriptionViewData($appId: ID!) {

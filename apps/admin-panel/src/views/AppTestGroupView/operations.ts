@@ -7,15 +7,13 @@ export type TestGroupViewDataQueryVariables = Types.Exact<{
   testGroupID: Types.Scalars['ID']['input'];
 }>;
 
-
-export type TestGroupViewDataQuery = { __typename?: 'Query', app?: { __typename?: 'App', currentUserRole: Types.AppRole } | null, appTestGroup: { __typename?: 'AppTestGroup', id: number, title: string, url: string, enabled: boolean, platforms: Array<{ __typename?: 'Platform', id: number }>, users: Array<{ __typename?: 'User', id: number, name: string }> } };
+export type TestGroupViewDataQuery = { __typename?: 'Query'; app?: { __typename?: 'App'; currentUserRole: Types.AppRole } | null; appTestGroup: { __typename?: 'AppTestGroup'; id: number; title: string; url: string; enabled: boolean; platforms: Array<{ __typename?: 'Platform'; id: number }>; users: Array<{ __typename?: 'User'; id: number; name: string }> } };
 
 export type DeleteTestGroupMutationVariables = Types.Exact<{
   testGroupID: Types.Scalars['ID']['input'];
 }>;
 
-
-export type DeleteTestGroupMutation = { __typename?: 'Mutation', deleteAppTestGroup: boolean };
+export type DeleteTestGroupMutation = { __typename?: 'Mutation'; deleteAppTestGroup: boolean };
 
 export type UpdateTestGroupMutationVariables = Types.Exact<{
   testGroupID: Types.Scalars['ID']['input'];
@@ -26,9 +24,7 @@ export type UpdateTestGroupMutationVariables = Types.Exact<{
   userIDs: Array<Types.Scalars['ID']['input']> | Types.Scalars['ID']['input'];
 }>;
 
-
-export type UpdateTestGroupMutation = { __typename?: 'Mutation', updateAppTestGroup: { __typename?: 'AppTestGroup', id: number, title: string, enabled: boolean, url: string, platforms: Array<{ __typename: 'Platform', id: number }>, users: Array<{ __typename: 'User', id: number, name: string }> } };
-
+export type UpdateTestGroupMutation = { __typename?: 'Mutation'; updateAppTestGroup: { __typename?: 'AppTestGroup'; id: number; title: string; enabled: boolean; url: string; platforms: Array<{ __typename: 'Platform'; id: number }>; users: Array<{ __typename: 'User'; id: number; name: string }> } };
 
 export const TestGroupViewData = gql`
     query TestGroupViewData($appID: ID!, $testGroupID: ID!) {

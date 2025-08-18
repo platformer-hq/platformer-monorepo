@@ -7,9 +7,7 @@ export type AppUrlViewerViewDataQueryVariables = Types.Exact<{
   userID: Types.Scalars['ID']['input'];
 }>;
 
-
-export type AppUrlViewerViewDataQuery = { __typename?: 'Query', userAppURLExplanations: Array<{ __typename?: 'AppURLExplanation', url?: string | null, platform: { __typename?: 'Platform', completeTitle: string }, explanation: { __typename?: 'AppURLSimpleExplanation', kind: Types.AppUrlSimpleExplanationKind } | { __typename?: 'AppURLTestGroupExplanation', id: number, title?: string | null } }> };
-
+export type AppUrlViewerViewDataQuery = { __typename?: 'Query'; userAppURLExplanations: Array<{ __typename?: 'AppURLExplanation'; url?: string | null; platform: { __typename?: 'Platform'; completeTitle: string }; explanation: { __typename?: 'AppURLSimpleExplanation'; kind: Types.AppUrlSimpleExplanationKind } | { __typename?: 'AppURLTestGroupExplanation'; id: number; title?: string | null } }> };
 
 export const AppUrlViewerViewData = gql`
     query AppUrlViewerViewData($appID: ID!, $userID: ID!) {

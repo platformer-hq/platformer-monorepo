@@ -2,7 +2,7 @@ import { queryOptions } from '@tanstack/vue-query';
 
 import { useGqlRequest } from '@/queries/useGqlRequest.js';
 
-import { createQueryDataRefetcher } from '@/queries/query-data.vue';
+import { createQueryDataRefetcher } from '@/queries/query-data.js';
 import { Invites } from './operations.js';
 
 export function homeViewQueryKey() {

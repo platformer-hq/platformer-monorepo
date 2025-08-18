@@ -6,9 +6,7 @@ export type AppTestGroupsViewDataQueryVariables = Types.Exact<{
   appID: Types.Scalars['ID']['input'];
 }>;
 
-
-export type AppTestGroupsViewDataQuery = { __typename?: 'Query', app?: { __typename?: 'App', currentUserRole: Types.AppRole, testGroups: Array<{ __typename?: 'AppTestGroup', id: number, title: string, enabled: boolean, users: Array<{ __typename: 'User' }>, platforms: Array<{ __typename: 'Platform' }> }> } | null };
-
+export type AppTestGroupsViewDataQuery = { __typename?: 'Query'; app?: { __typename?: 'App'; currentUserRole: Types.AppRole; testGroups: Array<{ __typename?: 'AppTestGroup'; id: number; title: string; enabled: boolean; users: Array<{ __typename: 'User' }>; platforms: Array<{ __typename: 'Platform' }> }> } | null };
 
 export const AppTestGroupsViewData = gql`
     query AppTestGroupsViewData($appID: ID!) {

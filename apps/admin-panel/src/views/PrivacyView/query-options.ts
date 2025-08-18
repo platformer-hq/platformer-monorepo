@@ -1,6 +1,6 @@
 import { queryOptions } from '@tanstack/vue-query';
 
-import { createQueryDataSetter } from '@/queries/query-data.vue';
+import { createQueryDataSetter } from '@/queries/query-data.js';
 import { useGqlRequest } from '@/queries/useGqlRequest.js';
 
 import { Permissions, type PermissionsQuery } from './operations.js';

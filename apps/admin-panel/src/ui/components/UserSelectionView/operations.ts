@@ -10,9 +10,7 @@ export type SearchUsersQueryVariables = Types.Exact<{
   canReceiveManagementInvite: Types.Scalars['Boolean']['input'];
 }>;
 
-
-export type SearchUsersQuery = { __typename?: 'Query', searchUsers: Array<{ __typename?: 'User', id: number, name: string }> };
-
+export type SearchUsersQuery = { __typename?: 'Query'; searchUsers: Array<{ __typename?: 'User'; id: number; name: string }> };
 
 export const SearchUsers = gql`
     query SearchUsers($input: String!, $page: Int!, $excludeUserIDs: [ID!], $canReceiveAppTransferReq: Boolean!, $canReceiveManagementInvite: Boolean!) {

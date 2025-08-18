@@ -1,6 +1,6 @@
 import { queryOptions } from '@tanstack/vue-query';
 
-import { createQueryDataSetterDynamic } from '@/queries/query-data.vue';
+import { createQueryDataSetterDynamic } from '@/queries/query-data.js';
 import { useGqlRequest } from '@/queries/useGqlRequest.js';
 
 import { AppUrlsViewData, type AppUrlsViewDataQuery } from './operations.js';

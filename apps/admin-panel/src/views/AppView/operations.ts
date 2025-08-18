@@ -6,23 +6,19 @@ export type AppViewDataQueryVariables = Types.Exact<{
   appID: Types.Scalars['ID']['input'];
 }>;
 
-
-export type AppViewDataQuery = { __typename?: 'Query', app?: { __typename?: 'App', currentUserRole: Types.AppRole, id: number, title: string, urlsCacheResetAt?: string | null } | null };
+export type AppViewDataQuery = { __typename?: 'Query'; app?: { __typename?: 'App'; currentUserRole: Types.AppRole; id: number; title: string; urlsCacheResetAt?: string | null } | null };
 
 export type DeleteAppMutationVariables = Types.Exact<{
   appID: Types.Scalars['ID']['input'];
 }>;
 
-
-export type DeleteAppMutation = { __typename?: 'Mutation', deleteApp: boolean };
+export type DeleteAppMutation = { __typename?: 'Mutation'; deleteApp: boolean };
 
 export type ResetAppCacheMutationVariables = Types.Exact<{
   appID: Types.Scalars['ID']['input'];
 }>;
 
-
-export type ResetAppCacheMutation = { __typename?: 'Mutation', updateApp: { __typename?: 'App', urlsCacheResetAt?: string | null } };
-
+export type ResetAppCacheMutation = { __typename?: 'Mutation'; updateApp: { __typename?: 'App'; urlsCacheResetAt?: string | null } };
 
 export const AppViewData = gql`
     query AppViewData($appID: ID!) {

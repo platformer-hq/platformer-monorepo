@@ -1,4 +1,3 @@
-<script lang="ts">
 import type { QueryClient, QueryKey, Updater } from '@tanstack/vue-query';
 import { produce } from 'immer';
 
@@ -42,4 +41,3 @@ export function createQueryDataRefetcherDynamic<F extends (...args: any) => Quer
     return client.refetchQueries({ queryKey: queryKey(...args) });
   };
 }
-</script>
