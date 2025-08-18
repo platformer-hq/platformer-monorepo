@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useQuery } from '@tanstack/vue-query';
+import { hapticFeedbackNotificationOccurred } from '@telegram-apps/sdk-vue';
 import { isTimeoutError } from 'better-promises';
 import { looseObject, nullish, string } from 'valibot';
 import { onUnmounted, ref, shallowRef, watchEffect } from 'vue';
@@ -96,6 +97,8 @@ watchEffect(() => {
     return;
   }
   if (requestError.value) {
+    hapticFeedbackNotificationOccurred('error');
+
     if (isApiError(requestError.value)) {
       if (requestError.value.data.code === 'ERR_APP_NOT_FOUND') {
         appData.value = { found: false };
