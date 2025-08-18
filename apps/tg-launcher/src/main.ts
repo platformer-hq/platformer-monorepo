@@ -4,6 +4,7 @@ import 'vue-ui/index.css';
 import './assets/index.scss';
 
 import { init as sentryInit } from '@sentry/vue';
+import { VueQueryPlugin } from '@tanstack/vue-query';
 import {
   createLogger,
   retrieveLaunchParams,
@@ -67,6 +68,15 @@ try {
   });
 
   app
+    .use(VueQueryPlugin, {
+      queryClientConfig: {
+        defaultOptions: {
+          queries: {
+            retry: 3,
+          },
+        },
+      },
+    })
     .use(createI18n({ locale, legacy: false }))
     .mount('#app');
 } catch (error) {
