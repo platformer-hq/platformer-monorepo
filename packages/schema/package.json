@@ -1,0 +1,14 @@
+{
+  "name": "schema",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "main": "src/index.ts",
+  "devDependencies": {
+    "tsconfig": "workspace:*"
+  },
+  "dependencies": {
+    "@graphql-typed-document-node/core": "^3.2.0",
+    "graphql-request": "^7.2.0"
+  }
+}

@@ -1,0 +1,14 @@
+<script setup lang="ts">
+/* eslint-disable */
+import type { SVGAttributes } from 'vue';
+
+export interface ThreeLines24Props extends /* @vue-ignore */ SVGAttributes {
+  size?: string | number;
+}
+
+const { size = 24 } = defineProps<ThreeLines24Props>();
+</script>
+
+<template>
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" :width="size" :height="size"><path fill="currentColor" fill-rule="evenodd" d="M3 7a1 1 0 0 1 1-1h16a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1m0 10a1 1 0 0 1 1-1h16a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1m1-6a1 1 0 1 0 0 2h16a1 1 0 1 0 0-2z" clip-rule="evenodd"/></svg>
+</template>

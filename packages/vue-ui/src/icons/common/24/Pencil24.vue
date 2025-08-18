@@ -1,0 +1,14 @@
+<script setup lang="ts">
+/* eslint-disable */
+import type { SVGAttributes } from 'vue';
+
+export interface Pencil24Props extends /* @vue-ignore */ SVGAttributes {
+  size?: string | number;
+}
+
+const { size = 24 } = defineProps<Pencil24Props>();
+</script>
+
+<template>
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" :width="size" :height="size"><path fill="currentColor" fill-rule="evenodd" d="M16.105 4.865c.281-.282.422-.422.562-.516a1.71 1.71 0 0 1 1.905 0c.14.094.281.234.563.516s.422.423.516.563a1.71 1.71 0 0 1 0 1.905c-.093.14-.234.28-.516.563l-.909.909-3.03-3.03-1.213 1.211 3.03 3.03-9.697 9.698-3.03-3.03zm-11.82 14.85v-3.031l3.031 3.03z" clip-rule="evenodd"/></svg>
+</template>

@@ -1,0 +1,29 @@
+{
+  "name": "vue-ui",
+  "private": true,
+  "version": "0.0.1",
+  "author": "Vladislav Kibenko <wolfram.deus@gmail.com>",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./index.css": {
+      "import": "./dist/index.css",
+      "require": "./dist/index.css"
+    }
+  },
+  "scripts": {
+    "build": "vite build",
+    "icons:build": "node scripts/build-icons.js"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
+  "devDependencies": {
+    "svgo": "^3.3.2"
+  }
+}
