@@ -7,26 +7,26 @@ export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> =
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: number; output: number };
-  String: { input: string; output: string };
-  Boolean: { input: boolean; output: boolean };
-  Int: { input: number; output: number };
-  Float: { input: number; output: number };
-  Time: { input: string; output: string };
+  ID: { input: number; output: number; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
+  Time: { input: string; output: string; }
 };
 
 export enum AppManagementInviteRole {
   /** Provides the application write access. */
   Admin = 'ADMIN',
   /** Provides the application read access. */
-  Member = 'MEMBER',
+  Member = 'MEMBER'
 }
 
 export enum AppPrivacy {
   /** Application is visible only to application managers. */
   Hidden = 'HIDDEN',
   /** Application is visible to all users. */
-  Visible = 'VISIBLE',
+  Visible = 'VISIBLE'
 }
 
 export enum AppRole {
@@ -35,7 +35,7 @@ export enum AppRole {
   /** Provides the application read access. */
   Member = 'MEMBER',
   /** Application owner role. */
-  Owner = 'OWNER',
+  Owner = 'OWNER'
 }
 
 export enum AppUrlSimpleExplanationKind {
@@ -44,7 +44,7 @@ export enum AppUrlSimpleExplanationKind {
   /** Application is public and everybody can open it. */
   AppIsPublic = 'APP_IS_PUBLIC',
   /** Application is private and the current user is its manager. */
-  UserIsManager = 'USER_IS_MANAGER',
+  UserIsManager = 'USER_IS_MANAGER'
 }
 
 export type InputAppUrl = {

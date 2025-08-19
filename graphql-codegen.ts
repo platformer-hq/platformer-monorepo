@@ -40,7 +40,7 @@ export default {
         scalars,
       } satisfies TypeScriptDocumentsPluginConfig & TypeScriptTypedDocumentNodesConfig,
     },
-    'packages/api/src/schema.ts': {
+    'packages/schema/src/schema.ts': {
       config: { scalars, onlyOperationTypes: true },
       plugins: ['typescript'],
     },
