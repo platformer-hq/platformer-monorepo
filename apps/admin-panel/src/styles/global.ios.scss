@@ -4,6 +4,7 @@
 
 :root[data-platform="ios"] {
   $textColor: var(--theme-text-color);
+  $hintColor: var(--theme-hint-color);
   $subtitleTextColor: var(--theme-subtitle-text-color);
   $accentColor: var(--theme-accent-text-color);
   $destructiveTextColor: var(--theme-destructive-text-color);
