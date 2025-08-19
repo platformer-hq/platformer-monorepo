@@ -1,3 +1,4 @@
+/* eslint-disable */
 import type * as Types from 'schema';
 
 import type { TypedDocumentNode as DocumentNode } from 'schema';
@@ -6,7 +7,8 @@ export type AppManagersViewDataQueryVariables = Types.Exact<{
   appID: Types.Scalars['ID']['input'];
 }>;
 
-export type AppManagersViewDataQuery = { __typename?: 'Query'; app?: { __typename?: 'App'; currentUserRole: Types.AppRole; managers: Array<{ __typename?: 'AppManager'; role: Types.AppRole; user: { __typename?: 'User'; id: number; name: string } }>; managementInvites: Array<{ __typename?: 'AppManagementInvite'; id: number; role: Types.AppManagementInviteRole; from: { __typename?: 'User'; name: string }; to: { __typename?: 'User'; id: number; name: string } }> } | null };
+
+export type AppManagersViewDataQuery = { __typename?: 'Query', app?: { __typename?: 'App', currentUserRole: Types.AppRole, managers: Array<{ __typename?: 'AppManager', role: Types.AppRole, user: { __typename?: 'User', id: number, name: string } }>, managementInvites: Array<{ __typename?: 'AppManagementInvite', id: number, role: Types.AppManagementInviteRole, from: { __typename?: 'User', name: string }, to: { __typename?: 'User', id: number, name: string } }> } | null };
 
 export type InviteManagerMutationVariables = Types.Exact<{
   appID: Types.Scalars['ID']['input'];
@@ -14,20 +16,23 @@ export type InviteManagerMutationVariables = Types.Exact<{
   role: Types.AppManagementInviteRole;
 }>;
 
-export type InviteManagerMutation = { __typename?: 'Mutation'; createAppManagementInvite: { __typename?: 'AppManagementInvite'; id: number; role: Types.AppManagementInviteRole; from: { __typename?: 'User'; name: string }; to: { __typename?: 'User'; id: number; name: string } } };
+
+export type InviteManagerMutation = { __typename?: 'Mutation', createAppManagementInvite: { __typename?: 'AppManagementInvite', id: number, role: Types.AppManagementInviteRole, from: { __typename?: 'User', name: string }, to: { __typename?: 'User', id: number, name: string } } };
 
 export type RevokeInviteMutationVariables = Types.Exact<{
   inviteID: Types.Scalars['ID']['input'];
 }>;
 
-export type RevokeInviteMutation = { __typename?: 'Mutation'; revokeAppManagementInvite: boolean };
+
+export type RevokeInviteMutation = { __typename?: 'Mutation', revokeAppManagementInvite: boolean };
 
 export type RemoveManagerMutationVariables = Types.Exact<{
   appID: Types.Scalars['ID']['input'];
   userID: Types.Scalars['ID']['input'];
 }>;
 
-export type RemoveManagerMutation = { __typename?: 'Mutation'; removeAppManager: boolean };
+
+export type RemoveManagerMutation = { __typename?: 'Mutation', removeAppManager: boolean };
 
 export type UpdateManagerMutationVariables = Types.Exact<{
   appID: Types.Scalars['ID']['input'];
@@ -35,7 +40,9 @@ export type UpdateManagerMutationVariables = Types.Exact<{
   userID: Types.Scalars['ID']['input'];
 }>;
 
-export type UpdateManagerMutation = { __typename?: 'Mutation'; updateAppManagerRole: { __typename: 'AppManager' } };
+
+export type UpdateManagerMutation = { __typename?: 'Mutation', updateAppManagerRole: { __typename: 'AppManager' } };
+
 
 export const AppManagersViewData = gql`
     query AppManagersViewData($appID: ID!) {

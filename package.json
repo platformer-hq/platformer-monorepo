@@ -12,6 +12,7 @@
   "devDependencies": {
     "@changesets/cli": "^2.27.12",
     "@eslint/js": "^9.23.0",
+    "@graphql-codegen/add": "^5.0.3",
     "@graphql-codegen/cli": "5.0.5",
     "@graphql-codegen/near-operation-file-preset": "^3.0.0",
     "@graphql-codegen/typed-document-node": "^5.1.1",

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import type * as Types from 'schema';
 
 import type { TypedDocumentNode as DocumentNode } from 'schema';
@@ -6,7 +7,8 @@ export type AppTgIntegrationViewDataQueryVariables = Types.Exact<{
   appID: Types.Scalars['ID']['input'];
 }>;
 
-export type AppTgIntegrationViewDataQuery = { __typename?: 'Query'; app?: { __typename?: 'App'; currentUserRole: Types.AppRole; telegramBotID?: number | null; telegramProxyLaunchParams: boolean } | null };
+
+export type AppTgIntegrationViewDataQuery = { __typename?: 'Query', app?: { __typename?: 'App', currentUserRole: Types.AppRole, telegramBotID?: number | null, telegramProxyLaunchParams: boolean } | null };
 
 export type UpdateAppTelegramDataMutationVariables = Types.Exact<{
   appID: Types.Scalars['ID']['input'];
@@ -14,7 +16,9 @@ export type UpdateAppTelegramDataMutationVariables = Types.Exact<{
   telegramProxyLaunchParams: Types.Scalars['Boolean']['input'];
 }>;
 
-export type UpdateAppTelegramDataMutation = { __typename?: 'Mutation'; updateApp: { __typename?: 'App'; telegramProxyLaunchParams: boolean; telegramBotID?: number | null } };
+
+export type UpdateAppTelegramDataMutation = { __typename?: 'Mutation', updateApp: { __typename?: 'App', telegramProxyLaunchParams: boolean, telegramBotID?: number | null } };
+
 
 export const AppTgIntegrationViewData = gql`
     query AppTgIntegrationViewData($appID: ID!) {

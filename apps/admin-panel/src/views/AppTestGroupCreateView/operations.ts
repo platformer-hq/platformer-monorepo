@@ -1,3 +1,4 @@
+/* eslint-disable */
 import type * as Types from 'schema';
 
 import type { TypedDocumentNode as DocumentNode } from 'schema';
@@ -11,7 +12,9 @@ export type CreateAppTestGroupMutationVariables = Types.Exact<{
   userIDs: Array<Types.Scalars['ID']['input']> | Types.Scalars['ID']['input'];
 }>;
 
-export type CreateAppTestGroupMutation = { __typename?: 'Mutation'; createAppTestGroup: { __typename?: 'AppTestGroup'; id: number; title: string; enabled: boolean; url: string; platforms: Array<{ __typename: 'Platform'; id: number }>; users: Array<{ __typename: 'User'; id: number; name: string }> } };
+
+export type CreateAppTestGroupMutation = { __typename?: 'Mutation', createAppTestGroup: { __typename?: 'AppTestGroup', id: number, title: string, enabled: boolean, url: string, platforms: Array<{ __typename: 'Platform', id: number }>, users: Array<{ __typename: 'User', id: number, name: string }> } };
+
 
 export const CreateAppTestGroup = gql`
     mutation CreateAppTestGroup($appID: ID!, $title: String!, $enabled: Boolean!, $url: String!, $platformIDs: [ID!]!, $userIDs: [ID!]!) {

@@ -1,17 +1,21 @@
+/* eslint-disable */
 import type * as Types from 'schema';
 
 import type { TypedDocumentNode as DocumentNode } from 'schema';
 import { gql } from 'schema';
-export type DataQueryVariables = Types.Exact<{ [key: string]: never }>;
+export type DataQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
-export type DataQuery = { __typename?: 'Query'; currentUser: { __typename?: 'CurrentUser'; managementInvites: Array<{ __typename?: 'AppManagementInvite'; id: number; role: Types.AppManagementInviteRole; from: { __typename?: 'User'; id: number; name: string }; app: { __typename?: 'App'; id: number; title: string } }> } };
+
+export type DataQuery = { __typename?: 'Query', currentUser: { __typename?: 'CurrentUser', managementInvites: Array<{ __typename?: 'AppManagementInvite', id: number, role: Types.AppManagementInviteRole, from: { __typename?: 'User', id: number, name: string }, app: { __typename?: 'App', id: number, title: string } }> } };
 
 export type RespondMutationVariables = Types.Exact<{
   inviteID: Types.Scalars['ID']['input'];
   accept: Types.Scalars['Boolean']['input'];
 }>;
 
-export type RespondMutation = { __typename?: 'Mutation'; respondAppManagementInvite: boolean };
+
+export type RespondMutation = { __typename?: 'Mutation', respondAppManagementInvite: boolean };
+
 
 export const Data = gql`
     query Data {

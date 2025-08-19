@@ -24,6 +24,7 @@ export default {
       plugins: [
         'typescript-operations',
         'typed-document-node',
+        { add: { content: '/* eslint-disable */' } }
       ],
       config: {
         useTypeImports: true,
@@ -42,7 +43,10 @@ export default {
     },
     'packages/schema/src/schema.ts': {
       config: { scalars, onlyOperationTypes: true },
-      plugins: ['typescript'],
+      plugins: [
+        'typescript',
+        { add: { content: '/* eslint-disable */' } }
+      ],
     },
   },
 } satisfies CodegenConfig;

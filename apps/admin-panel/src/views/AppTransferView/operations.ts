@@ -1,3 +1,4 @@
+/* eslint-disable */
 import type * as Types from 'schema';
 
 import type { TypedDocumentNode as DocumentNode } from 'schema';
@@ -6,20 +7,24 @@ export type RevokeTransferMutationVariables = Types.Exact<{
   requestID: Types.Scalars['ID']['input'];
 }>;
 
-export type RevokeTransferMutation = { __typename?: 'Mutation'; revokeAppTransferRequest: boolean };
+
+export type RevokeTransferMutation = { __typename?: 'Mutation', revokeAppTransferRequest: boolean };
 
 export type CreateTransferRequestMutationVariables = Types.Exact<{
   appID: Types.Scalars['ID']['input'];
   toUserID: Types.Scalars['ID']['input'];
 }>;
 
-export type CreateTransferRequestMutation = { __typename?: 'Mutation'; createAppTransferRequest: { __typename?: 'AppTransferRequest'; id: number; from: { __typename?: 'User'; id: number; name: string }; to: { __typename?: 'User'; id: number; name: string } } };
+
+export type CreateTransferRequestMutation = { __typename?: 'Mutation', createAppTransferRequest: { __typename?: 'AppTransferRequest', id: number, from: { __typename?: 'User', id: number, name: string }, to: { __typename?: 'User', id: number, name: string } } };
 
 export type AppTransferViewDataQueryVariables = Types.Exact<{
   appID: Types.Scalars['ID']['input'];
 }>;
 
-export type AppTransferViewDataQuery = { __typename?: 'Query'; app?: { __typename?: 'App'; currentUserRole: Types.AppRole; transferRequest?: { __typename?: 'AppTransferRequest'; id: number; to: { __typename?: 'User'; id: number; name: string } } | null } | null };
+
+export type AppTransferViewDataQuery = { __typename?: 'Query', app?: { __typename?: 'App', currentUserRole: Types.AppRole, transferRequest?: { __typename?: 'AppTransferRequest', id: number, to: { __typename?: 'User', id: number, name: string } } | null } | null };
+
 
 export const RevokeTransfer = gql`
     mutation RevokeTransfer($requestID: ID!) {
