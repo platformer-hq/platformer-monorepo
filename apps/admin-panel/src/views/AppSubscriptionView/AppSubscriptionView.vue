@@ -377,7 +377,9 @@ watchEffect(() => {
       }
 
       &--right {
-        background-color: var(--theme-accent-text-color);
+        background-color: #007AFF;
+        // TODO: Temp disabled due to some custom themes in Telegram.
+        // background-color: var(--theme-accent-text-color);
 
         &-light {
           color: white;
