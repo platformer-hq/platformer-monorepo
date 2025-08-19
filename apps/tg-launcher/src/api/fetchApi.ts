@@ -1,4 +1,4 @@
-import { type BaseSchema, is, literal, looseObject, nullish, string, unknown } from 'valibot';
+import { type BaseSchema, type InferOutput, is, literal, looseObject, nullish, string, unknown } from 'valibot';
 
 import {
   ApiError,
@@ -15,11 +15,11 @@ import {
  * @param options - optional request options.
  * @returns Response data.
  */
-export async function fetchApi<T, S extends BaseSchema<T, unknown, any>>(
+export async function fetchApi<S extends BaseSchema<any, any, any>>(
   url: string | URL,
   schema: S,
   options?: RequestInit,
-): Promise<T> {
+): Promise<InferOutput<S>> {
   let response: Response;
   try {
     response = await fetch(url, options);
