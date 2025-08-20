@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import { onMainButtonClick, setMainButtonParams } from '@telegram-apps/sdk-vue';
 import { computed, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import AppFrame, { type AppFrameEmits, type AppFrameProps } from '@/components/AppFrame.vue';
-import { onMainButtonClick, setMainButtonParams } from '@telegram-apps/sdk-vue';
+import AppFrame, { type AppFrameEmits, type AppFrameProps } from './AppFrame.vue';
 import StatusPage from './StatusPage.vue';
 
 const props = defineProps<AppFrameProps>();
@@ -16,19 +16,26 @@ const { t } = useI18n({
       redirecting: 'Redirecting',
       httpTitle: 'HTTP URL detected',
       httpText: 'Due to web restrictions, Platformer doesn\'t support HTTP links, but can redirect you to them. In this case Platformer\'s functionality will be unavailable',
+      httpErrorText: 'Due to web restrictions, Platformer doesn\'t support HTTP links in web clients. Try using an HTTPS link or a different client',
     },
     ru: {
       redirect: 'Перенаправить',
       redirecting: 'Перенаправляем',
       httpTitle: 'Обнаружена HTTP-ссылка',
       httpText: 'Платформер не поддерживает HTTP-ссылки из-за веб-ограничений, но может перенаправить Вас на них. \n\nВ этом случае функционал Платформера не будет доступен',
+      httpErrorText: 'Платформер не поддерживает HTTP-ссылки из-за веб-ограничений. Попробуйте указать HTTPS-ссылку, или использовать другой клиент',
     },
   },
 });
 const isHttp = computed(() => props.url.startsWith('http:'));
+let isWeb = true;
+try {
+  isWeb = window.self !== window.top;
+} catch {
+}
 
 watchEffect(() => {
-  if (isHttp.value) {
+  if (isHttp.value && !isWeb) {
     setMainButtonParams({ text: t('redirect'), isVisible: true, isEnabled: true });
     onMainButtonClick(() => {
       setMainButtonParams({ text: t('redirecting'), isLoaderVisible: true, isEnabled: false });
@@ -46,10 +53,10 @@ watchEffect(() => {
   <StatusPage
     v-if="isHttp"
     :title="t('httpTitle')"
-    state="warning"
+    :state="isWeb ? 'error' : 'warning'"
   >
     <span class="warningText">
-      {{ t('httpText') }}
+      {{ t(isWeb ? 'httpErrorText' : 'httpText') }}
     </span>
   </StatusPage>
   <AppFrame
