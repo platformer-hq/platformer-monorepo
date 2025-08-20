@@ -9,14 +9,7 @@ import { computeFallbackURL } from '@/helpers/computeFallbackURL.js';
 import { secureRawLaunchParams } from '@/helpers/secureRawLaunchParams.js';
 import { injectLogger } from '@/providers/global.js';
 
-defineEmits<{
-  error: [{
-    error: ErrorStatusPageError;
-    fallbackUrl?: string;
-  }];
-}>();
-
-const props = defineProps<{
+defineProps<{
   appId: number;
   apiBaseUrl: string;
   fallbackUrl?: string | null;
@@ -24,6 +17,12 @@ const props = defineProps<{
   loadTimeout: number;
   rawInitData: string;
   rawLaunchParams: string;
+}>();
+const emit = defineEmits<{
+  error: [{
+    error: ErrorStatusPageError;
+    fallbackUrl?: string;
+  }];
 }>();
 
 const logger = injectLogger();
@@ -41,16 +40,6 @@ const { t } = useI18n({
     },
   },
 });
-const computedFallbackURL = props.fallbackUrl
-  ? computeFallbackURL(props.fallbackUrl, props.rawLaunchParams)
-  : undefined;
-const securedRawLaunchParams = secureRawLaunchParams(props.rawLaunchParams, props.rawInitData);
-
-const onReady = ({ fallbackUrl }: { fallbackUrl?: string }) => {
-  fallbackUrl && logger.forceWarn('Platformer failed to load. Used fallback:', fallbackUrl);
-  logger.log('Removing the loader');
-  ready.value = true;
-};
 
 const onStatusPageExit = (el: Element, done: () => void) => {
   return el
@@ -81,10 +70,18 @@ const onStatusPageExit = (el: Element, done: () => void) => {
     :init-timeout
     :load-timeout
     :raw-launch-params
-    :secured-raw-launch-params
-    :fallback-url="computedFallbackURL"
-    @error="$emit('error', $event)"
-    @ready="onReady"
+    :secured-raw-launch-params="secureRawLaunchParams(rawLaunchParams, rawInitData)"
+    :fallback-url="fallbackUrl
+      ? computeFallbackURL(fallbackUrl, rawLaunchParams)
+      : undefined"
+    @error="emit('error', $event)"
+    @ready="
+      if ($event.fallbackUrl) {
+        logger.forceWarn('Platformer failed to load. Fallback used:', $event.fallbackUrl);
+      }
+      logger.log('Removing the loader');
+      ready = true;
+    "
     @app-data-retrieved="step = 'waiting-load'"
   />
 </template>

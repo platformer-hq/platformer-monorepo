@@ -48,7 +48,6 @@ const { t } = useI18n({
     },
   },
 });
-const defaultTitle = t('defaultTitle');
 
 watchEffect(() => {
   if (!onRetry) {
@@ -65,54 +64,32 @@ watchEffect(() => {
 </script>
 
 <template>
-  <StatusPage
-    v-if="error.type === 'config-invalid'"
-    state="error"
-    :title="t('configInvalidTitle')"
-  >
-    {{ error.cause.message }}
-  </StatusPage>
-
-  <StatusPage
-    v-else-if="error.type === 'init-data-missing'"
-    state="error"
-    :title="t('initDataMissingTitle')"
-  >
-    {{ t('initDataMissingMessage') }}
-  </StatusPage>
-
   <ServerErrorStatusPage
-    v-else-if="error.type === 'server'"
+    v-if="error.type === 'server'"
     :error="error.cause"
   />
-
   <StatusPage
-    v-else-if="error.type === 'init'"
+    v-else
     state="error"
-    :title="defaultTitle"
-  >
-    {{ t('apiTimeoutMessage', { time: error.timeout }) }}
-  </StatusPage>
-
-  <StatusPage
-    v-else-if="error.type === 'iframe'"
-    state="error"
-    :title="defaultTitle"
-  >
-    {{ t(error.timeout ? 'loadTimeoutMessage' : 'appUnknownMessage') }}
-  </StatusPage>
-
-  <StatusPage
-    v-else-if="error.type === 'unknown'"
-    state="error"
-    :title="defaultTitle"
+    :title="t(({
+      'config-invalid': 'configInvalidTitle',
+      'init-data-missing': 'initDataMissingTitle'
+    } as Partial<Record<ErrorStatusPageError['type'], string>>)[error.type] || 'defaultTitle')"
   >
     {{
-      t('defaultMessage', {
-        error: error.cause instanceof Error
-          ? `: ${error.cause.message}`
-          : ''
-      })
+      error.type === 'config-invalid'
+        ? error.cause.message
+        : error.type === 'init'
+          ? t('apiTimeoutMessage', { time: error.timeout })
+          : error.type === 'iframe'
+            ? t(error.timeout ? 'loadTimeoutMessage' : 'appUnknownMessage')
+            : error.type === 'init-data-missing'
+              ? t('initDataMissingMessage')
+              : t('defaultMessage', {
+                error: error.cause instanceof Error
+                  ? `: ${error.cause.message}`
+                  : ''
+              })
     }}
   </StatusPage>
 </template>

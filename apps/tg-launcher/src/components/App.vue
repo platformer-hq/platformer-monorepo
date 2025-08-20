@@ -15,7 +15,7 @@ export interface AppProps {
 const props = defineProps<AppProps>();
 
 const { forceError } = injectLogger();
-const initError = ref<ErrorStatusPageError>();
+const error = ref<ErrorStatusPageError>();
 
 const opts = extractLauncherOptions();
 if (!opts.ok) {
@@ -24,18 +24,6 @@ if (!opts.ok) {
 if (!props.rawInitData) {
   forceError('Init data is missing');
 }
-
-const onError = ({ error, fallbackUrl }: {
-  error: ErrorStatusPageError;
-  fallbackUrl?: string;
-}) => {
-  if (fallbackUrl) {
-    forceError('Fallback URL failed to load:', fallbackUrl, error);
-  } else {
-    forceError('Failed to load the app:', error);
-  }
-  initError.value = error;
-};
 </script>
 
 <template>
@@ -49,16 +37,23 @@ const onError = ({ error, fallbackUrl }: {
       :error="{ type: 'init-data-missing' }"
     />
     <ErrorStatusPage
-      v-else-if="initError"
-      :error="initError"
-      @retry="initError = undefined"
+      v-else-if="error"
+      :error="error"
+      @retry="error = undefined"
     />
     <AppInitializer
       v-else
       v-bind="opts.options"
       :raw-launch-params
       :raw-init-data
-      @error="onError"
+      @error="
+        if ($event.fallbackUrl) {
+          forceError('Fallback URL failed to load:', $event.fallbackUrl, $event.error);
+        } else {
+          forceError('Failed to load the app:', $event.error);
+        }
+        error = $event.error;
+      "
     />
   </main>
 </template>

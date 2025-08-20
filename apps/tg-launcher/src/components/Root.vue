@@ -3,6 +3,7 @@ import type { Logger, Platform } from '@telegram-apps/sdk-vue';
 
 import { provideGlobals } from '@/providers/global.js';
 import type { InitialColorsTuple, Locale } from '@/types/common.js';
+
 import App, { type AppProps } from './App.vue';
 import ErrorBoundary from './ErrorBoundary.vue';
 
