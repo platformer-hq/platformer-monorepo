@@ -3,10 +3,10 @@ import { computed, watchEffect } from 'vue';
 
 import AppFrame, { type AppFrameEmits, type AppFrameProps } from '@/components/AppFrame.vue';
 
-const { url } = defineProps<AppFrameProps>();
-defineEmits<AppFrameEmits>();
+const props = defineProps<AppFrameProps>();
+const emit = defineEmits<AppFrameEmits>();
 
-const isHttp = computed(() => url.startsWith('http://'));
+const isHttp = computed(() => props.url.startsWith('http://'));
 
 watchEffect(() => {
   // Web doesn't support loading iframes with an HTTP URL in the secure context. All we
@@ -14,7 +14,7 @@ watchEffect(() => {
   if (isHttp.value) {
     // TODO: Show error in Web versions of Telegram. Show redirect message on all
     // other platforms.
-    window.location.href = url;
+    window.location.href = props.url;
   }
 });
 </script>
@@ -22,9 +22,9 @@ watchEffect(() => {
 <template>
   <AppFrame
     v-if="!isHttp"
-    :load-timeout="loadTimeout"
-    :url="url"
-    @error="$emit('error', $event)"
-    @ready="$emit('ready')"
+    :load-timeout
+    :url
+    @error="emit('error', $event)"
+    @ready="emit('ready')"
   />
 </template>

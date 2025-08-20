@@ -9,16 +9,14 @@ import { computeFallbackURL } from '@/helpers/computeFallbackURL.js';
 import { secureRawLaunchParams } from '@/helpers/secureRawLaunchParams.js';
 import { injectLogger } from '@/providers/global.js';
 
-interface ErrorEvent {
-  error: ErrorStatusPageError;
-  fallbackUrl?: string;
-}
-
 defineEmits<{
-  error: [ErrorEvent];
+  error: [{
+    error: ErrorStatusPageError;
+    fallbackUrl?: string;
+  }];
 }>();
 
-const { fallbackUrl, rawLaunchParams, rawInitData } = defineProps<{
+const props = defineProps<{
   appId: number;
   apiBaseUrl: string;
   fallbackUrl?: string | null;
@@ -43,10 +41,10 @@ const { t } = useI18n({
     },
   },
 });
-const computedFallbackURL = fallbackUrl
-  ? computeFallbackURL(fallbackUrl, rawLaunchParams)
+const computedFallbackURL = props.fallbackUrl
+  ? computeFallbackURL(props.fallbackUrl, props.rawLaunchParams)
   : undefined;
-const securedRawLaunchParams = secureRawLaunchParams(rawLaunchParams, rawInitData);
+const securedRawLaunchParams = secureRawLaunchParams(props.rawLaunchParams, props.rawInitData);
 
 const onReady = ({ fallbackUrl }: { fallbackUrl?: string }) => {
   fallbackUrl && logger.forceWarn('Platformer failed to load. Used fallback:', fallbackUrl);
@@ -78,12 +76,12 @@ const onStatusPageExit = (el: Element, done: () => void) => {
     </StatusPage>
   </Transition>
   <AppLoader
-    :app-id="appId"
-    :api-base-url="apiBaseUrl"
-    :init-timeout="initTimeout"
-    :load-timeout="loadTimeout"
-    :raw-launch-params="rawLaunchParams"
-    :secured-raw-launch-params="securedRawLaunchParams"
+    :app-id
+    :api-base-url
+    :init-timeout
+    :load-timeout
+    :raw-launch-params
+    :secured-raw-launch-params
     :fallback-url="computedFallbackURL"
     @error="$emit('error', $event)"
     @ready="onReady"

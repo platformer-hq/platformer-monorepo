@@ -13,7 +13,6 @@ interface RootProps extends AppProps {
   platform: Platform;
 }
 
-defineOptions({ inheritAttrs: false });
 const { platform, locale, logger, initialColors } = defineProps<RootProps>();
 provideGlobals({ platform, locale, logger, initialColors });
 </script>
@@ -21,8 +20,8 @@ provideGlobals({ platform, locale, logger, initialColors });
 <template>
   <ErrorBoundary>
     <App
-      :raw-init-data="rawInitData"
-      :raw-launch-params="rawLaunchParams"
+      :raw-init-data
+      :raw-launch-params
     />
   </ErrorBoundary>
 </template>

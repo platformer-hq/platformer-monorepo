@@ -8,6 +8,9 @@
   "exclude": [
     "src/**/__tests__/*"
   ],
+  "vueCompilerOptions": {
+    "strictTemplates": true
+  },
   "compilerOptions": {
     "lib": [
       "ESNext",

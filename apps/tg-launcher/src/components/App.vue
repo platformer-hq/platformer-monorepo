@@ -3,6 +3,7 @@ import { ref } from 'vue';
 
 import { extractLauncherOptions } from '@/helpers/extractLauncherOptions.ts';
 import { injectLogger } from '@/providers/global';
+
 import AppInitializer from './AppInitializer.vue';
 import ErrorStatusPage, { type ErrorStatusPageError } from './ErrorStatusPage.vue';
 
@@ -11,8 +12,7 @@ export interface AppProps {
   rawLaunchParams: string;
 }
 
-defineOptions({ inheritAttrs: false });
-const { rawInitData } = defineProps<AppProps>();
+const props = defineProps<AppProps>();
 
 const { forceError } = injectLogger();
 const initError = ref<ErrorStatusPageError>();
@@ -21,7 +21,7 @@ const opts = extractLauncherOptions();
 if (!opts.ok) {
   forceError('Launcher options are corrupted:', opts.error);
 }
-if (!rawInitData) {
+if (!props.rawInitData) {
   forceError('Init data is missing');
 }
 
@@ -55,13 +55,9 @@ const onError = ({ error, fallbackUrl }: {
     />
     <AppInitializer
       v-else
-      :app-id="opts.options.appId"
-      :api-base-url="opts.options.apiBaseUrl"
-      :fallback-url="opts.options.fallbackUrl"
-      :init-timeout="opts.options.initTimeout"
-      :load-timeout="opts.options.loadTimeout"
-      :raw-launch-params="rawLaunchParams"
-      :raw-init-data="rawInitData"
+      v-bind="opts.options"
+      :raw-launch-params
+      :raw-init-data
       @error="onError"
     />
   </main>
