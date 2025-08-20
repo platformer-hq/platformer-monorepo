@@ -1,7 +1,7 @@
 import type { Logger, Platform } from '@telegram-apps/sdk-vue';
 import { inject, type InjectionKey, provide } from 'vue';
 
-import type { InitialColorsTuple, Locale } from '@/types/common.ts';
+import type { InitialColors, Locale } from '@/types/common.ts';
 
 function createProviderTuple<V>(): [provide: (value: V) => void, inject: () => V] {
   const k = Symbol() as InjectionKey<V>;
@@ -21,7 +21,7 @@ function createProviderTuple<V>(): [provide: (value: V) => void, inject: () => V
 
 export const [provideGlobals, injectGlobals] = createProviderTuple<{
   platform: Platform;
-  initialColors: InitialColorsTuple;
+  initialColors: InitialColors;
   logger: Logger;
   locale: Locale;
 }>();

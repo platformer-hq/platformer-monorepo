@@ -30,7 +30,7 @@ import {
 } from '@telegram-apps/sdk-vue';
 import { formatThemeParamsCssVar, formatViewportCssVar } from 'shared';
 
-import type { InitialColorsTuple } from '@/types/common.js';
+import type { InitialColors } from '@/types/common.js';
 
 /**
  * Initializes the SDK.
@@ -55,7 +55,7 @@ export async function init({ debug, ...options }: {
    * Applies some mocks related to incorrect Telegram Web K client behavior.
    */
   mockForWebK: boolean;
-}): Promise<{ initialColors: InitialColorsTuple }> {
+}): Promise<{ initialColors: InitialColors }> {
   applyPolyfills();
   setDebug(debug);
   bridgeLogger.set(createLogger('🚀Bridge', {
@@ -125,11 +125,11 @@ export async function init({ debug, ...options }: {
   }
   mountMiniAppSync.ifAvailable();
 
-  const initialColors: InitialColorsTuple = [
-    miniAppHeaderColor(),
-    miniAppBackgroundColorRGB(),
-    miniAppBottomBarColorRGB(),
-  ];
+  const initialColors: InitialColors = {
+    header: miniAppHeaderColor(),
+    background: miniAppBackgroundColorRGB(),
+    bottomBar: miniAppBottomBarColorRGB(),
+  };
 
   const desiredColor = themeParamsBackgroundColor();
   if (desiredColor) {
