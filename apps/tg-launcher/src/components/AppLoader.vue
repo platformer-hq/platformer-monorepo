@@ -38,9 +38,7 @@ const emit = defineEmits<{
   ready: [{ fallbackUrl?: string }];
 }>();
 
-const isTimeoutError = (e: unknown): boolean => {
-  return isFetchError(e) && e.cause instanceof AbortSignal;
-};
+const isTimeoutError = (e: unknown) => isFetchError(e) && e.cause instanceof AbortSignal;
 
 const { t } = useI18n({
   messages: {
@@ -160,13 +158,15 @@ watchEffect(() => {
 </script>
 
 <template>
-  <AppFrameBootstrapper
-    v-if="error && fallbackUrl"
-    :load-timeout
-    :url="appendRawLaunchParams(fallbackUrl, rawLaunchParams)"
-    @error="emit('error', { error, fallbackUrl })"
-    @ready="emit('ready', { fallbackUrl })"
-  />
+  <template v-if="error">
+    <AppFrameBootstrapper
+      v-if="fallbackUrl"
+      :load-timeout
+      :url="appendRawLaunchParams(fallbackUrl, rawLaunchParams)"
+      @error="emit('error', { error, fallbackUrl })"
+      @ready="emit('ready', { fallbackUrl })"
+    />
+  </template>
   <template v-else-if="state">
     <AppFrameBootstrapper
       v-if="state.url"
