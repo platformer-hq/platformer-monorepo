@@ -100,6 +100,9 @@ export async function init({ debug, ...options }: {
             });
           }
         }
+        if (mockForWebK && event[0] === 'web_app_request_safe_area') {
+          return emitEvent('safe_area_changed', noInsets);
+        }
         if (event[0] === 'web_app_request_content_safe_area') {
           return emitEvent('content_safe_area_changed', noInsets);
         }
