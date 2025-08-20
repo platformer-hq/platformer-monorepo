@@ -51,7 +51,6 @@ try {
   }
 
   const app = createApp(Root, {
-    debug,
     platform,
     rawLaunchParams,
     rawInitData,
