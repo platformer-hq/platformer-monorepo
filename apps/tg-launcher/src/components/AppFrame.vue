@@ -1,17 +1,10 @@
 <script setup lang="ts">
-import {
-  type MethodName,
-  isRGB,
-  postEvent,
-  setMiniAppBackgroundColor,
-  setMiniAppBottomBarColor,
-  setMiniAppHeaderColor,
-} from '@telegram-apps/sdk-vue';
+import { type MethodName, isRGB, postEvent } from '@telegram-apps/sdk-vue';
 import { useEventListener, useTimeoutFn } from '@vueuse/core';
 import { looseObject, optional, parse, string, unknown } from 'valibot';
 import { onMounted, useTemplateRef } from 'vue';
 
-import { injectGlobals } from '@/providers/global.js';
+import { injectGlobals, injectLogger } from '@/providers/global.js';
 
 export interface AppFrameProps {
   loadTimeout: number;
@@ -26,12 +19,12 @@ export interface AppFrameEmits {
 const props = defineProps<AppFrameProps>();
 const emit = defineEmits<AppFrameEmits>();
 
-const { initialColors, logger } = injectGlobals();
-const { log, forceError } = logger;
+const { initialColors } = injectGlobals();
+const { log, forceError } = injectLogger();
 
 // List of collected Mini Apps events along with their parameters, which are related to the
 // UI mutations.
-const collectedUIMutatingEvents: [string, unknown][] = [];
+const collectedUiEvents: { eventType: string; eventData: any }[] = [];
 let isContainerReady = false;
 const iframe = useTemplateRef('iframe');
 
@@ -78,41 +71,44 @@ onMounted(() => {
       log('The app is ready. Going to call previously collected events');
       isContainerReady = true;
 
-      const uiMethodsMeta = [
-        ['web_app_set_header_color', initialColors[0], setMiniAppHeaderColor],
-        ['web_app_set_background_color', initialColors[1], setMiniAppBackgroundColor],
-        ['web_app_set_bottom_bar_color', initialColors[2], setMiniAppBottomBarColor],
-      ] as [MethodName, string | undefined, (color: string) => void][];
-      collectedUIMutatingEvents.forEach(([method, payload]: [string, any]) => {
-        // As long the launcher mutates UI colors, we need to restore them as long the wrapped
-        // application expects them to be initial ones, set by itself. Nevertheless, we don't
-        // have to call UI updates in case, the app already have a target color.
-        const meta = uiMethodsMeta.find(tuple => tuple[0] === method);
-        meta && (meta[1] = undefined);
+      const uiMethods = [
+        { name: 'web_app_set_header_color' as const, color: initialColors.header },
+        { name: 'web_app_set_background_color' as const, color: initialColors.background },
+        { name: 'web_app_set_bottom_bar_color' as const, color: initialColors.bottomBar },
+      ];
 
-        // Call collected UI event.
-        (postEvent as any)(method, payload);
-      });
-      uiMethodsMeta.forEach(([method, color], idx) => {
-        if (color) {
-          log('Restoring UI color using', { method, color });
-          (postEvent as any)(
-            method,
-            // "web_app_setup_header_color" accepts the "color_key" parameter if non-RGB value
-            // was passed. All other methods accept the "color" parameter.
-            idx === 0 && !isRGB(color) ? { color_key: color } : { color },
-          );
+      // As long the launcher mutates UI colors, we need to restore them as long the wrapped
+      // application expects them to be initial ones, set by itself. Nevertheless, we don't
+      // have to call UI updates in case, the app already has a target color.
+      //
+      // So, first of all we are calling all suspended UI-mutating events. Then, we are calling
+      // methods to restore initials in case they were not called previously.
+      collectedUiEvents.forEach(mutation => {
+        const index = uiMethods.findIndex(m => m.name === mutation.eventType);
+        if (index >= 0) {
+          uiMethods.splice(index, 1);
         }
+        // Call collected UI event.
+        (postEvent as any)(mutation.eventType, mutation.eventData);
+      });
+      uiMethods.forEach(({ name, color }) => {
+        log('Restoring UI color using', { method: name, color });
+        (postEvent as any)(
+          name,
+          // "web_app_setup_header_color" accepts the "color_key" parameter if non-RGB value
+          // was passed. All other methods accept the "color" parameter.
+          name === 'web_app_set_header_color' && !isRGB(color) ? { color_key: color } : { color },
+        );
       });
 
       cleanupTimeout();
       return emit('ready');
     }
 
-    // All methods except specified in this list are considered as UI-affecting. We will
-    // memoize them and will call whenever the app is ready to be shown.
+    // List of methods specified in this list is considered safe and non UI-mutating. Due to
+    // this reason we are allowing to use them even if the app is not ready to be displayed yet.
     if (
-      !([
+      ([
         'iframe_ready',
         'iframe_will_reload',
         'web_app_invoke_custom_method',
@@ -122,11 +118,12 @@ onMounted(() => {
         'web_app_request_viewport',
       ] satisfies MethodName[] as string[]).includes(eventType)
     ) {
-      log('Delaying call until the app is ready:', payload);
-      collectedUIMutatingEvents.push([eventType, eventData]);
+      (postEvent as any)(eventType, eventData);
       return;
     }
-    (postEvent as any)(eventType, eventData);
+
+    log('Delaying call until the app is ready:', { eventType, eventData });
+    collectedUiEvents.push({ eventType, eventData });
   });
 });
 </script>
