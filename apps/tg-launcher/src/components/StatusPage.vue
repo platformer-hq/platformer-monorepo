@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import { bem, LoadingIndicatorAndroid, LoadingIndicatorIos, Xmark28 } from 'vue-ui';
+import {
+  bem,
+  Xmark28 as ErrorIcon,
+  LoadingIndicatorAndroid,
+  LoadingIndicatorIos,
+  ExclamationMarkTriangleFill28 as WarningIcon,
+} from 'vue-ui';
 
 import platformerLogoSrc from '@/assets/platformer-logo.svg';
 import Disclaimer from '@/components/Disclaimer.vue';
@@ -7,7 +13,7 @@ import Text from '@/components/Text.vue';
 import { injectGlobals } from '@/providers/global.ts';
 
 defineProps<{
-  state?: 'error' | 'loading';
+  state?: 'error' | 'loading' | 'warning';
   title?: string;
 }>();
 
@@ -25,9 +31,13 @@ const { platform } = injectGlobals();
           :class="e('logo')"
           :src="platformerLogoSrc"
         >
-        <Xmark28
+        <ErrorIcon
           v-if="state === 'error'"
-          :class="e('error-icon')"
+          :class="e('icon', 'error')"
+        />
+        <WarningIcon
+          v-else-if="state === 'warning'"
+          :class="e('icon', 'warning')"
         />
       </div>
       <div :class="e('content')">
@@ -70,7 +80,7 @@ const { platform } = injectGlobals();
 @use "sass:list" as list;
 
 $baseLoaderSize: 28px;
-$errorIconShift: translate(20%, 20%);
+$statusIconShift: translate(20%, 20%);
 
 .status-page {
   height: 100%;
@@ -93,11 +103,11 @@ $errorIconShift: translate(20%, 20%);
     display: block;
   }
 
-  &__error-icon {
+  &__icon {
     position: absolute;
     right: 0;
     bottom: 0;
-    transform: $errorIconShift;
+    transform: $statusIconShift;
     display: block;
     width: 16px;
     height: 16px;
@@ -105,11 +115,18 @@ $errorIconShift: translate(20%, 20%);
     box-sizing: content-box;
     border-radius: 50%;
     color: white;
-    background: var(--theme-destructive-text-color);
     animation: status-page-error-icon-appear 400ms ease forwards;
 
-    path {
-      stroke-width: 4;
+    &--error {
+      background: var(--theme-destructive-text-color);
+
+      path {
+        stroke-width: 4;
+      }
+    }
+
+    &--warning {
+      background: orange;
     }
   }
 
@@ -146,16 +163,16 @@ $errorIconShift: translate(20%, 20%);
 @keyframes status-page-error-icon-appear {
   from {
     opacity: 0;
-    transform: $errorIconShift translateZ(0) scale(.65);
+    transform: $statusIconShift translateZ(0) scale(.65);
   }
 
   50% {
-    transform: $errorIconShift translateZ(0) scale(1.2);
+    transform: $statusIconShift translateZ(0) scale(1.2);
   }
 
   to {
     opacity: 1;
-    transform: $errorIconShift translateZ(0) scale(1);
+    transform: $statusIconShift translateZ(0) scale(1);
   }
 }
 
