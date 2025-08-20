@@ -19,10 +19,7 @@ defineProps<{
   rawLaunchParams: string;
 }>();
 const emit = defineEmits<{
-  error: [{
-    error: ErrorStatusPageError;
-    fallbackUrl?: string;
-  }];
+  error: [{ error: ErrorStatusPageError; fallbackUrl?: string }];
 }>();
 
 const logger = injectLogger();
