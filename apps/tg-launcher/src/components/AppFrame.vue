@@ -7,9 +7,9 @@ import {
   setMiniAppBottomBarColor,
   setMiniAppHeaderColor,
 } from '@telegram-apps/sdk-vue';
-import { useEventListener } from '@vueuse/core';
+import { useEventListener, useTimeoutFn } from '@vueuse/core';
 import { looseObject, optional, parse, string, unknown } from 'valibot';
-import { onMounted, onUnmounted, useTemplateRef } from 'vue';
+import { onMounted, useTemplateRef } from 'vue';
 
 import { injectGlobals } from '@/providers/global.js';
 
@@ -23,7 +23,7 @@ export interface AppFrameEmits {
   ready: [];
 }
 
-const { loadTimeout } = defineProps<AppFrameProps>();
+const props = defineProps<AppFrameProps>();
 const emit = defineEmits<AppFrameEmits>();
 
 const { initialColors, logger } = injectGlobals();
@@ -37,18 +37,10 @@ const iframe = useTemplateRef('iframe');
 
 // Give some time for the mini application to load.
 // When the timeout is reached, notify the parent component about it.
-const timeoutID = setTimeout(() => {
-  emit('error', { timeout: true });
-}, loadTimeout);
-const cleanupTimeout = () => {
-  clearTimeout(timeoutID);
-};
-onUnmounted(cleanupTimeout);
-
-const onError = () => {
-  cleanupTimeout();
-  emit('error', {});
-};
+const { stop: cleanupTimeout } = useTimeoutFn(
+  () => emit('error', { timeout: true }),
+  () => props.loadTimeout,
+);
 
 onMounted(() => {
   const { contentWindow } = iframe.value || {};
@@ -144,7 +136,10 @@ onMounted(() => {
     ref="iframe"
     class="app-frame"
     :src="url"
-    @error="onError"
+    @error="
+      cleanupTimeout();
+      emit('error', {});
+    "
   />
 </template>
 
