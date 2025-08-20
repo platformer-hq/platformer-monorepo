@@ -1,25 +1,26 @@
 <script setup lang="ts">
 import { useQuery } from '@tanstack/vue-query';
 import { hapticFeedbackNotificationOccurred } from '@telegram-apps/sdk-vue';
-import { looseObject, nullish, string } from 'valibot';
-import { onUnmounted, ref, shallowRef, watchEffect } from 'vue';
+import { useTimeoutFn } from '@vueuse/core';
+import { is, literal, looseObject, nullish, string, unknown } from 'valibot';
+import { ref, shallowRef, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import { isApiError, isFetchError } from '@/api/errors.js';
-import { fetchApi } from '@/api/fetchApi.js';
+import {
+  ApiError,
+  FetchError,
+  InvalidDataTypeError,
+  InvalidResponseDataError,
+  InvalidResponseFormatError,
+  isApiError,
+  isFetchError,
+} from '@/api/errors.js';
 import AppFrameBootstrapper from '@/components/AppFrameBootstrapper.vue';
 import type { ErrorStatusPageError } from '@/components/ErrorStatusPage.vue';
 import StatusPage from '@/components/StatusPage.vue';
 import { appendRawLaunchParams } from '@/helpers/appendRawLaunchParams.js';
 
-const {
-  fallbackUrl,
-  appId,
-  securedRawLaunchParams,
-  initTimeout,
-  loadTimeout,
-  apiBaseUrl,
-} = defineProps<{
+const props = defineProps<{
   appId: number;
   apiBaseUrl: string;
   fallbackUrl?: string | null;
@@ -29,7 +30,7 @@ const {
   securedRawLaunchParams: string;
 }>();
 const emit = defineEmits<{
-  appDataRetrieved: [];
+  dataRetrieved: [];
   error: [{
     error: ErrorStatusPageError;
     fallbackUrl?: string;
@@ -58,31 +59,55 @@ const { t } = useI18n({
   },
 });
 const error = ref<ErrorStatusPageError>();
-const appData = shallowRef<{ found: boolean; url?: string | null }>();
+const state = shallowRef<{ found: boolean; url?: string | null }>();
 
 const controller = new AbortController();
-const { signal: timeoutSignal } = controller;
-const timeoutId = setTimeout(() => {
-  controller.abort();
-}, loadTimeout);
-onUnmounted(() => {
-  clearTimeout(timeoutId);
-});
+useTimeoutFn(() => controller.abort(), () => props.loadTimeout);
 
-const { data: requestData, error: requestError } = useQuery<
-  { url?: string | null },
-  unknown,
-  { url?: string | null },
-  readonly ['app-url', appId: number, apiBaseUrl: string, launchParams: string]
->({
-  queryKey: ['app-url', appId, apiBaseUrl, securedRawLaunchParams],
-  queryFn({ signal, queryKey: [, appId, apiBaseUrl, launchParams] }) {
+const { data: requestData, error: requestError } = useQuery({
+  queryKey: [
+    'app-url',
+    props.appId,
+    props.apiBaseUrl,
+    props.securedRawLaunchParams,
+  ] as const,
+  async queryFn({ signal, queryKey: [, appId, apiBaseUrl, launchParams] }) {
     const url = new URL(`apps/${appId}/telegram-url`, apiBaseUrl);
     url.searchParams.set('lp', launchParams);
-    signal.onabort = reason => {
-      controller.abort(reason);
-    };
-    return fetchApi(url, looseObject({ url: nullish(string()) }), { signal: timeoutSignal });
+    signal.onabort = controller.abort.bind(controller);
+
+    let response: Response;
+    try {
+      response = await fetch(url, { signal: controller.signal });
+    } catch (e) {
+      throw new FetchError(e);
+    }
+
+    let json: unknown;
+    try {
+      json = await response.json();
+    } catch (e) {
+      throw new InvalidDataTypeError(e);
+    }
+
+    if (is(
+      looseObject({
+        ok: literal(false),
+        error: looseObject({ code: string(), message: nullish(string()) }),
+      }),
+      json,
+    )) {
+      throw new ApiError(json.error.code, json.error.message);
+    }
+
+    if (is(looseObject({ ok: literal(true), data: unknown() }), json)) {
+      if (is(looseObject({ url: nullish(string()) }), json.data)) {
+        return json.data;
+      }
+      throw new InvalidResponseDataError(json.data);
+    }
+
+    throw new InvalidResponseFormatError(json);
   },
   staleTime: 0,
   retry: (_failureCount, error) => (
@@ -92,58 +117,69 @@ const { data: requestData, error: requestError } = useQuery<
 
 watchEffect(() => {
   if (requestData.value) {
-    appData.value = { found: true, url: requestData.value.url };
-    emit('appDataRetrieved');
+    state.value = { found: true, url: requestData.value.url };
+    emit('dataRetrieved');
+  }
+});
+
+watchEffect(() => {
+  if (!requestError.value) {
     return;
   }
-  if (requestError.value) {
-    hapticFeedbackNotificationOccurred('error');
+  hapticFeedbackNotificationOccurred('error');
 
-    if (isApiError(requestError.value)) {
-      if (requestError.value.data.code === 'ERR_APP_NOT_FOUND') {
-        appData.value = { found: false };
-      } else {
-        error.value = { type: 'server', cause: requestError.value };
-      }
-      return;
-    }
+  if (!isApiError(requestError.value)) {
     error.value = isTimeoutError(requestError.value)
-      ? { type: 'init', timeout: initTimeout }
+      ? { type: 'init', timeout: props.initTimeout }
       : { type: 'unknown', cause: requestError.value };
+    return;
+  }
+  if (requestError.value.data.code === 'ERR_APP_NOT_FOUND') {
+    state.value = { found: false };
+  } else {
+    error.value = { type: 'server', cause: requestError.value };
+  }
+});
+
+watchEffect(() => {
+  // The initial URL failed to load, but we have fallback URL to use to try again. The component
+  // should complet its lifecycle.
+  if (error.value && !props.fallbackUrl) {
+    emit('error', { error: error.value });
+  }
+});
+
+watchEffect(() => {
+  // The data fromt the server was retrieved, but the application was not found. The status
+  // page must be displayed and the parent component notified about this component completing its
+  // lifecycle.
+  if (state.value && !state.value.found) {
+    emit('ready', {});
   }
 });
 </script>
 
 <template>
-  <template v-if="error">
+  <AppFrameBootstrapper
+    v-if="error && fallbackUrl"
+    :load-timeout
+    :url="appendRawLaunchParams(fallbackUrl, rawLaunchParams)"
+    @error="emit('error', { error, fallbackUrl })"
+    @ready="emit('ready', { fallbackUrl })"
+  />
+  <template v-else-if="state">
     <AppFrameBootstrapper
-      v-if="fallbackUrl"
-      :load-timeout="loadTimeout"
-      :url="appendRawLaunchParams(fallbackUrl, rawLaunchParams)"
-      @error="$emit('error', { error, fallbackUrl })"
-      @ready="$emit('ready', { fallbackUrl })"
-    />
-    <div
-      v-else
-      v-show="false"
-      @vue:mounted="$emit('error', { error })"
-    />
-  </template>
-  <template v-else-if="appData">
-    <AppFrameBootstrapper
-      v-if="appData.url"
-      :load-timeout="loadTimeout"
-      :url="appendRawLaunchParams(appData.url, rawLaunchParams)"
+      v-if="state.url"
+      :load-timeout
+      :url="appendRawLaunchParams(state.url, rawLaunchParams)"
       @error="error = { type: 'iframe', timeout: $event.timeout}"
-      @ready="$emit('ready', {})"
+      @ready="emit('ready', {})"
     />
-    <template v-else>
-      <StatusPage
-        :title="t(appData.found ? 'noAccessTitle' : 'notFoundTitle')"
-        @vue:mounted="$emit('ready', {})"
-      >
-        {{ t(appData.found ? 'noAccessText' : 'notFoundText') }}
-      </StatusPage>
-    </template>
+    <StatusPage
+      v-else
+      :title="t(state.found ? 'noAccessTitle' : 'notFoundTitle')"
+    >
+      {{ t(state.found ? 'noAccessText' : 'notFoundText') }}
+    </StatusPage>
   </template>
 </template>

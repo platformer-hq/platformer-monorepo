@@ -82,7 +82,7 @@ const onStatusPageExit = (el: Element, done: () => void) => {
       logger.log('Removing the loader');
       ready = true;
     "
-    @app-data-retrieved="step = 'waiting-load'"
+    @data-retrieved="step = 'waiting-load'"
   />
 </template>
 
