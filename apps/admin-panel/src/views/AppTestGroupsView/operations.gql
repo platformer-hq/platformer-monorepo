@@ -12,5 +12,11 @@ query AppTestGroupsViewData($appID: ID!) {
         __typename
       }
     }
+    limits {
+      maxTestGroupsCount
+    }
+    subscription {
+      endsAt
+    }
   }
 }

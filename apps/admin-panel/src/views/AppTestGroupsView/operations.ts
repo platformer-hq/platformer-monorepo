@@ -1,3 +1,4 @@
+/* eslint-disable */
 import type * as Types from 'schema';
 
 import type { TypedDocumentNode as DocumentNode } from 'schema';
@@ -6,7 +7,9 @@ export type AppTestGroupsViewDataQueryVariables = Types.Exact<{
   appID: Types.Scalars['ID']['input'];
 }>;
 
-export type AppTestGroupsViewDataQuery = { __typename?: 'Query'; app?: { __typename?: 'App'; currentUserRole: Types.AppRole; testGroups: Array<{ __typename?: 'AppTestGroup'; id: number; title: string; enabled: boolean; users: Array<{ __typename: 'User' }>; platforms: Array<{ __typename: 'Platform' }> }> } | null };
+
+export type AppTestGroupsViewDataQuery = { __typename?: 'Query', app?: { __typename?: 'App', currentUserRole: Types.AppRole, testGroups: Array<{ __typename?: 'AppTestGroup', id: number, title: string, enabled: boolean, users: Array<{ __typename: 'User' }>, platforms: Array<{ __typename: 'Platform' }> }>, limits: { __typename?: 'AppLimits', maxTestGroupsCount?: number | null }, subscription?: { __typename?: 'AppSubscription', endsAt: string } | null } | null };
+
 
 export const AppTestGroupsViewData = gql`
     query AppTestGroupsViewData($appID: ID!) {
@@ -22,6 +25,12 @@ export const AppTestGroupsViewData = gql`
       platforms {
         __typename
       }
+    }
+    limits {
+      maxTestGroupsCount
+    }
+    subscription {
+      endsAt
     }
   }
 }
