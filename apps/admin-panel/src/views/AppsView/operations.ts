@@ -23,6 +23,9 @@ export const Data = gql`
       }
       role
     }
+    limits {
+      maxOwnedAppsCount
+    }
   }
 }
     ` as unknown as DocumentNode<DataQuery, DataQueryVariables>;

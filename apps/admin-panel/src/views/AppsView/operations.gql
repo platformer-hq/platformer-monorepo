@@ -11,5 +11,8 @@ query Data {
       }
       role
     }
+    limits {
+      maxOwnedAppsCount
+    }
   }
 }

@@ -4,11 +4,11 @@ import { AppRole } from 'schema';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
+import { bem } from 'vue-ui';
 
 import List from '@/ui/adapters/List.js';
 import ListItem from '@/ui/adapters/ListItem.js';
 import ListItemBodyLeftLabel from '@/ui/adapters/ListItemBodyLeftLabel.js';
-import Text from '@/ui/adapters/Text.vue';
 import Page from '@/ui/components/Page.vue';
 import PageLoading from '@/ui/components/PageLoading.vue';
 import PagePaddings from '@/ui/components/PagePaddings.vue';
@@ -19,8 +19,8 @@ import { useAppsViewQueryOptions } from './query-options.js';
 const { t } = useI18n({
   messages: {
     en: {
-      yourAppsTitle: 'Your applications',
-      yourAppsFooter: 'Applications owned by you.',
+      ownedAppsTitle: 'Your applications ({current} / {max})',
+      ownedAppsFooter: 'Applications owned by you.',
       createNotAllowed: 'You can\'t create applications.',
       canCreateUpToPrefix: 'You can create up to',
       canCreateUpToSuffix: 'applications | application | applications',
@@ -30,10 +30,11 @@ const { t } = useI18n({
       createApp: 'Create application',
       managedAppsTitle: 'Managed applications',
       managedAppsFooter: 'Applications you have access to as a manager.',
+      limitReached: 'You can\'t create more applications as the limit was reached.',
     },
     ru: {
-      yourAppsTitle: 'Ваши приложения',
-      yourAppsFooter: 'Приложения, которые принадлежат Вам.',
+      ownedAppsTitle: 'Ваши приложения ({current} / {max})',
+      ownedAppsFooter: 'Приложения, которые принадлежат Вам.',
       createNotAllowed: 'Вы не можете создавать приложения.',
       canCreateUpToPrefix: 'Вы можете создать до',
       canCreateUpToSuffix: 'приложений | приложения | приложений',
@@ -43,6 +44,7 @@ const { t } = useI18n({
       createApp: 'Создать приложение',
       managedAppsTitle: 'Управляемые приложения',
       managedAppsFooter: 'Приложения, к которым Вы имеете доступ будучи их менеджером.',
+      limitReached: 'Вы не можете создать приложение, так как достигли лимита.',
     },
   },
 });
@@ -62,6 +64,12 @@ const ownedApps = computed(() => {
     return a.app.id - b.app.id;
   }) || [];
 });
+const isLimitReached = computed(() => {
+  return typeof maxOwnedAppsCount.value === 'number'
+    ? ownedApps.value.length >= maxOwnedAppsCount.value
+    : false;
+});
+const [, e] = bem('apps-view');
 </script>
 
 <template>
@@ -69,53 +77,39 @@ const ownedApps = computed(() => {
     <PagePaddings>
       <PageLoading v-if="!data" />
       <template v-else>
-        <List :title="t('yourAppsTitle')">
+        <List
+          :title="t('ownedAppsTitle', {
+            current: ownedApps.length,
+            max: typeof maxOwnedAppsCount === 'number' ? maxOwnedAppsCount : '∞'
+          })"
+          :footer="isLimitReached ? t('limitReached') : undefined"
+        >
           <ListItem
-            v-if="maxOwnedAppsCount === undefined || ownedApps.length < maxOwnedAppsCount"
-            clickable
-            variant="accent"
-            @click="router.push('/apps/create')"
+            :clickable="!isLimitReached"
+            :variant="isLimitReached ? 'placeholder' : 'accent'"
+            @click="!isLimitReached && router.push('/apps/create')"
           >
             <template #bodyLeftLabel>
-              <ListItemBodyLeftLabel>
-                {{ t('createApp') }}
-              </ListItemBodyLeftLabel>
+              <ListItemBodyLeftLabel>{{ t('createApp') }}</ListItemBodyLeftLabel>
             </template>
           </ListItem>
+        </List>
+        <List
+          :footer="t('ownedAppsFooter')"
+          :class="e('list')"
+        >
           <Apps :apps="ownedApps" />
-          <template #footer>
-            {{ t('yourAppsFooter') }}
-            <template v-if="maxOwnedAppsCount === 0">
-              {{ t('createNotAllowed') }}
-            </template>
-            <template v-else-if="maxOwnedAppsCount">
-              {{ t('canCreateUpToPrefix') }}
-              <Text weight="semibold">
-                {{ maxOwnedAppsCount }}
-              </Text>
-              {{ t('canCreateUpToSuffix', maxOwnedAppsCount) }}
-            </template>
-            <template v-else>
-              {{ t('canCreatePrefix') }}
-              <Text weight="semibold">
-                {{ t('canCreateUnlimited') }}
-              </Text>
-              {{ t('canCreateSuffix') }}
-            </template>
-          </template>
         </List>
         <List
           v-if="managedApps.length"
           :title="t('managedAppsTitle')"
-          class="apps-view__list"
+          :footer="t('managedAppsFooter')"
+          :class="e('list')"
         >
           <Apps
             :apps="managedApps"
             show-role
           />
-          <template #footer>
-            {{ t('managedAppsFooter') }}
-          </template>
         </List>
       </template>
     </PagePaddings>
