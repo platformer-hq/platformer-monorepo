@@ -71,7 +71,7 @@ const isLimitReached = computed(() => {
     ? testGroups.length >= maxTestGroupsCount
     : false;
 });
-const canCreate = computed(() => !isEditor.value && !isLimitReached.value);
+const canCreate = computed(() => !isEditor.value && isLimitReached.value);
 
 const onLimitReachedClick = async (e: MouseEvent) => {
   if (e.target instanceof HTMLAnchorElement) {
