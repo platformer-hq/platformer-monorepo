@@ -60,7 +60,7 @@ const error = ref<ErrorStatusPageError>();
 const state = shallowRef<{ found: boolean; url?: string | null }>();
 
 const controller = new AbortController();
-useTimeoutFn(() => controller.abort(), () => props.loadTimeout);
+const { stop: cleanupTimeout } = useTimeoutFn(() => controller.abort(), () => props.loadTimeout);
 
 const { data: requestData, error: requestError } = useQuery({
   queryKey: [
@@ -114,16 +114,19 @@ const { data: requestData, error: requestError } = useQuery({
 });
 
 watchEffect(() => {
-  if (requestData.value) {
-    state.value = { found: true, url: requestData.value.url };
-    emit('dataRetrieved');
+  if (!requestData.value) {
+    return;
   }
+  cleanupTimeout();
+  state.value = { found: true, url: requestData.value.url };
+  emit('dataRetrieved');
 });
 
 watchEffect(() => {
   if (!requestError.value) {
     return;
   }
+  cleanupTimeout();
   hapticFeedbackNotificationOccurred('error');
 
   if (!isApiError(requestError.value)) {
