@@ -82,7 +82,11 @@ const [, e] = bem('apps-view');
             current: ownedApps.length,
             max: typeof maxOwnedAppsCount === 'number' ? maxOwnedAppsCount : '∞'
           })"
-          :footer="isLimitReached ? t('limitReached') : undefined"
+          :footer="isLimitReached
+            ? t('limitReached')
+            : ownedApps.length
+              ? undefined
+              : t('ownedAppsFooter')"
         >
           <ListItem
             :clickable="!isLimitReached"
@@ -95,6 +99,7 @@ const [, e] = bem('apps-view');
           </ListItem>
         </List>
         <List
+          v-if="ownedApps.length"
           :footer="t('ownedAppsFooter')"
           :class="e('list')"
         >
