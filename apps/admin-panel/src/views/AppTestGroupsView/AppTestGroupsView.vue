@@ -21,6 +21,7 @@ import PagePaddings from '@/ui/components/PagePaddings.vue';
 import AppNotFoundView from '@/views/AppNotFoundView/AppNotFoundView.vue';
 
 import { useAppTestGroupsViewQueryOptions } from './query-options';
+import TextWithLink from './TextWithLink.vue';
 
 const { t } = useI18n({
   messages: {
@@ -57,35 +58,23 @@ const route = useRoute();
 
 const hasActiveSub = computed(() => {
   const endsAt = data.value?.subscription?.endsAt;
-  return endsAt
-    ? Date.now() < new Date(endsAt).getTime()
-    : false;
+  return endsAt ? Date.now() < new Date(endsAt).getTime() : false;
 });
-const isEditor = computed(() => data.value && isEditorAppRole(data.value.currentUserRole));
+const isEditor = computed(() => !!data.value && isEditorAppRole(data.value.currentUserRole));
+const testGroups = computed(() => data.value?.testGroups || []);
+const maxTestGroups = computed(() => data.value?.limits.maxTestGroupsCount);
 const isLimitReached = computed(() => {
-  if (!data.value) {
-    return false;
-  }
-  const { limits: { maxTestGroupsCount }, testGroups } = data.value;
-  return typeof maxTestGroupsCount === 'number'
-    ? testGroups.length >= maxTestGroupsCount
+  return typeof maxTestGroups.value === 'number'
+    ? testGroups.value.length >= maxTestGroups.value
     : false;
 });
-const canCreate = computed(() => !isEditor.value && isLimitReached.value);
-
-const onLimitReachedClick = async (e: MouseEvent) => {
-  if (e.target instanceof HTMLAnchorElement) {
-    await router.push(`/apps/${appId}/premium`);
-  }
-};
-
-const onAboutClick = (e: MouseEvent) => {
-  if (e.target instanceof HTMLAnchorElement) {
-    openLink('https://docs.mini-apps.store/test-groups');
-  }
-};
+const canCreate = computed(() => isEditor.value && !isLimitReached.value);
 
 const [, e] = bem('app-test-groups-view');
+
+const navToTestGroupsDocs = () => {
+  openLink('https://docs.mini-apps.store/test-groups');
+};
 </script>
 
 <template>
@@ -96,10 +85,8 @@ const [, e] = bem('app-test-groups-view');
       <template v-else>
         <List
           :title="t('title', {
-            current: data.testGroups.length,
-            max: typeof data.limits.maxTestGroupsCount === 'number'
-              ? data.limits.maxTestGroupsCount
-              : '∞'
+            current: testGroups.length,
+            max: typeof maxTestGroups === 'number' ? maxTestGroups : '∞',
           })"
         >
           <ListItem
@@ -112,21 +99,30 @@ const [, e] = bem('app-test-groups-view');
             </template>
           </ListItem>
           <template
-            v-if="isLimitReached"
+            v-if="isLimitReached || !testGroups.length"
             #footer
           >
-            {{ t('limitReached') }}
-            <span
-              v-if="!hasActiveSub"
-              :class="e('limit-reached')"
-              @click="onLimitReachedClick"
-              v-html="t('limitReachedPremium')"
+            <template v-if="isLimitReached">
+              {{ t('limitReached') }}
+              <TextWithLink
+                v-if="!hasActiveSub"
+                :html="t('limitReachedPremium')"
+                @link-click="router.push(`/apps/${appId}/premium`)"
+              />
+            </template>
+            <TextWithLink
+              v-else
+              :html="t('footer')"
+              @link-click="navToTestGroupsDocs"
             />
           </template>
         </List>
-        <List :class="e('list')">
+        <List
+          v-if="testGroups.length"
+          :class="e('list')"
+        >
           <ListItem
-            v-for="testGroup in data.testGroups"
+            v-for="testGroup in testGroups"
             :key="testGroup.id"
             large
             clickable
@@ -155,10 +151,9 @@ const [, e] = bem('app-test-groups-view');
             </template>
           </ListItem>
           <template #footer>
-            <span
-              :class="e('about')"
-              @click="onAboutClick"
-              v-html="t('footer')"
+            <TextWithLink
+              :html="t('footer')"
+              @link-click="navToTestGroupsDocs"
             />
           </template>
         </List>
@@ -171,18 +166,8 @@ const [, e] = bem('app-test-groups-view');
 @use "@/vue-ui/styles/mixins";
 
 .app-test-groups-view {
-  &__limit-reached a, &__about a {
-    color: var(--theme-accent-text-color);
-    @include mixins.clickable;
-  }
-
-  &__empty {
-    padding: 16px;
-    color: var(--theme-subtitle-text-color);
-  }
-
   &__list {
-    margin-top: 16px;
+    margin-top: 8px;
   }
 
   &__empty-name {
