@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useQuery } from '@tanstack/vue-query';
+import { openLink } from '@telegram-apps/sdk-vue';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
@@ -25,7 +26,7 @@ const { t } = useI18n({
   messages: {
     en: {
       title: 'Test groups ({current} / {max})',
-      footer: 'Test groups are collections of users for specific platforms, each assigned a unique URL for the app. Test groups override other URL-related rules, such as platform-specific URLs and privacy levels.',
+      footer: 'Test groups are collections of users for specific platforms, each assigned a unique URL for the app. <a>Learn more</a>',
       create: 'Create test group',
       noTitle: '(empty title)',
       platforms: '{count} platforms | {count} platform | {count} platforms',
@@ -37,7 +38,7 @@ const { t } = useI18n({
     },
     ru: {
       title: 'Тестовые группы ({current} / {max})',
-      footer: 'Тестовые группы – коллекции пользователей на конкретных платформах, каждой из которых присвоена своя ссылка на приложение. Тестовые группы переопределяют другие правила, связанные со ссылками. Они являются более приоритетными, чем общие установленные ссылки для платформ, а также уровень приватности приложения.',
+      footer: 'Тестовые группы – коллекции пользователей на конкретных платформах, каждой из которых присвоена своя ссылка на приложение. <a>Подробнее</a>',
       create: 'Создать тестовую группу',
       noTitle: '(названия нет)',
       platforms: '{count} платформ | {count} платформа | {count} платформы | {count} платформ',
@@ -75,6 +76,12 @@ const canCreate = computed(() => !isEditor.value && !isLimitReached.value);
 const onLimitReachedClick = async (e: MouseEvent) => {
   if (e.target instanceof HTMLAnchorElement) {
     await router.push(`/apps/${appId}/premium`);
+  }
+};
+
+const onAboutClick = (e: MouseEvent) => {
+  if (e.target instanceof HTMLAnchorElement) {
+    openLink('https://docs.mini-apps.store/test-groups');
   }
 };
 
@@ -148,7 +155,11 @@ const [, e] = bem('app-test-groups-view');
             </template>
           </ListItem>
           <template #footer>
-            {{ t('footer') }}
+            <span
+              :class="e('about')"
+              @click="onAboutClick"
+              v-html="t('footer')"
+            />
           </template>
         </List>
       </template>
@@ -160,7 +171,7 @@ const [, e] = bem('app-test-groups-view');
 @use "@/vue-ui/styles/mixins";
 
 .app-test-groups-view {
-  &__limit-reached a {
+  &__limit-reached a, &__about a {
     color: var(--theme-accent-text-color);
     @include mixins.clickable;
   }
