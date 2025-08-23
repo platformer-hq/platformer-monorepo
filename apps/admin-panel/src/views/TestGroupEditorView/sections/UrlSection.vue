@@ -15,17 +15,17 @@ const { t } = useI18n({
   messages: {
     en: {
       title: 'URL',
-      footer: 'Link that will be opened whenever test group users visit the application. It must either have <b>HTTP</b> or <b>HTTPS</b> protocol.',
+      footer: 'Link that will be opened whenever test group users visit the application. It must either have {0} or {1} protocol.',
       placeholder: 'required',
       httpWarningTitle: 'HTTP links limitations',
-      httpWarningMessage: 'Non-secured HTTP links (starting with the <i>http://</i> protocol) work with a limited number of clients. Use them only during development.',
+      httpWarningMessage: 'Non-secured HTTP links (starting with the {0} protocol) work with a limited number of clients. Use them only during development.',
     },
     ru: {
       title: 'Ссылка',
-      footer: 'Ссылка, которая будет использована для показа пользователям из тестовой группы. Она должна иметь <b>HTTP</b> или <b>HTTPS</b> протокол.',
+      footer: 'Ссылка, которая будет использована для показа пользователям из тестовой группы. Она должна иметь {0} или {1} протокол.',
       placeholder: 'обязательно',
       httpWarningTitle: 'Ограничения HTTP-ссылок',
-      httpWarningMessage: 'Небезопасные HTTP-ссылки (начинающиеся с <i>http://</i> протокола) работают в ограниченном количестве клиентов. Используйте их только для разработки.',
+      httpWarningMessage: 'Небезопасные HTTP-ссылки (начинающиеся с {0} протокола) работают в ограниченном количестве клиентов. Используйте их только для разработки.',
     },
   },
 });
@@ -70,7 +70,10 @@ const onElementLeave = (el: Element, done: () => void) => {
       </template>
     </ListItem>
     <template #footer>
-      <span v-html="t('footer')" />
+      <i18n-t keypath="footer">
+        <b>HTTP</b>
+        <b>HTTPS</b>
+      </i18n-t>
     </template>
   </List>
   <Transition
@@ -88,7 +91,9 @@ const onElementLeave = (el: Element, done: () => void) => {
         variant="warning"
       >
         <CalloutParagraph>
-          <span v-html="t('httpWarningMessage')" />
+          <i18n-t keypath="httpWarningMessage">
+            <i>http://</i>
+          </i18n-t>
         </CalloutParagraph>
       </Callout>
     </section>
