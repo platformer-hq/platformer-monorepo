@@ -26,24 +26,56 @@ import UrlSection from './sections/UrlSection.vue';
 import UsersSection from './sections/UsersSection/UsersSection.vue';
 
 const {
-  onCreate,
-  readonly,
-  loading,
+  onCreate: propsOnCreate,
+  readonly: propsReadonly,
+  loading: propsLoading,
   enabled: propsEnabled = false,
   platformIds: propsPlatformIds = [],
   title: propsTitle = '',
   url: propsUrl = '',
   users: propsUsers = [],
+  maxUsers: propsMaxUsers,
 } = defineProps<{
+  /**
+   * The current test group owner application.
+   */
   appId: number;
+  /**
+   * True if the current user is able to increase test group users limit.
+   */
   canIncreaseLimits?: boolean;
+  /**
+   * True if the test group is enabled.
+   */
   enabled?: boolean;
+  /**
+   * True if there is a pending background operation, that should prevent the editor from
+   * mutating the current information and display loading state.
+   */
   loading?: boolean;
+  /**
+   * List of selected platform identifiers.
+   */
   platformIds?: number[];
+  /**
+   * True if the readonly mode should be enabled. Enabling it, mutating controls will be disabled.
+   */
   readonly?: boolean;
+  /**
+   * The test group title.
+   */
   title?: string;
+  /**
+   * The test group URL.
+   */
   url?: string;
+  /**
+   * List of selected test group users.
+   */
   users?: SelectedUser[];
+  /**
+   * Max amount of test group users the user is allowed to add.
+   */
   maxUsers?: number | null;
 
   onCreate?(payload: {
@@ -76,15 +108,17 @@ const emit = defineEmits<{
 const { t } = useI18n({
   messages: {
     en: {
-      create: 'Create',
-      update: 'Update',
-      urlInvalid: 'URL is invalid',
+      mbCreate: 'Create',
+      mbUpdate: 'Update',
+      mbUrlInvalid: 'URL is invalid',
+      mbLimitReached: 'Too many users specified',
       delete: 'Delete test group',
     },
     ru: {
-      create: 'Создать',
-      update: 'Обновить',
-      urlInvalid: 'Ссылка невалидна',
+      mbCreate: 'Создать',
+      mbUpdate: 'Обновить',
+      mbUrlInvalid: 'Ссылка невалидна',
+      mbLimitReached: 'Cлишком много пользователей',
       delete: 'Удалить тестовую группу',
     },
   },
@@ -116,8 +150,8 @@ watchEffect(() => {
   users.value = propsUsers || [];
 });
 
-const mode = computed<'create' | 'update'>(() => (onCreate ? 'create' : 'update'));
-const disabled = computed(() => readonly || loading || false);
+const mode = computed<'create' | 'update'>(() => (propsOnCreate ? 'create' : 'update'));
+const disabled = computed(() => propsReadonly || propsLoading || false);
 const isChanged = computed(() => {
   return (
     mode.value === 'update' && (
@@ -132,6 +166,9 @@ const isChanged = computed(() => {
   );
 });
 const isUrlValid = computed(() => isAnyHttpUrl(url.value));
+const isUsersLimitExceeded = computed(() => {
+  return users.value.length > (propsMaxUsers ?? Number.POSITIVE_INFINITY);
+});
 
 watchEffect(() => {
   if (!firstInteraction.value && url.value) {
@@ -154,11 +191,17 @@ watchEffect(() => {
   }
   setMainButtonParams({
     isVisible: true,
-    isLoaderVisible: loading,
-    isEnabled: isUrlValid.value && !loading,
-    text: t(isUrlValid.value
-      ? mode.value === 'create' ? 'create' : 'update'
-      : 'urlInvalid'),
+    isLoaderVisible: propsLoading,
+    isEnabled: isUrlValid.value && !isUsersLimitExceeded.value && !propsLoading,
+    text: t(
+      !isUrlValid.value
+        ? 'mbUrlInvalid'
+        : isUsersLimitExceeded.value
+          ? 'mbLimitReached'
+          : mode.value === 'create'
+            ? 'mbCreate'
+            : 'mbUpdate',
+    ),
   });
   onWatcherCleanup(onMainButtonClick(() => {
     const shared = {
@@ -179,10 +222,7 @@ const [, e] = bem('test-group-editor-view');
 </script>
 
 <template>
-  <Page
-    v-if="!viewData"
-    preserve-main-button
-  >
+  <Page v-if="!viewData">
     <PagePaddings>
       <PageLoading />
     </PagePaddings>

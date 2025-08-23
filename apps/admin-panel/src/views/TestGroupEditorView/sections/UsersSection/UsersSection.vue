@@ -17,7 +17,7 @@ const props = defineProps<{
   appId: number;
   maxCount?: number | null;
   canIncreaseLimits?: boolean;
-  readonly: boolean;
+  readonly?: boolean;
   disabled: boolean;
   platforms: string[];
   class?: string;
