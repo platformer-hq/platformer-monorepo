@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --config vite.config.ts",
     "dev:https": "cross-env HTTPS=1 vite --config vite.config.ts",
     "build": "run-p type-check \"build-only {@}\" --",
     "rollout": "pnpm run build && pnpm mate deploy upload",
