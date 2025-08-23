@@ -1,3 +1,14 @@
+query AppTestGroupCreateViewData($appId: ID!) {
+  app(appID: $appId) {
+    subscription {
+      endsAt
+    }
+    limits {
+      maxTestGroupUsersCount
+    }
+  }
+}
+
 mutation CreateAppTestGroup(
   $appID: ID!,
   $title: String!,

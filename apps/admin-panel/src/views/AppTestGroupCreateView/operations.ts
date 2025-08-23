@@ -3,6 +3,13 @@ import type * as Types from 'schema';
 
 import type { TypedDocumentNode as DocumentNode } from 'schema';
 import { gql } from 'schema';
+export type AppTestGroupCreateViewDataQueryVariables = Types.Exact<{
+  appId: Types.Scalars['ID']['input'];
+}>;
+
+
+export type AppTestGroupCreateViewDataQuery = { __typename?: 'Query', app?: { __typename?: 'App', subscription?: { __typename?: 'AppSubscription', endsAt: string } | null, limits: { __typename?: 'AppLimits', maxTestGroupUsersCount?: number | null } } | null };
+
 export type CreateAppTestGroupMutationVariables = Types.Exact<{
   appID: Types.Scalars['ID']['input'];
   title: Types.Scalars['String']['input'];
@@ -16,6 +23,18 @@ export type CreateAppTestGroupMutationVariables = Types.Exact<{
 export type CreateAppTestGroupMutation = { __typename?: 'Mutation', createAppTestGroup: { __typename?: 'AppTestGroup', id: number, title: string, enabled: boolean, url: string, platforms: Array<{ __typename: 'Platform', id: number }>, users: Array<{ __typename: 'User', id: number, name: string }> } };
 
 
+export const AppTestGroupCreateViewData = gql`
+    query AppTestGroupCreateViewData($appId: ID!) {
+  app(appID: $appId) {
+    subscription {
+      endsAt
+    }
+    limits {
+      maxTestGroupUsersCount
+    }
+  }
+}
+    ` as unknown as DocumentNode<AppTestGroupCreateViewDataQuery, AppTestGroupCreateViewDataQueryVariables>;
 export const CreateAppTestGroup = gql`
     mutation CreateAppTestGroup($appID: ID!, $title: String!, $enabled: Boolean!, $url: String!, $platformIDs: [ID!]!, $userIDs: [ID!]!) {
   createAppTestGroup(
