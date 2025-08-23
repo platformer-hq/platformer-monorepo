@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { useQuery } from '@tanstack/vue-query';
-import { openLink } from '@telegram-apps/sdk-vue';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import { bem } from 'vue-ui';
 
+import Link from '@/navigation/Link.vue';
 import { useAppIDFromParams } from '@/navigation/useAppIDFromParams';
 import { isEditorAppRole } from '@/roles/isEditorAppRole';
 import List from '@/ui/adapters/List';
@@ -21,13 +21,13 @@ import PagePaddings from '@/ui/components/PagePaddings.vue';
 import AppNotFoundView from '@/views/AppNotFoundView/AppNotFoundView.vue';
 
 import { useAppTestGroupsViewQueryOptions } from './query-options';
-import TextWithLink from './TextWithLink.vue';
 
 const { t } = useI18n({
   messages: {
     en: {
       title: 'Test groups ({current} / {max})',
-      footer: 'Test groups are collections of users for specific platforms, each assigned a unique URL for the app. <a>Learn more</a>',
+      about: 'Test groups are collections of users for specific platforms, each assigned a unique URL for the app.',
+      learnMore: 'Learn more',
       create: 'Create test group',
       noTitle: '(empty title)',
       platforms: '{count} platforms | {count} platform | {count} platforms',
@@ -35,11 +35,13 @@ const { t } = useI18n({
       enabled: 'Enabled',
       disabled: 'Disabled',
       limitReached: 'You\'ve reached your test groups limit for this application.',
-      limitReachedPremium: 'To create more test groups, you can purchase a <a>subscription</a>.',
+      limitReachedPremiumSub: 'subscription',
+      limitReachedPremium: 'To create more test groups, you can purchase a {subscription}.',
     },
     ru: {
       title: 'Тестовые группы ({current} / {max})',
-      footer: 'Тестовые группы – коллекции пользователей на конкретных платформах, каждой из которых присвоена своя ссылка на приложение. <a>Подробнее</a>',
+      about: 'Тестовые группы – коллекции пользователей на конкретных платформах, каждой из которых присвоена своя ссылка на приложение.',
+      learnMore: 'Подробнее',
       create: 'Создать тестовую группу',
       noTitle: '(названия нет)',
       platforms: '{count} платформ | {count} платформа | {count} платформы | {count} платформ',
@@ -47,7 +49,8 @@ const { t } = useI18n({
       enabled: 'Включена',
       disabled: 'Отключена',
       limitReached: 'Вы достигли лимита по количеству тестовых групп для этого приложения.',
-      limitReachedPremium: 'Для создания большего количества тестовых групп, Вы можете приобрести <a>подписку</a>.',
+      limitReachedPremiumSub: 'подписку',
+      limitReachedPremium: 'Для создания большего количества тестовых групп, Вы можете приобрести {subscription}.',
     },
   },
 });
@@ -71,10 +74,7 @@ const isLimitReached = computed(() => {
 const canCreate = computed(() => isEditor.value && !isLimitReached.value);
 
 const [, e] = bem('app-test-groups-view');
-
-const navToTestGroupsDocs = () => {
-  openLink('https://docs.mini-apps.store/test-groups');
-};
+const docsLink = 'https://docs.mini-apps.store/test-groups';
 </script>
 
 <template>
@@ -83,12 +83,7 @@ const navToTestGroupsDocs = () => {
       <PageLoading v-if="!data && isPending" />
       <AppNotFoundView v-else-if="!data" />
       <template v-else>
-        <List
-          :title="t('title', {
-            current: testGroups.length,
-            max: typeof maxTestGroups === 'number' ? maxTestGroups : '∞',
-          })"
-        >
+        <List :title="t('title', { current: testGroups.length, max: maxTestGroups ?? '∞' })">
           <ListItem
             :variant="canCreate ? 'accent' : 'placeholder'"
             :clickable="canCreate"
@@ -104,17 +99,23 @@ const navToTestGroupsDocs = () => {
           >
             <template v-if="isLimitReached">
               {{ t('limitReached') }}
-              <TextWithLink
+              <i18n-t
                 v-if="!hasActiveSub"
-                :html="t('limitReachedPremium')"
-                @link-click="router.push(`/apps/${appId}/premium`)"
-              />
+                keypath="limitReachedPremium"
+              >
+                <template #subscription>
+                  <Link :to="`/apps/${appId}/premium`">
+                    {{ t('limitReachedPremiumSub') }}
+                  </Link>
+                </template>
+              </i18n-t>
             </template>
-            <TextWithLink
-              v-else
-              :html="t('footer')"
-              @link-click="navToTestGroupsDocs"
-            />
+            <template v-else>
+              {{ t('about') }}
+              <Link :to="docsLink">
+                {{ t('learnMore') }}
+              </Link>
+            </template>
           </template>
         </List>
         <List
@@ -151,10 +152,10 @@ const navToTestGroupsDocs = () => {
             </template>
           </ListItem>
           <template #footer>
-            <TextWithLink
-              :html="t('footer')"
-              @link-click="navToTestGroupsDocs"
-            />
+            {{ t('about') }}
+            <Link :to="docsLink">
+              {{ t('learnMore') }}
+            </Link>
           </template>
         </List>
       </template>
@@ -163,8 +164,6 @@ const navToTestGroupsDocs = () => {
 </template>
 
 <style lang="scss">
-@use "@/vue-ui/styles/mixins";
-
 .app-test-groups-view {
   &__list {
     margin-top: 8px;
