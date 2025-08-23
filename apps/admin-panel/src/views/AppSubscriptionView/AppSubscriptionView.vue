@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query';
 import {
   isThemeParamsDark,
   onMainButtonClick,
@@ -21,11 +22,10 @@ import Text from '@/ui/adapters/Text.vue';
 import Page from '@/ui/components/Page.vue';
 import PageLoading from '@/ui/components/PageLoading.vue';
 import PagePaddings from '@/ui/components/PagePaddings.vue';
+import Picture from '@/ui/components/Picture.vue';
 import AppNotFoundView from '@/views/AppNotFoundView/AppNotFoundView.vue';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query';
 
-import image from './img.png';
-import image2x from './img@2x.png';
+import img from './image.png?process';
 import {
   CreateSubInvoiceLink,
   UpdateAppSubAutoRenewal,
@@ -42,7 +42,7 @@ const { t } = useI18n({
   messages: {
     en: {
       titlePurchased: 'Premium is active',
-      subtitle: 'Unlock new features with Platformer Premium only for <b>{price}</b>',
+      subtitle: 'Unlock new features with Platformer Premium only for {0}',
       subtitlePurchased: 'Your application has an active premium susbcription. Its special functionality is now available to you',
       limitsTitle: 'Enhanced limits',
       free: 'Free',
@@ -64,7 +64,7 @@ const { t } = useI18n({
     },
     ru: {
       titlePurchased: 'Подписка активна',
-      subtitle: 'Откройте новые возможности с Platformer Premium всего за <b>{price}</b>',
+      subtitle: 'Откройте новые возможности с Platformer Premium всего за {0}',
       subtitlePurchased: 'Ваше приложение имеет активную премиум-подписку. Теперь её функционал доступен Вам',
       limitsTitle: 'Расширенные лимиты',
       free: 'Бесплатно',
@@ -165,13 +165,10 @@ watchEffect(() => {
       <PageLoading v-if="!viewData && isViewDataLoading" />
       <AppNotFoundView v-else-if="!viewData" />
       <template v-else>
-        <img
+        <Picture
           :class="e('image')"
-          :src="image"
-          width="96"
-          height="96"
-          :srcset="`${image} 1x, ${image2x} 2x`"
-        >
+          v-bind="img"
+        />
         <Text
           is="p"
           variant="title2"
@@ -188,7 +185,9 @@ watchEffect(() => {
         >
           <span v-if="activeSub">{{ t('subtitlePurchased') }}</span>
           <template v-else>
-            <span v-html="t('subtitle', { price })" />
+            <i18n-t keypath="subtitle">
+              <b>{{ price }}</b>
+            </i18n-t>
             <PremiumLogo28
               :class="e('subtitle-icon')"
               size="16"
