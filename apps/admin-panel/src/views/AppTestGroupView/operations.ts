@@ -9,7 +9,7 @@ export type TestGroupViewDataQueryVariables = Types.Exact<{
 }>;
 
 
-export type TestGroupViewDataQuery = { __typename?: 'Query', app?: { __typename?: 'App', currentUserRole: Types.AppRole } | null, appTestGroup: { __typename?: 'AppTestGroup', id: number, title: string, url: string, enabled: boolean, platforms: Array<{ __typename?: 'Platform', id: number }>, users: Array<{ __typename?: 'User', id: number, name: string }> } };
+export type TestGroupViewDataQuery = { __typename?: 'Query', app?: { __typename?: 'App', currentUserRole: Types.AppRole, subscription?: { __typename?: 'AppSubscription', endsAt: string } | null, limits: { __typename?: 'AppLimits', maxTestGroupUsersCount?: number | null } } | null, appTestGroup: { __typename?: 'AppTestGroup', id: number, title: string, url: string, enabled: boolean, platforms: Array<{ __typename?: 'Platform', id: number }>, users: Array<{ __typename?: 'User', id: number, name: string }> } };
 
 export type DeleteTestGroupMutationVariables = Types.Exact<{
   testGroupID: Types.Scalars['ID']['input'];
@@ -35,6 +35,12 @@ export const TestGroupViewData = gql`
     query TestGroupViewData($appID: ID!, $testGroupID: ID!) {
   app(appID: $appID) {
     currentUserRole
+    subscription {
+      endsAt
+    }
+    limits {
+      maxTestGroupUsersCount
+    }
   }
   appTestGroup(testGroupID: $testGroupID) {
     id

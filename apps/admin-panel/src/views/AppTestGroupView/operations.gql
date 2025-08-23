@@ -1,6 +1,12 @@
 query TestGroupViewData($appID: ID!, $testGroupID: ID!) {
   app(appID: $appID) {
     currentUserRole
+    subscription {
+      endsAt
+    }
+    limits {
+      maxTestGroupUsersCount
+    }
   }
   appTestGroup(testGroupID: $testGroupID) {
     id

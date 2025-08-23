@@ -6,7 +6,9 @@ import { useRoute, useRouter } from 'vue-router';
 import { useAppIDFromParams } from '@/navigation/useAppIDFromParams';
 import { useMutationFn } from '@/queries/useMutationFn';
 import { isEditorAppRole } from '@/roles/isEditorAppRole';
+import Page from '@/ui/components/Page.vue';
 import PageLoading from '@/ui/components/PageLoading.vue';
+import PagePaddings from '@/ui/components/PagePaddings.vue';
 import AppNotFoundView from '@/views/AppNotFoundView/AppNotFoundView.vue';
 import { setAppTestGroupsViewQueryData } from '@/views/AppTestGroupsView/query-options';
 import TestGroupEditorView from '@/views/TestGroupEditorView/TestGroupEditorView.vue';
@@ -84,20 +86,31 @@ const testGroup = computed(() => (viewData.value ? viewData.value.appTestGroup :
 const platformIds = computed(() => {
   return testGroup.value ? testGroup.value.platforms.map(p => p.id) : undefined;
 });
+const hasActiveSub = computed(() => {
+  const endsAt = viewData.value?.app?.subscription?.endsAt;
+  return endsAt ? Date.now() < new Date(endsAt).getTime() : false;
+});
 </script>
 
 <template>
-  <PageLoading v-if="(!app || !testGroup) && isLoadingViewData" />
+  <Page v-if="(!app || !testGroup) && isLoadingViewData">
+    <PagePaddings>
+      <PageLoading />
+    </PagePaddings>
+  </Page>
   <AppNotFoundView v-else-if="!app || !testGroup" />
   <TestGroupEditorView
     v-else
+    :app-id
+    :can-increase-limits="!hasActiveSub"
     :enabled="testGroup.enabled"
     :title="testGroup.title"
     :url="testGroup.url"
-    :platform-ids="platformIds"
+    :platform-ids
     :users="testGroup.users"
     :readonly="!isEditorAppRole(app.currentUserRole)"
     :loading="isMutating"
+    :max-users="app.limits.maxTestGroupUsersCount"
     @delete="deleteTestGroup({ testGroupID: testGroupId })"
     @update="updateTestGroup({
       userIDs: $event.users.map(u => u.id),
