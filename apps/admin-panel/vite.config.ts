@@ -9,6 +9,8 @@ import { analyzer } from 'vite-bundle-analyzer';
 import mkcert from 'vite-plugin-mkcert';
 import vueDevTools from 'vite-plugin-vue-devtools';
 
+import { imagePlugin } from './plugins/imagePlugin/imagePlugin.js';
+
 import packageJson from './package.json' with { type: 'json' };
 
 export default defineConfig({
@@ -16,6 +18,7 @@ export default defineConfig({
     postcss: { plugins: [autoprefixer(), cssnano()] },
   },
   plugins: [
+    imagePlugin(),
     vue({
       features: {
         // TODO: This one breaks hot reload.
