@@ -43,7 +43,7 @@ const onDelete = async () => {
 </script>
 
 <template>
-  <List>
+  <List class="root">
     <ListItem
       :clickable="!disabled"
       variant="destructive"
@@ -55,3 +55,9 @@ const onDelete = async () => {
     </ListItem>
   </List>
 </template>
+
+<style scoped>
+.root {
+  margin-top: 8px;
+}
+</style>
