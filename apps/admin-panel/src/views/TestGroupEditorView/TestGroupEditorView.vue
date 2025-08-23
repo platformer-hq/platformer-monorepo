@@ -23,7 +23,7 @@ import EnabledSection from './sections/EnabledSection.vue';
 import PlatformsSection from './sections/PlatformsSection.vue';
 import TitleSection from './sections/TitleSection.vue';
 import UrlSection from './sections/UrlSection.vue';
-import UsersSection from './sections/UsersSection.vue';
+import UsersSection from './sections/UsersSection/UsersSection.vue';
 
 const {
   onCreate,
@@ -35,6 +35,8 @@ const {
   url: propsUrl = '',
   users: propsUsers = [],
 } = defineProps<{
+  appId: number;
+  canIncreaseLimits?: boolean;
   enabled?: boolean;
   loading?: boolean;
   platformIds?: number[];
@@ -42,6 +44,8 @@ const {
   title?: string;
   url?: string;
   users?: SelectedUser[];
+  maxUsers?: number | null;
+
   onCreate?(payload: {
     enabled: boolean;
     platformIDs: number[];
@@ -72,15 +76,15 @@ const emit = defineEmits<{
 const { t } = useI18n({
   messages: {
     en: {
-      mbCreate: 'Create',
-      mbUpdate: 'Update',
-      mbURLInvalid: 'URL is invalid',
+      create: 'Create',
+      update: 'Update',
+      urlInvalid: 'URL is invalid',
       delete: 'Delete test group',
     },
     ru: {
-      mbCreate: 'Создать',
-      mbUpdate: 'Обновить',
-      mbURLInvalid: 'Ссылка невалидна',
+      create: 'Создать',
+      update: 'Обновить',
+      urlInvalid: 'Ссылка невалидна',
       delete: 'Удалить тестовую группу',
     },
   },
@@ -153,8 +157,8 @@ watchEffect(() => {
     isLoaderVisible: loading,
     isEnabled: isUrlValid.value && !loading,
     text: t(isUrlValid.value
-      ? mode.value === 'create' ? 'mbCreate' : 'mbUpdate'
-      : 'mbURLInvalid'),
+      ? mode.value === 'create' ? 'create' : 'update'
+      : 'urlInvalid'),
   });
   onWatcherCleanup(onMainButtonClick(() => {
     const shared = {
@@ -206,30 +210,33 @@ const [, e] = bem('test-group-editor-view');
       <EnabledSection
         v-model="enabled"
         :class="e('section')"
-        :disabled="disabled"
+        :disabled
       />
       <TitleSection
         v-model="title"
         :class="e('section')"
-        :disabled="disabled"
+        :disabled
       />
       <UrlSection
         v-model="url"
         :class="e('section')"
-        :disabled="disabled"
+        :disabled
       />
       <PlatformsSection
         v-model="platformIds"
         :class="e('section')"
         :platforms="viewData.platforms"
-        :disabled="disabled"
+        :disabled
       />
       <UsersSection
         v-model="users"
+        :app-id
+        :can-increase-limits
+        :max-count="maxUsers"
         :class="e('section')"
-        :disabled="disabled"
-        :readonly="readonly"
-        :platform-names="
+        :disabled
+        :readonly
+        :platforms="
           viewData
             .platforms
             .filter(platform => platformIds.includes(platform.id))
@@ -239,7 +246,7 @@ const [, e] = bem('test-group-editor-view');
       />
       <ActionsSection
         v-if="!readonly && onDelete"
-        :disabled="disabled"
+        :disabled
         @delete="$emit('delete')"
       />
     </PagePaddings>
