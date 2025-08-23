@@ -65,11 +65,13 @@ const onLeave = (el: Element, done: () => void) => {
         ]"
         :key="variant.type"
         v-bind="variant"
+        @load="isLoaded = true"
       >
       <img
         loading="lazy"
         :src
         :srcset
+        @load="isLoaded = true"
       >
     </picture>
   </div>
