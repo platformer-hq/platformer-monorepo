@@ -47,9 +47,9 @@ const onUserDeleted = (user: SelectedUser) => {
   users.value = users.value.filter(u => u.id !== user.id);
   hapticFeedbackSelectionChanged();
 };
-const isLimitReached = computed(() => {
+const isLimitExceeded = computed(() => {
   return typeof props.maxCount === 'number'
-    ? users.value.length >= props.maxCount
+    ? users.value.length > props.maxCount
     : false;
 });
 </script>
@@ -70,10 +70,10 @@ const isLimitReached = computed(() => {
       </template>
     </ListItem>
     <template
-      v-if="(!users.length && platforms.length) || isLimitReached"
+      v-if="(!users.length && platforms.length) || isLimitExceeded"
       #footer
     >
-      <template v-if="isLimitReached">
+      <template v-if="isLimitExceeded">
         {{ t('limitReached') }}
         <i18n-t
           v-if="canIncreaseLimits"
