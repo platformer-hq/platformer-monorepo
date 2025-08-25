@@ -17,7 +17,7 @@ jobs:
       pull-requests: write  # Optional: Needed if Changesets creates PRs
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup node
         uses: actions/setup-node@v4
