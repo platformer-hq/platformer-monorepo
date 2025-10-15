@@ -41,6 +41,7 @@ try {
     eruda,
     mockForWebK: platform === 'web',
     mockForMacOS: platform === 'macos',
+    launchParams,
   });
 
   const rawLaunchParams = retrieveRawLaunchParams();

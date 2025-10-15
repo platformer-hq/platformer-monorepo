@@ -8,6 +8,7 @@ import {
   init as initSDK,
   isViewportExpanded,
   isViewportStable,
+  type LaunchParams,
   miniAppBackgroundColorRGB,
   miniAppBottomBarColorRGB,
   miniAppHeaderColor,
@@ -35,7 +36,7 @@ import type { InitialColors } from '@/types/common.js';
 /**
  * Initializes the SDK.
  */
-export async function init({ debug, ...options }: {
+export async function init({ debug, launchParams, ...options }: {
   /**
    * Should the debug mode be enabled.
    */
@@ -55,6 +56,10 @@ export async function init({ debug, ...options }: {
    * Applies some mocks related to incorrect Telegram Web K client behavior.
    */
   mockForWebK: boolean;
+  /**
+   * Launch parameters to initialize the SDK.
+   */
+  launchParams: LaunchParams;
 }): Promise<{ initialColors: InitialColors }> {
   applyPolyfills();
   setDebug(debug);
@@ -68,7 +73,7 @@ export async function init({ debug, ...options }: {
     bgColor: '#7688FF',
     shouldLog: debug,
   }));
-  initSDK();
+  initSDK({ launchParams });
 
   // Init eruda.
   options.eruda && await import('eruda').then(({ default: eruda }) => {
