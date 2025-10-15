@@ -7,10 +7,12 @@ import { init as sentryInit } from '@sentry/vue';
 import { VueQueryPlugin } from '@tanstack/vue-query';
 import {
   createLogger,
+} from '@telegram-apps/sdk-vue';
+import {
   retrieveLaunchParams,
   retrieveRawInitData,
   retrieveRawLaunchParams,
-} from '@telegram-apps/sdk-vue';
+} from '@tma.js/bridge';
 import { createApp } from 'vue';
 import { createI18n } from 'vue-i18n';
 

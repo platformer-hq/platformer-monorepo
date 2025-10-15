@@ -264,6 +264,9 @@ importers:
       '@telegram-apps/sdk-vue':
         specifier: ^2.0.30
         version: 2.0.30(typescript@5.8.3)(vue@3.5.17(typescript@5.8.3))
+      '@tma.js/bridge':
+        specifier: ^2.0.3
+        version: 2.0.3(typescript@5.8.3)
       '@vueuse/core':
         specifier: ^13.5.0
         version: 13.5.0(vue@3.5.17(typescript@5.8.3))
@@ -2378,6 +2381,21 @@ packages:
   '@telegram-apps/types@2.0.3':
     resolution: {integrity: sha512-pXh9BdnLZF3e2BGc4WL+RTRMAUpqKpaSP3Rs8rB4WyRwIoRSGWFKE4gtT/9m42LGixB8YVwdo/pJ+9XO765XEA==}
 
+  '@tma.js/bridge@2.0.3':
+    resolution: {integrity: sha512-4MAqctxutK+NvGP7IbjSSlfUuBiruCa+pSJa01ri0IfssaCrqVM8VAF6TIkIEfk1tlPDkJRQ77RJJrOsklvL/Q==}
+
+  '@tma.js/signals@1.0.0':
+    resolution: {integrity: sha512-LsTTcg+AEhYQPFOkgx+4B3eLNOxfhzACQfpCqngomrcVEBgLvYCyXMxdMVGmP2O+2E+jf45kmeddrxNDDw5NKQ==}
+
+  '@tma.js/toolkit@1.0.1':
+    resolution: {integrity: sha512-ihXOY4YscLL1Z1JcAoR0W1u3ANWCm8G+oq+cC491WEHX80O9i/ojYYSM3GX8o2yDBBGQXqHo70tsf1nxXvv7dg==}
+
+  '@tma.js/transformers@1.1.0':
+    resolution: {integrity: sha512-hh6pwVAsVrLKZmiHfi5pNXKa8wlhSDK+lKpW/uG3qmzQAFrvqmNdY3Z78VClqmgOWAwz4ej0/X1ge7VkfTqh+g==}
+
+  '@tma.js/types@1.0.1':
+    resolution: {integrity: sha512-A847UR4mf+wM1ptIdxbSw5VDc7bL/pANMOwVF4fFKfv3Uo6dAoNjklg3RuE1DoIZK7+xozyX77AkQ9ZfRGe14A==}
+
   '@tootallnate/quickjs-emscripten@0.23.0':
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
 
@@ -3081,6 +3099,9 @@ packages:
   better-promises@0.4.1:
     resolution: {integrity: sha512-cDW7eMvhvCoWzSih5o/OxsAgTUfP05yGMq77xNZUTmcZoNU9vEeFZJ+yJJi4lnocvxFrVFKsG0Yxt7ZnuYJEig==}
 
+  better-promises@1.0.0:
+    resolution: {integrity: sha512-gPgL2nRgeSbMIe3QpsYdKR3K0S9OZuphVuos60Eqsw8d/6GivOkyJ5D/zmnolJ6hzh7upnnflBUWUlQh4qpU2A==}
+
   birpc@2.4.0:
     resolution: {integrity: sha512-5IdNxTyhXHv2UlgnPHQ0h+5ypVmkrYHzL8QT+DwFZ//2N/oNV8Ch+BCRmTJ3x6/z9Axo/cXYBc9eprsUVK/Jsg==}
 
@@ -3660,6 +3681,9 @@ packages:
   error-kid@0.0.7:
     resolution: {integrity: sha512-8mFs7ZaDWlBFgjOy4lHLMCe2+KZfZXGx5GOgh2VQ/M1CCIvSWzbl2OMl+5fdZgrgoUfhTeF+NPhmqfEvUhN8yw==}
 
+  error-kid@1.0.2:
+    resolution: {integrity: sha512-Xvq0ZrY/azCbREWKt9E/3mXDF0MkuEVVvHnOKutUhtq2O8pyneEixQ4nSFkA19Xfn+/OVSg//iVG0dxIDj7DIA==}
+
   error-stack-parser-es@0.1.5:
     resolution: {integrity: sha512-xHku1X40RO+fO8yJ8Wh2f2rZWVjqyhb1zgq1yZ8aZRQkv6OOKhKWRUaht3eSCUbAOBaKIgM+ykwFLE+QUxgGeg==}
 
@@ -3921,6 +3945,9 @@ packages:
   formdata-polyfill@4.0.10:
     resolution: {integrity: sha512-buewHzMvYL29jdeQTVILecSaZKnt/RJWjoZCF5OW60Z67/GmSLBkOFM7qh1PI3zFNtJbaZL5eQu1vLfazOwj4g==}
     engines: {node: '>=12.20.0'}
+
+  fp-ts@2.16.11:
+    resolution: {integrity: sha512-LaI+KaX2NFkfn1ZGHoKCmcfv7yrZsC3b8NtWsTVQeHkq4F27vI5igUuO53sxqDEa2gNQMHFPmpojDw/1zmUK7w==}
 
   fraction.js@4.3.7:
     resolution: {integrity: sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==}
@@ -9350,6 +9377,37 @@ snapshots:
 
   '@telegram-apps/types@2.0.3': {}
 
+  '@tma.js/bridge@2.0.3(typescript@5.8.3)':
+    dependencies:
+      '@tma.js/signals': 1.0.0
+      '@tma.js/toolkit': 1.0.1
+      '@tma.js/transformers': 1.1.0(typescript@5.8.3)
+      '@tma.js/types': 1.0.1
+      better-promises: 1.0.0
+      error-kid: 1.0.2
+      fp-ts: 2.16.11
+      mitt: 3.0.1
+      valibot: 1.1.0(typescript@5.8.3)
+    transitivePeerDependencies:
+      - typescript
+
+  '@tma.js/signals@1.0.0': {}
+
+  '@tma.js/toolkit@1.0.1':
+    dependencies:
+      fp-ts: 2.16.11
+
+  '@tma.js/transformers@1.1.0(typescript@5.8.3)':
+    dependencies:
+      '@tma.js/toolkit': 1.0.1
+      '@tma.js/types': 1.0.1
+      fp-ts: 2.16.11
+      valibot: 1.1.0(typescript@5.8.3)
+    transitivePeerDependencies:
+      - typescript
+
+  '@tma.js/types@1.0.1': {}
+
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
   '@trysound/sax@0.2.0': {}
@@ -10287,6 +10345,10 @@ snapshots:
     dependencies:
       error-kid: 0.0.7
 
+  better-promises@1.0.0:
+    dependencies:
+      error-kid: 1.0.2
+
   birpc@2.4.0: {}
 
   bl@4.1.0:
@@ -10930,6 +10992,8 @@ snapshots:
 
   error-kid@0.0.7: {}
 
+  error-kid@1.0.2: {}
+
   error-stack-parser-es@0.1.5: {}
 
   eruda@3.4.3: {}
@@ -11295,6 +11359,8 @@ snapshots:
   formdata-polyfill@4.0.10:
     dependencies:
       fetch-blob: 3.2.0
+
+  fp-ts@2.16.11: {}
 
   fraction.js@4.3.7: {}
 

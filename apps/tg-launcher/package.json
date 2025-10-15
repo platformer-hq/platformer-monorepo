@@ -17,6 +17,7 @@
     "@sentry/vue": "^9.36.0",
     "@tanstack/vue-query": "^5.83.1",
     "@telegram-apps/sdk-vue": "^2.0.30",
+    "@tma.js/bridge": "^2.0.3",
     "@vueuse/core": "^13.5.0",
     "error-kid": "^0.0.4",
     "eruda": "^3.4.3",
