@@ -35,7 +35,7 @@ const { t } = useI18n({
       botIDPlaceholder: 'Telegram Bot ID identifier',
       botIDFooter: 'Having a mini application based on Telegram Mini Apps, you should set this value equal to the bound Telegram Bot identifier. Otherwise, Platformer will not be able to display your application due to inability to verify init data, sent to your mini app using init data Third Party Validation.',
       proxyLP: 'Proxy launch parameters',
-      proxyLPFooter: 'Enabling this option, the Platformer\'s launcher will append all Telegram Mini Apps launch parameters to the URL. In turn, it allows you yo use Server-Side Rendering (SSR).',
+      proxyLPFooter: 'Enabling this option, the Platformer\'s launcher will append all Telegram Mini Apps launch parameters to the URL. In turn, it allows you to use Server-Side Rendering (SSR).',
     },
     ru: {
       mbApplyChanges: 'Применить изменения',
