@@ -1,0 +1,69 @@
+<script setup lang="ts">
+import type { Component } from 'vue';
+
+const { size = 'small' } = defineProps<{
+  /**
+   * An icon to render.
+   */
+  icon?: Component<{ class?: unknown }>;
+  /**
+   * The icon size.
+   * - `small` - 28px
+   * - `large` - 40px
+   * @default 'small'
+   */
+  size?: 'small' | 'large';
+  /**
+   * True if the icon is supposed to be square. This only adds a left padding and adds border
+   * radius to the icon.
+   */
+  square?: boolean;
+}>();
+
+const { b, e } = bem('list-ios-item-left-icon');
+</script>
+
+<template>
+  <div :class="b({ square })">
+    <i :class="e('icon', { rounded: square }, size)">
+      <component :is="icon" v-if="icon" :class="e('image')"/>
+      <slot v-else/>
+    </i>
+  </div>
+</template>
+
+<style lang="scss">
+.list-ios-item-left-icon {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+  &--square {
+    padding-left: 6px;
+  }
+
+  &__icon {
+    &--small {
+      width: 28px;
+      height: 28px;
+    }
+
+    &--large {
+      width: 40px;
+      height: 40px;
+    }
+
+    &--rounded {
+      border-radius: 8px;
+    }
+  }
+
+  &__image {
+    object-fit: contain;
+    object-position: center;
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>
