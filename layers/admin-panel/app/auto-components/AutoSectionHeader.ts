@@ -1,6 +1,6 @@
-import { SectionHeaderAndroid, SectionHeaderIos } from '#components';
+import { SectionIosHeader, SectionAndroidHeader } from '#components';
 
 export default platformed({
-  common: SectionHeaderAndroid,
-  ios: SectionHeaderIos,
+  common: SectionAndroidHeader,
+  ios: SectionIosHeader,
 });
