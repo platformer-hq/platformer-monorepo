@@ -37,7 +37,7 @@ defineSlots<{
   min-height: 40px;
 
   &--default {
-    padding: 3px 20px;
+    padding: 3px 20px 6px;
     color: var(--section-android-header-default-color);
   }
 
