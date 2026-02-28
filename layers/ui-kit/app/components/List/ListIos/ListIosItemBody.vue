@@ -25,7 +25,6 @@ const { large } = injectListItemOptions();
 .list-ios-item-body {
   flex: 1 0 0;
   box-shadow: 0 0.33px 0 var(--section-separator-color);
-  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: space-between;
