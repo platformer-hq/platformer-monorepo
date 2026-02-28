@@ -15,17 +15,30 @@
     --#{$key}: var(--#{$fallback});
   }
 
-  // --list-android-item-accent-color: var(--button-color);
-  // --list-android-item-body-left-subtitle-color: var(--subtitle-text-color);
-  // --list-android-item-body-right-label-color: var(--subtitle-text-color);
-  // --list-android-item-body-right-chevron-color: var(--subtitle-text-color);
-  // --section-header-android-default-color: var(--section-header-text-color);
+  --list-android-item-placeholder-color: var(--subtitle-text-color);
+  --list-android-item-accent-color: var(--link-color);
+  --list-android-item-body-left-subtitle-color: var(--subtitle-text-color);
+  --list-android-item-body-right-label-color: var(--subtitle-text-color);
+  --list-android-item-body-right-badge-bg: var(--destructive-text-color);
+  --list-android-item-body-right-badge-color: white;
+  --list-android-item-body-right-chevron-color: var(--subtitle-text-color);
+  --list-android-item-body-right-checkmark-color: var(--accent-text-color);
+  --list-android-item-body-input-clear-color: var(--subtitle-text-color);
+  --list-android-item-body-input-placeholder-color: var(--subtitle-text-color);
+  --list-android-item-body-separator-color: var(--section-separator-color);
 
-  // --list-ios-item-accent-color: var(--button-color);
-  // --list-ios-item-body-left-subtitle-color: var(--subtitle-text-color);
-  // --list-ios-item-body-right-label-color: var(--subtitle-text-color);
-  // --list-ios-item-body-right-chevron-color: var(--subtitle-text-color);
-  // --section-header-ios-default-color: var(--section-header-text-color);
+  --list-ios-item-placeholder-color: var(--subtitle-text-color);
+  --list-ios-item-accent-color: var(--link-color);
+  --list-ios-item-body-left-subtitle-color: var(--subtitle-text-color);
+  --list-ios-item-body-right-label-color: var(--subtitle-text-color);
+  --list-ios-item-body-right-badge-bg: var(--destructive-text-color);
+  --list-ios-item-body-right-badge-color: white;
+  --list-ios-item-body-right-chevron-color: var(--subtitle-text-color);
+  --list-ios-item-body-right-checkmark-color: var(--accent-text-color);
+  --list-ios-item-body-input-clear-color: var(--subtitle-text-color);
+  --list-ios-item-body-input-placeholder-color: var(--subtitle-text-color);
+  --list-ios-item-body-separator-color: var(--section-separator-color);
+  --section-header-ios-default-color: var(--section-header-text-color);
 }
 
 body {
