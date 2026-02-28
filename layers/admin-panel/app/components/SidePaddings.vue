@@ -17,6 +17,6 @@ const { as = 'div' } = defineProps<{
 
 <style>
 .side-paddings {
-  padding: 0 16px;
+  padding-inline: 16px;
 }
 </style>
