@@ -13,7 +13,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  Time: { input: any; output: any; }
+  Time: { input: string; output: string; }
 };
 
 /** Application information. This object can only be returned in case, current user is a member of it. */
