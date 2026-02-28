@@ -8,7 +8,7 @@ export interface SectionHeaderIosProps {
 }
 
 const { variant = 'default' } = defineProps<SectionHeaderIosProps>();
-const { b } = bem('section-header-ios');
+const { b } = bem('section-ios-header');
 
 defineSlots<{
   default(): unknown;
@@ -18,10 +18,7 @@ defineSlots<{
 
 <template>
   <div :class="b({variant}, variant)">
-    <TypographyIos
-      :variant="variant === 'headline' ? 'title3' : 'body'"
-      weight="semibold"
-    >
+    <TypographyIos :variant="variant === 'headline' ? 'title3' : 'body'" weight="semibold">
       <slot/>
     </TypographyIos>
     <slot name="right"/>
@@ -29,7 +26,7 @@ defineSlots<{
 </template>
 
 <style lang="scss">
-.section-header-ios {
+.section-ios-header {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -37,12 +34,12 @@ defineSlots<{
 
   &--default {
     padding: 10px 16px;
-    color: var(--section-header-ios-default-color);
+    color: var(--section-ios-header-default-color);
   }
 
   &--headline {
     padding: 8px 16px 12px;
-    color: var(--section-header-ios-headline-color);
+    color: var(--section-ios-header-headline-color);
   }
 }
 </style>

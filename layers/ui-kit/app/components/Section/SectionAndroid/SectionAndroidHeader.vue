@@ -8,7 +8,7 @@ export interface SectionHeaderAndroidProps {
 }
 
 const { variant = 'default' } = defineProps<SectionHeaderAndroidProps>();
-const { b } = bem('section-header-android');
+const { b } = bem('section-android-header');
 
 defineSlots<{
   default(): unknown;
@@ -19,7 +19,7 @@ defineSlots<{
 <template>
   <div :class="b({variant}, variant)">
     <TypographyAndroid
-      :variant="variant === 'headline' ? 'headline6' : 'button1'"
+      :variant="variant === 'headline' ? 'title2' : 'subheadline1'"
       weight="medium"
     >
       <slot/>
@@ -29,14 +29,15 @@ defineSlots<{
 </template>
 
 <style lang="scss">
-.section-header-android {
+.section-android-header {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 16px;
+  min-height: 40px;
 
   &--default {
-    padding: 19px 20px 3px;
+    padding: 3px 20px;
     color: var(--section-header-android-default-color);
   }
 

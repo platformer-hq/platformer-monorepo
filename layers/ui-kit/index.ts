@@ -41,8 +41,13 @@ export { default as LoadingIndicatorIos } from './app/components/LoadingIndicato
 export { default as SafeAreaInsets, type SafeAreaInset, type SafeAreaInsetsProps } from './app/components/SafeAreaInsets/SafeAreaInsets.vue';
 export { default as UseSafeAreaInsets, type UseSafeAreaInset, type UseSafeAreaInsetsProps } from './app/components/SafeAreaInsets/UseSafeAreaInsets.vue';
 
-export { default as SectionHeaderAndroid, type SectionHeaderAndroidProps, type SectionHeaderAndroidVariant } from './app/components/SectionHeader/SectionHeaderAndroid.vue';
-export { default as SectionHeaderIos, type SectionHeaderIosProps, type SectionHeaderIosVariant } from './app/components/SectionHeader/SectionHeaderIos.vue';
+export { default as SectionAndroid } from './app/components/Section/SectionAndroid/SectionAndroid.vue';
+export { default as SectionFooterAndroid } from './app/components/Section/SectionAndroid/SectionAndroidFooter.vue';
+export { default as SectionHeaderAndroid, type SectionHeaderAndroidProps, type SectionHeaderAndroidVariant } from './app/components/Section/SectionAndroid/SectionAndroidHeader.vue';
+
+export { default as SectionIos } from './app/components/Section/SectionIos/SectionIos.vue';
+export { default as SectionFooterIos } from './app/components/Section/SectionIos/SectionIosFooter.vue';
+export { default as SectionHeaderIos, type SectionHeaderIosProps, type SectionHeaderIosVariant } from './app/components/Section/SectionIos/SectionIosHeader.vue';
 
 export { default as TypographyBase, type TypographyBaseAlign, type TypographyBaseProps } from './app/components/Typography/TypographyBase/TypographyBase.vue';
 export { default as UseTypographyBase, type UseTypographyBaseAlign, type UseTypographyBaseProps, type UseTypographyBaseSlotProps } from './app/components/Typography/TypographyBase/UseTypographyBase.vue';
