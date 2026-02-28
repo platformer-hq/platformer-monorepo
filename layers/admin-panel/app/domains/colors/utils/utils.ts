@@ -28,7 +28,10 @@ const knownThemeKeyToSdkKnownThemeKeyMap = {
 const knownCustomColorKeyMap = {
   'quaternary-fill-bg': 1,
   'tertiary-fill-bg': 1,
-  'separator-non-opaque': 1,
+  'secondary-fill-bg': 1,
+  'button-confirm': 1,
+  'text-main-disabled': 1,
+  'button-main-disabled': 1,
 } satisfies Record<KnownCustomColorKey, 1>;
 
 const knownMiniAppColorKeyMap = {

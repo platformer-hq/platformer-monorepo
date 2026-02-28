@@ -56,6 +56,8 @@
     --tertiary-fill-bg-color: rgba(116, 116, 128, .12);
     --secondary-fill-bg-color: rgba(118, 118, 128, .16);
     --button-confirm-color: #2FB250;
+    --text-main-disabled-color: #B9B9BA;
+    --button-main-disabled-color: #E8E8E9;
   }
 
   &[data-theme="dark"] {
@@ -63,6 +65,8 @@
     --tertiary-fill-bg-color: rgba(118, 118, 128, .24);
     --secondary-fill-bg-color: rgba(118, 118, 128, .32);
     --button-confirm-color: #30D158;
+    --text-main-disabled-color: #606060;
+    --button-main-disabled-color: #2F2F2F;
   }
 
   --elevated-box-shadow: -0.6px -0.5px 0 0 rgba(255, 255, 255, 0.30) inset,

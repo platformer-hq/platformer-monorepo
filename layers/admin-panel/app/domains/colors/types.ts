@@ -25,7 +25,10 @@ export type KnownMiniAppColorKey = 'app-header' | 'app-bottom-bar' | 'app-bg';
 export type KnownCustomColorKey =
   | 'quaternary-fill-bg'
   | 'tertiary-fill-bg'
-  | 'separator-non-opaque';
+  | 'secondary-fill-bg'
+  | 'button-confirm'
+  | 'text-main-disabled'
+  | 'button-main-disabled';
 
 /**
  * List of all known color keys.
