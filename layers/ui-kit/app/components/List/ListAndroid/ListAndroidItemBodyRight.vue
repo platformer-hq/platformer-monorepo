@@ -1,26 +1,10 @@
 <script setup lang="ts">
-// TODO: What for all these slots?
-defineSlots<{
-  default(): unknown;
-  chevron(): unknown;
-  checkmark(): unknown;
-  label(): unknown;
-}>();
-
-const { b, e } = bem('list-android-item-body-right');
+const { b } = bem('list-android-item-body-right');
 </script>
 
 <template>
   <div :class="b()">
     <slot/>
-    <slot name="checkmark" />
-    <slot name="label" />
-    <div
-      v-if="$slots.chevron"
-      :class="e('chevron', {'pad-left': $slots.label || $slots.checkmark})"
-    >
-      <slot name="chevron" />
-    </div>
   </div>
 </template>
 
@@ -32,15 +16,5 @@ const { b, e } = bem('list-android-item-body-right');
   align-items: center;
   height: 100%;
   padding-left: 16px;
-
-  &__chevron {
-    height: 100%;
-    display: flex;
-    align-items: center;
-
-    &--pad-left {
-      padding-left: 12px;
-    }
-  }
 }
 </style>
