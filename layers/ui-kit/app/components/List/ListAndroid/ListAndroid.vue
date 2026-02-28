@@ -1,11 +1,8 @@
 <script lang="ts" setup>
-defineProps<{
-  bgColor?: string;
-}>();
 </script>
 
 <template>
-  <ul class="list-android" :style="{backgroundColor: bgColor}">
+  <ul class="list-android">
     <slot />
   </ul>
 </template>
