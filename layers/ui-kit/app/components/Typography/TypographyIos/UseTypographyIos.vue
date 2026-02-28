@@ -12,7 +12,6 @@ export type UseTypographyIosVariant =
   | 'title1'
   | 'title2'
   | 'title3'
-  | 'headline'
   | 'body'
   | 'callout'
   | 'subheadline1'
@@ -68,7 +67,6 @@ const { b } = bem('typography-ios');
   @include variant("title1", 28px, 34px, 700);
   @include variant("title2", 22px, 28px);
   @include variant("title3", 20px, 24px);
-  @include variant("headline", 17px, 22px, 590);
   @include variant("body", 17px, 22px);
   @include variant("callout", 16px, 22px);
   @include variant("subheadline1", 15px, 20px);

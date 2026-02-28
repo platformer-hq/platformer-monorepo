@@ -9,14 +9,14 @@ import type {
  * List of known font variants. This list is specific to each project.
  */
 export type UseTypographyAndroidVariant =
-  | 'headline5'
-  | 'headline6'
-  | 'headline7'
-  | 'body1'
-  | 'subtitle1'
-  | 'subtitle2'
-  | 'button1'
-  | 'button2'
+  | 'title1'
+  | 'title2'
+  | 'title3'
+  | 'body'
+  | 'callout'
+  | 'subheadline1'
+  | 'subheadline2'
+  | 'footnote'
   | 'caption1'
   | 'caption2';
 export type UseTypographyAndroidSlotProps = UseTypographyBaseSlotProps;
@@ -65,14 +65,12 @@ const { b } = bem('typography-android');
 .typography-android {
   font-family: Roboto, "Segoe UI", "Helvetica Neue", sans-serif;
 
-  @include variant("headline5", 24px, 28px, 500);
-  @include variant("headline6", 20px, 24px, 500);
-  @include variant("headline7", 17px, 22px, 500);
-  @include variant("body1", 16px, 20px);
-  @include variant("subtitle1", 15px, 18px);
-  @include variant("subtitle2", 14px, 16px);
-  @include variant("button1", 15px, 18px, 500, 0.1px);
-  @include variant("button2", 14px, 16px, 600);
+  @include variant("title1", 24px, 28px, 500);
+  @include variant("title2", 20px, 24px, 500);
+  @include variant("title3", 17px, 22px, 500);
+  @include variant("body", 16px, 20px);
+  @include variant("subheadline1", 15px, 18px);
+  @include variant("subheadline2", 14px, 16px);
   @include variant("caption1", 13px, 16px);
   @include variant("caption2", 12px, 14px);
 

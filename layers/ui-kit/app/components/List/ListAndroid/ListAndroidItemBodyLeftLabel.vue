@@ -13,7 +13,7 @@ const { b } = bem('list-android-item-body-left-label');
 
 <template>
   <TypographyAndroid
-    variant="body1"
+    variant="body"
     :max-lines
     :class="b()"
     :weight="medium ? 'medium' : undefined"

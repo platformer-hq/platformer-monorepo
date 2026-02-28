@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <TypographyAndroid variant="body1" class="list-android-item-left-label">
+  <TypographyAndroid variant="body" class="list-android-item-left-label">
     <slot />
   </TypographyAndroid>
 </template>

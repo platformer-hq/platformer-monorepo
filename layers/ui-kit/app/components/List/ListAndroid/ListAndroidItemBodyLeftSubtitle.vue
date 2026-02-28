@@ -8,7 +8,7 @@ const { b } = bem('list-android-item-body-left-subtitle');
 </script>
 
 <template>
-  <TypographyAndroid variant="subtitle1" :max-lines :class="b()">
+  <TypographyAndroid variant="subheadline1" :max-lines :class="b()">
     <slot />
   </TypographyAndroid>
 </template>

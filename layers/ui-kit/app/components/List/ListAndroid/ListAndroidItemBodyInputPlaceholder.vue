@@ -8,7 +8,7 @@ defineSlots<{
   <TypographyAndroid
     v-if="$slots.default"
     class="list-android-item-body-input-placeholder"
-    variant="body1"
+    variant="body"
   >
     <slot/>
   </TypographyAndroid>
