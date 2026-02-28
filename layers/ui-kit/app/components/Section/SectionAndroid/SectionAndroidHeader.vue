@@ -38,12 +38,12 @@ defineSlots<{
 
   &--default {
     padding: 3px 20px;
-    color: var(--section-header-android-default-color);
+    color: var(--section-android-header-default-color);
   }
 
   &--headline {
     padding: 24px 20px 4px;
-    color: var(--section-header-android-headline-color);
+    color: var(--section-android-header-headline-color);
   }
 }
 </style>
