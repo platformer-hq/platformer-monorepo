@@ -1,80 +1,65 @@
 <script setup lang="ts">
-import type { InputHTMLAttributes } from 'vue';
-
-export interface SwitchAndroidProps extends /* @vue-ignore */ Omit<InputHTMLAttributes, 'type' | 'onChange'> {
-  class?: unknown;
-  checked?: boolean;
+defineProps<{
   disabled?: boolean;
-}
-
-export type SwitchAndroidEmits = /* @vue-ignore */ {
-  change: [Event & { target: HTMLInputElement }];
-};
-
-defineProps<SwitchAndroidProps>();
-defineEmits<SwitchAndroidEmits>();
-defineOptions({ inheritAttrs: false });
-
-// FIXME: Model
+}>();
 
 const { b, e } = bem('switch-android');
+const checked = defineModel<boolean>('checked', { default: false });
 </script>
 
 <template>
-  <label :class="[b({ checked, disabled }), $props.class]">
-    <input
-      v-bind="$attrs"
-      :disabled="disabled"
-      :checked="checked"
-      :class="e('input')"
-      type="checkbox"
-    >
-    <span :class="e('thumb', { checked })" />
+  <label :class="b({ checked, disabled })">
+    <input v-show="false" v-model="checked" :disabled type="checkbox">
+    <span :class="e('track', {checked})"/>
+    <span :class="e('knob', {checked})" />
   </label>
 </template>
 
 <style lang="scss">
 .switch-android {
-  appearance: none;
   display: inline-block;
-  height: 14px;
+  height: 16px;
   width: 32px;
-  border-radius: 100px;
-  background: var(--switch-android-bg, #A8A8A8);
   position: relative;
-  transition: background 200ms ease;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 
   &--disabled {
     cursor: default;
+    opacity: 0.5;
   }
 
-  &--checked {
-    background: var(--switch-android-checked-bg, #50A8EB);
-  }
-
-  &__input {
-    display: none;
-  }
-
-  &__thumb {
-    position: absolute;
-    left: -3px;
-    top: -3px;
-    border: 2px solid var(--switch-android-thumb-border-bg, #A8A8A8);
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: var(--switch-android-thumb-bg, white);
-    transition: left 200ms ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  &__track {
+    display: block;
+    height: 100%;
+    width: 100%;
+    border-radius: 100px;
+    background: var(--switch-android-bg, #A8A8A8);
+    transition: 300ms;
+    mask-image: radial-gradient(circle 9px, transparent 100%, black 100%);
+    mask-size: 300% 100%;
+    mask-repeat: no-repeat;
+    mask-position: -39.5px center;
 
     &--checked {
-      left: 14px;
-      border-color: var(--switch-android-thumb-border-checked-bg, #50A8EB);;
+      background: var(--switch-android-checked-bg, #50A8EB);
+      mask-position: -23px center;
+    }
+  }
+
+  &__knob {
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    outline: 2px solid var(--switch-android-knob-color, #A8A8A8);
+    transition: left 300ms;
+
+    &--checked {
+      left: 17px;
+      outline-color: var(--switch-android-knob-checked-color, #50A8EB);
     }
   }
 }

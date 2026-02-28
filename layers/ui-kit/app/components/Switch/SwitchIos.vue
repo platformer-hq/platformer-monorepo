@@ -1,109 +1,118 @@
 <script setup lang="ts">
-import type { InputHTMLAttributes } from 'vue';
-
-import { IconCheckmarkIOS28, IconXmark24 } from '#components';
-
-export interface SwitchIosProps extends /* @vue-ignore */ Omit<InputHTMLAttributes, 'type' | 'onChange'> {
-  /**
-   * Should icons inside the thumb be displayed. Enabling this mode will also slightly modify
-   * the switch colors.
-   */
-  iconed?: boolean;
-  class?: unknown;
-  checked?: boolean;
+defineProps<{
   disabled?: boolean;
-}
-
-export type SwitchIosEmits = /* @vue-ignore */ {
-  change: [Event & { target: HTMLInputElement }];
-};
-
-defineProps<SwitchIosProps>();
-defineEmits<SwitchIosEmits>();
-defineOptions({ inheritAttrs: false });
-
-// FIXME: Model
+}>();
 
 const { b, e } = bem('switch-ios');
+const checked = defineModel<boolean>('checked', { default: false });
+const checkedInitially = checked.value;
+
+const makeKeyframes = (checked: boolean): Keyframe[] => {
+  const leftFrom = '2px';
+  const leftTo = '23px';
+  const leftDelta = '2px';
+  const leftFromWithDelta = `calc(${leftFrom} - ${leftDelta})`;
+  const leftToWithDelta = `calc(${leftTo} + ${leftDelta})`;
+  const shared2080 = {
+    transform: 'scale(1.4)',
+    backgroundColor: 'rgba(255,255,255,.3)',
+  };
+  return [
+    { offset: 0, left: checked ? leftFrom : leftTo },
+    { offset: 0.1, left: checked ? leftFromWithDelta : leftToWithDelta },
+    { offset: 0.2, ...shared2080 },
+    { offset: 0.5, transform: 'scale(1.6)' },
+    { offset: 0.8, ...shared2080 },
+    { offset: 0.9, left: checked ? leftToWithDelta : leftFromWithDelta },
+    { offset: 1, left: checked ? leftTo : leftFrom },
+  ];
+};
+
+const knob = useTemplateRef('knob');
+watch(checked, checked => {
+  knob.value?.animate(
+    makeKeyframes(checked),
+    { duration: 350, easing: 'linear', fill: 'both' },
+  );
+});
 </script>
 
 <template>
-  <label :class="[b({ checked, disabled, iconed }), $props.class]">
-    <input
-      v-bind="$attrs"
-      :disabled="disabled"
-      :checked="checked"
-      :class="e('input')"
-      type="checkbox"
-    >
-    <span :class="e('thumb', { checked })">
-      <template v-if="iconed">
-        <component
-          :is="checked ? IconCheckmarkIOS28 : IconXmark24"
-          width="auto"
-          height="20"
-        />
-      </template>
-    </span>
+  <label :class="b({ checked, disabled })">
+    <input v-show="false" v-model="checked" :disabled type="checkbox">
+    <span :class="e('mark', 'left', checked && 'visible')"/>
+    <span :class="e('mark', 'right', !checked && 'visible')"/>
+    <span
+      ref="knob"
+      :class="e('knob', { checked, 'checked-initially': checkedInitially })"
+    />
   </label>
 </template>
 
 <style lang="scss">
 .switch-ios {
-  appearance: none;
   display: inline-block;
-  height: 31px;
-  width: 51px;
-  border-radius: 16px;
-  background: var(--switch-ios-bg, #78788029);
+  height: 28px;
+  width: 64px;
+  border-radius: 1000px;
+  background: var(--switch-ios-bg, #747480);
   position: relative;
-  transition: background 200ms ease;
+  transition: 350ms ease;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 
   &--disabled {
     cursor: default;
-  }
-
-  &--iconed {
-    background: var(--switch-ios-iconed-bg, #FF3B30);
+    opacity: 0.5;
   }
 
   &--checked {
-    background: var(--switch-ios-checked-bg, #34C759);
+    background: var(--switch-ios-checked-bg, #2FB250);
   }
 
-  &__input {
-    display: none;
-  }
-
-  &__thumb {
+  &__knob {
     position: absolute;
     left: 2px;
     top: 2px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    width: 27px;
-    height: 27px;
-    border-radius: 50%;
-    background: var(--switch-ios-thumb-bg, white);
-    transition: left 200ms ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    bottom: 2px;
+    width: 39px;
+    border-radius: 1000px;
+    transform-origin: center center;
+    background: var(--switch-ios-knob-bg, white);
+    box-shadow: var(--elevated-box-shadow);
+    backdrop-filter: blur(2px) contrast(150%) brightness(150%);
 
-    &--checked {
-      left: 22px;
+    &--checked-initially {
+      left: 23px;
     }
   }
 
-  &__check-icon {
-    display: block;
-    color: var(--switch-ios-check-icon-color, #34C759);
-  }
+  &__mark {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: 350ms ease-out;
+    transition-delay: 100ms;
 
-  &__uncheck-icon {
-    display: block;
-    color: var(--switch-ios-uncheck-icon-color, #FF3B30);
+    &--left {
+      left: 13px;
+      width: 1px;
+      height: 10px;
+      background: var(--switch-ios-mark-left-color, black);
+    }
+
+    &--right {
+      right: 8px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 1.5px solid var(--switch-ios-mark-right-color, rgba(255,255,255,.3));
+    }
+
+    &--visible {
+      opacity: 1;
+    }
   }
 }
 </style>
