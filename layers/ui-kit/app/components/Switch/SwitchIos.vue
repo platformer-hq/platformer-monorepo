@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { hapticFeedback } from '@tma.js/sdk-vue';
+
 defineProps<{
   disabled?: boolean;
 }>();
@@ -21,7 +23,7 @@ const makeKeyframes = (checked: boolean): Keyframe[] => {
     { offset: 0, left: checked ? leftFrom : leftTo },
     { offset: 0.1, left: checked ? leftFromWithDelta : leftToWithDelta },
     { offset: 0.2, ...shared2080 },
-    { offset: 0.5, transform: 'scale(1.6)' },
+    { offset: 0.5, transform: 'scale(1.6)', backdropFilter: 'blur(2px) contrast(150%) brightness(150%)' },
     { offset: 0.8, ...shared2080 },
     { offset: 0.9, left: checked ? leftToWithDelta : leftFromWithDelta },
     { offset: 1, left: checked ? leftTo : leftFrom },
@@ -34,6 +36,7 @@ watch(checked, checked => {
     makeKeyframes(checked),
     { duration: 350, easing: 'linear', fill: 'both' },
   );
+  hapticFeedback.selectionChanged.ifAvailable();
 });
 </script>
 
@@ -80,7 +83,6 @@ watch(checked, checked => {
     transform-origin: center center;
     background: var(--switch-ios-knob-bg, white);
     box-shadow: var(--elevated-box-shadow);
-    backdrop-filter: blur(2px) contrast(150%) brightness(150%);
 
     &--checked-initially {
       left: 23px;

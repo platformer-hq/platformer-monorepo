@@ -1,10 +1,16 @@
 <script setup lang="ts">
+import { hapticFeedback } from '@tma.js/sdk-vue';
+
 defineProps<{
   disabled?: boolean;
 }>();
 
 const { b, e } = bem('switch-android');
 const checked = defineModel<boolean>('checked', { default: false });
+
+watch(checked, () => {
+  hapticFeedback.selectionChanged.ifAvailable();
+});
 </script>
 
 <template>
