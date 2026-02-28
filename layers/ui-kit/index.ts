@@ -8,11 +8,13 @@ export { default as ListAndroidItemBodyLeft } from './app/components/List/ListAn
 export { default as ListAndroidItemBodyLeftLabel } from './app/components/List/ListAndroid/ListAndroidItemBodyLeftLabel.vue';
 export { default as ListAndroidItemBodyLeftSubtitle } from './app/components/List/ListAndroid/ListAndroidItemBodyLeftSubtitle.vue';
 export { default as ListAndroidItemBodyRight } from './app/components/List/ListAndroid/ListAndroidItemBodyRight.vue';
+export { default as ListAndroidItemBodyRightBadge } from './app/components/List/ListAndroid/ListAndroidItemBodyRightBadge.vue';
 export { default as ListAndroidItemBodyRightCheckmark } from './app/components/List/ListAndroid/ListAndroidItemBodyRightCheckmark.vue';
 export { default as ListAndroidItemBodyRightChevron } from './app/components/List/ListAndroid/ListAndroidItemBodyRightChevron.vue';
 export { default as ListAndroidItemBodyRightLabel } from './app/components/List/ListAndroid/ListAndroidItemBodyRightLabel.vue';
 export { default as ListAndroidItemLeft } from './app/components/List/ListAndroid/ListAndroidItemLeft.vue';
 export { default as ListAndroidItemLeftIcon } from './app/components/List/ListAndroid/ListAndroidItemLeftIcon.vue';
+export { default as ListAndroidItemLeftIconElement } from './app/components/List/ListAndroid/ListAndroidItemLeftIconElement.vue';
 export { default as ListAndroidItemLeftLabel } from './app/components/List/ListAndroid/ListAndroidItemLeftLabel.vue';
 
 export { default as ListIos } from './app/components/List/ListIos/ListIos.vue';
@@ -24,11 +26,13 @@ export { default as ListIosItemBodyLeft } from './app/components/List/ListIos/Li
 export { default as ListIosItemBodyLeftLabel } from './app/components/List/ListIos/ListIosItemBodyLeftLabel.vue';
 export { default as ListIosItemBodyLeftSubtitle } from './app/components/List/ListIos/ListIosItemBodyLeftSubtitle.vue';
 export { default as ListIosItemBodyRight } from './app/components/List/ListIos/ListIosItemBodyRight.vue';
+export { default as ListIosItemBodyRightBadge } from './app/components/List/ListIos/ListIosItemBodyRightBadge.vue';
 export { default as ListIosItemBodyRightCheckmark } from './app/components/List/ListIos/ListIosItemBodyRightCheckmark.vue';
 export { default as ListIosItemBodyRightChevron } from './app/components/List/ListIos/ListIosItemBodyRightChevron.vue';
 export { default as ListIosItemBodyRightLabel } from './app/components/List/ListIos/ListIosItemBodyRightLabel.vue';
 export { default as ListIosItemLeft } from './app/components/List/ListIos/ListIosItemLeft.vue';
 export { default as ListIosItemLeftIcon } from './app/components/List/ListIos/ListIosItemLeftIcon.vue';
+export { default as ListIosItemLeftIconElement } from './app/components/List/ListIos/ListIosItemLeftIconElement.vue';
 export { default as ListIosItemLeftLabel } from './app/components/List/ListIos/ListIosItemLeftLabel.vue';
 
 export { default as LoadingIndicatorAndroid } from './app/components/LoadingIndicator/LoadingIndicatorAndroid.vue';
