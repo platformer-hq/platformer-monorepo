@@ -11,6 +11,6 @@ import TypographyAndroid from '../../Typography/TypographyAndroid/TypographyAndr
 <style lang="scss">
 .section-android-footer {
   padding: 12px 20px;
-  color: var(--section-footer-android-color);
+  color: var(--section-android-footer-color);
 }
 </style>
