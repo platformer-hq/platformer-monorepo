@@ -1,7 +1,7 @@
 import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const scalars = {
-  JSON: 'Record<string, unknown>',
+  Time: 'string',
 };
 
 export default {
@@ -14,7 +14,6 @@ export default {
       presetConfig: {
         extension: '.ts',
         baseTypesPath: '~#layers/api/schema',
-        scalars,
       },
       plugins: [
         'typescript-operations',
@@ -22,18 +21,19 @@ export default {
         { add: { content: '/* eslint-disable */' } },
       ],
       config: {
+        scalars,
         useTypeImports: true,
         declarationKind: 'interface',
       },
     },
     './layers/api/schema.ts': {
-      config: {
-        scalars,
-      },
       plugins: [
         'typescript',
         { add: { content: '/* eslint-disable */' } },
       ],
+      config: {
+        scalars,
+      },
     },
   },
   watch: true,
