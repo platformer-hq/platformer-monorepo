@@ -1,0 +1,11 @@
+query HomePageData {
+  currentUser {
+    id
+    managementInvites {
+      __typename
+    }
+    appTransferRequests {
+      __typename
+    }
+  }
+}
