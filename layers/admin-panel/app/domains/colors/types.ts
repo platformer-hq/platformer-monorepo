@@ -20,6 +20,14 @@ export type KnownThemeParamsKey = SDKKnownThemeParamsKey extends (infer U extend
 export type KnownMiniAppColorKey = 'app-header' | 'app-bottom-bar' | 'app-bg';
 
 /**
+ * List of colors imagined by designer.
+ */
+export type KnownCustomColorKey =
+  | 'quaternary-fill-bg'
+  | 'tertiary-fill-bg'
+  | 'separator-non-opaque';
+
+/**
  * List of all known color keys.
  */
-export type AnyKnownColorKey = KnownThemeParamsKey | KnownMiniAppColorKey;
+export type AnyKnownColorKey = KnownThemeParamsKey | KnownMiniAppColorKey | KnownCustomColorKey;

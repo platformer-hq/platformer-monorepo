@@ -2,6 +2,7 @@ import type { KnownThemeParamsKey as SdkKnownThemeParamsKey } from '@tma.js/sdk-
 
 import type {
   AnyKnownColorKey,
+  KnownCustomColorKey,
   KnownMiniAppColorKey,
   KnownThemeParamsKey,
 } from '../types';
@@ -24,6 +25,12 @@ const knownThemeKeyToSdkKnownThemeKeyMap = {
   'section-separator': 'section_separator_color',
 } satisfies Record<KnownThemeParamsKey, SdkKnownThemeParamsKey>;
 
+const knownCustomColorKeyMap = {
+  'quaternary-fill-bg': 1,
+  'tertiary-fill-bg': 1,
+  'separator-non-opaque': 1,
+} satisfies Record<KnownCustomColorKey, 1>;
+
 const knownMiniAppColorKeyMap = {
   'app-header': 1,
   'app-bottom-bar': 1,
@@ -38,7 +45,9 @@ export function isAnyKnownColorKey(value: unknown): value is AnyKnownColorKey {
   if (typeof value !== 'string') {
     return false;
   }
-  return isKnownThemeParamsKey(value) || value in knownMiniAppColorKeyMap;
+  return isKnownThemeParamsKey(value)
+    || value in knownCustomColorKeyMap
+    || value in knownMiniAppColorKeyMap;
 }
 
 export function knownThemeKeyToSdkKnownThemeKey(key: KnownThemeParamsKey): SdkKnownThemeParamsKey {
