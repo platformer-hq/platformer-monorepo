@@ -25,7 +25,8 @@
   --list-android-item-body-right-checkmark-color: var(--accent-text-color);
   --list-android-item-body-input-clear-color: var(--subtitle-text-color);
   --list-android-item-body-input-placeholder-color: var(--subtitle-text-color);
-  --list-android-item-body-separator-color: var(--section-separator-color);
+  --section-android-header-default-color: var(--section-header-text-color);
+  --section-android-footer-color: var(--subtitle-text-color);
 
   --list-ios-item-placeholder-color: var(--subtitle-text-color);
   --list-ios-item-accent-color: var(--link-color);
@@ -38,7 +39,8 @@
   --list-ios-item-body-input-clear-color: var(--subtitle-text-color);
   --list-ios-item-body-input-placeholder-color: var(--subtitle-text-color);
   --list-ios-item-body-separator-color: var(--section-separator-color);
-  --section-header-ios-default-color: var(--section-header-text-color);
+  --section-ios-header-default-color: var(--section-header-text-color);
+  --section-ios-footer-color: var(--subtitle-text-color);
 
   &[data-theme="light"] {
     --quaternary-fill-bg-color: rgba(116, 116, 128, .08);
