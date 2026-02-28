@@ -1,4 +1,4 @@
-export const useScrollStates = defineStore('scroll-states', () => {
+export const useScrollStatesStore = defineStore('scroll-states', () => {
   const positions = ref<Partial<Record<string | symbol, number>>>({});
 
   return {

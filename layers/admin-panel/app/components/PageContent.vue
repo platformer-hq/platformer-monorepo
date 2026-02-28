@@ -11,19 +11,17 @@ const { as = 'div' } = defineProps<{
    */
   as?: KnownHtmlTag;
 }>();
-const rootRef = useTemplateRef<HTMLElement>('root');
-defineExpose({ element: rootRef });
 </script>
 
 <template>
-  <component :is="as" ref="root" class="view-content">
+  <component :is="as" class="page-content">
     <slot />
   </component>
 </template>
 
 <style lang="scss">
-.view-content {
-  max-width: 375px;
+.page-content {
+  max-width: 450px;
   margin: auto;
 }
 </style>

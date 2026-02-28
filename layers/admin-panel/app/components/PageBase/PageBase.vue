@@ -15,8 +15,7 @@ import { useScroll } from '@vueuse/core';
 
 import type { KnownThemeParamsKey } from '~/domains/colors/types';
 
-import type { ViewBaseExpose } from './types';
-import { useScrollStates } from './useScrollStates';
+import { useScrollStatesStore } from './useScrollStates';
 
 type RgbOrKnownThemeParamsKey = RGB | KnownThemeParamsKey;
 
@@ -26,7 +25,12 @@ interface Colors {
   bottomBar?: RgbOrKnownThemeParamsKey;
 }
 
-export interface ViewBaseProps {
+const {
+  insets = true,
+  back = true,
+  scrollToTop = 'default',
+  colors = { header: 'bg', background: 'bg', bottomBar: 'bg' },
+} = defineProps<{
   /**
    * Should the back button be displayed.
    * @default true
@@ -42,7 +46,6 @@ export interface ViewBaseProps {
    * Insets to apply.
    */
   insets?: boolean | ('left' | 'right' | 'bottom' | 'top')[];
-  onBack?(): void;
   /**
    * Should the scrollbar be visible.
    * @default false
@@ -50,24 +53,15 @@ export interface ViewBaseProps {
   scrollbar?: boolean;
   /**
    * Scroll to top behavior. Values:
-   * - True to forcibly scroll to top.
-   * - False to disable scroll to top.
+   * - `true` to forcibly scroll to top.
+   * - `false` to disable scrolling to top.
    * - `default` to apply scroll based on the current routing state. Navigating forward will
    * scroll the view to top, when navigating back and reloading the view will not do it.
    * @default 'default'
    */
   scrollToTop?: boolean | 'default';
-}
-
-const {
-  insets = true,
-  back = true,
-  scrollToTop = 'default',
-  colors = { header: 'bg', background: 'bg', bottomBar: 'bg' },
-  ...props
-} = defineProps<ViewBaseProps>();
-defineEmits<{ back: [] }>();
-const { b, e } = bem('view-base');
+}>();
+const { b, e } = bem('page-base');
 
 const rootRef = useTemplateRef('root');
 const rootElement = computed(() => rootRef.value?.element);
@@ -80,9 +74,11 @@ watchPostEffect(() => {
     return backButton.hide();
   }
   backButton.show();
-  onWatcherCleanup(backButton.onClick(props.onBack || (() => {
-    router.go(-1);
-  })));
+  onWatcherCleanup(
+    backButton.onClick((() => {
+      router.go(-1);
+    })),
+  );
 });
 //#endregion
 
@@ -151,12 +147,12 @@ watchPostEffect(() => {
 //#region Scrollbar and scroll adjustments.
 const route = useRoute();
 const routingDirection = useNavigationDirection();
-const scrollStates = useScrollStates();
+const scrollStatesStore = useScrollStatesStore();
 
 const { y: scrollTop } = useScroll(rootElement);
 watch(() => [scrollTop.value, route.name] as const, ([y, routeName]) => {
   if (routeName) {
-    scrollStates.set(routeName, y);
+    scrollStatesStore.set(routeName, y);
   }
 });
 
@@ -166,14 +162,23 @@ onMounted(() => {
     return scrollTop.value = 0;
   }
   if (scrollToTop === 'default' && direction === 'backward' && route.name) {
-    scrollTop.value = scrollStates.get(route.name) || 0;
+    scrollTop.value = scrollStatesStore.get(route.name) || 0;
   }
 });
 //#endregion
 
-const context: ViewBaseExpose = { scrollTop, rootElement };
-provideViewBaseContext(context);
-defineExpose(context);
+const formattedInsets = computed(() => {
+  return (
+    insets === true
+      ? ['left', 'right', 'bottom', 'top'] as ('left' | 'right' | 'bottom' | 'top')[]
+      : insets === false
+        ? []
+        : insets
+  ).reduce<{ [K in 'left' | 'right' | 'bottom' | 'top']?: true }>((acc, key) => {
+    acc[key] = true;
+    return acc;
+  }, {});
+});
 
 // TODO: Yeah, the bottom block imitating the bottom inset is not the greatest solution, but I
 // wasn't able to find any reliable solution considering that inner element has height = 100vh.
@@ -189,25 +194,20 @@ defineExpose(context);
 <template>
   <SafeAreaInsets
     ref="root"
-    as="div"
-    left
-    right
-    top
+    v-bind="formattedInsets"
+    :bottom="false"
     :class="b({'no-scrollbar': !scrollbar})"
     :style="{background: colorReference(colorsMapped.background)}"
   >
     <div :class="e('inner', platform?.mapped)">
       <slot />
-      <SafeAreaInsets
-        v-if="insets && (insets === true || insets.includes('bottom'))"
-        bottom
-      />
+      <SafeAreaInsets v-if="formattedInsets.bottom" bottom/>
     </div>
   </SafeAreaInsets>
 </template>
 
 <style lang="scss">
-.view-base {
+.page-base {
   height: 100vh;
   overflow: hidden auto;
 
