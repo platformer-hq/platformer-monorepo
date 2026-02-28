@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --port 5174 --host",
     "gql-codegen": "graphql-codegen --config graphql.config.ts",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "icons:build": "tsx layers/ui-kit/build-icons.ts"
   },
   "dependencies": {
     "@graphql-typed-document-node/core": "^3.2.0",
