@@ -18,14 +18,14 @@ const { t } = useI18n({
       apps: 'Applications',
       invites: 'Management Invites',
       transferRequests: 'App Transfer Requests',
-      account: 'Аккаунт',
+      account: 'Account',
       privacy: 'Privacy and Security',
     },
     ru: {
       apps: 'Приложения',
       invites: 'Приглашения на управление',
       transferRequests: 'Трансферы приложений',
-      account: 'Account',
+      account: 'Аккаунт',
       privacy: 'Приватность и безопасность',
     },
   },
@@ -89,61 +89,63 @@ onMounted(() => {
 <template>
   <PageBase :back="false">
     <PageContent>
-      <SidePaddings>
-        <AutoSection
-          v-for="(section, sectionIdx) in sections"
-          :key="sectionIdx"
-          :style="sectionIdx > 0 ? {marginTop: '16px'} : undefined"
-          list-bg-color="secondary-bg"
-        >
-          <AutoList>
-            <AutoListItem
-              v-for="item in section"
-              :key="item.name"
-              clickable
-              @click="navigateTo({name: item.name})"
-            >
-              <template #left>
-                <AutoListItemLeft>
-                  <AutoListItemLeftIcon square>
-                    <AutoListItemLeftIconElement
-                      square
-                      :style="item.icon.kind === 'custom' ? {
-                        background: colorReference(item.icon.bgColor) || undefined,
-                        color: 'white',
-                      } : undefined"
-                    >
-                      <component
-                        :is="item.icon.component"
-                        :size="item.icon.kind === 'custom' ? item.icon.size : undefined"
-                      />
-                    </AutoListItemLeftIconElement>
-                  </AutoListItemLeftIcon>
-                </AutoListItemLeft>
-              </template>
-              <template #bodyLeftLabel>
-                <AutoListItemBodyLeftLabel>
-                  {{ item.title }}
-                </AutoListItemBodyLeftLabel>
-              </template>
-              <template #bodyRight>
-                <AutoListItemBodyRight>
-                  <ShimmerBox
-                    v-if="'hasCounter' in item && item.count === undefined && isPending"
-                    :width="24"
-                    :height="24"
-                    rounded
-                  />
-                  <AutoListItemBodyRightBadge v-else-if="'count' in item && item.count">
-                    {{ item.count }}
-                  </AutoListItemBodyRightBadge>
-                  <AutoListItemBodyRightChevron v-if="platform.isMappedIos"/>
-                </AutoListItemBodyRight>
-              </template>
-            </AutoListItem>
-          </AutoList>
-        </AutoSection>
-      </SidePaddings>
+      <VerticalPaddings>
+        <SidePaddings>
+          <AutoSection
+            v-for="(section, sectionIdx) in sections"
+            :key="sectionIdx"
+            :style="sectionIdx > 0 ? {marginTop: '16px'} : undefined"
+            list-bg-color="secondary-bg"
+          >
+            <AutoList>
+              <AutoListItem
+                v-for="item in section"
+                :key="item.name"
+                clickable
+                @click="navigateTo({name: item.name})"
+              >
+                <template #left>
+                  <AutoListItemLeft>
+                    <AutoListItemLeftIcon square>
+                      <AutoListItemLeftIconElement
+                        square
+                        :style="item.icon.kind === 'custom' ? {
+                          background: colorReference(item.icon.bgColor) || undefined,
+                          color: 'white',
+                        } : undefined"
+                      >
+                        <component
+                          :is="item.icon.component"
+                          :size="item.icon.kind === 'custom' ? item.icon.size : undefined"
+                        />
+                      </AutoListItemLeftIconElement>
+                    </AutoListItemLeftIcon>
+                  </AutoListItemLeft>
+                </template>
+                <template #bodyLeftLabel>
+                  <AutoListItemBodyLeftLabel>
+                    {{ item.title }}
+                  </AutoListItemBodyLeftLabel>
+                </template>
+                <template #bodyRight>
+                  <AutoListItemBodyRight>
+                    <ShimmerBox
+                      v-if="'hasCounter' in item && item.count === undefined && isPending"
+                      :width="24"
+                      :height="24"
+                      rounded
+                    />
+                    <AutoListItemBodyRightBadge v-else-if="'count' in item && item.count">
+                      {{ item.count }}
+                    </AutoListItemBodyRightBadge>
+                    <AutoListItemBodyRightChevron v-if="platform.isMappedIos"/>
+                  </AutoListItemBodyRight>
+                </template>
+              </AutoListItem>
+            </AutoList>
+          </AutoSection>
+        </SidePaddings>
+      </VerticalPaddings>
     </PageContent>
   </PageBase>
 </template>
