@@ -27,7 +27,6 @@ const { large } = injectListItemOptions();
   flex: 1 0 0;
   align-items: center;
   box-sizing: border-box;
-  box-shadow: 0 0.5px 0 var(--list-android-item-body-separator-color);
   overflow: hidden;
   padding-right: 20px;
 
