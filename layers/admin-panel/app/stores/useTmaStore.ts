@@ -1,7 +1,7 @@
 import {
+  retrieveAndroidDeviceData,
   retrieveLaunchParamsFp,
   retrieveRawInitDataFp,
-  type LaunchParams,
 } from '@tma.js/sdk-vue';
 import { useSessionStorage } from '@vueuse/core';
 import { function as fn, either, option } from 'fp-ts';
@@ -17,21 +17,18 @@ interface User {
   username?: string;
 }
 
-interface Value {
-  user: Ref<User | undefined>;
-  launchParams: LaunchParams;
-  startParam: string;
-  initDataRaw: string;
-}
-
 export const useTmaStore = defineStore('tma', () => {
   const {
     initDataRaw,
     launchParams,
     user,
     startParam,
+    androidDeviceData,
   } = fn.pipe(
     either.Do,
+    either.bindW('androidDeviceData', () => {
+      return either.tryCatch(retrieveAndroidDeviceData, e => e as Error);
+    }),
     either.bindW('launchParams', retrieveLaunchParamsFp),
     either.bindW('initDataRaw', () => {
       return fn.pipe(
@@ -46,9 +43,10 @@ export const useTmaStore = defineStore('tma', () => {
     }),
     either.matchW(e => {
       throw e;
-    }, ({ launchParams, initDataRaw }): Value => {
+    }, ({ launchParams, initDataRaw, androidDeviceData }) => {
       const { tgWebAppStartParam = '' } = launchParams;
       return {
+        androidDeviceData,
         launchParams,
         initDataRaw,
         startParam: tgWebAppStartParam,
@@ -92,6 +90,7 @@ export const useTmaStore = defineStore('tma', () => {
   });
 
   return {
+    androidDeviceData,
     initDataRaw,
     launchParams,
     startParam,
