@@ -29,6 +29,7 @@ watch(checked, () => {
   position: relative;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  transition: 300ms;
 
   &--disabled {
     cursor: default;
