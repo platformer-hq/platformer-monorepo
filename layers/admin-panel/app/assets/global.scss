@@ -39,6 +39,18 @@
   --list-ios-item-body-input-placeholder-color: var(--subtitle-text-color);
   --list-ios-item-body-separator-color: var(--section-separator-color);
   --section-header-ios-default-color: var(--section-header-text-color);
+
+  &[data-theme="light"] {
+    --quaternary-fill-bg-color: rgba(116, 116, 128, .08);
+    --tertiary-fill-bg-color: rgba(116, 116, 128, .12);
+    --secondary-fill-bg-color: rgba(118, 118, 128, .16);
+  }
+
+  &[data-theme="dark"] {
+    --quaternary-fill-bg-color: rgba(118, 118, 128, .18);
+    --tertiary-fill-bg-color: rgba(118, 118, 128, .24);
+    --secondary-fill-bg-color: rgba(118, 118, 128, .32);
+  }
 }
 
 body {
