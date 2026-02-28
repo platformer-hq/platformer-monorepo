@@ -2,12 +2,9 @@ import {
   retrieveLaunchParamsFp,
   retrieveRawInitDataFp,
   type LaunchParams,
-  type Platform,
 } from '@tma.js/sdk-vue';
 import { useSessionStorage } from '@vueuse/core';
 import { function as fn, either, option } from 'fp-ts';
-
-import type { KnownPlatform } from '../domains/platform/types';
 
 interface User {
   id: number;
@@ -25,19 +22,12 @@ interface Value {
   launchParams: LaunchParams;
   startParam: string;
   initDataRaw: string;
-  platform: {
-    raw: Platform;
-    mapped: KnownPlatform;
-    isMappedAndroid: boolean;
-    isMappedIos: boolean;
-  };
 }
 
 export const useTmaStore = defineStore('tma', () => {
   const {
     initDataRaw,
     launchParams,
-    platform,
     user,
     startParam,
   } = fn.pipe(
@@ -57,22 +47,11 @@ export const useTmaStore = defineStore('tma', () => {
     either.matchW(e => {
       throw e;
     }, ({ launchParams, initDataRaw }): Value => {
-      const {
-        tgWebAppStartParam = '',
-        // tgWebAppPlatform,
-      } = launchParams;
-      const tgWebAppPlatform = 'ios';
-      const mappedPlatform = ['ios', 'macos'].includes(tgWebAppPlatform) ? 'ios' : 'android';
+      const { tgWebAppStartParam = '' } = launchParams;
       return {
         launchParams,
         initDataRaw,
         startParam: tgWebAppStartParam,
-        platform: {
-          raw: tgWebAppPlatform,
-          mapped: mappedPlatform,
-          isMappedAndroid: mappedPlatform === 'android',
-          isMappedIos: mappedPlatform === 'ios',
-        },
         user: useSessionStorage<User | undefined>(
           'tma-user',
           () => {
@@ -100,6 +79,17 @@ export const useTmaStore = defineStore('tma', () => {
       };
     }),
   );
+  const platform = computed(() => {
+    // const { tgWebAppPlatform } = launchParams;
+    const tgWebAppPlatform = 'ios';
+    const mappedPlatform = ['ios', 'macos'].includes(tgWebAppPlatform) ? 'ios' : 'android';
+    return {
+      raw: tgWebAppPlatform,
+      mapped: mappedPlatform,
+      isMappedAndroid: mappedPlatform === 'android',
+      isMappedIos: mappedPlatform === 'ios',
+    };
+  });
 
   return {
     initDataRaw,
