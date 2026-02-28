@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { looseObject, nonEmpty, parse, pipe, string } from 'valibot';
 
 function resolve(filePath: string) {
   return path.resolve(__dirname, filePath);
@@ -8,6 +9,13 @@ const componentsIgnore = [
   '**/_/**',
   '**/_*',
 ];
+
+const env = parse(
+  looseObject({
+    API_BASE_URL: pipe(string(), nonEmpty()),
+  }),
+  process.env,
+);
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -86,11 +94,23 @@ export default defineNuxtConfig({
     },
   },
   runtimeConfig: {
-
+    public: {
+      apiBaseUrl: env.API_BASE_URL,
+    },
   },
   routeRules: {
     '/**': {
       prerender: true,
+    },
+  },
+  vite: {
+    server: {
+      proxy: {
+        '/api/gql': {
+          target: 'https://mini-apps.store',
+          changeOrigin: true,
+        },
+      },
     },
   },
 });
