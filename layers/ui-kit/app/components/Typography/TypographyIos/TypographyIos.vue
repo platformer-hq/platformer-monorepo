@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { KnownHtmlTag } from '#layers/ui-kit';
+
 import type {
   UseTypographyIosAlign,
   UseTypographyIosProps,

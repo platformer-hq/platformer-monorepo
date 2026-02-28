@@ -23,7 +23,11 @@ export type ListAndroidItemBodyInputEmits = /* @vue-ignore */ {
   change: [Event & { target: HTMLInputElement }];
 };
 
-const { clear = true } = defineProps<ListAndroidItemBodyInputProps>();
+const {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore TODO: To replace input with slot in future.
+  clear = true,
+} = defineProps<ListAndroidItemBodyInputProps>();
 defineEmits<ListAndroidItemBodyInputEmits>();
 defineOptions({ inheritAttrs: false });
 defineSlots<{
@@ -31,7 +35,7 @@ defineSlots<{
 }>();
 
 const { b, e } = bem('list-android-item-body-input');
-const model = defineModel({ default: '' });
+const model = defineModel<string>({ default: '' });
 const focused = ref(false);
 const inputRef = useTemplateRef<HTMLInputElement | HTMLTextAreaElement>('input');
 

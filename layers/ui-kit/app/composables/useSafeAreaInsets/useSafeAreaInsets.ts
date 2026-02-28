@@ -43,13 +43,14 @@ export function useSafeAreaInsets(options: MaybeRefOrGetter<UseSafeAreaInsetsOpt
   return {
     classes: computed(() => {
       const values = toValue(options);
-      return b([values.top, values.bottom, values.left, values.right].map(value => (
-        value
+      return b((['top', 'bottom', 'left', 'right'] as const).map(side => {
+        const value = values[side];
+        return value
           ? value === true
-            ? 'sum-inset'
-            : `${value}-inset`
-          : undefined
-      )));
+            ? `sum-${side}`
+            : `${value}-${side}`
+          : undefined;
+      }));
     }),
   };
 }

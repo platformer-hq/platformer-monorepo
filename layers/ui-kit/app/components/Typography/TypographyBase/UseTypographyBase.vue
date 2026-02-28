@@ -63,6 +63,7 @@ const { b } = bem('typography-base');
   }
 
   &--clamped {
+    text-overflow: ellipsis;
     @include mixins.lineClamp(var(--max-lines));
   }
 }

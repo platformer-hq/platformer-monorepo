@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { SysIosChevronSubheadline1Semibold20Props } from '#ui-kit-icons';
+import type { IosChevronSubheadline1Semibold20Props } from '#ui-kit-icons';
 
-defineProps<SysIosChevronSubheadline1Semibold20Props>();
+defineProps<IosChevronSubheadline1Semibold20Props>();
 </script>
 
 <template>
-  <IconSysIosChevronSubheadline1Semibold20
+  <IconIosChevronSubheadline1Semibold20
     class="list-ios-item-body-right-chevron"
     v-bind="$props"
   />

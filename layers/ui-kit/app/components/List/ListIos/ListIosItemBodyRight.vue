@@ -1,5 +1,7 @@
 <script setup lang="ts">
+// TODO: What for all these slots?
 defineSlots<{
+  default(): unknown;
   chevron(): unknown;
   checkmark(): unknown;
   label(): unknown;
@@ -10,6 +12,7 @@ const { b, e } = bem('list-ios-item-body-right');
 
 <template>
   <div :class="b()">
+    <slot />
     <slot name="label" />
     <slot name="checkmark" />
     <div

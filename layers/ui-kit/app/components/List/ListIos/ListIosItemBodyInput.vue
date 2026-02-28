@@ -23,7 +23,11 @@ export type ListIosItemBodyInputEmits = /* @vue-ignore */ {
   change: [Event & { target: HTMLInputElement }];
 };
 
-const { clear = true } = defineProps<ListIosItemBodyInputProps>();
+const {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore TODO: To replace input with slot in future.
+  clear = true,
+} = defineProps<ListIosItemBodyInputProps>();
 defineEmits<ListIosItemBodyInputEmits>();
 defineOptions({ inheritAttrs: false });
 defineSlots<{

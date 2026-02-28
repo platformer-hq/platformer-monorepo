@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useMousePressed } from '@vueuse/core';
 
+import type { KnownHtmlTag } from '#layers/ui-kit';
+
 const { enabled = true } = defineProps<{
   as: KnownHtmlTag;
   /**
