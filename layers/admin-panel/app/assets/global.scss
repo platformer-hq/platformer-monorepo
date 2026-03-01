@@ -51,6 +51,11 @@
   --switch-ios-mark-left-color: black;
   --switch-ios-mark-right-color: var(--subtitle-text-color);
 
+  --button-base-filled-bg-color: var(--button-color);
+  --button-base-filled-text-color: var(--button-text-color);
+  --button-base-disabled-bg-color: var(--button-main-disabled-color);
+  --button-base-disabled-text-color: var(--text-main-disabled-color);
+
   &[data-theme="light"] {
     --quaternary-fill-bg-color: rgba(116, 116, 128, .08);
     --tertiary-fill-bg-color: rgba(116, 116, 128, .12);
