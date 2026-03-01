@@ -16,7 +16,7 @@ const animate: UseViewTransitionAnimateFn = (transition, view, el, done) => {
   el
     .animate({ transform: view === 'right' ? rightTransform : leftTransform }, {
       duration: 300,
-      easing: 'ease-in-out',
+      easing: 'ease-out',
     })
     .finished
     .then(() => {
