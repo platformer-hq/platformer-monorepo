@@ -39,11 +39,18 @@ const { mutate: updatePermissions, isPending: isUpdating } = useMutation({
 });
 
 const isLoading = computed(() => isLoadingPageData.value || isUpdating.value);
-const allowTransfers = ref(data.value?.canAcceptAppTransfers || false);
-const allowInvites = ref(data.value?.canBeInvitedToManage || false);
+const canAcceptAppTransfers = ref(data.value?.canAcceptAppTransfers || false);
+const canBeInvitedToManage = ref(data.value?.canBeInvitedToManage || false);
 
 onMounted(() => {
   preloadRouteComponents({ name: PAGE_NAME_MAIN });
+});
+
+watch(data, data => {
+  if (data) {
+    canAcceptAppTransfers.value = data.canAcceptAppTransfers;
+    canBeInvitedToManage.value = data.canBeInvitedToManage;
+  }
 });
 </script>
 
@@ -57,7 +64,7 @@ onMounted(() => {
               <AutoListItem
                 :clickable="platform.isMappedAndroid && !isLoading"
                 @click="platform.isMappedAndroid && !isLoading
-                  ? (allowTransfers = !allowTransfers)
+                  ? (canAcceptAppTransfers = !canAcceptAppTransfers)
                   : undefined"
               >
                 <template #bodyLeftLabel>
@@ -68,7 +75,7 @@ onMounted(() => {
                 <template #bodyRight>
                   <AutoListItemBodyRight>
                     <AutoSwitch
-                      v-model:checked="allowTransfers"
+                      v-model:checked="canAcceptAppTransfers"
                       :disabled="isLoading"
                       @click="platform.isMappedAndroid ? $event.preventDefault() : undefined"
                     />
@@ -88,7 +95,7 @@ onMounted(() => {
               <AutoListItem
                 :clickable="platform.isMappedAndroid && !isLoading"
                 @click="platform.isMappedAndroid && !isLoading
-                  ? (allowInvites = !allowInvites)
+                  ? (canBeInvitedToManage = !canBeInvitedToManage)
                   : undefined"
               >
                 <template #bodyLeftLabel>
@@ -99,7 +106,7 @@ onMounted(() => {
                 <template #bodyRight>
                   <AutoListItemBodyRight>
                     <AutoSwitch
-                      v-model:checked="allowInvites"
+                      v-model:checked="canBeInvitedToManage"
                       :disabled="isLoading"
                       @click="platform.isMappedAndroid ? $event.preventDefault() : undefined"
                     />
@@ -119,25 +126,25 @@ onMounted(() => {
     <BottomBarEnterUpTransition>
       <BottomBar
         v-if="!isLoadingPageData && (
-          data?.canAcceptAppTransfers !== allowTransfers
-          || data?.canBeInvitedToManage !== allowInvites
+          data?.canAcceptAppTransfers !== canAcceptAppTransfers
+          || data?.canBeInvitedToManage !== canBeInvitedToManage
         )"
       >
-        <UiButton
-          :palette="isLoading ? 'gray' : 'filled'"
+        <AutoButton
+          :palette="isLoading ? 'disabled' : 'filled'"
           full-width
           elevated
           :disabled="isLoading"
           :active="!isLoading"
           @click="updatePermissions({
-            canAcceptAppTransfers: allowTransfers,
-            canBeInvitedToManage: allowInvites
+            canAcceptAppTransfers: canAcceptAppTransfers,
+            canBeInvitedToManage: canBeInvitedToManage
           })"
         >
-          <AutoTypography variant="body">
+          <AutoTypography variant="body" weight="medium">
             {{ t('button.save') }}
           </AutoTypography>
-        </UiButton>
+        </AutoButton>
       </BottomBar>
     </BottomBarEnterUpTransition>
   </PageBase>
