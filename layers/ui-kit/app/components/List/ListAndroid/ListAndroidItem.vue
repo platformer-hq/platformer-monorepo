@@ -26,9 +26,6 @@ defineSlots<{
   bodyLeftLabel(): unknown;
   bodyLeftSubtitle(): unknown;
   bodyRight(): unknown;
-  bodyRightCheckmark(): unknown;
-  bodyRightChevron(): unknown;
-  bodyRightLabel(): unknown;
 }>();
 
 const { b, e } = bem('list-android-item');
@@ -40,11 +37,6 @@ provideListItemOptions({
 const bodyLeftSlots = [
   { id: 'bodyLeftLabel', name: 'label' },
   { id: 'bodyLeftSubtitle', name: 'subtitle' },
-] as const;
-const bodyRightSlots = [
-  { id: 'bodyRightCheckmark', name: 'checkmark' },
-  { id: 'bodyRightChevron', name: 'chevron' },
-  { id: 'bodyRightLabel', name: 'label' },
 ] as const;
 </script>
 
@@ -71,17 +63,7 @@ const bodyRightSlots = [
             </slot>
           </template>
           <template #right>
-            <slot name="bodyRight">
-              <ListAndroidItemBodyRight v-if="bodyRightSlots.some(s => s.id in $slots)">
-                <template
-                  v-for="{id, name} in bodyRightSlots.filter(s => s.id in $slots)"
-                  :key="id"
-                  #[name]
-                >
-                  <slot :name="id" />
-                </template>
-              </ListAndroidItemBodyRight>
-            </slot>
+            <slot name="bodyRight"/>
           </template>
         </ListAndroidItemBody>
       </slot>

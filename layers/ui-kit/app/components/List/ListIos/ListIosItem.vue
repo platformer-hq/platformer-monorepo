@@ -28,9 +28,6 @@ defineSlots<{
   bodyLeftLabel(): unknown;
   bodyLeftSubtitle(): unknown;
   bodyRight(): unknown;
-  bodyRightCheckmark(): unknown;
-  bodyRightChevron(): unknown;
-  bodyRightLabel(): unknown;
 }>();
 
 const { b, e } = bem('list-ios-item');
@@ -42,11 +39,6 @@ provideListItemOptions({
 const bodyLeftSlots = [
   { id: 'bodyLeftLabel', name: 'label' },
   { id: 'bodyLeftSubtitle', name: 'subtitle' },
-] as const;
-const bodyRightSlots = [
-  { id: 'bodyRightCheckmark', name: 'checkmark' },
-  { id: 'bodyRightChevron', name: 'chevron' },
-  { id: 'bodyRightLabel', name: 'label' },
 ] as const;
 
 const innerRef = useTemplateRef<HTMLButtonElement>('inner');
@@ -87,17 +79,7 @@ const onHighlightLeave = (el: Element, done: VoidFunction) => {
             </slot>
           </template>
           <template #right>
-            <slot name="bodyRight">
-              <ListIosItemBodyRight v-if="bodyRightSlots.some(s => s.id in $slots)">
-                <template
-                  v-for="{id, name} in bodyRightSlots.filter(s => s.id in $slots)"
-                  :key="id"
-                  #[name]
-                >
-                  <slot :name="id" />
-                </template>
-              </ListIosItemBodyRight>
-            </slot>
+            <slot name="bodyRight"/>
           </template>
         </ListIosItemBody>
       </slot>
