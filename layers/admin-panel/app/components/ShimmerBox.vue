@@ -3,13 +3,7 @@
  * This component is reponsible for displaying a block, notifying the user that the content
  * is loading.
  */
-import type { KnownHtmlTag } from '#layers/ui-kit';
-
-const { as = 'div', color = 'quaternary' } = defineProps<{
-  /**
-   * @default 'div'
-   */
-  as?: KnownHtmlTag;
+const { color = 'quaternary' } = defineProps<{
   /**
    * Color to apply to the shimmer background.
    * @default 'quaternary'
@@ -30,7 +24,6 @@ const isDark = useIsDark();
 
 <template>
   <ColorBox
-    :as
     :class="b({rounded})"
     :bg="color === 'transparent' ? undefined : `${color}-fill-bg`"
     :style="{
