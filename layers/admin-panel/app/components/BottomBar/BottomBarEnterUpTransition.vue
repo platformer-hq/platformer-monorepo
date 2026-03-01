@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const transition = createReversibleTransition({
   animatedProperties: {
-    transform: ['translateY(100%)', 'translateY(0)'],
+    transform: ['translateY(100%) scale(0.8)', 'translateY(0) scale(1)'],
     opacity: [0, 0, 1],
   },
   animationOptions: {
