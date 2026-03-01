@@ -27,9 +27,9 @@ if (import.meta.client) {
 
 <template>
   <ClientOnly>
-    <NavigationStateProvider v-if="apiStore.token">
+    <NavigationStateProvider>
       <LayoutBody v-slot="{transition}" @ready="miniApp.ready">
-        <NuxtPage :page-key="route => route.path" :transition="transition"/>
+        <NuxtPage v-if="apiStore.token" :page-key="route => route.path" :transition="transition"/>
       </LayoutBody>
     </NavigationStateProvider>
   </ClientOnly>
