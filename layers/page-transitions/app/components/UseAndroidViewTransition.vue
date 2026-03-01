@@ -1,59 +1,48 @@
 <script setup lang="ts">
 import type { TransitionProps } from 'vue';
 
-import type {
-  UseViewTransitionAfterEnterFn,
-  UseViewTransitionAnimateFn,
-  UseViewTransitionBeforeAnimateFn,
-} from './UseViewTransition.vue';
+import type { UseViewTransitionAnimateFn } from './UseViewTransition.vue';
 
 defineSlots<{
   default(props: TransitionProps): void;
 }>();
 
-const animationOptions = {
-  duration: 300,
-  easing: 'ease-in-out',
-} satisfies KeyframeEffectOptions;
-const modifyClassList = (el: HTMLElement, view: 'left' | 'right', action: 'add' | 'remove') => {
-  el.classList[action]('android-view-transition', `android-view-transition--${view}`);
-};
-const beforeAnimate: UseViewTransitionBeforeAnimateFn = (transition, view, el) => {
-  modifyClassList(el, view, 'add');
-  if (view === 'left') {
-    el.style.top = `${-window.scrollY}px`;
-  }
-  if (transition === 'enter' && view === 'right') {
-    el.style.opacity = '0';
-  }
-};
-const animate: UseViewTransitionAnimateFn = (transition, viewKind, el, done) => {
-  const opacity = ['0', '1'];
-  const scale = ['1.02', '1'];
+const animate: UseViewTransitionAnimateFn = (transition, view, el, done) => {
+  const rightTransform = ['translateX(100%)', 'translateX(0)'];
   if (transition === 'leave') {
-    [opacity, scale].forEach(arr => arr.reverse());
+    rightTransform.reverse();
   }
-  return viewKind === 'left'
-    ? setTimeout(() => done(), animationOptions.duration)
-    : el.animate({ opacity, scale }, animationOptions).finished.then(() => {
+  if (view === 'left') {
+    return setTimeout(done, 300);
+  }
+  el
+    .animate({ transform: rightTransform }, {
+      duration: 300,
+      easing: 'ease-out',
+    })
+    .finished
+    .then(() => {
       done();
     });
-};
-const afterEnter: UseViewTransitionAfterEnterFn = (view, el) => {
-  modifyClassList(el, view, 'remove');
-  el.style.top = '';
-  el.style.opacity = '';
 };
 </script>
 
 <template>
   <UseViewTransition
-    v-slot="slotProps"
-    :before-animate="beforeAnimate"
+    v-slot="transitionProps"
+    :before-animate="(_transition, view, el) => {
+      if (view === 'right') {
+        el.classList.add('android-view-transition');
+      }
+    }"
     :animate="animate"
-    :after-enter="afterEnter"
+    :after-enter="(view, el) => {
+      if (view === 'right') {
+        el.classList.remove('android-view-transition');
+      }
+    }"
   >
-    <slot v-bind="slotProps"/>
+    <slot v-bind="transitionProps"/>
   </UseViewTransition>
 </template>
 
@@ -66,11 +55,5 @@ const afterEnter: UseViewTransitionAfterEnterFn = (view, el) => {
   width: 100vw;
   bottom: 0;
   overflow: hidden;
-  transform: translateZ(0);
-  will-change: opacity, scale;
-
-  &--right {
-    z-index: 101;
-  }
 }
 </style>
