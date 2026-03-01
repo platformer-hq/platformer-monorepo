@@ -14,6 +14,7 @@ import {
   swipeBehavior,
   miniApp,
 } from '@tma.js/sdk-vue';
+import { function as fn, taskEither } from 'fp-ts';
 import type { TransitionProps } from 'vue';
 
 import { UseIosViewTransition, UseAndroidViewTransition } from '#components';
@@ -28,10 +29,11 @@ const emit = defineEmits<{
 // Apply polyfills for @tma.js/sdk-vue.
 callOnce(applyPolyfills);
 
-const store = useTmaStore();
+const tmaStore = useTmaStore();
 const router = useRouter();
+const { setLocale } = useI18n();
 
-// Initialize the SDK.
+// Initializing the SDK.
 await callOnce(async () => {
   /**
    * Converts value from camel case to kebab case.
@@ -41,7 +43,7 @@ await callOnce(async () => {
     return value.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`);
   };
 
-  const { startParam, launchParams, platform } = store;
+  const { startParam, launchParams, platform } = tmaStore;
 
   // Init eruda.
   if (
@@ -148,6 +150,27 @@ await callOnce(async () => {
   });
 });
 
+// Configuring the current locale.
+await callOnce(async () => {
+  let locale = await fn.pipe(
+    csGetLocale(),
+    taskEither.matchW(
+      e => {
+        console.error('Error when restoring locale from the cloud storage', e);
+      },
+      locale => locale,
+    ),
+  )();
+  if (!locale) {
+    const languageCode = tmaStore.launchParams.tgWebAppData?.user?.language_code;
+    if (isKnownLocale(languageCode)) {
+      locale = languageCode;
+    }
+  }
+  await setLocale(locale || 'en');
+});
+
+// Setting the initial route.
 await callOnce(async () => {
   if (!isPageReload()) {
     await router.replace({ name: PAGE_NAME_MAIN });
@@ -161,7 +184,7 @@ onMounted(() => {
 
 <template>
   <component
-    :is="store.platform.isMappedIos ? UseIosViewTransition : UseAndroidViewTransition"
+    :is="tmaStore.platform.isMappedIos ? UseIosViewTransition : UseAndroidViewTransition"
     v-slot="transition"
   >
     <slot :transition="transition"/>
