@@ -23,6 +23,8 @@ const animate: UseViewTransitionAnimateFn = (transition, view, el, done) => {
       done();
     });
 };
+
+// TODO: There is probably some box shadow for the right view.
 </script>
 
 <template>
