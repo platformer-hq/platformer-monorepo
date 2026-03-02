@@ -41,7 +41,7 @@ const { b } = bem('typography-base');
 </template>
 
 <style lang="scss">
-@use "@/domains/styles/mixins";
+@use "@ui-kit-mixins" as mixins;
 
 .typography-base {
   margin: 0;

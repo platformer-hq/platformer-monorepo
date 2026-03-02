@@ -79,7 +79,7 @@ useRipples({
 </template>
 
 <style lang="scss">
-@use "@/domains/styles/mixins";
+@use "@ui-kit-mixins" as mixins;
 
 .list-android-item {
   display: block;

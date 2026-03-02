@@ -14,7 +14,7 @@ const { b } = bem('list-ios-item-body-left-subtitle');
 </template>
 
 <style lang="scss">
-@use "@/domains/styles/mixins";
+@use "@ui-kit-mixins" as mixins;
 
 .list-ios-item-body-left-subtitle {
   width: 100%;

@@ -88,7 +88,7 @@ const onHighlightLeave = (el: Element, done: VoidFunction) => {
 </template>
 
 <style lang="scss">
-@use "@/domains/styles/mixins.scss";
+@use "@ui-kit-mixins" as mixins;
 
 .list-ios-item {
   display: block;

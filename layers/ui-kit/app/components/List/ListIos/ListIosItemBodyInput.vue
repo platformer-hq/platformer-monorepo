@@ -87,7 +87,7 @@ const onFocus = (e: FocusEvent) => {
 </template>
 
 <style lang="scss">
-@use "@/domains/styles/mixins";
+@use "@ui-kit-mixins" as mixins;
 
 .list-ios-item-body-input {
   display: flex;
