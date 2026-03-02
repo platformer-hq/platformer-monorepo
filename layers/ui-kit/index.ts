@@ -53,6 +53,9 @@ export { default as SectionIos } from './app/components/Section/SectionIos/Secti
 export { default as SectionFooterIos } from './app/components/Section/SectionIos/SectionIosFooter.vue';
 export { default as SectionHeaderIos, type SectionHeaderIosProps, type SectionHeaderIosVariant } from './app/components/Section/SectionIos/SectionIosHeader.vue';
 
+export { default as SwitchAndroid } from './app/components/Switch/SwitchAndroid.vue';
+export { default as SwitchIos } from './app/components/Switch/SwitchIos.vue';
+
 export { default as TypographyBase, type TypographyBaseAlign, type TypographyBaseProps } from './app/components/Typography/TypographyBase/TypographyBase.vue';
 export { default as UseTypographyBase, type UseTypographyBaseAlign, type UseTypographyBaseProps, type UseTypographyBaseSlotProps } from './app/components/Typography/TypographyBase/UseTypographyBase.vue';
 
@@ -66,6 +69,7 @@ export { default as UseTypographyIos, type UseTypographyIosAlign, type UseTypogr
 //#region Composables.
 export { useSafeAreaInsets, type UseSafeAreaInsetsInset, type UseSafeAreaInsetsOptions } from './app/composables/useSafeAreaInsets/useSafeAreaInsets';
 export { useKeyboardVisibility } from './app/composables/useKeyboardVisibility';
+export { useRipples } from './app/composables/useRipples';
 //#endregion
 
 //#region Utils.
