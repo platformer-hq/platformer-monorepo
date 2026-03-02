@@ -1,9 +1,14 @@
 <script setup lang="ts">
 const { b, e } = bem('bottom-bar');
+
+const rootRef = useTemplateRef('root');
+defineExpose({
+  element: computed(() => rootRef.value?.element),
+});
 </script>
 
 <template>
-  <SafeAreaInsets :class="b()" left right bottom>
+  <SafeAreaInsets ref="root" :class="b()" left right bottom>
     <div :class="e('inner')">
       <slot/>
     </div>
