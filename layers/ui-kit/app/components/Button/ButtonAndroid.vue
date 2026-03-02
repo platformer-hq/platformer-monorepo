@@ -38,26 +38,44 @@ const props = withDefaults(defineProps<ButtonAndroidProps>(), {
   active: undefined,
 });
 
-const { b, e } = bem('button-android');
+const { b } = bem('button-android');
 
 const basedOnActive = (key: 'ripples' | 'pressable' | 'clickable') => {
   return props[key] ?? props.active ?? true;
 };
 const rootRef = useTemplateRef('root');
-const { pressed } = useMousePressed({ target: computed(() => rootRef.value?.element) });
+const pressed = ref(false);
+useMousePressed({
+  target: () => rootRef.value?.element,
+  onPressed() {
+    if (basedOnActive('pressable')) {
+      pressed.value = true;
+    }
+  },
+  onReleased() {
+    pressed.value = false;
+  },
+});
+
+const isClickable = computed(() => basedOnActive('clickable'));
+const ripplesRef = computed(() => rootRef.value?.element);
+useRipples({
+  enabled: isClickable,
+  containerRef: ripplesRef,
+  clickRef: ripplesRef,
+});
 </script>
 
 <template>
   <ButtonBase
     ref="root"
     :as
-    :clickable="basedOnActive('clickable')"
+    :clickable="isClickable"
     :palette
     :full-width
-    :class="b({pressed: basedOnActive('pressable') && pressed, palette}, variant)"
+    :class="b({pressed, palette}, variant)"
   >
     <slot/>
-    <UiRipples v-if="basedOnActive('clickable')" as="span" :class="e('ripples')"/>
   </ButtonBase>
 </template>
 
@@ -66,6 +84,7 @@ const { pressed } = useMousePressed({ target: computed(() => rootRef.value?.elem
 
 .button-android {
   position: relative;
+  overflow: hidden;
   transition: 300ms ease-out;
 
   &--pressed {
@@ -91,16 +110,6 @@ const { pressed } = useMousePressed({ target: computed(() => rootRef.value?.elem
     padding: 6px 12px;
     min-height: 28px;
     border-radius: 1000px;
-  }
-
-  &__ripples {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    border-radius: inherit;
-    overflow: hidden;
   }
 
   @each $palette in ('filled', 'tinted', 'plain', 'gray', 'disabled') {
