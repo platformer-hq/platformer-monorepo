@@ -61,8 +61,6 @@ export { default as UseTypographyAndroid, type UseTypographyAndroidAlign, type U
 
 export { default as TypographyIos, type TypographyIosAlign, type TypographyIosProps, type TypographyIosVariant } from './app/components/Typography/TypographyIos/TypographyIos.vue';
 export { default as UseTypographyIos, type UseTypographyIosAlign, type UseTypographyIosProps, type UseTypographyIosSlotProps, type UseTypographyIosVariant } from './app/components/Typography/TypographyIos/UseTypographyIos.vue';
-
-export { default as UiRipples } from './app/components/UiRipples.vue';
 //#endregion
 
 //#region Composables.
