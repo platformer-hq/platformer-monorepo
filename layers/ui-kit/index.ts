@@ -1,4 +1,7 @@
 //#region Components.
+export { default as BottomBar } from './app/components/BottomBar/BottomBar.vue';
+export { default as BottomBarTransition } from './app/components/BottomBar/BottomBarTransition.vue';
+
 export { default as ButtonBase, type ButtonBaseProps } from './app/components/Button/ButtonBase.vue';
 export { default as ButtonIos, type ButtonIosProps } from './app/components/Button/ButtonIos.vue';
 export { default as ButtonAndroid, type ButtonAndroidProps } from './app/components/Button/ButtonAndroid.vue';
