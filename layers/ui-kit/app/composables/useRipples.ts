@@ -4,7 +4,7 @@ export function useRipples(options: {
   /**
    * @default true
    */
-  enabled?: ComputedRef<boolean>;
+  enabled?: MaybeRefOrGetter<boolean>;
   containerRef: MaybeComputedElementRef<HTMLElement | null | undefined>;
   clickRef: MaybeComputedElementRef<HTMLElement | null | undefined>;
 }) {
@@ -13,7 +13,7 @@ export function useRipples(options: {
     target: options.clickRef,
     async onPressed(event) {
       const container = toValue(options.containerRef);
-      const enabled = options.enabled?.value ?? true;
+      const enabled = toValue(options.enabled) ?? true;
       if (!enabled || !container) {
         return;
       }
@@ -39,6 +39,7 @@ export function useRipples(options: {
       rippleEl.style.position = 'absolute';
       rippleEl.style.left = `${ripple.x}px`;
       rippleEl.style.top = `${ripple.y}px`;
+      rippleEl.style.pointerEvents = 'none';
       container.appendChild(rippleEl);
 
       // Animate the ripple appearance.
