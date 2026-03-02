@@ -123,7 +123,7 @@ watch(data, data => {
         </SidePaddings>
       </VerticalPaddings>
     </PageContent>
-    <BottomBarEnterUpTransition>
+    <BottomBarTransition>
       <BottomBar
         v-if="!isLoadingPageData && (
           data?.canAcceptAppTransfers !== canAcceptAppTransfers
@@ -146,6 +146,6 @@ watch(data, data => {
           </AutoTypography>
         </AutoButton>
       </BottomBar>
-    </BottomBarEnterUpTransition>
+    </BottomBarTransition>
   </PageBase>
 </template>
