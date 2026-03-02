@@ -34,7 +34,7 @@ interface Props extends Omit<ButtonBaseProps, 'palette'>, IosSpecificProps, Andr
    * and `clickable` properties.
    */
   active?: boolean;
-  palette: ButtonBaseProps['palette'] | {
+  palette?: ButtonBaseProps['palette'] | {
     bg?: ColorReferenceAnyColor;
     text?: ColorReferenceAnyColor;
   };
@@ -58,7 +58,12 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const platform = useTmaPlatform();
-const sharedProps = reactivePick(props, ['fullWidth', 'as', 'palette', 'variant', 'clickable']);
+const formattedPalette = computed(() => (
+  typeof props.palette === 'string' ? props.palette : undefined
+));
+const sharedProps = reactivePick(props, [
+  'fullWidth', 'as', 'variant', 'clickable', 'active',
+]);
 const style = computed(() => (
   typeof props.palette === 'object'
     ? ({
@@ -73,13 +78,21 @@ const style = computed(() => (
   <ButtonAndroid
     v-if="platform.isMappedAndroid"
     v-bind="sharedProps"
+    :palette="formattedPalette"
     :style="style"
     :ripples
     :pressable
   >
     <slot/>
   </ButtonAndroid>
-  <ButtonIos v-else v-bind="sharedProps" :style="style" :highlight-on-active :elevated>
+  <ButtonIos
+    v-else
+    v-bind="sharedProps"
+    :style="style"
+    :highlight-on-active
+    :elevated
+    :palette="formattedPalette"
+  >
     <slot/>
   </ButtonIos>
 </template>
