@@ -87,6 +87,7 @@ useRipples({
   background: transparent;
   overflow: hidden;
   position: relative;
+  transition: 300ms ease-out;
 
   &--no-left {
     grid-template-columns: 1fr;

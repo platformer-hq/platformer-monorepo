@@ -20,7 +20,7 @@ const { b } = bem('list-android-item-left');
 <style lang="scss">
 .list-android-item-left {
   &--default {
-    width: 50px;
+    width: 44px;
   }
 }
 </style>
