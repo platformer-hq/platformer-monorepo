@@ -123,7 +123,7 @@ onMounted(() => {
                   </AutoListItemLeft>
                 </template>
                 <template #bodyLeftLabel>
-                  <AutoListItemBodyLeftLabel>
+                  <AutoListItemBodyLeftLabel :max-lines="1">
                     {{ item.title }}
                   </AutoListItemBodyLeftLabel>
                 </template>
