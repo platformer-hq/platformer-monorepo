@@ -13,21 +13,17 @@ export function useRipples(options: {
     target: options.clickRef,
     async onPressed(event) {
       const container = toValue(options.containerRef);
+      const clickContainer = toValue(options.clickRef);
       const enabled = toValue(options.enabled) ?? true;
-      if (!enabled || !container) {
+      if (!enabled || !container || !clickContainer) {
         return;
       }
       const [x, y] = 'clientX' in event
         ? [event.clientX, event.clientY]
         : [event.touches[0]!.clientX, event.touches[0]!.clientY];
-      const { currentTarget } = event;
-      const rect = (currentTarget as HTMLElement).getBoundingClientRect();
-      const ripple = {
-        x: x - rect.left,
-        y: y - rect.top,
-        key: Math.random(),
-      };
-      lastAddedRippleKey = ripple.key;
+      const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+      const rippleKey = Math.random();
+      lastAddedRippleKey = rippleKey;
 
       // Create ripple element and add to container.
       const rippleEl = document.createElement('span');
@@ -37,8 +33,8 @@ export function useRipples(options: {
       rippleEl.style.borderRadius = '50%';
       rippleEl.style.transform = 'translate(-50%, -50%)';
       rippleEl.style.position = 'absolute';
-      rippleEl.style.left = `${ripple.x}px`;
-      rippleEl.style.top = `${ripple.y}px`;
+      rippleEl.style.left = `${x - rect.left}px`;
+      rippleEl.style.top = `${y - rect.top}px`;
       rippleEl.style.pointerEvents = 'none';
       container.appendChild(rippleEl);
 
@@ -58,7 +54,7 @@ export function useRipples(options: {
 
       // If the user is holding the pointer and the last one added ripple is the current
       // one, we should wait for the user to move the pointer away and then remove the ripple.
-      if (pressed.value && lastAddedRippleKey === ripple.key) {
+      if (pressed.value && lastAddedRippleKey === rippleKey) {
         const stop = watch(pressed, v => {
           if (!v) {
             stop();
