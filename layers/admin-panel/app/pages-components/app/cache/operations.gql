@@ -1,0 +1,11 @@
+query AppCachePageData($appID: ID!) {
+  app(appID: $appID) {
+    urlsCacheResetAt
+  }
+}
+
+mutation ResetAppCache($appID: ID!) {
+  updateApp(appID: $appID, urlsCacheReset: true) {
+    urlsCacheResetAt
+  }
+}
