@@ -63,7 +63,7 @@ const apps = computed(() => {
     return;
   }
   interface App {
-    id: string;
+    id: number;
     title: string;
     isPublic: boolean;
     role: 'owner' | 'admin' | 'member';
@@ -86,6 +86,7 @@ const canCreate = computed(() => {
   return maxOwnedAppsCount === undefined || apps.value.owned.length < maxOwnedAppsCount;
 });
 
+const hasInitialData = !!apps.value;
 const appTransition = createReversibleTransition({
   animatedProperties({ transition, el }) {
     return reverseTransitionKeyframesIfLeave({
@@ -114,12 +115,6 @@ const handleCreateClick = async () => {
   } else {
     navigateTo({ name: PAGE_NAME_CREATE_APP });
   }
-};
-const goToApp = (id: string) => {
-  navigateTo({
-    name: PAGE_NAME_APP,
-    query: { id },
-  });
 };
 
 watch(canCreate, value => {
@@ -175,9 +170,13 @@ onMounted(() => {
               <TransitionGroup v-bind="appTransition" :css="false">
                 <AutoListItem
                   v-for="(appOrWidth, idx) in apps?.owned || ['40%', '70%', '60%']"
-                  :key="idx"
+                  :key="hasInitialData
+                    ? typeof appOrWidth === 'object'
+                      ? appOrWidth.id
+                      : idx
+                    : idx"
                   :clickable="typeof appOrWidth === 'object'"
-                  @click="typeof appOrWidth === 'object' && goToApp(appOrWidth.id)"
+                  @click="typeof appOrWidth === 'object' && navigateToApp(appOrWidth.id)"
                 >
                   <template #bodyLeftLabel>
                     <AutoListItemBodyLeftLabel
@@ -223,6 +222,7 @@ onMounted(() => {
                     v-for="app in apps.managed"
                     :key="app.id"
                     clickable
+                    @click="navigateToApp(app.id)"
                   >
                     <template #bodyLeftLabel>
                       <AutoListItemBodyLeftLabel :max-lines="1">
