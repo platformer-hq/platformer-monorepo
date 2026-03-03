@@ -1,0 +1,15 @@
+query AppsPageData {
+  currentUser {
+    apps {
+      app {
+        id
+        title
+        privacy
+      }
+      role
+    }
+    limits {
+      maxOwnedAppsCount
+    }
+  }
+}
