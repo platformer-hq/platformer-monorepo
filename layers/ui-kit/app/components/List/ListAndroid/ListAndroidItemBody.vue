@@ -2,7 +2,6 @@
 import { injectListItemOptions } from './provider';
 
 defineSlots<{
-  input(): unknown;
   left(): unknown;
   right(): unknown;
 }>();
@@ -13,17 +12,15 @@ const { large } = injectListItemOptions();
 
 <template>
   <div :class="b(large ? 'large' : 'small')">
-    <slot v-if="$slots.input" name="input"/>
-    <template v-else>
-      <slot name="left" />
-      <slot name="right" />
-    </template>
+    <slot name="left" />
+    <slot name="right" />
   </div>
 </template>
 
 <style lang="scss">
 .list-android-item-body {
   display: flex;
+  gap: 16px;
   flex: 1 0 0;
   align-items: center;
   box-sizing: border-box;

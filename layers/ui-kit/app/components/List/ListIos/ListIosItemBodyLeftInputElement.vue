@@ -1,0 +1,69 @@
+<script setup lang="ts">
+import { onClickOutside } from '@vueuse/core';
+import { mergeProps } from 'vue';
+
+defineOptions({ inheritAttrs: false });
+
+const { b } = bem('list-ios-item-body-input-element');
+const model = defineModel<string>({ default: '' });
+const inputRef = useTemplateRef('input');
+const keyboard = useKeyboardVisibility();
+
+// Both Telegram for iOS and Adnroid don't handle click outside and don't lose focus on
+// the input.
+onClickOutside(inputRef, () => {
+  inputRef.value?.blur();
+});
+
+// Sometimes Telegram for iOS scrolls the input into view improperly. So,
+// after the keyboard was shown, we are scrolling the input into view.
+const onFocus = (e: FocusEvent) => {
+  if (!keyboard.isShown) {
+    // If the keyboard is not shown, then it is going to. It takes about 500 ms
+    // for the keyboard to appear.
+    setTimeout(() => {
+      (e.target as HTMLElement).scrollIntoView({ behavior: 'smooth' });
+    }, 500);
+  }
+};
+</script>
+
+<template>
+  <UseTypographyIos v-slot="{classes, style}" variant="body">
+    <input
+      ref="input"
+      v-bind="mergeProps($attrs, {class: [classes, b()], style})"
+      v-model="model"
+      @focus="onFocus"
+    >
+  </UseTypographyIos>
+</template>
+
+<style lang="scss">
+@use "@ui-kit-mixins" as mixins;
+
+.list-ios-item-body-input-element {
+  border: none;
+  background: transparent;
+  appearance: none;
+  display: block;
+  height: 100%;
+  outline: none;
+  position: relative;
+  padding: 15px 0;
+  width: 100%;
+  color: var(--list-ios-item-body-left-input-text-color);
+  @include mixins.hideScrollbar;
+  @include mixins.noHighlight;
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &::placeholder {
+    color: var(--list-ios-item-body-left-input-placeholder-color);
+  }
+}
+</style>

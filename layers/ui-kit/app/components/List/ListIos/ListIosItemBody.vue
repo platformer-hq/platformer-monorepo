@@ -2,7 +2,6 @@
 import { injectListItemOptions } from './provider';
 
 defineSlots<{
-  input(): unknown;
   left(): unknown;
   right(): unknown;
 }>();
@@ -13,22 +12,20 @@ const { large } = injectListItemOptions();
 
 <template>
   <div :class="b(large ? 'large' : 'small')">
-    <slot v-if="$slots.input" name="input"/>
-    <template v-else>
-      <slot name="left" />
-      <slot name="right" />
-    </template>
+    <slot name="left" />
+    <slot name="right" />
   </div>
 </template>
 
 <style lang="scss">
 .list-ios-item-body {
   flex: 1 0 0;
+  gap: 16px;
   box-shadow: 0 0.33px 0 var(--section-separator-color);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-right: 16px;
+  padding-right: 16px;
 
   &--small {
     min-height: 52px;

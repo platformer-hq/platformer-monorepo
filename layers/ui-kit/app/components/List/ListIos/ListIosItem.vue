@@ -5,9 +5,10 @@ import { provideListItemOptions } from './provider.js';
 
 export type ListIosItemVariant = 'regular' | 'accent' | 'destructive' | 'placeholder';
 
-const { variant = 'regular', large = false } = defineProps<{
+const props = withDefaults(defineProps<{
   /**
-   * True if the element is clickable. This will add some additional visual changes to the element.
+   * True if the element is clickable. This will add some additional visual changes
+   * to the element.
    */
   clickable?: boolean;
   /**
@@ -19,12 +20,14 @@ const { variant = 'regular', large = false } = defineProps<{
    * @default 'regular'
    */
   variant?: ListIosItemVariant;
-}>();
+}>(), {
+  variant: 'regular',
+});
 defineSlots<{
   left(): unknown;
   body(): unknown;
-  bodyInput(): unknown;
   bodyLeft(): unknown;
+  bodyLeftInput(): unknown;
   bodyLeftLabel(): unknown;
   bodyLeftSubtitle(): unknown;
   bodyRight(): unknown;
@@ -33,16 +36,17 @@ defineSlots<{
 const { b, e } = bem('list-ios-item');
 
 provideListItemOptions({
-  large: computed(() => large),
+  large: computed(() => props.large || false),
 });
 
 const bodyLeftSlots = [
+  { id: 'bodyLeftInput', name: 'input' },
   { id: 'bodyLeftLabel', name: 'label' },
   { id: 'bodyLeftSubtitle', name: 'subtitle' },
 ] as const;
 
-const innerRef = useTemplateRef<HTMLButtonElement>('inner');
-const { pressed } = useMousePressed({ target: innerRef });
+const rootRef = useTemplateRef('root');
+const { pressed } = useMousePressed({ target: rootRef });
 const onHighlightLeave = (el: Element, done: VoidFunction) => {
   el
     .animate({ opacity: [0.1, 0] }, { duration: 300 })
@@ -54,36 +58,31 @@ const onHighlightLeave = (el: Element, done: VoidFunction) => {
 </script>
 
 <template>
-  <li :class="b(variant)">
-    <div ref="inner" :class="e('inner', { clickable })">
-      <Transition v-if="clickable" :css="false" @leave="onHighlightLeave">
-        <span v-if="pressed" key="active" :class="e('highlight')"/>
-      </Transition>
-      <slot name="left"/>
-      <slot name="body">
-        <ListIosItemBody>
-          <template v-if="$slots.bodyInput" #input>
-            <slot name="bodyInput" />
-          </template>
-          <template v-else #left>
-            <slot name="bodyLeft">
-              <ListIosItemBodyLeft v-if="bodyLeftSlots.some(s => s.id in $slots)">
-                <template
-                  v-for="{id, name} in bodyLeftSlots.filter(s => s.id in $slots)"
-                  :key="id"
-                  #[name]
-                >
-                  <slot :name="id" />
-                </template>
-              </ListIosItemBodyLeft>
-            </slot>
-          </template>
-          <template #right>
-            <slot name="bodyRight"/>
-          </template>
-        </ListIosItemBody>
-      </slot>
-    </div>
+  <li ref="root" :class="b(variant, { clickable })">
+    <Transition v-if="clickable" :css="false" @leave="onHighlightLeave">
+      <span v-if="pressed" key="active" :class="e('highlight')"/>
+    </Transition>
+    <slot name="left"/>
+    <slot name="body">
+      <ListIosItemBody>
+        <template #left>
+          <slot name="bodyLeft">
+            <ListIosItemBodyLeft v-if="bodyLeftSlots.some(s => s.id in $slots)">
+              <template
+                v-for="{id, name} in bodyLeftSlots.filter(s => s.id in $slots)"
+                :key="id"
+                #[name]
+              >
+                <slot :name="id" />
+              </template>
+            </ListIosItemBodyLeft>
+          </slot>
+        </template>
+        <template #right>
+          <slot name="bodyRight"/>
+        </template>
+      </ListIosItemBody>
+    </slot>
   </li>
 </template>
 
@@ -91,8 +90,18 @@ const onHighlightLeave = (el: Element, done: VoidFunction) => {
 @use "@ui-kit-mixins" as mixins;
 
 .list-ios-item {
-  display: block;
   position: relative;
+  appearance: none;
+  border: none;
+  box-sizing: border-box;
+  display: flex;
+  padding: 0 0 0 16px;
+  background: transparent;
+  // align-items: stretch;
+
+  &--clickable {
+    @include mixins.clickable;
+  }
 
   &__highlight {
     background: currentColor;
@@ -104,24 +113,6 @@ const onHighlightLeave = (el: Element, done: VoidFunction) => {
     border-radius: inherit;
     opacity: 0.1;
     pointer-events: none;
-  }
-
-  &__inner {
-    appearance: none;
-    border: none;
-    box-sizing: border-box;
-    width: 100%;
-    display: flex;
-    padding: 0 0 0 16px;
-    background: transparent;
-    text-align: left;
-    cursor: unset;
-    color: inherit;
-    align-items: stretch;
-
-    &--clickable {
-      @include mixins.clickable;
-    }
   }
 
   @each $variant in ("regular", "destructive", "accent", "placeholder") {

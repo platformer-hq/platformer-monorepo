@@ -23,8 +23,8 @@ const props = withDefaults(defineProps<{
 defineSlots<{
   left(): unknown;
   body(): unknown;
-  bodyInput(): unknown;
   bodyLeft(): unknown;
+  bodyLeftInput(): unknown;
   bodyLeftLabel(): unknown;
   bodyLeftSubtitle(): unknown;
   bodyRight(): unknown;
@@ -37,6 +37,7 @@ provideListItemOptions({
 });
 
 const bodyLeftSlots = [
+  { id: 'bodyLeftInput', name: 'input' },
   { id: 'bodyLeftLabel', name: 'label' },
   { id: 'bodyLeftSubtitle', name: 'subtitle' },
 ] as const;
@@ -54,10 +55,7 @@ useRipples({
     <slot name="left"/>
     <slot name="body">
       <ListAndroidItemBody>
-        <template v-if="$slots.bodyInput" #input>
-          <slot name="bodyInput" />
-        </template>
-        <template v-else #left>
+        <template #left>
           <slot name="bodyLeft">
             <ListAndroidItemBodyLeft v-if="bodyLeftSlots.some(s => s.id in $slots)">
               <template
@@ -82,12 +80,10 @@ useRipples({
 @use "@ui-kit-mixins" as mixins;
 
 .list-android-item {
-  display: block;
   box-sizing: border-box;
   display: flex;
   padding: 0 0 0 20px;
   background: transparent;
-  height: 100%;
   overflow: hidden;
   position: relative;
 

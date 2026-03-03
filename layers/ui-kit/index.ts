@@ -9,9 +9,9 @@ export { default as ButtonAndroid, type ButtonAndroidProps } from './app/compone
 export { default as ListAndroid } from './app/components/List/ListAndroid/ListAndroid.vue';
 export { default as ListAndroidItem, type ListAndroidItemVariant } from './app/components/List/ListAndroid/ListAndroidItem.vue';
 export { default as ListAndroidItemBody } from './app/components/List/ListAndroid/ListAndroidItemBody.vue';
-export { default as ListAndroidItemBodyInput, type ListAndroidItemBodyInputEmits, type ListAndroidItemBodyInputProps } from './app/components/List/ListAndroid/ListAndroidItemBodyInput.vue';
-export { default as ListAndroidItemBodyInputPlaceholder } from './app/components/List/ListAndroid/ListAndroidItemBodyInputPlaceholder.vue';
 export { default as ListAndroidItemBodyLeft } from './app/components/List/ListAndroid/ListAndroidItemBodyLeft.vue';
+export { default as ListAndroidItemBodyLeftInput } from './app/components/List/ListAndroid/ListAndroidItemBodyLeftInput.vue';
+export { default as ListAndroidItemBodyLeftInputElement } from './app/components/List/ListAndroid/ListAndroidItemBodyLeftInputElement.vue';
 export { default as ListAndroidItemBodyLeftLabel } from './app/components/List/ListAndroid/ListAndroidItemBodyLeftLabel.vue';
 export { default as ListAndroidItemBodyLeftSubtitle } from './app/components/List/ListAndroid/ListAndroidItemBodyLeftSubtitle.vue';
 export { default as ListAndroidItemBodyRight } from './app/components/List/ListAndroid/ListAndroidItemBodyRight.vue';
@@ -27,9 +27,9 @@ export { default as ListAndroidItemLeftLabel } from './app/components/List/ListA
 export { default as ListIos } from './app/components/List/ListIos/ListIos.vue';
 export { default as ListIosItem, type ListIosItemVariant } from './app/components/List/ListIos/ListIosItem.vue';
 export { default as ListIosItemBody } from './app/components/List/ListIos/ListIosItemBody.vue';
-export { default as ListIosItemBodyInput, type ListIosItemBodyInputEmits, type ListIosItemBodyInputProps } from './app/components/List/ListIos/ListIosItemBodyInput.vue';
-export { default as ListIosItemBodyInputPlaceholder } from './app/components/List/ListIos/ListIosItemBodyInputPlaceholder.vue';
 export { default as ListIosItemBodyLeft } from './app/components/List/ListIos/ListIosItemBodyLeft.vue';
+export { default as ListIosItemBodyLeftInput } from './app/components/List/ListIos/ListIosItemBodyLeftInput.vue';
+export { default as ListIosItemBodyLeftInputElement } from './app/components/List/ListIos/ListIosItemBodyLeftInputElement.vue';
 export { default as ListIosItemBodyLeftLabel } from './app/components/List/ListIos/ListIosItemBodyLeftLabel.vue';
 export { default as ListIosItemBodyLeftSubtitle } from './app/components/List/ListIos/ListIosItemBodyLeftSubtitle.vue';
 export { default as ListIosItemBodyRight } from './app/components/List/ListIos/ListIosItemBodyRight.vue';
