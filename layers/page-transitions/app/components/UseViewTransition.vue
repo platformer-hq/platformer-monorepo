@@ -35,6 +35,7 @@ defineSlots<{
 
 const routingDirection = useNavigationDirection();
 const scrollLock = useScrollLock(window);
+const route = useRoute();
 const state = ref<'before-enter' | 'entering' | 'entered'>(
   // On the initial direction transition hooks will not be called. This means, that not
   // setting the state to "entered", the value will hang on the "before-enter" value.
@@ -81,7 +82,7 @@ const onLeave = (el: Element, done: VoidFunction) => {
 };
 
 provideViewTransition({
-  isEntered: computed(() => state.value === 'entered'),
+  enteredPage: computed(() => (state.value === 'entered' ? route.name : undefined)),
 });
 </script>
 
