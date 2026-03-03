@@ -2,6 +2,7 @@ import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const scalars = {
   Time: 'string',
+  ID: 'number',
 };
 
 export default {
