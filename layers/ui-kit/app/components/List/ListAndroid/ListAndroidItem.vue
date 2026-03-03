@@ -51,7 +51,7 @@ useRipples({
 </script>
 
 <template>
-  <li ref="root" :class="b(variant, {clickable})">
+  <li ref="root" :class="b(variant, {clickable, 'no-left': !$slots.left})">
     <slot name="left"/>
     <slot name="body">
       <ListAndroidItemBody>
@@ -81,11 +81,16 @@ useRipples({
 
 .list-android-item {
   box-sizing: border-box;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr;
   padding: 0 0 0 20px;
   background: transparent;
   overflow: hidden;
   position: relative;
+
+  &--no-left {
+    grid-template-columns: 1fr;
+  }
 
   &--clickable {
     @include mixins.clickable;

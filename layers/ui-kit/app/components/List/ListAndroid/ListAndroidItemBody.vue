@@ -19,10 +19,9 @@ const { large } = injectListItemOptions();
 
 <style lang="scss">
 .list-android-item-body {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto;
   gap: 16px;
-  flex: 1 0 0;
-  align-items: center;
   box-sizing: border-box;
   overflow: hidden;
   padding-right: 20px;

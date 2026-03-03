@@ -15,6 +15,5 @@ const { b } = bem('list-android-item-body-right');
   display: flex;
   align-items: center;
   height: 100%;
-  padding-left: 16px;
 }
 </style>

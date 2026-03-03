@@ -2,6 +2,8 @@
 import { useMousePressed } from '@vueuse/core';
 
 import { provideListItemOptions } from './provider.js';
+import { of } from 'fp-ts/lib/ReadonlyNonEmptyArray.js';
+import { id } from 'fp-ts/lib/Refinement.js';
 
 export type ListIosItemVariant = 'regular' | 'accent' | 'destructive' | 'placeholder';
 
@@ -58,7 +60,7 @@ const onHighlightLeave = (el: Element, done: VoidFunction) => {
 </script>
 
 <template>
-  <li ref="root" :class="b(variant, { clickable })">
+  <li ref="root" :class="b(variant, { clickable, 'no-left': !$slots.left })">
     <Transition v-if="clickable" :css="false" @leave="onHighlightLeave">
       <span v-if="pressed" key="active" :class="e('highlight')"/>
     </Transition>
@@ -94,10 +96,14 @@ const onHighlightLeave = (el: Element, done: VoidFunction) => {
   appearance: none;
   border: none;
   box-sizing: border-box;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr;
   padding: 0 0 0 16px;
   background: transparent;
-  // align-items: stretch;
+
+  &--no-left {
+    grid-template-columns: 1fr;
+  }
 
   &--clickable {
     @include mixins.clickable;

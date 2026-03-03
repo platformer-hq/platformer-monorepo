@@ -19,12 +19,10 @@ const { large } = injectListItemOptions();
 
 <style lang="scss">
 .list-ios-item-body {
-  flex: 1 0 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
   gap: 16px;
   box-shadow: 0 0.33px 0 var(--section-separator-color);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   padding-right: 16px;
 
   &--small {

@@ -28,6 +28,7 @@ const { b, e } = bem('list-android-item-body-left');
 .list-android-item-body-left {
   flex: 1 0 0;
   box-sizing: border-box;
+  overflow: hidden;
 
   &__texts {
     display: flex;
