@@ -12,6 +12,7 @@ export const PAGE_NAME_APP_TG_LAUNCHER = 'app-tg-launcher';
 export const PAGE_NAME_APP_TRANSFER = 'app-transfer';
 export const PAGE_NAME_APP_URLS = 'app-urls';
 export const PAGE_NAME_APP_URL_VIEWER = 'app-url-viewer';
+export const PAGE_NAME_APP_CACHE = 'app-cache';
 export const PAGE_NAME_CREATE_TEST_GROUP = 'create-test-group';
 export const PAGE_NAME_CREATE_APP = 'create-app';
 export const PAGE_NAME_ACCOUNT = 'profile';
