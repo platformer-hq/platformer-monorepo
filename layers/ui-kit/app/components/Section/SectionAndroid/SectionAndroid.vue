@@ -22,6 +22,7 @@ defineSlots<{
     border-radius: 16px;
     overflow: hidden;
     background: var(--section-android-list-bg);
+    transition: 300ms ease-out;
   }
 }
 </style>

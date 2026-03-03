@@ -22,6 +22,7 @@ defineSlots<{
     border-radius: 26px;
     overflow: hidden;
     background: var(--section-ios-list-bg);
+    transition: 300ms ease-out;
   }
 }
 </style>
