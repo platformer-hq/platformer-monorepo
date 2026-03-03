@@ -91,12 +91,7 @@ const { data: appData, isPending: isLoadingApp } = useQuery({
       request({ document: data.queryKey[0], variables: { appID: data.queryKey[1] } }),
       taskEither.map(({ app }) => (
         app
-          ? {
-            id: app.id,
-            title: app.title,
-            urlsCacheResetAt: app.urlsCacheResetAt,
-            role: apiAppRoleToLocal(app.currentUserRole),
-          }
+          ? { id: app.id, title: app.title, role: apiAppRoleToLocal(app.currentUserRole) }
           : null
       )),
     );

@@ -3,7 +3,6 @@ query AppPageData($appID: ID!) {
     currentUserRole
     id
     title
-    urlsCacheResetAt
   }
 }
 
