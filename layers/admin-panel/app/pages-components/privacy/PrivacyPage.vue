@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useMutation, useQuery } from '@tanstack/vue-query';
 
-import { usePageDataMutator, usePageDataQueryOptions, useUpdateMutationOptions } from './_api/api';
+import { usePageDataMutator, usePageDataQueryOptions, useUpdateMutationOptions } from './api';
 
 const { t } = useI18n({
   messages: {
