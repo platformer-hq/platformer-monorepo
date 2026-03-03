@@ -5,7 +5,13 @@
  */
 import type { AutoTypographyVariant } from '~/auto-components/AutoTypography/AutoTypography.vue';
 
-defineProps<{
+import type { KnownHtmlTag } from '#layers/ui-kit';
+
+const { borderRadius = 5, as = 'div' } = defineProps<{
+  /**
+   * @default 'div'
+   */
+  as?: KnownHtmlTag;
   /**
    * Color to apply to the shimmer background.
    * @default 'quaternary'
@@ -19,16 +25,23 @@ defineProps<{
   borderRadius?: string | number;
   margin?: string | number;
   variant: AutoTypographyVariant;
+  display?: string;
 }>();
+
+const { b, e } = bem('text-shimmer-box');
 </script>
 
 <template>
-  <div class="text-shimmer-box" :style="{margin: toPx(margin)}">
+  <component
+    :is="as"
+    :class="b()"
+    :style="{margin: toPx(margin), width: toPx(width), display}"
+  >
     <AutoTypography :variant>
       &nbsp;
     </AutoTypography>
-    <ShimmerBox :width :border-radius :rounded :color class="text-shimmer-box__shimmer"/>
-  </div>
+    <ShimmerBox :class="e('shimmer')" :border-radius :rounded :color/>
+  </component>
 </template>
 
 <style lang="scss">
@@ -39,6 +52,7 @@ defineProps<{
     position: absolute;
     top: 12.5%;
     bottom: 12.5%;
+    width: 100%;
   }
 }
 </style>
