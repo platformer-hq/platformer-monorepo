@@ -115,6 +115,12 @@ const handleCreateClick = async () => {
     navigateTo({ name: PAGE_NAME_CREATE_APP });
   }
 };
+const goToApp = (id: string) => {
+  navigateTo({
+    name: PAGE_NAME_APP,
+    query: { id },
+  });
+};
 
 watch(canCreate, value => {
   if (value) {
@@ -171,6 +177,7 @@ onMounted(() => {
                   v-for="(appOrWidth, idx) in apps?.owned || ['40%', '70%', '60%']"
                   :key="idx"
                   :clickable="typeof appOrWidth === 'object'"
+                  @click="typeof appOrWidth === 'object' && goToApp(appOrWidth.id)"
                 >
                   <template #bodyLeftLabel>
                     <AutoListItemBodyLeftLabel
