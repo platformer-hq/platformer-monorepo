@@ -1,0 +1,12 @@
+query AppPageData($appID: ID!) {
+  app(appID: $appID) {
+    currentUserRole
+    id
+    title
+    urlsCacheResetAt
+  }
+}
+
+mutation DeleteApp($appID: ID!) {
+  deleteApp(appID: $appID)
+}
