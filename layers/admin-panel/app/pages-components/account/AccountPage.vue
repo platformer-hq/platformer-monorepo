@@ -1,17 +1,19 @@
 <script setup lang="ts">
 import { useQuery } from '@tanstack/vue-query';
-
 import { taskEither, function as fn } from 'fp-ts';
 
 import { AccountPageDataDocument } from './operations';
 
 const { e } = bem('account-page');
+const platform = useTmaPlatform();
 const { t, locale, setLocale } = useI18n({
   messages: {
     en: {
+      'public.id': 'Identifier',
       'public.title': 'Public information',
       'public.name': 'Name',
       'public.footer': 'This data is public and visible to all Platformer users',
+      'tg.id': 'Identifier',
       'tg.title': 'Telegram account data',
       'tg.firstName': 'First name',
       'tg.lastName': 'Last name',
@@ -22,9 +24,11 @@ const { t, locale, setLocale } = useI18n({
       'lang.en': 'English',
     },
     ru: {
+      'public.id': 'Идентификатор',
       'public.title': 'Публичная информация',
       'public.name': 'Имя',
       'public.footer': 'Эти данные публичны и видны всем пользователям Платформера',
+      'tg.id': 'Идентификатор',
       'tg.title': 'Данные Telegram',
       'tg.firstName': 'Имя',
       'tg.lastName': 'Фамилия',
@@ -67,7 +71,7 @@ const sections = computed(() => {
     {
       title: t('public.title'),
       fields: [
-        { title: 'ID', value: data.value?.id },
+        { title: t('public.id'), value: data.value?.id },
         { title: t('public.name'), value: data.value?.name },
       ],
       footer: t('public.footer'),
@@ -75,7 +79,7 @@ const sections = computed(() => {
     {
       title: t('tg.title'),
       fields: [
-        { title: 'ID', value: telegramData?.id },
+        { title: t('tg.id'), value: telegramData?.id },
         { title: t('tg.firstName'), value: telegramData?.firstName },
         { title: t('tg.lastName'), value: telegramData?.lastName },
         { title: t('tg.userName'), value: telegramData?.login },
@@ -115,7 +119,7 @@ const saveLocale = async (locale: 'ru' | 'en') => {
                   <AutoListItemBodyLeft reversed>
                     <template #subtitle>
                       <AutoListItemBodyLeftSubtitle>
-                        {{ field.title }}
+                        {{ platform.isMappedIos ? field.title.toLowerCase() : field.title }}
                       </AutoListItemBodyLeftSubtitle>
                     </template>
                     <template #label>
