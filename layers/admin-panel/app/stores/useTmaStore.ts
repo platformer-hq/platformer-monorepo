@@ -78,8 +78,8 @@ export const useTmaStore = defineStore('tma', () => {
     }),
   );
   const platform = computed(() => {
-    // const { tgWebAppPlatform } = launchParams;
-    const tgWebAppPlatform = 'ios';
+    const { tgWebAppPlatform } = launchParams;
+    // const tgWebAppPlatform = 'ios';
     const mappedPlatform = ['ios', 'macos'].includes(tgWebAppPlatform) ? 'ios' : 'android';
     return {
       raw: tgWebAppPlatform,
