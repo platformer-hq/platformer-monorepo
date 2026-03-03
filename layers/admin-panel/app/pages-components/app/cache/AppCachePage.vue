@@ -11,7 +11,7 @@ const query = parse(
   useRoute().query,
 );
 
-const { t } = useI18n({
+const { t, locale } = useI18n({
   messages: {
     en: {
       'reset.button': 'Reset URL cache',
@@ -123,7 +123,7 @@ onMounted(() => {
                       <AutoListItemBodyLeftLabel>
                         <template v-if="appData">
                           {{
-                          appData?.urlsCacheResetAt?.toLocaleString(undefined, {
+                          appData?.urlsCacheResetAt?.toLocaleString(locale, {
                             day: 'numeric',
                             month: 'long',
                             year: 'numeric',
