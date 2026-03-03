@@ -33,6 +33,13 @@ export default defineNuxtConfig({
   },
   app: {
     rootTag: 'main',
+    head: {
+      link: [
+        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Roboto:wght@100..900&display=swap' },
+      ],
+    },
   },
   appId: 'admin-panel',
   css: [
