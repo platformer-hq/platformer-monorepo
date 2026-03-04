@@ -122,8 +122,7 @@ onMounted(() => {
                     <template #label>
                       <AutoListItemBodyLeftLabel>
                         <template v-if="appData">
-                          {{
-                          appData?.urlsCacheResetAt?.toLocaleString(locale, {
+                          {{ appData?.urlsCacheResetAt?.toLocaleString(locale, {
                             day: 'numeric',
                             month: 'long',
                             year: 'numeric',
@@ -131,8 +130,7 @@ onMounted(() => {
                             minute: 'numeric',
                             second: 'numeric',
                             weekday: 'short'
-                          }) || t('date.value.never')
-                        }}
+                          }) || t('date.value.never') }}
                         </template>
                         <TextShimmerBox v-else variant="body" :width="90"/>
                       </AutoListItemBodyLeftLabel>
