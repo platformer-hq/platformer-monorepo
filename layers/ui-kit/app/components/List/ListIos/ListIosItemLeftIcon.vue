@@ -1,8 +1,7 @@
 <script setup lang="ts">
 defineProps<{
   /**
-   * True if the icon is supposed to be square. This only adds a left padding and adds border
-   * radius to the icon.
+   * True if the icon is supposed to be square. This only adds a left padding.
    */
   square?: boolean;
 }>();
@@ -17,7 +16,7 @@ const { b } = bem('list-ios-item-left-icon');
 </script>
 
 <template>
-  <div :class="b({ 'non-square': !square })">
+  <div :class="b({square})">
     <slot :square/>
   </div>
 </template>
@@ -28,9 +27,10 @@ const { b } = bem('list-ios-item-left-icon');
   height: 100%;
   display: flex;
   align-items: center;
+  padding-left: 6px;
 
-  &--non-square {
-    padding-left: 6px;
+  &--square {
+    padding-left: 0;
   }
 }
 </style>

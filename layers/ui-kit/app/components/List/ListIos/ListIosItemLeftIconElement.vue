@@ -7,18 +7,14 @@ const { size = 'small' } = defineProps<{
    * @default 'small'
    */
   size?: 'small' | 'large';
-  /**
-   * True if the icon is supposed to be square. This only adds a left padding and adds border
-   * radius to the icon.
-   */
-  square?: boolean;
+  rounded?: boolean;
 }>();
 
 const { b } = bem('list-ios-item-left-icon-element');
 </script>
 
 <template>
-  <i :class="b({ rounded: square }, size)">
+  <i :class="b({ rounded }, size)">
     <slot/>
   </i>
 </template>
@@ -28,6 +24,7 @@ const { b } = bem('list-ios-item-left-icon-element');
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 
   &--small {
     width: 28px;
