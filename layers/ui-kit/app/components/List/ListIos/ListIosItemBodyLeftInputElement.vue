@@ -8,12 +8,12 @@ defineProps<{
 defineOptions({ inheritAttrs: false });
 
 const { b } = bem('list-ios-item-body-input-element');
-const model = defineModel<string>({ default: '' });
+const model = defineModel<string | undefined>({ default: '' });
 const inputRef = useTemplateRef<HTMLInputElement | HTMLTextAreaElement>('input');
 const keyboard = useKeyboardVisibility();
 
 useTextareaAutosize({
-  input: model,
+  input: computed(() => model.value || ''),
   element: computed(() => {
     return inputRef.value instanceof HTMLTextAreaElement ? inputRef.value : undefined;
   }),
