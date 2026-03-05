@@ -130,21 +130,23 @@ watch(data, data => {
           || data?.canBeInvitedToManage !== canBeInvitedToManage
         )"
       >
-        <AutoButton
-          :palette="isLoading ? 'disabled' : 'filled'"
-          full-width
-          elevated
-          :disabled="isLoading"
-          :active="!isLoading"
-          @click="updatePermissions({
-            canAcceptAppTransfers: canAcceptAppTransfers,
-            canBeInvitedToManage: canBeInvitedToManage
-          })"
-        >
-          <AutoTypography variant="body" weight="medium">
-            {{ t('button.save') }}
-          </AutoTypography>
-        </AutoButton>
+        <BottomBarInner>
+          <AutoButton
+            :palette="isLoading ? 'disabled' : 'filled'"
+            full-width
+            elevated
+            :disabled="isLoading"
+            :active="!isLoading"
+            @click="updatePermissions({
+              canAcceptAppTransfers: canAcceptAppTransfers,
+              canBeInvitedToManage: canBeInvitedToManage
+            })"
+          >
+            <AutoTypography variant="body" weight="medium">
+              {{ t('button.save') }}
+            </AutoTypography>
+          </AutoButton>
+        </BottomBarInner>
       </BottomBar>
     </BottomBarTransition>
   </PageBase>

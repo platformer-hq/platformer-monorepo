@@ -80,18 +80,20 @@ const isButtonEnabled = computed(() => {
       </VerticalPaddings>
       <BottomBarTransition>
         <BottomBar v-if="isPageEntered">
-          <AutoButton
-            full-width
-            :active="isButtonEnabled"
-            :disabled="!isButtonEnabled"
-            :palette="isButtonEnabled ? 'filled' : 'disabled'"
-            @click="createApp({title: appName})"
-          >
-            <AutoTypography variant="body" weight="medium">
-              {{t('button')}}
-            </AutoTypography>
-            <ButtonLoadingIndicator :show="isCreatingApp"/>
-          </AutoButton>
+          <BottomBarInner>
+            <AutoButton
+              full-width
+              :active="isButtonEnabled"
+              :disabled="!isButtonEnabled"
+              :palette="isButtonEnabled ? 'filled' : 'disabled'"
+              @click="createApp({title: appName})"
+            >
+              <AutoTypography variant="body" weight="medium">
+                {{t('button')}}
+              </AutoTypography>
+              <ButtonLoadingIndicator :show="isCreatingApp"/>
+            </AutoButton>
+          </BottomBarInner>
         </BottomBar>
       </BottomBarTransition>
     </PageContent>
