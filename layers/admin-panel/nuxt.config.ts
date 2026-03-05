@@ -74,7 +74,6 @@ export default defineNuxtConfig({
   extends: [
     '../api',
     '../base',
-    '../page-transitions',
     '../navigation',
     '../ui-kit',
   ],
