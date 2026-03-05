@@ -127,7 +127,7 @@ const sections = computed(() => [
   {
     title: t('integrations.title'),
     items: [
-      { icon: TelegramIcon, title: t('integrations.tg'), name: PAGE_NAME_APP_TG_INTEGRATION },
+      { icon: TelegramIcon, title: t('integrations.tg'), name: PAGE_NAME_APP_TG },
     ],
   },
   {
@@ -211,7 +211,7 @@ onMounted(() => {
                   <AutoListItemLeft>
                     <AutoListItemLeftIcon square>
                       <AutoListItemLeftIconElement
-                        square
+                        rounded
                         :style="item.icon.kind === 'custom' ? {
                           background: colorReference(item.icon.bgColor) || undefined,
                           color: 'white',
