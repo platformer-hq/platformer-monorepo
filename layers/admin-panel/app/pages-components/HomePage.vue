@@ -108,7 +108,7 @@ onMounted(() => {
                   <AutoListItemLeft>
                     <AutoListItemLeftIcon square>
                       <AutoListItemLeftIconElement
-                        square
+                        rounded
                         :style="item.icon.kind === 'custom' ? {
                           background: colorReference(item.icon.bgColor) || undefined,
                           color: 'white',
