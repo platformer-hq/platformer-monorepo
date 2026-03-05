@@ -68,7 +68,7 @@ useRipples({
             </ListAndroidItemBodyLeft>
           </slot>
         </template>
-        <template #right>
+        <template v-if="$slots.bodyRight" #right>
           <slot name="bodyRight"/>
         </template>
       </ListAndroidItemBody>

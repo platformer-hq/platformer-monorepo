@@ -34,10 +34,9 @@ defineSlots<{
   align-items: flex-end;
   justify-content: space-between;
   gap: 16px;
-  min-height: 40px;
 
   &--default {
-    padding: 3px 20px 6px;
+    padding: 16px 20px 6px;
     color: var(--section-android-header-default-color);
   }
 

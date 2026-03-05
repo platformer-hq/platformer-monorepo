@@ -11,7 +11,7 @@ const { large } = injectListItemOptions();
 </script>
 
 <template>
-  <div :class="b(large ? 'large' : 'small')">
+  <div :class="b(large ? 'large' : 'small', {'no-right': !$slots.right})">
     <slot name="left" />
     <slot name="right" />
   </div>
@@ -24,6 +24,10 @@ const { large } = injectListItemOptions();
   gap: 16px;
   box-shadow: 0 0.33px 0 var(--section-separator-color);
   padding-right: 16px;
+
+  &--no-right {
+    grid-template-columns: 1fr;
+  }
 
   &--small {
     min-height: 52px;

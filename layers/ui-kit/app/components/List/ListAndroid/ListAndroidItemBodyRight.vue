@@ -11,7 +11,6 @@ const { b } = bem('list-android-item-body-right');
 <style lang="scss">
 .list-android-item-body-right {
   box-sizing: border-box;
-  flex: 0 0 auto;
   display: flex;
   align-items: center;
   height: 100%;

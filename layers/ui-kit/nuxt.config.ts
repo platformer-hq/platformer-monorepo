@@ -17,6 +17,11 @@ export default defineNuxtConfig({
       extensions: ['.vue'],
     },
     {
+      path: resolve('app/page-transitions/components'),
+      pathPrefix: false,
+      extensions: ['.vue'],
+    },
+    {
       path: resolve('app/icons'),
       pathPrefix: false,
       prefix: 'Icon',
@@ -26,6 +31,7 @@ export default defineNuxtConfig({
   imports: {
     dirs: [
       resolve('app/composables/**/*.ts'),
+      resolve('app/page-transitions/composables/*.ts'),
     ],
   },
 });

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import TypographyAndroid from '../../Typography/TypographyAndroid/TypographyAndroid.vue';
 </script>
 
 <template>

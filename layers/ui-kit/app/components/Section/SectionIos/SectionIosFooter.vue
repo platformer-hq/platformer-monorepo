@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import TypographyIos from '../../Typography/TypographyIos/TypographyIos.vue';
 </script>
 
 <template>

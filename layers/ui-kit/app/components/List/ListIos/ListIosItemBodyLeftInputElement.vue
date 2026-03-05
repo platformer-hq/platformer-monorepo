@@ -1,13 +1,23 @@
 <script setup lang="ts">
-import { onClickOutside } from '@vueuse/core';
+import { onClickOutside, useTextareaAutosize } from '@vueuse/core';
 import { mergeProps } from 'vue';
 
+defineProps<{
+  multiline?: boolean;
+}>();
 defineOptions({ inheritAttrs: false });
 
 const { b } = bem('list-ios-item-body-input-element');
 const model = defineModel<string>({ default: '' });
-const inputRef = useTemplateRef('input');
+const inputRef = useTemplateRef<HTMLInputElement | HTMLTextAreaElement>('input');
 const keyboard = useKeyboardVisibility();
+
+useTextareaAutosize({
+  input: model,
+  element: computed(() => {
+    return inputRef.value instanceof HTMLTextAreaElement ? inputRef.value : undefined;
+  }),
+});
 
 // Both Telegram for iOS and Adnroid don't handle click outside and don't lose focus on
 // the input.
@@ -18,6 +28,8 @@ onClickOutside(inputRef, () => {
 // Sometimes Telegram for iOS scrolls the input into view improperly. So,
 // after the keyboard was shown, we are scrolling the input into view.
 const onFocus = (e: FocusEvent) => {
+  // FIXME: This should one should depend on if the keyboard exists at all. We can use
+  // this component in macOS, but there should not be this kind of behavior there.
   if (!keyboard.isShown) {
     // If the keyboard is not shown, then it is going to. It takes about 500 ms
     // for the keyboard to appear.
@@ -26,16 +38,22 @@ const onFocus = (e: FocusEvent) => {
     }, 500);
   }
 };
+
+defineExpose({
+  input: inputRef,
+});
 </script>
 
 <template>
   <UseTypographyIos v-slot="{classes, style}" variant="body">
-    <input
+    <component
+      :is="multiline ? 'textarea' : 'input'"
       ref="input"
       v-bind="mergeProps($attrs, {class: [classes, b()], style})"
-      v-model="model"
+      :value="model"
+      @input="model = $event.target.value"
       @focus="onFocus"
-    >
+    />
   </UseTypographyIos>
 </template>
 
@@ -50,6 +68,7 @@ const onFocus = (e: FocusEvent) => {
   height: 100%;
   outline: none;
   position: relative;
+  resize: none;
   padding: 15px 0;
   width: 100%;
   color: var(--list-ios-item-body-left-input-text-color);

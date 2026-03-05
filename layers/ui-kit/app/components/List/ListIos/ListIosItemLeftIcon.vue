@@ -17,7 +17,7 @@ const { b } = bem('list-ios-item-left-icon');
 </script>
 
 <template>
-  <div :class="b({ square })">
+  <div :class="b({ 'non-square': !square })">
     <slot :square/>
   </div>
 </template>
@@ -29,7 +29,7 @@ const { b } = bem('list-ios-item-left-icon');
   display: flex;
   align-items: center;
 
-  &--square {
+  &--non-square {
     padding-left: 6px;
   }
 }

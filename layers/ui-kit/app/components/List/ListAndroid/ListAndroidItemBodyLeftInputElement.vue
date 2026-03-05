@@ -1,26 +1,42 @@
 <script setup lang="ts">
-import { onClickOutside } from '@vueuse/core';
+import { onClickOutside, useTextareaAutosize } from '@vueuse/core';
 import { mergeProps } from 'vue';
 
+defineProps<{
+  multiline?: boolean;
+}>();
 defineOptions({ inheritAttrs: false });
 
 const { b } = bem('list-android-item-body-input-element');
 const model = defineModel<string>({ default: '' });
 const inputRef = useTemplateRef<HTMLInputElement | HTMLTextAreaElement>('input');
 
+useTextareaAutosize({
+  input: model,
+  element: computed(() => {
+    return inputRef.value instanceof HTMLTextAreaElement ? inputRef.value : undefined;
+  }),
+});
+
 // Telegram for Android doesn't handle click outside and doesn't lose focus on the input.
 onClickOutside(inputRef, () => {
   inputRef.value?.blur();
+});
+
+defineExpose({
+  input: inputRef,
 });
 </script>
 
 <template>
   <UseTypographyAndroid v-slot="{classes, style}" variant="body">
-    <input
+    <component
+      :is="multiline ? 'textarea' : 'input'"
       ref="input"
       v-bind="mergeProps($attrs, { class: [b(), classes], style })"
-      v-model="model"
-    >
+      :value="model"
+      @input="model = $event.target.value"
+    />
   </UseTypographyAndroid>
 </template>
 

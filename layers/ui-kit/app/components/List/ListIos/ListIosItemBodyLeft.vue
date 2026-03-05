@@ -36,10 +36,8 @@ const { b, e } = bem('list-ios-item-body-left');
 
 <style lang="scss">
 .list-ios-item-body-left {
-  flex: 1 0 0;
-  box-sizing: border-box;
   height: 100%;
-  overflow: hidden;
+  min-width: 0;
 
   &__texts {
     height: 100%;

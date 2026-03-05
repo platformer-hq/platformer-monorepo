@@ -75,6 +75,19 @@ export { useKeyboardVisibility } from './app/composables/useKeyboardVisibility';
 export { useRipples } from './app/composables/useRipples';
 //#endregion
 
+//#region Page transitions.
+export { default as UseAndroidPageTransition } from './app/page-transitions/components/UseAndroidPageTransition.vue';
+export {
+  default as UsePageTransition,
+  type PageTransitionState,
+  type UsePageTransitionAfterEnterFn,
+  type UsePageTransitionAnimateFn,
+  type UsePageTransitionBeforeAnimateFn,
+  type UsePageTransitionProps,
+} from './app/page-transitions/components/UsePageTransition.vue';
+export { default as UseIosPageTransition } from './app/page-transitions/components/UseIosPageTransition.vue';
+//#endregion
+
 //#region Utils.
 export type { KnownHtmlTag, KnownHtmlTagAttributes } from './app/types/html-tags';
 export { bem } from './app/utils/bem';

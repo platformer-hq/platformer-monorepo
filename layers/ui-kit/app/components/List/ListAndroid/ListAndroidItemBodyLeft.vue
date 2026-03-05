@@ -26,9 +26,7 @@ const { b, e } = bem('list-android-item-body-left');
 
 <style lang="scss">
 .list-android-item-body-left {
-  flex: 1 0 0;
-  box-sizing: border-box;
-  overflow: hidden;
+  min-width: 0;
 
   &__texts {
     display: flex;
