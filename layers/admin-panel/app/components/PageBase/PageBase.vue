@@ -208,6 +208,7 @@ const formattedInsets = computed(() => {
 
 <style lang="scss">
 .page-base {
+  width: 100vw;
   height: 100vh;
   overflow: hidden auto;
 
