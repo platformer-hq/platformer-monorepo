@@ -10,11 +10,9 @@ const { b } = bem('list-ios-item-body-right');
 
 <style lang="scss">
 .list-ios-item-body-right {
-  flex: 0 0 auto;
   display: flex;
   align-items: center;
   height: 100%;
   gap: 6px;
-  padding-left: 16px;
 }
 </style>
