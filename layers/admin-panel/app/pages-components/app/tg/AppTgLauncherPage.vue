@@ -50,7 +50,7 @@ const { mutate: copy } = useMutation({
 
 const appId = useQueryAppId();
 const bottomBar = useTemplateRef('bottom-bar');
-const fallbackUrl = ref('https://t.me/telegram');
+const fallbackUrl = ref('');
 const initTimeout = ref('');
 const loadTimeout = ref('');
 const baseUrl = computed(() => `https://tgl.mini-apps.store/?app_id=${appId.value}`);
