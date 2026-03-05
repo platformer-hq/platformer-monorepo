@@ -25,6 +25,7 @@ const { t } = useI18n({
   },
 });
 const isPageEntered = useIsCurrentPageEntered();
+const platform = useTmaPlatform();
 const appId = useQueryAppId();
 const queryClient = useQueryClient();
 const request = useMakeGqlApiRequest();
@@ -83,6 +84,7 @@ const { mutate: updateApp, isPending: isUpdatingApp } = useMutation({
   },
 });
 
+const readonly = computed(() => data.value?.role === 'member');
 const initialBotId = computed(() => (data.value?.botId?.toString() || ''));
 const initialProxy = computed(() => data.value?.proxy || false);
 
@@ -120,7 +122,7 @@ watch(data, data => {
                       v-model="botId"
                       type="number"
                       min="1"
-                      :disabled="isUpdatingApp"
+                      :disabled="isUpdatingApp || readonly"
                       :placeholder="t('botId.placeholder')"
                     />
                   </AutoListItemBodyLeftInput>
@@ -141,7 +143,10 @@ watch(data, data => {
 
           <AutoSection list-bg-color="secondary-bg" :style="{marginTop: '16px'}">
             <AutoList>
-              <AutoListItem>
+              <AutoListItem
+                :clickable="platform.isMappedAndroid && !readonly"
+                @click="platform.isMappedAndroid && !readonly && (proxy = !proxy)"
+              >
                 <template #bodyLeftLabel>
                   <AutoListItemBodyLeftLabel :max-lines="1">
                     {{ t('proxy.title') }}
@@ -151,7 +156,8 @@ watch(data, data => {
                   <AutoListItemBodyRight>
                     <AutoSwitch
                       v-model:checked="proxy"
-                      :disabled="!data || isUpdatingApp"
+                      :disabled="!data || isUpdatingApp || readonly"
+                      @click.stop
                     />
                   </AutoListItemBodyRight>
                 </template>
