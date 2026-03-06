@@ -209,7 +209,7 @@ onMounted(() => {
               >
                 <template #left>
                   <AutoListItemLeft>
-                    <AutoListItemLeftIcon square>
+                    <AutoListItemLeftIcon pad-left>
                       <AutoListItemLeftIconElement
                         rounded
                         :style="item.icon.kind === 'custom' ? {
@@ -250,7 +250,7 @@ onMounted(() => {
               >
                 <template #left>
                   <AutoListItemLeft>
-                    <AutoListItemLeftIcon>
+                    <AutoListItemLeftIcon pad-left>
                       <AutoListItemLeftIconElement>
                         <IconBinOutline28/>
                       </AutoListItemLeftIconElement>
