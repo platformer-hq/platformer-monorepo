@@ -1,35 +1,24 @@
 <script setup lang="ts">
+import type { UseTypographyBaseOptions } from '@ui-kit/composables/useTypographyBase/useTypographyBase';
 import type { KnownHtmlTag } from '@ui-kit/types';
 
-import type {
-  UseTypographyBaseAlign,
-  UseTypographyBaseProps,
-} from './UseTypographyBase.vue';
-
 export type TypographyBaseAlign = UseTypographyBaseAlign;
-export interface TypographyBaseProps extends UseTypographyBaseProps {
+export interface TypographyBaseProps extends UseTypographyBaseOptions {
   /**
    * @default 'p'
    */
   as?: KnownHtmlTag;
 }
 
-const { as = 'p' } = defineProps<TypographyBaseProps>();
+const props = withDefaults(defineProps<TypographyBaseProps>(), { as: 'p' });
 const element = useTemplateRef('element');
+const typography = useTypographyBase(props);
 
 defineExpose({ element });
 </script>
 
 <template>
-  <UseTypographyBase v-slot="{classes, style}" v-bind="$props">
-    <component
-      :is="as"
-      ref="element"
-      v-bind="$attrs"
-      :class="classes"
-      :style="style"
-    >
-      <slot/>
-    </component>
-  </UseTypographyBase>
+  <component :is="as" ref="element" :class="typography.classes" :style="typography.style">
+    <slot/>
+  </component>
 </template>

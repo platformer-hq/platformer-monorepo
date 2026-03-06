@@ -60,17 +60,37 @@ export { default as SwitchAndroid } from './app/components/Switch/SwitchAndroid.
 export { default as SwitchIos } from './app/components/Switch/SwitchIos.vue';
 
 export { default as TypographyBase, type TypographyBaseAlign, type TypographyBaseProps } from './app/components/Typography/TypographyBase/TypographyBase.vue';
-export { default as UseTypographyBase, type UseTypographyBaseAlign, type UseTypographyBaseProps, type UseTypographyBaseSlotProps } from './app/components/Typography/TypographyBase/UseTypographyBase.vue';
+export { default as UseTypographyBase, type UseTypographyBaseProps, type UseTypographyBaseSlotProps } from './app/components/Typography/TypographyBase/UseTypographyBase.vue';
 
 export { default as TypographyAndroid, type TypographyAndroidAlign, type TypographyAndroidProps, type TypographyAndroidVariant } from './app/components/Typography/TypographyAndroid/TypographyAndroid.vue';
-export { default as UseTypographyAndroid, type UseTypographyAndroidAlign, type UseTypographyAndroidProps, type UseTypographyAndroidSlotProps, type UseTypographyAndroidVariant } from './app/components/Typography/TypographyAndroid/UseTypographyAndroid.vue';
+export { default as UseTypographyAndroid, type UseTypographyAndroidProps, type UseTypographyAndroidSlotProps } from './app/components/Typography/TypographyAndroid/UseTypographyAndroid.vue';
 
 export { default as TypographyIos, type TypographyIosAlign, type TypographyIosProps, type TypographyIosVariant } from './app/components/Typography/TypographyIos/TypographyIos.vue';
-export { default as UseTypographyIos, type UseTypographyIosAlign, type UseTypographyIosProps, type UseTypographyIosSlotProps, type UseTypographyIosVariant } from './app/components/Typography/TypographyIos/UseTypographyIos.vue';
+export { default as UseTypographyIos, type UseTypographyIosProps, type UseTypographyIosSlotProps } from './app/components/Typography/TypographyIos/UseTypographyIos.vue';
 //#endregion
 
 //#region Composables.
 export { useSafeAreaInsets, type UseSafeAreaInsetsInset, type UseSafeAreaInsetsOptions } from './app/composables/useSafeAreaInsets/useSafeAreaInsets';
+export {
+  useTypographyBase,
+  type UseTypographyBaseAlign,
+  type UseTypographyBaseOptions,
+  type UseTypographyBaseReturn,
+} from './app/composables/useTypographyBase/useTypographyBase';
+export {
+  useTypographyAndroid,
+  type UseTypographyAndroidAlign,
+  type UseTypographyAndroidOptions,
+  type UseTypographyAndroidReturn,
+  type UseTypographyAndroidVariant,
+} from './app/composables/useTypographyAndroid/useTypographyAndroid';
+export {
+  useTypographyIos,
+  type UseTypographyIosAlign,
+  type UseTypographyIosOptions,
+  type UseTypographyIosReturn,
+  type UseTypographyIosVariant,
+} from './app/composables/useTypographyIos/useTypographyIos';
 export { useKeyboardVisibility } from './app/composables/useKeyboardVisibility';
 export { useRipples } from './app/composables/useRipples';
 //#endregion

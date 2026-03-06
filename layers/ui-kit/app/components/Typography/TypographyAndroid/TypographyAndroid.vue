@@ -1,37 +1,26 @@
 <script setup lang="ts">
+import type { UseTypographyAndroidOptions } from '@ui-kit/composables/useTypographyAndroid/useTypographyAndroid';
 import type { KnownHtmlTag } from '@ui-kit/types';
 
-import type {
-  UseTypographyAndroidAlign,
-  UseTypographyAndroidProps,
-  UseTypographyAndroidVariant,
-} from './UseTypographyAndroid.vue';
-
-export type TypographyAndroidVariant = UseTypographyAndroidVariant;
 export type TypographyAndroidAlign = UseTypographyAndroidAlign;
-export interface TypographyAndroidProps extends UseTypographyAndroidProps {
+export type TypographyAndroidVariant = UseTypographyAndroidVariant;
+export interface TypographyAndroidProps extends UseTypographyAndroidOptions {
   /**
    * @default 'p'
    */
   as?: KnownHtmlTag;
 }
 
-const { as = 'p' } = defineProps<TypographyAndroidProps>();
+const props = withDefaults(defineProps<TypographyAndroidProps>(), { as: 'p' });
 const element = useTemplateRef('element');
+const typography = useTypographyAndroid(props);
 
 defineExpose({ element });
 </script>
 
 <template>
-  <UseTypographyAndroid v-slot="{classes, style}" v-bind="$props">
-    <component
-      :is="as"
-      ref="element"
-      v-bind="$attrs"
-      :class="[$attrs.class, classes]"
-      :style="[$attrs.style, style]"
-    >
-      <slot/>
-    </component>
-  </UseTypographyAndroid>
+  <component :is="as" ref="element" :class="typography.classes" :style="typography.style">
+    {{ $props.maxLines }}
+    <slot/>
+  </component>
 </template>

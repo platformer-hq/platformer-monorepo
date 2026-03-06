@@ -1,37 +1,25 @@
 <script setup lang="ts">
+import type { UseTypographyIosOptions } from '@ui-kit/composables/useTypographyIos/useTypographyIos';
 import type { KnownHtmlTag } from '@ui-kit/types';
 
-import type {
-  UseTypographyIosAlign,
-  UseTypographyIosProps,
-  UseTypographyIosVariant,
-} from './UseTypographyIos.vue';
-
-export type TypographyIosVariant = UseTypographyIosVariant;
 export type TypographyIosAlign = UseTypographyIosAlign;
-export interface TypographyIosProps extends UseTypographyIosProps {
+export type TypographyIosVariant = UseTypographyIosVariant;
+export interface TypographyIosProps extends UseTypographyIosOptions {
   /**
    * @default 'p'
    */
   as?: KnownHtmlTag;
 }
 
-const { as = 'p' } = defineProps<TypographyIosProps>();
+const props = withDefaults(defineProps<TypographyIosProps>(), { as: 'p' });
 const element = useTemplateRef('element');
+const typography = useTypographyIos(props);
 
 defineExpose({ element });
 </script>
 
 <template>
-  <UseTypographyIos v-slot="{classes, style}" v-bind="$props">
-    <component
-      :is="as"
-      ref="element"
-      v-bind="$attrs"
-      :class="[$attrs.class, classes]"
-      :style="[$attrs.style, style]"
-    >
-      <slot/>
-    </component>
-  </UseTypographyIos>
+  <component :is="as" ref="element" :class="typography.classes" :style="typography.style">
+    <slot/>
+  </component>
 </template>
