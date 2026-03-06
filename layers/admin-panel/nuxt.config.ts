@@ -45,32 +45,31 @@ export default defineNuxtConfig({
   css: [
     resolve('app/assets/global.scss'),
   ],
-  components: [
-    {
-      path: resolve('app/pages-components'),
-      pathPrefix: false,
-      extensions: ['.vue'],
-      ignore: componentsIgnore,
-    },
-    {
-      path: resolve('app/components'),
-      pathPrefix: false,
-      extensions: ['.vue'],
-      ignore: componentsIgnore,
-    },
-    {
-      path: resolve('app/auto-components'),
-      pathPrefix: false,
-      extensions: ['.ts', '.vue'],
-      ignore: componentsIgnore,
-    },
-    {
-      path: resolve('app/domains'),
-      pathPrefix: false,
-      pattern: '**/components/*.vue',
-      ignore: componentsIgnore,
-    },
-  ],
+  components: [{
+    path: resolve('app/pages-components'),
+    pathPrefix: false,
+    extensions: ['.vue'],
+    ignore: componentsIgnore,
+    priority: 100,
+  }, {
+    path: resolve('app/components'),
+    pathPrefix: false,
+    extensions: ['.vue'],
+    ignore: componentsIgnore,
+    priority: 100,
+  }, {
+    path: resolve('app/auto-components'),
+    pathPrefix: false,
+    extensions: ['.ts', '.vue'],
+    ignore: componentsIgnore,
+    priority: 100,
+  }, {
+    path: resolve('app/domains'),
+    pathPrefix: false,
+    pattern: '**/components/*.vue',
+    ignore: componentsIgnore,
+    priority: 100,
+  }],
   extends: [
     '../api',
     '../base',
