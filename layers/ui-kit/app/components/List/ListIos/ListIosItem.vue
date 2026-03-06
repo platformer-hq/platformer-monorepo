@@ -46,7 +46,7 @@ const bodyLeftSlots = [
 ] as const;
 
 const rootRef = useTemplateRef('root');
-const { pressed } = useMousePressed({ target: rootRef });
+const { pressed } = useMousePressed({ target: rootRef, touch: false });
 const onHighlightLeave = (el: Element, done: VoidFunction) => {
   el
     .animate({ opacity: [0.1, 0] }, { duration: 300 })
