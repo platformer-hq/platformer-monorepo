@@ -88,8 +88,11 @@ export {
 export { default as UseIosPageTransition } from './app/page-transitions/components/UseIosPageTransition.vue';
 //#endregion
 
+//#region Types.
+export type * from './app/types';
+//#endregion
+
 //#region Utils.
-export type { KnownHtmlTag, KnownHtmlTagAttributes } from './app/types/html-tags';
 export { bem } from './app/utils/bem';
 //#endregion
 

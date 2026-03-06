@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { KnownHtmlTag } from '#layers/ui-kit';
+import type { KnownHtmlTag } from '@ui-kit/types';
 
 export interface ButtonBaseProps {
   /**
