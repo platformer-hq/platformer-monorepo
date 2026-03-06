@@ -60,7 +60,7 @@ useMousePressed({
 const isClickable = computed(() => basedOnActive('clickable'));
 const ripplesRef = computed(() => rootRef.value?.element);
 useRipples({
-  enabled: isClickable,
+  enabled: () => props.ripples || false,
   containerRef: ripplesRef,
   clickRef: ripplesRef,
 });
