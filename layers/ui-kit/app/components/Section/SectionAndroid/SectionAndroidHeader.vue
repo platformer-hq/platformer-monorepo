@@ -41,7 +41,7 @@ defineSlots<{
   }
 
   &--headline {
-    padding: 24px 20px 4px;
+    padding: 20px 20px 8px;
     color: var(--section-android-header-headline-color);
   }
 }
