@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import type { UseTypographyBaseOptions } from '@ui-kit/composables/useTypographyBase/useTypographyBase';
+import type {
+  UseTypographyBaseOptions,
+  UseTypographyBaseAlign,
+} from '@ui-kit/composables/useTypographyBase/useTypographyBase';
 import type { KnownHtmlTag } from '@ui-kit/types';
 
 export type TypographyBaseAlign = UseTypographyBaseAlign;

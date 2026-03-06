@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import type { UseTypographyAndroidOptions } from '@ui-kit/composables/useTypographyAndroid/useTypographyAndroid';
+import type {
+  UseTypographyAndroidOptions,
+  UseTypographyAndroidAlign,
+  UseTypographyAndroidVariant,
+} from '@ui-kit/composables/useTypographyAndroid/useTypographyAndroid';
 import type { KnownHtmlTag } from '@ui-kit/types';
 
 export type TypographyAndroidAlign = UseTypographyAndroidAlign;

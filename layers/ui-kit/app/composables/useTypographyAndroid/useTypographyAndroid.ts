@@ -1,5 +1,10 @@
 import type { StyleValue } from 'vue';
 
+import type {
+  UseTypographyBaseOptions,
+  UseTypographyBaseAlign,
+} from '../useTypographyBase/useTypographyBase';
+
 import './TypographyAndroid.scss';
 
 /**

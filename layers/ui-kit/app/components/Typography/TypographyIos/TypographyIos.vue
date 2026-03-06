@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import type { UseTypographyIosOptions } from '@ui-kit/composables/useTypographyIos/useTypographyIos';
+import type {
+  UseTypographyIosOptions,
+  UseTypographyIosVariant,
+  UseTypographyIosAlign,
+} from '@ui-kit/composables/useTypographyIos/useTypographyIos';
 import type { KnownHtmlTag } from '@ui-kit/types';
 
 export type TypographyIosAlign = UseTypographyIosAlign;
