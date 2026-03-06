@@ -24,7 +24,6 @@ defineExpose({ element });
 
 <template>
   <component :is="as" ref="element" :class="typography.classes" :style="typography.style">
-    {{ $props.maxLines }}
     <slot/>
   </component>
 </template>
