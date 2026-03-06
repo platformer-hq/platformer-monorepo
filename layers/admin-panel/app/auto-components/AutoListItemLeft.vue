@@ -7,11 +7,9 @@ const props = defineProps<{
 
 const platform = useTmaPlatform();
 const computedWidth = computed(() => (
-  platform.value.isMappedAndroid
+  platform.value.isMappedAndroid || props.width !== 'large'
     ? props.width
-    : props.width === 'large'
-      ? 'default'
-      : props.width
+    : 'default'
 ));
 </script>
 

@@ -15,7 +15,7 @@ const platform = useTmaPlatform();
 
 <template>
   <component
-    :is="platform.isMappedIos ? ListAndroidItemLeftIconElement : ListIosItemLeftIconElement"
+    :is="platform.isMappedIos ? ListIosItemLeftIconElement : ListAndroidItemLeftIconElement"
     v-bind="platform.isMappedIos ? $props : reactiveOmit($props, 'padLeft')"
   >
     <slot/>
