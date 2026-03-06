@@ -13,6 +13,7 @@ export interface ShimmerBoxProps {
   width?: string | number;
   borderRadius?: string | number;
   margin?: string | number;
+  display?: string;
 }
 
 const { as = 'div', bgColor } = defineProps<ShimmerBoxProps>();
@@ -29,6 +30,7 @@ const { b, e } = bem('shimmer-box');
       width: toPx(width),
       borderRadius: toPx(borderRadius),
       margin: toPx(margin),
+      display,
       '--shimmer-box-color': shimmerColor,
     }"
   >
