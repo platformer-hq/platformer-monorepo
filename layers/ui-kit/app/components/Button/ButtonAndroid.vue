@@ -57,10 +57,9 @@ useMousePressed({
   },
 });
 
-const isClickable = computed(() => basedOnActive('clickable'));
 const ripplesRef = computed(() => rootRef.value?.element);
 useRipples({
-  enabled: () => props.ripples || false,
+  enabled: () => basedOnActive('ripples'),
   containerRef: ripplesRef,
   clickRef: ripplesRef,
 });
@@ -70,7 +69,7 @@ useRipples({
   <ButtonBase
     ref="root"
     :as
-    :clickable="isClickable"
+    :clickable="basedOnActive('clickable')"
     :palette
     :full-width
     :class="b({pressed, palette}, variant)"
