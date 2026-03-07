@@ -1,25 +1,26 @@
 <script setup lang="ts">
-const { width = 'default' } = defineProps<{
+const { size = 'default' } = defineProps<{
+  width?: number | string;
   /**
    * @default 'default'
    */
-  width?: 'default' | 'large' | 'auto' | number | string;
+  size?: 'default' | 'small' | 'large';
 }>();
 const { b } = bem('list-android-item-left');
-const isKnownWidth = computed(() => ['default', 'large'].includes(width as string));
 </script>
 
 <template>
-  <div
-    :class="b({[width]: isKnownWidth})"
-    :style="{width: isKnownWidth ? undefined : toPx(width)}"
-  >
+  <div :class="b(size)" :style="{width: toPx(width)}">
     <slot/>
   </div>
 </template>
 
 <style lang="scss">
 .list-android-item-left {
+  &--small {
+    width: 32px;
+  }
+
   &--default {
     width: 44px;
   }

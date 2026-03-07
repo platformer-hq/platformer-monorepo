@@ -1,24 +1,26 @@
 <script setup lang="ts">
-const { width = 'default' } = defineProps<{
+const { size = 'default' } = defineProps<{
+  width?: number | string;
   /**
    * @default 'default'
    */
-  width?: 'default' | 'auto' | number | string;
+  size?: 'default' | 'small' | 'large';
 }>();
 const { b } = bem('list-ios-item-left');
 </script>
 
 <template>
-  <div
-    :class="b({[width]: width === 'default'})"
-    :style="{width: width !== 'default' && width !== 'auto' ? toPx(width) : undefined}"
-  >
+  <div :class="b(size)" :style="{width: toPx(width)}">
     <slot/>
   </div>
 </template>
 
 <style lang="scss">
 .list-ios-item-left {
+  &--small {
+    width: 32px;
+  }
+
   &--default {
     width: 50px;
   }
