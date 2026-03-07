@@ -11,6 +11,13 @@ export function apiAppRoleToLocal(role: AppRole): LocalRole {
   } as const)[role];
 }
 
+export function localAppPrivacyToApi(privacy: LocalPrivacy): AppPrivacy {
+  return ({
+    private: AppPrivacy.Hidden,
+    public: AppPrivacy.Visible,
+  } as const)[privacy];
+}
+
 export function apiAppPrivacyToLocal(privacy: AppPrivacy): LocalPrivacy {
   return ({
     [AppPrivacy.Hidden]: 'private',
