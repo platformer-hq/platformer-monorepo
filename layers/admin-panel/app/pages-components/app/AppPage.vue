@@ -35,7 +35,7 @@ const URLsIcon = createIconComponent(IconLink30);
 const CacheIcon = createIconComponent(IconDataAndStorage30);
 const TransferIcon = createCustomIconComponent(IconPersonLineDottedFill28, 22, '#34C759');
 const TelegramIcon = createCustomIconComponent(IconTelegram24, 24, '#007AFF');
-const UrlWizardIcon = createCustomIconComponent(IconEyeFillIOS28, 24, '#FF2D55');
+const UrlViewerIcon = createCustomIconComponent(IconEyeFillIOS28, 24, '#FF2D55');
 
 const query = parse(
   looseObject({ appId: pipe(string(), transform(Number)) }),
@@ -55,7 +55,7 @@ const { t } = useI18n({
       'integrations.title': 'Integrations',
       'integrations.tg': 'Telegram',
       'utils.title': 'Utilities',
-      'utils.urlWizard': 'URL Wizard',
+      'utils.urlViewer': 'URL Viewer',
       'utils.cache': 'Caching',
       'popup.delete.title': 'Confirm app deletion',
       'popup.delete.message': 'Are you sure you want to delete the application? This action is irreversible.',
@@ -72,7 +72,7 @@ const { t } = useI18n({
       'integrations.title': 'Интеграции',
       'integrations.tg': 'Телеграм',
       'utils.title': 'Утилиты',
-      'utils.urlWizard': 'Обозреватель ссылок',
+      'utils.urlViewer': 'Обозреватель ссылок',
       'utils.cache': 'Кеширование',
       'popup.delete.title': 'Подтвердите удаление приложения',
       'popup.delete.message': 'Вы уверены, что хотите удалить приложение? Это действие необратимо.',
@@ -133,7 +133,7 @@ const sections = computed(() => [
   {
     title: t('utils.title'),
     items: [
-      { icon: UrlWizardIcon, title: t('utils.urlWizard'), name: PAGE_NAME_APP_URL_VIEWER },
+      { icon: UrlViewerIcon, title: t('utils.urlViewer'), name: PAGE_NAME_APP_URL_VIEWER },
       { icon: CacheIcon, title: t('utils.cache'), name: PAGE_NAME_APP_CACHE },
     ],
   },
