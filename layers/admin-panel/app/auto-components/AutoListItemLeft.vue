@@ -2,22 +2,18 @@
 import { ListIosItemLeft, ListAndroidItemLeft } from '#components';
 
 const props = defineProps<{
-  width?: 'default' | 'large' | 'auto' | number | string;
+  width?: number | string;
+  size?: 'small' | 'default' | 'large';
 }>();
 
 const platform = useTmaPlatform();
-const computedWidth = computed(() => (
-  platform.value.isMappedAndroid || props.width !== 'large'
-    ? props.width
-    : 'default'
-));
 </script>
 
 <template>
   <component
     :is="platform.isMappedIos ? ListIosItemLeft : ListAndroidItemLeft"
     v-bind="$props"
-    :width="computedWidth"
+    :size="platform.isMappedAndroid || props.size !== 'large' ? props.size : 'default'"
   >
     <slot/>
   </component>
