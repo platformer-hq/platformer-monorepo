@@ -42,7 +42,6 @@ const { b, e } = bem('list-ios-item-body-left');
   &__texts {
     height: 100%;
     display: flex;
-    flex: 1 0 0;
     align-items: flex-start;
     flex-direction: column;
     justify-content: center;
