@@ -1,0 +1,44 @@
+<script setup lang="ts">
+import type { KnownHtmlTag } from '#layers/ui-kit';
+
+const { as = 'div', bottom = true, left = true, right = true, top = true } = defineProps<{
+  /**
+   * @default 'div'
+   */
+  as?: KnownHtmlTag;
+  /**
+   * @default true
+   */
+  top?: boolean;
+  /**
+   * @default true
+   */
+  left?: boolean;
+  /**
+   * @default true
+   */
+  right?: boolean;
+  /**
+   * @default true
+   */
+  bottom?: boolean;
+}>();
+
+const { b } = bem('page-paddings');
+</script>
+
+<template>
+  <component :is="as" :class="b({top, left, bottom, right})">
+    <slot/>
+  </component>
+</template>
+
+<style lang="scss">
+.page-paddings {
+  @each $side in ("top", "left", "right", "bottom") {
+    &--#{$side} {
+      padding-#{$side}: 16px;
+    }
+  }
+}
+</style>
