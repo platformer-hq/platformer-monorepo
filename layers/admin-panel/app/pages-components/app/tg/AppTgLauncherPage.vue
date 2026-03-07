@@ -50,6 +50,7 @@ const { mutate: copy } = useMutation({
 
 const appId = useQueryAppId();
 const bottomBar = useTemplateRef('bottom-bar');
+const isPageEntered = useIsCurrentPageEntered();
 const fallbackUrl = ref('');
 const initTimeout = ref('');
 const loadTimeout = ref('');
@@ -149,7 +150,7 @@ const handleCopy = () => {
       </VerticalPaddings>
     </PageContent>
     <BottomBarTransition>
-      <BottomBar ref="bottom-bar">
+      <BottomBar v-if="isPageEntered" ref="bottom-bar">
         <BottomBarInner>
           <AutoButton
             palette="filled"
