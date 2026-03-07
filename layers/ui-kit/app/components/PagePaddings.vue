@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { KnownHtmlTag } from '#layers/ui-kit';
 
-const { as = 'div', bottom = true, left = true, right = true, top = true } = defineProps<{
+export interface PagePaddingsProps {
   /**
    * @default 'div'
    */
@@ -22,7 +22,15 @@ const { as = 'div', bottom = true, left = true, right = true, top = true } = def
    * @default true
    */
   bottom?: boolean;
-}>();
+}
+
+const {
+  as = 'div',
+  bottom = true,
+  left = true,
+  right = true,
+  top = true,
+} = defineProps<PagePaddingsProps>();
 
 const { b } = bem('page-paddings');
 </script>

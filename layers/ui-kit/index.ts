@@ -68,7 +68,9 @@ export { default as UseTypographyAndroid, type UseTypographyAndroidProps, type U
 export { default as TypographyIos, type TypographyIosAlign, type TypographyIosProps, type TypographyIosVariant } from './app/components/Typography/TypographyIos/TypographyIos.vue';
 export { default as UseTypographyIos, type UseTypographyIosProps, type UseTypographyIosSlotProps } from './app/components/Typography/TypographyIos/UseTypographyIos.vue';
 
-export { default as PagePaddings } from './app/components/PagePaddings.vue';
+export { default as PagePaddings, type PagePaddingsProps } from './app/components/PagePaddings.vue';
+export { default as SidePaddings } from './app/components/SidePaddings.vue';
+export { default as VerticalPaddings } from './app/components/VerticalPaddings.vue';
 
 export { default as ShimmerBox, type ShimmerBoxProps } from './app/components/ShimmerBox.vue';
 //#endregion
