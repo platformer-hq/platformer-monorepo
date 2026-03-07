@@ -1,4 +1,5 @@
 export const PAGE_NAME_MAIN = 'main';
+export const PAGE_NAME_USER_SELECTION = 'user-selection';
 export const PAGE_NAME_APPS = 'apps';
 export const PAGE_NAME_APP = 'app';
 export const PAGE_NAME_APP_GENERAL = 'app-general';
