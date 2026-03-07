@@ -67,12 +67,14 @@ const fields = computed(() => [
     footer: t('initTimeout.footer'),
     param: 'init_timeout',
     ref: initTimeout,
+    type: 'number',
   },
   {
     title: t('loadTimeout.title'),
     footer: t('loadTimeout.footer'),
     param: 'load_timeout',
     ref: loadTimeout,
+    type: 'number',
   },
 ]);
 
@@ -136,6 +138,7 @@ const handleCopy = () => {
                   <AutoListItemBodyLeftInputElement
                     v-model="field.ref.value"
                     :placeholder="t('optional')"
+                    :type="field.type"
                   />
                 </AutoListItemBodyLeftInput>
               </template>
