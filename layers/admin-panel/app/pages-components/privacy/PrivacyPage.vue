@@ -57,71 +57,69 @@ watch(data, data => {
 <template>
   <PageBase>
     <PageContent>
-      <VerticalPaddings>
-        <SidePaddings>
-          <AutoSection list-bg-color="secondary-bg">
-            <AutoList>
-              <AutoListItem
-                :clickable="platform.isMappedAndroid && !isLoading"
-                @click="platform.isMappedAndroid && !isLoading
-                  ? (canAcceptAppTransfers = !canAcceptAppTransfers)
-                  : undefined"
-              >
-                <template #bodyLeftLabel>
-                  <AutoListItemBodyLeftLabel>
-                    {{ t('invites.title') }}
-                  </AutoListItemBodyLeftLabel>
-                </template>
-                <template #bodyRight>
-                  <AutoListItemBodyRight>
-                    <AutoSwitch
-                      v-model:checked="canAcceptAppTransfers"
-                      :disabled="isLoading"
-                      @click="platform.isMappedAndroid ? $event.preventDefault() : undefined"
-                    />
-                  </AutoListItemBodyRight>
-                </template>
-              </AutoListItem>
-            </AutoList>
-            <template #footer>
-              <AutoSectionFooter>
-                {{ t('invites.footer') }}
-              </AutoSectionFooter>
-            </template>
-          </AutoSection>
+      <PagePaddings>
+        <AutoSection list-bg-color="secondary-bg">
+          <AutoList>
+            <AutoListItem
+              :clickable="platform.isMappedAndroid && !isLoading"
+              @click="platform.isMappedAndroid && !isLoading
+                ? (canAcceptAppTransfers = !canAcceptAppTransfers)
+                : undefined"
+            >
+              <template #bodyLeftLabel>
+                <AutoListItemBodyLeftLabel>
+                  {{ t('invites.title') }}
+                </AutoListItemBodyLeftLabel>
+              </template>
+              <template #bodyRight>
+                <AutoListItemBodyRight>
+                  <AutoSwitch
+                    v-model:checked="canAcceptAppTransfers"
+                    :disabled="isLoading"
+                    @click="platform.isMappedAndroid ? $event.preventDefault() : undefined"
+                  />
+                </AutoListItemBodyRight>
+              </template>
+            </AutoListItem>
+          </AutoList>
+          <template #footer>
+            <AutoSectionFooter>
+              {{ t('invites.footer') }}
+            </AutoSectionFooter>
+          </template>
+        </AutoSection>
 
-          <AutoSection list-bg-color="secondary-bg" style="margin-top: 16px;">
-            <AutoList>
-              <AutoListItem
-                :clickable="platform.isMappedAndroid && !isLoading"
-                @click="platform.isMappedAndroid && !isLoading
-                  ? (canBeInvitedToManage = !canBeInvitedToManage)
-                  : undefined"
-              >
-                <template #bodyLeftLabel>
-                  <AutoListItemBodyLeftLabel>
-                    {{ t('transfers.title') }}
-                  </AutoListItemBodyLeftLabel>
-                </template>
-                <template #bodyRight>
-                  <AutoListItemBodyRight>
-                    <AutoSwitch
-                      v-model:checked="canBeInvitedToManage"
-                      :disabled="isLoading"
-                      @click="platform.isMappedAndroid ? $event.preventDefault() : undefined"
-                    />
-                  </AutoListItemBodyRight>
-                </template>
-              </AutoListItem>
-            </AutoList>
-            <template #footer>
-              <AutoSectionFooter>
-                {{ t('transfers.footer') }}
-              </AutoSectionFooter>
-            </template>
-          </AutoSection>
-        </SidePaddings>
-      </VerticalPaddings>
+        <AutoSection list-bg-color="secondary-bg" style="margin-top: 16px;">
+          <AutoList>
+            <AutoListItem
+              :clickable="platform.isMappedAndroid && !isLoading"
+              @click="platform.isMappedAndroid && !isLoading
+                ? (canBeInvitedToManage = !canBeInvitedToManage)
+                : undefined"
+            >
+              <template #bodyLeftLabel>
+                <AutoListItemBodyLeftLabel>
+                  {{ t('transfers.title') }}
+                </AutoListItemBodyLeftLabel>
+              </template>
+              <template #bodyRight>
+                <AutoListItemBodyRight>
+                  <AutoSwitch
+                    v-model:checked="canBeInvitedToManage"
+                    :disabled="isLoading"
+                    @click="platform.isMappedAndroid ? $event.preventDefault() : undefined"
+                  />
+                </AutoListItemBodyRight>
+              </template>
+            </AutoListItem>
+          </AutoList>
+          <template #footer>
+            <AutoSectionFooter>
+              {{ t('transfers.footer') }}
+            </AutoSectionFooter>
+          </template>
+        </AutoSection>
+      </PagePaddings>
     </PageContent>
     <BottomBarTransition>
       <BottomBar

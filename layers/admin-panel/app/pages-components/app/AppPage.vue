@@ -164,109 +164,107 @@ onMounted(() => {
 <template>
   <PageBase>
     <PageContent>
-      <VerticalPaddings>
-        <SidePaddings>
-          <AppIcon :class="e('icon')"/>
-          <AutoTypography
-            as="h1"
-            variant="title1"
-            :class="e('title')"
-            weight="semibold"
-          >
+      <PagePaddings>
+        <AppIcon :class="e('icon')"/>
+        <AutoTypography
+          as="h1"
+          variant="title1"
+          :class="e('title')"
+          weight="semibold"
+        >
+          <template v-if="appData">
+            {{ appData.title }}
+          </template>
+          <TextShimmerBox v-else variant="title1" :width="130" display="inline-block"/>
+          <ColorBox text="hint" as="span">
+            ·
             <template v-if="appData">
-              {{ appData.title }}
+              #{{ appData.id }}
             </template>
-            <TextShimmerBox v-else variant="title1" :width="130" display="inline-block"/>
-            <ColorBox text="hint" as="span">
-              ·
-              <template v-if="appData">
-                #{{ appData.id }}
+            <TextShimmerBox v-else variant="title1" :width="50" display="inline-block"/>
+          </ColorBox>
+        </AutoTypography>
+        <AutoSection
+          v-for="(section, sectionIdx) in sections"
+          :key="sectionIdx"
+          list-bg-color="secondary-bg"
+          :class="e('section', sectionIdx && 'offset-top')"
+        >
+          <template v-if="section.title" #header>
+            <AutoSectionHeader>
+              {{ section.title }}
+            </AutoSectionHeader>
+          </template>
+          <AutoList>
+            <AutoListItem
+              v-for="item in section.items"
+              :key="item.name"
+              :variant="isSendingRequest ? 'placeholder' : 'regular'"
+              :clickable="!isSendingRequest"
+              @click="!isSendingRequest && navigateTo({
+                name: item.name,
+                query: {appId: query.appId}
+              })"
+            >
+              <template #left>
+                <AutoListItemLeft>
+                  <AutoListItemLeftIcon pad-left>
+                    <AutoListItemLeftIconElement
+                      rounded
+                      :style="item.icon.kind === 'custom' ? {
+                        background: colorReference(item.icon.bgColor) || undefined,
+                        color: 'white',
+                      } : undefined"
+                    >
+                      <component
+                        :is="item.icon.component"
+                        :size="item.icon.kind === 'custom' ? item.icon.size : undefined"
+                      />
+                    </AutoListItemLeftIconElement>
+                  </AutoListItemLeftIcon>
+                </AutoListItemLeft>
               </template>
-              <TextShimmerBox v-else variant="title1" :width="50" display="inline-block"/>
-            </ColorBox>
-          </AutoTypography>
-          <AutoSection
-            v-for="(section, sectionIdx) in sections"
-            :key="sectionIdx"
-            list-bg-color="secondary-bg"
-            :class="e('section', sectionIdx && 'offset-top')"
-          >
-            <template v-if="section.title" #header>
-              <AutoSectionHeader>
-                {{ section.title }}
-              </AutoSectionHeader>
-            </template>
-            <AutoList>
-              <AutoListItem
-                v-for="item in section.items"
-                :key="item.name"
-                :variant="isSendingRequest ? 'placeholder' : 'regular'"
-                :clickable="!isSendingRequest"
-                @click="!isSendingRequest && navigateTo({
-                  name: item.name,
-                  query: {appId: query.appId}
-                })"
-              >
-                <template #left>
-                  <AutoListItemLeft>
-                    <AutoListItemLeftIcon pad-left>
-                      <AutoListItemLeftIconElement
-                        rounded
-                        :style="item.icon.kind === 'custom' ? {
-                          background: colorReference(item.icon.bgColor) || undefined,
-                          color: 'white',
-                        } : undefined"
-                      >
-                        <component
-                          :is="item.icon.component"
-                          :size="item.icon.kind === 'custom' ? item.icon.size : undefined"
-                        />
-                      </AutoListItemLeftIconElement>
-                    </AutoListItemLeftIcon>
-                  </AutoListItemLeft>
-                </template>
-                <template #bodyLeftLabel>
-                  <AutoListItemBodyLeftLabel>
-                    {{ item.title }}
-                  </AutoListItemBodyLeftLabel>
-                </template>
-                <template v-if="platform.isMappedIos" #bodyRight>
-                  <AutoListItemBodyRight>
-                    <AutoListItemBodyRightChevron/>
-                  </AutoListItemBodyRight>
-                </template>
-              </AutoListItem>
-            </AutoList>
-          </AutoSection>
-          <AutoSection
-            :class="e('section', 'offset-top')"
-            :list-bg-color="isSendingRequest ? 'secondary-bg' : 'rgb(221 4 4 / 19%)'"
-          >
-            <AutoList>
-              <AutoListItem
-                :variant="isSendingRequest ? 'placeholder' : 'destructive'"
-                :clickable="!isSendingRequest"
-                @click="!isSendingRequest && handleDelete()"
-              >
-                <template #left>
-                  <AutoListItemLeft>
-                    <AutoListItemLeftIcon pad-left>
-                      <AutoListItemLeftIconElement>
-                        <IconBinOutline28/>
-                      </AutoListItemLeftIconElement>
-                    </AutoListItemLeftIcon>
-                  </AutoListItemLeft>
-                </template>
-                <template #bodyLeftLabel>
-                  <AutoListItemBodyLeftLabel>
-                    {{ t('deleteApp') }}
-                  </AutoListItemBodyLeftLabel>
-                </template>
-              </AutoListItem>
-            </AutoList>
-          </AutoSection>
-        </SidePaddings>
-      </VerticalPaddings>
+              <template #bodyLeftLabel>
+                <AutoListItemBodyLeftLabel>
+                  {{ item.title }}
+                </AutoListItemBodyLeftLabel>
+              </template>
+              <template v-if="platform.isMappedIos" #bodyRight>
+                <AutoListItemBodyRight>
+                  <AutoListItemBodyRightChevron/>
+                </AutoListItemBodyRight>
+              </template>
+            </AutoListItem>
+          </AutoList>
+        </AutoSection>
+        <AutoSection
+          :class="e('section', 'offset-top')"
+          :list-bg-color="isSendingRequest ? 'secondary-bg' : 'rgb(221 4 4 / 19%)'"
+        >
+          <AutoList>
+            <AutoListItem
+              :variant="isSendingRequest ? 'placeholder' : 'destructive'"
+              :clickable="!isSendingRequest"
+              @click="!isSendingRequest && handleDelete()"
+            >
+              <template #left>
+                <AutoListItemLeft>
+                  <AutoListItemLeftIcon pad-left>
+                    <AutoListItemLeftIconElement>
+                      <IconBinOutline28/>
+                    </AutoListItemLeftIconElement>
+                  </AutoListItemLeftIcon>
+                </AutoListItemLeft>
+              </template>
+              <template #bodyLeftLabel>
+                <AutoListItemBodyLeftLabel>
+                  {{ t('deleteApp') }}
+                </AutoListItemBodyLeftLabel>
+              </template>
+            </AutoListItem>
+          </AutoList>
+        </AutoSection>
+      </PagePaddings>
     </PageContent>
   </PageBase>
 </template>

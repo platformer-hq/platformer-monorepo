@@ -93,64 +93,62 @@ const handleCopy = () => {
 
 <template>
   <PageBase>
-    <PageContent>
-      <VerticalPaddings :style="{paddingBottom: toPx(bottomBar?.height)}">
-        <SidePaddings>
-          <AutoSection list-bg-color="secondary-bg">
-            <template #header>
-              <AutoSectionHeader>
-                {{ t('launcherUrl.title') }}
-              </AutoSectionHeader>
+    <PageContent :style="{paddingBottom: toPx(bottomBar?.height)}">
+      <PagePaddings>
+        <AutoSection list-bg-color="secondary-bg">
+          <template #header>
+            <AutoSectionHeader>
+              {{ t('launcherUrl.title') }}
+            </AutoSectionHeader>
+          </template>
+          <AutoListItem>
+            <template #bodyLeftLabel>
+              <AutoListItemBodyLeftLabel>
+                {{ baseUrl }}
+                <template
+                  v-for="field in fields.filter(item => item.ref.value)"
+                  :key="field.param"
+                >
+                  <br>&nbsp;&nbsp;&{{ field.param }}={{ encodeURIComponent(field.ref.value) }}
+                </template>
+              </AutoListItemBodyLeftLabel>
             </template>
-            <AutoListItem>
-              <template #bodyLeftLabel>
-                <AutoListItemBodyLeftLabel>
-                  {{ baseUrl }}
-                  <template
-                    v-for="field in fields.filter(item => item.ref.value)"
-                    :key="field.param"
-                  >
-                    <br>&nbsp;&nbsp;&{{ field.param }}={{ encodeURIComponent(field.ref.value) }}
-                  </template>
-                </AutoListItemBodyLeftLabel>
-              </template>
-            </AutoListItem>
-            <template #footer>
-              <AutoSectionFooter>
-                {{ t('launcherUrl.footer') }}
-              </AutoSectionFooter>
+          </AutoListItem>
+          <template #footer>
+            <AutoSectionFooter>
+              {{ t('launcherUrl.footer') }}
+            </AutoSectionFooter>
+          </template>
+        </AutoSection>
+        <AutoSection
+          v-for="field in fields"
+          :key="field.param"
+          list-bg-color="secondary-bg"
+          :style="{marginTop: '16px'}"
+        >
+          <template #header>
+            <AutoSectionHeader>
+              {{ field.title }}
+            </AutoSectionHeader>
+          </template>
+          <AutoListItem>
+            <template #bodyLeftInput>
+              <AutoListItemBodyLeftInput>
+                <AutoListItemBodyLeftInputElement
+                  v-model="field.ref.value"
+                  :placeholder="t('optional')"
+                  :type="field.type"
+                />
+              </AutoListItemBodyLeftInput>
             </template>
-          </AutoSection>
-          <AutoSection
-            v-for="field in fields"
-            :key="field.param"
-            list-bg-color="secondary-bg"
-            :style="{marginTop: '16px'}"
-          >
-            <template #header>
-              <AutoSectionHeader>
-                {{ field.title }}
-              </AutoSectionHeader>
-            </template>
-            <AutoListItem>
-              <template #bodyLeftInput>
-                <AutoListItemBodyLeftInput>
-                  <AutoListItemBodyLeftInputElement
-                    v-model="field.ref.value"
-                    :placeholder="t('optional')"
-                    :type="field.type"
-                  />
-                </AutoListItemBodyLeftInput>
-              </template>
-            </AutoListItem>
-            <template #footer>
-              <AutoSectionFooter>
-                {{ field.footer }}
-              </AutoSectionFooter>
-            </template>
-          </AutoSection>
-        </SidePaddings>
-      </VerticalPaddings>
+          </AutoListItem>
+          <template #footer>
+            <AutoSectionFooter>
+              {{ field.footer }}
+            </AutoSectionFooter>
+          </template>
+        </AutoSection>
+      </PagePaddings>
     </PageContent>
     <BottomBarTransition>
       <BottomBar v-if="isPageEntered" ref="bottom-bar">

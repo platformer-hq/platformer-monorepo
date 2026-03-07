@@ -106,71 +106,69 @@ watch(data, data => {
 <template>
   <PageBase>
     <PageContent>
-      <VerticalPaddings>
-        <SidePaddings>
-          <AutoSection list-bg-color="secondary-bg">
-            <template #header>
-              <AutoSectionHeader>
-                {{ t('botId.title') }}
-              </AutoSectionHeader>
-            </template>
-            <AutoList>
-              <AutoListItem>
-                <template v-if="data" #bodyLeftInput>
-                  <AutoListItemBodyLeftInput>
-                    <AutoListItemBodyLeftInputElement
-                      v-model="botId"
-                      type="number"
-                      min="1"
-                      :disabled="isUpdatingApp || readonly"
-                      :placeholder="t('botId.placeholder')"
-                    />
-                  </AutoListItemBodyLeftInput>
-                </template>
-                <template v-else #bodyLeftLabel>
-                  <AutoListItemBodyLeftLabel>
-                    <TextShimmerBox variant="body" :width="160"/>
-                  </AutoListItemBodyLeftLabel>
-                </template>
-              </AutoListItem>
-            </AutoList>
-            <template #footer>
-              <AutoSectionFooter>
-                {{ t('botId.footer') }}
-              </AutoSectionFooter>
-            </template>
-          </AutoSection>
+      <PagePaddings>
+        <AutoSection list-bg-color="secondary-bg">
+          <template #header>
+            <AutoSectionHeader>
+              {{ t('botId.title') }}
+            </AutoSectionHeader>
+          </template>
+          <AutoList>
+            <AutoListItem>
+              <template v-if="data" #bodyLeftInput>
+                <AutoListItemBodyLeftInput>
+                  <AutoListItemBodyLeftInputElement
+                    v-model="botId"
+                    type="number"
+                    min="1"
+                    :disabled="isUpdatingApp || readonly"
+                    :placeholder="t('botId.placeholder')"
+                  />
+                </AutoListItemBodyLeftInput>
+              </template>
+              <template v-else #bodyLeftLabel>
+                <AutoListItemBodyLeftLabel>
+                  <TextShimmerBox variant="body" :width="160"/>
+                </AutoListItemBodyLeftLabel>
+              </template>
+            </AutoListItem>
+          </AutoList>
+          <template #footer>
+            <AutoSectionFooter>
+              {{ t('botId.footer') }}
+            </AutoSectionFooter>
+          </template>
+        </AutoSection>
 
-          <AutoSection list-bg-color="secondary-bg" :style="{marginTop: '16px'}">
-            <AutoList>
-              <AutoListItem
-                :clickable="platform.isMappedAndroid && !readonly"
-                @click="platform.isMappedAndroid && !readonly && (proxy = !proxy)"
-              >
-                <template #bodyLeftLabel>
-                  <AutoListItemBodyLeftLabel :max-lines="1">
-                    {{ t('proxy.title') }}
-                  </AutoListItemBodyLeftLabel>
-                </template>
-                <template #bodyRight>
-                  <AutoListItemBodyRight>
-                    <AutoSwitch
-                      v-model:checked="proxy"
-                      :disabled="!data || isUpdatingApp || readonly"
-                      @click.stop
-                    />
-                  </AutoListItemBodyRight>
-                </template>
-              </AutoListItem>
-            </AutoList>
-            <template #footer>
-              <AutoSectionFooter>
-                {{ t('proxy.footer') }}
-              </AutoSectionFooter>
-            </template>
-          </AutoSection>
-        </SidePaddings>
-      </VerticalPaddings>
+        <AutoSection list-bg-color="secondary-bg" :style="{marginTop: '16px'}">
+          <AutoList>
+            <AutoListItem
+              :clickable="platform.isMappedAndroid && !readonly"
+              @click="platform.isMappedAndroid && !readonly && (proxy = !proxy)"
+            >
+              <template #bodyLeftLabel>
+                <AutoListItemBodyLeftLabel :max-lines="1">
+                  {{ t('proxy.title') }}
+                </AutoListItemBodyLeftLabel>
+              </template>
+              <template #bodyRight>
+                <AutoListItemBodyRight>
+                  <AutoSwitch
+                    v-model:checked="proxy"
+                    :disabled="!data || isUpdatingApp || readonly"
+                    @click.stop
+                  />
+                </AutoListItemBodyRight>
+              </template>
+            </AutoListItem>
+          </AutoList>
+          <template #footer>
+            <AutoSectionFooter>
+              {{ t('proxy.footer') }}
+            </AutoSectionFooter>
+          </template>
+        </AutoSection>
+      </PagePaddings>
     </PageContent>
     <BottomBarTransition>
       <BottomBar v-if="isPageEntered && isDirty">

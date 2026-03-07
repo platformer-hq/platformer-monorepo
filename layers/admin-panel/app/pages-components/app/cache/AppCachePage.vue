@@ -96,57 +96,55 @@ onMounted(() => {
 <template>
   <PageBase>
     <PageContent>
-      <VerticalPaddings>
-        <SidePaddings>
-          <AutoSection list-bg-color="secondary-bg">
-            <AutoList>
-              <AutoListItem
-                :variant="isSendingRequest ? 'placeholder' : 'accent'"
-                :clickable="!isSendingRequest"
-                @click="!isSendingRequest && handleReset()"
-              >
-                <template #bodyLeftLabel>
-                  <AutoListItemBodyLeftLabel>
-                    {{ t('reset.button') }}
-                  </AutoListItemBodyLeftLabel>
-                </template>
-              </AutoListItem>
-              <AutoListItem large>
-                <template #bodyLeft>
-                  <AutoListItemBodyLeft reversed>
-                    <template #subtitle>
-                      <AutoListItemBodyLeftSubtitle>
-                        {{ t('date.title') }}
-                      </AutoListItemBodyLeftSubtitle>
-                    </template>
-                    <template #label>
-                      <AutoListItemBodyLeftLabel>
-                        <template v-if="appData">
-                          {{ appData?.urlsCacheResetAt?.toLocaleString(locale, {
-                            day: 'numeric',
-                            month: 'long',
-                            year: 'numeric',
-                            hour: 'numeric',
-                            minute: 'numeric',
-                            second: 'numeric',
-                            weekday: 'short'
-                          }) || t('date.value.never') }}
-                        </template>
-                        <TextShimmerBox v-else variant="body" :width="90"/>
-                      </AutoListItemBodyLeftLabel>
-                    </template>
-                  </AutoListItemBodyLeft>
-                </template>
-              </AutoListItem>
-            </AutoList>
-            <template #footer>
-              <AutoSectionFooter>
-                {{ t('reset.footer') }}
-              </AutoSectionFooter>
-            </template>
-          </AutoSection>
-        </SidePaddings>
-      </VerticalPaddings>
+      <PagePaddings>
+        <AutoSection list-bg-color="secondary-bg">
+          <AutoList>
+            <AutoListItem
+              :variant="isSendingRequest ? 'placeholder' : 'accent'"
+              :clickable="!isSendingRequest"
+              @click="!isSendingRequest && handleReset()"
+            >
+              <template #bodyLeftLabel>
+                <AutoListItemBodyLeftLabel>
+                  {{ t('reset.button') }}
+                </AutoListItemBodyLeftLabel>
+              </template>
+            </AutoListItem>
+            <AutoListItem large>
+              <template #bodyLeft>
+                <AutoListItemBodyLeft reversed>
+                  <template #subtitle>
+                    <AutoListItemBodyLeftSubtitle>
+                      {{ t('date.title') }}
+                    </AutoListItemBodyLeftSubtitle>
+                  </template>
+                  <template #label>
+                    <AutoListItemBodyLeftLabel>
+                      <template v-if="appData">
+                        {{ appData?.urlsCacheResetAt?.toLocaleString(locale, {
+                          day: 'numeric',
+                          month: 'long',
+                          year: 'numeric',
+                          hour: 'numeric',
+                          minute: 'numeric',
+                          second: 'numeric',
+                          weekday: 'short'
+                        }) || t('date.value.never') }}
+                      </template>
+                      <TextShimmerBox v-else variant="body" :width="90"/>
+                    </AutoListItemBodyLeftLabel>
+                  </template>
+                </AutoListItemBodyLeft>
+              </template>
+            </AutoListItem>
+          </AutoList>
+          <template #footer>
+            <AutoSectionFooter>
+              {{ t('reset.footer') }}
+            </AutoSectionFooter>
+          </template>
+        </AutoSection>
+      </PagePaddings>
     </PageContent>
   </PageBase>
 </template>

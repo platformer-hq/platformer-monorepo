@@ -89,63 +89,61 @@ onMounted(() => {
 <template>
   <PageBase :back="false">
     <PageContent>
-      <VerticalPaddings>
-        <SidePaddings>
-          <AutoSection
-            v-for="(section, sectionIdx) in sections"
-            :key="sectionIdx"
-            :style="sectionIdx > 0 ? {marginTop: '16px'} : undefined"
-            list-bg-color="secondary-bg"
-          >
-            <AutoList>
-              <AutoListItem
-                v-for="item in section"
-                :key="item.name"
-                clickable
-                @click="navigateTo({name: item.name})"
-              >
-                <template #left>
-                  <AutoListItemLeft>
-                    <AutoListItemLeftIcon pad-left>
-                      <AutoListItemLeftIconElement
-                        rounded
-                        :style="item.icon.kind === 'custom' ? {
-                          background: colorReference(item.icon.bgColor) || undefined,
-                          color: 'white',
-                        } : undefined"
-                      >
-                        <component
-                          :is="item.icon.component"
-                          :size="item.icon.kind === 'custom' ? item.icon.size : undefined"
-                        />
-                      </AutoListItemLeftIconElement>
-                    </AutoListItemLeftIcon>
-                  </AutoListItemLeft>
-                </template>
-                <template #bodyLeftLabel>
-                  <AutoListItemBodyLeftLabel :max-lines="1">
-                    {{ item.title }}
-                  </AutoListItemBodyLeftLabel>
-                </template>
-                <template #bodyRight>
-                  <AutoListItemBodyRight>
-                    <ShimmerBox
-                      v-if="'hasCounter' in item && item.count === undefined && isPending"
-                      :width="24"
-                      :height="24"
+      <PagePaddings>
+        <AutoSection
+          v-for="(section, sectionIdx) in sections"
+          :key="sectionIdx"
+          :style="sectionIdx > 0 ? {marginTop: '16px'} : undefined"
+          list-bg-color="secondary-bg"
+        >
+          <AutoList>
+            <AutoListItem
+              v-for="item in section"
+              :key="item.name"
+              clickable
+              @click="navigateTo({name: item.name})"
+            >
+              <template #left>
+                <AutoListItemLeft>
+                  <AutoListItemLeftIcon pad-left>
+                    <AutoListItemLeftIconElement
                       rounded
-                    />
-                    <AutoListItemBodyRightBadge v-else-if="'count' in item && item.count">
-                      {{ item.count }}
-                    </AutoListItemBodyRightBadge>
-                    <AutoListItemBodyRightChevron v-if="platform.isMappedIos"/>
-                  </AutoListItemBodyRight>
-                </template>
-              </AutoListItem>
-            </AutoList>
-          </AutoSection>
-        </SidePaddings>
-      </VerticalPaddings>
+                      :style="item.icon.kind === 'custom' ? {
+                        background: colorReference(item.icon.bgColor) || undefined,
+                        color: 'white',
+                      } : undefined"
+                    >
+                      <component
+                        :is="item.icon.component"
+                        :size="item.icon.kind === 'custom' ? item.icon.size : undefined"
+                      />
+                    </AutoListItemLeftIconElement>
+                  </AutoListItemLeftIcon>
+                </AutoListItemLeft>
+              </template>
+              <template #bodyLeftLabel>
+                <AutoListItemBodyLeftLabel :max-lines="1">
+                  {{ item.title }}
+                </AutoListItemBodyLeftLabel>
+              </template>
+              <template #bodyRight>
+                <AutoListItemBodyRight>
+                  <ShimmerBox
+                    v-if="'hasCounter' in item && item.count === undefined && isPending"
+                    :width="24"
+                    :height="24"
+                    rounded
+                  />
+                  <AutoListItemBodyRightBadge v-else-if="'count' in item && item.count">
+                    {{ item.count }}
+                  </AutoListItemBodyRightBadge>
+                  <AutoListItemBodyRightChevron v-if="platform.isMappedIos"/>
+                </AutoListItemBodyRight>
+              </template>
+            </AutoListItem>
+          </AutoList>
+        </AutoSection>
+      </PagePaddings>
     </PageContent>
   </PageBase>
 </template>

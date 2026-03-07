@@ -100,81 +100,79 @@ const saveLocale = async (locale: 'ru' | 'en') => {
 <template>
   <PageBase>
     <PageContent>
-      <SidePaddings>
-        <VerticalPaddings>
-          <AutoSection
-            v-for="(section, sectionIdx) in sections"
-            :key="sectionIdx"
-            list-bg-color="secondary-bg"
-            :class="e('section', sectionIdx > 0 && 'margin-top')"
-          >
-            <template #header>
-              <AutoSectionHeader>
-                {{ section.title }}
-              </AutoSectionHeader>
-            </template>
-            <AutoList>
-              <AutoListItem v-for="field in section.fields" :key="field.title" large>
-                <template #bodyLeft>
-                  <AutoListItemBodyLeft reversed>
-                    <template #subtitle>
-                      <AutoListItemBodyLeftSubtitle>
-                        {{ platform.isMappedIos ? field.title.toLowerCase() : field.title }}
-                      </AutoListItemBodyLeftSubtitle>
-                    </template>
-                    <template #label>
-                      <AutoListItemBodyLeftLabel v-if="!isPending">
-                        {{ field.value || '' }}
-                      </AutoListItemBodyLeftLabel>
-                      <TextShimmerBox v-else variant="body" width="100px" border-radius="6px"/>
-                    </template>
-                  </AutoListItemBodyLeft>
-                </template>
-              </AutoListItem>
-            </AutoList>
-            <template #footer>
-              <AutoSectionFooter>
-                {{ section.footer }}
-              </AutoSectionFooter>
-            </template>
-          </AutoSection>
-          <AutoSection :class="e('section', 'margin-top')" list-bg-color="secondary-bg">
-            <template #header>
-              <AutoSectionHeader>
-                {{ t('lang.title') }}
-              </AutoSectionHeader>
-            </template>
-            <AutoList>
-              <AutoListItem
-                v-for="item in [
-                  { title: t('lang.en'), subtitle: 'English', locale: 'en' as const },
-                  { title: t('lang.ru'), subtitle: 'Русский', locale: 'ru' as const },
-                ]"
-                :key="item.locale"
-                large
-                clickable
-                @click="saveLocale(item.locale)"
-              >
-                <template #bodyLeftLabel>
-                  <AutoListItemBodyLeftLabel>
-                    {{ item.title }}
-                  </AutoListItemBodyLeftLabel>
-                </template>
-                <template #bodyLeftSubtitle>
-                  <AutoListItemBodyLeftSubtitle>
-                    {{ item.subtitle }}
-                  </AutoListItemBodyLeftSubtitle>
-                </template>
-                <template v-if="item.locale === locale" #bodyRight>
-                  <AutoListItemBodyRight>
-                    <AutoListItemBodyRightCheckmark/>
-                  </AutoListItemBodyRight>
-                </template>
-              </AutoListItem>
-            </AutoList>
-          </AutoSection>
-        </VerticalPaddings>
-      </SidePaddings>
+      <PagePaddings>
+        <AutoSection
+          v-for="(section, sectionIdx) in sections"
+          :key="sectionIdx"
+          list-bg-color="secondary-bg"
+          :class="e('section', sectionIdx > 0 && 'margin-top')"
+        >
+          <template #header>
+            <AutoSectionHeader>
+              {{ section.title }}
+            </AutoSectionHeader>
+          </template>
+          <AutoList>
+            <AutoListItem v-for="field in section.fields" :key="field.title" large>
+              <template #bodyLeft>
+                <AutoListItemBodyLeft reversed>
+                  <template #subtitle>
+                    <AutoListItemBodyLeftSubtitle>
+                      {{ platform.isMappedIos ? field.title.toLowerCase() : field.title }}
+                    </AutoListItemBodyLeftSubtitle>
+                  </template>
+                  <template #label>
+                    <AutoListItemBodyLeftLabel v-if="!isPending">
+                      {{ field.value || '' }}
+                    </AutoListItemBodyLeftLabel>
+                    <TextShimmerBox v-else variant="body" width="100px" border-radius="6px"/>
+                  </template>
+                </AutoListItemBodyLeft>
+              </template>
+            </AutoListItem>
+          </AutoList>
+          <template #footer>
+            <AutoSectionFooter>
+              {{ section.footer }}
+            </AutoSectionFooter>
+          </template>
+        </AutoSection>
+        <AutoSection :class="e('section', 'margin-top')" list-bg-color="secondary-bg">
+          <template #header>
+            <AutoSectionHeader>
+              {{ t('lang.title') }}
+            </AutoSectionHeader>
+          </template>
+          <AutoList>
+            <AutoListItem
+              v-for="item in [
+                { title: t('lang.en'), subtitle: 'English', locale: 'en' as const },
+                { title: t('lang.ru'), subtitle: 'Русский', locale: 'ru' as const },
+              ]"
+              :key="item.locale"
+              large
+              clickable
+              @click="saveLocale(item.locale)"
+            >
+              <template #bodyLeftLabel>
+                <AutoListItemBodyLeftLabel>
+                  {{ item.title }}
+                </AutoListItemBodyLeftLabel>
+              </template>
+              <template #bodyLeftSubtitle>
+                <AutoListItemBodyLeftSubtitle>
+                  {{ item.subtitle }}
+                </AutoListItemBodyLeftSubtitle>
+              </template>
+              <template v-if="item.locale === locale" #bodyRight>
+                <AutoListItemBodyRight>
+                  <AutoListItemBodyRightCheckmark/>
+                </AutoListItemBodyRight>
+              </template>
+            </AutoListItem>
+          </AutoList>
+        </AutoSection>
+      </PagePaddings>
     </PageContent>
   </PageBase>
 </template>

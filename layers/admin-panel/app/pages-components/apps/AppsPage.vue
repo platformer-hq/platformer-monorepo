@@ -136,61 +136,102 @@ onMounted(() => {
 <template>
   <PageBase>
     <PageContent>
-      <VerticalPaddings>
-        <SidePaddings>
-          <AutoSection list-bg-color="secondary-bg">
+      <PagePaddings>
+        <AutoSection list-bg-color="secondary-bg">
+          <template #header>
+            <AutoSectionHeader>
+              {{ t('ownedApps.title') }}
+              <template v-if="apps && data">
+                ({{ apps.owned.length }} / {{ data.maxOwnedAppsCount ?? '∞' }})
+              </template>
+              <TextShimmerBox
+                v-else
+                as="span"
+                display="inline-block"
+                variant="body"
+                :width="40"
+                margin="0 0 0 5px"
+              />
+            </AutoSectionHeader>
+          </template>
+          <AutoList>
+            <AutoListItem
+              :variant="isPending ? 'placeholder' : 'accent'"
+              :clickable="!isPending"
+              @click="handleCreateClick"
+            >
+              <template #bodyLeftLabel>
+                <AutoListItemBodyLeftLabel>
+                  {{ t('ownedApps.create') }}
+                </AutoListItemBodyLeftLabel>
+              </template>
+            </AutoListItem>
+            <TransitionGroup v-bind="appTransition" :css="false">
+              <AutoListItem
+                v-for="(appOrWidth, idx) in apps?.owned || ['40%', '70%', '60%']"
+                :key="hasInitialData
+                  ? typeof appOrWidth === 'object'
+                    ? appOrWidth.id
+                    : idx
+                  : idx"
+                :clickable="typeof appOrWidth === 'object'"
+                @click="typeof appOrWidth === 'object' && navigateToApp(appOrWidth.id)"
+              >
+                <template #bodyLeftLabel>
+                  <AutoListItemBodyLeftLabel
+                    v-if="typeof appOrWidth === 'object'"
+                    :max-lines="1"
+                  >
+                    {{ appOrWidth.title }}
+                  </AutoListItemBodyLeftLabel>
+                  <TextShimmerBox v-else variant="body" :width="appOrWidth"/>
+                </template>
+                <template v-if="typeof appOrWidth === 'object'" #bodyRight>
+                  <AutoListItemBodyRight>
+                    <AutoListItemBodyRightLabel v-if="appOrWidth?.isPublic">
+                      {{ t('app.privacy.public') }}
+                    </AutoListItemBodyRightLabel>
+                    <AutoListItemBodyRightChevron v-if="platform.isMappedIos"/>
+                  </AutoListItemBodyRight>
+                </template>
+              </AutoListItem>
+            </TransitionGroup>
+          </AutoList>
+          <template #footer>
+            <AutoSectionFooter>
+              {{ t('ownedApps.footer') }}
+            </AutoSectionFooter>
+          </template>
+        </AutoSection>
+
+        <Transition v-bind="managedAppsTransition" :css="false">
+          <AutoSection
+            v-if="apps?.managed.length"
+            list-bg-color="secondary-bg"
+            :style="{marginTop: '16px'}"
+          >
             <template #header>
               <AutoSectionHeader>
-                {{ t('ownedApps.title') }}
-                <template v-if="apps && data">
-                  ({{ apps.owned.length }} / {{ data.maxOwnedAppsCount ?? '∞' }})
-                </template>
-                <TextShimmerBox
-                  v-else
-                  as="span"
-                  display="inline-block"
-                  variant="body"
-                  :width="40"
-                  margin="0 0 0 5px"
-                />
+                {{ t('managedApps.title') }}
               </AutoSectionHeader>
             </template>
             <AutoList>
-              <AutoListItem
-                :variant="isPending ? 'placeholder' : 'accent'"
-                :clickable="!isPending"
-                @click="handleCreateClick"
-              >
-                <template #bodyLeftLabel>
-                  <AutoListItemBodyLeftLabel>
-                    {{ t('ownedApps.create') }}
-                  </AutoListItemBodyLeftLabel>
-                </template>
-              </AutoListItem>
               <TransitionGroup v-bind="appTransition" :css="false">
                 <AutoListItem
-                  v-for="(appOrWidth, idx) in apps?.owned || ['40%', '70%', '60%']"
-                  :key="hasInitialData
-                    ? typeof appOrWidth === 'object'
-                      ? appOrWidth.id
-                      : idx
-                    : idx"
-                  :clickable="typeof appOrWidth === 'object'"
-                  @click="typeof appOrWidth === 'object' && navigateToApp(appOrWidth.id)"
+                  v-for="app in apps.managed"
+                  :key="app.id"
+                  clickable
+                  @click="navigateToApp(app.id)"
                 >
                   <template #bodyLeftLabel>
-                    <AutoListItemBodyLeftLabel
-                      v-if="typeof appOrWidth === 'object'"
-                      :max-lines="1"
-                    >
-                      {{ appOrWidth.title }}
+                    <AutoListItemBodyLeftLabel :max-lines="1">
+                      {{ app.title }}
                     </AutoListItemBodyLeftLabel>
-                    <TextShimmerBox v-else variant="body" :width="appOrWidth"/>
                   </template>
-                  <template v-if="typeof appOrWidth === 'object'" #bodyRight>
+                  <template #bodyRight>
                     <AutoListItemBodyRight>
-                      <AutoListItemBodyRightLabel v-if="appOrWidth?.isPublic">
-                        {{ t('app.privacy.public') }}
+                      <AutoListItemBodyRightLabel>
+                        {{ t(app.role === 'admin' ? 'app.role.admin' : 'app.role.member') }}
                       </AutoListItemBodyRightLabel>
                       <AutoListItemBodyRightChevron v-if="platform.isMappedIos"/>
                     </AutoListItemBodyRight>
@@ -200,55 +241,12 @@ onMounted(() => {
             </AutoList>
             <template #footer>
               <AutoSectionFooter>
-                {{ t('ownedApps.footer') }}
+                {{ t('managedApps.footer') }}
               </AutoSectionFooter>
             </template>
           </AutoSection>
-
-          <Transition v-bind="managedAppsTransition" :css="false">
-            <AutoSection
-              v-if="apps?.managed.length"
-              list-bg-color="secondary-bg"
-              :style="{marginTop: '16px'}"
-            >
-              <template #header>
-                <AutoSectionHeader>
-                  {{ t('managedApps.title') }}
-                </AutoSectionHeader>
-              </template>
-              <AutoList>
-                <TransitionGroup v-bind="appTransition" :css="false">
-                  <AutoListItem
-                    v-for="app in apps.managed"
-                    :key="app.id"
-                    clickable
-                    @click="navigateToApp(app.id)"
-                  >
-                    <template #bodyLeftLabel>
-                      <AutoListItemBodyLeftLabel :max-lines="1">
-                        {{ app.title }}
-                      </AutoListItemBodyLeftLabel>
-                    </template>
-                    <template #bodyRight>
-                      <AutoListItemBodyRight>
-                        <AutoListItemBodyRightLabel>
-                          {{ t(app.role === 'admin' ? 'app.role.admin' : 'app.role.member') }}
-                        </AutoListItemBodyRightLabel>
-                        <AutoListItemBodyRightChevron v-if="platform.isMappedIos"/>
-                      </AutoListItemBodyRight>
-                    </template>
-                  </AutoListItem>
-                </TransitionGroup>
-              </AutoList>
-              <template #footer>
-                <AutoSectionFooter>
-                  {{ t('managedApps.footer') }}
-                </AutoSectionFooter>
-              </template>
-            </AutoSection>
-          </Transition>
-        </SidePaddings>
-      </VerticalPaddings>
+        </Transition>
+      </PagePaddings>
     </PageContent>
   </PageBase>
 </template>

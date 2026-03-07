@@ -49,35 +49,33 @@ const isButtonEnabled = computed(() => {
 <template>
   <PageBase>
     <PageContent>
-      <VerticalPaddings>
-        <SidePaddings>
-          <AutoSection list-bg-color="secondary-bg">
-            <template #header>
-              <AutoSectionHeader>
-                {{ t('title') }}
-              </AutoSectionHeader>
-            </template>
-            <AutoList>
-              <AutoListItem>
-                <template #bodyLeftInput>
-                  <AutoListItemBodyLeftInput>
-                    <AutoListItemBodyLeftInputElement
-                      v-model="appName"
-                      :placeholder="t('placeholder')"
-                    />
-                  </AutoListItemBodyLeftInput>
-                </template>
+      <PagePaddings>
+        <AutoSection list-bg-color="secondary-bg">
+          <template #header>
+            <AutoSectionHeader>
+              {{ t('title') }}
+            </AutoSectionHeader>
+          </template>
+          <AutoList>
+            <AutoListItem>
+              <template #bodyLeftInput>
+                <AutoListItemBodyLeftInput>
+                  <AutoListItemBodyLeftInputElement
+                    v-model="appName"
+                    :placeholder="t('placeholder')"
+                  />
+                </AutoListItemBodyLeftInput>
+              </template>
 
-              </AutoListItem>
-            </AutoList>
-            <template #footer>
-              <AutoSectionFooter>
-                {{ t('footer') }}
-              </AutoSectionFooter>
-            </template>
-          </AutoSection>
-        </SidePaddings>
-      </VerticalPaddings>
+            </AutoListItem>
+          </AutoList>
+          <template #footer>
+            <AutoSectionFooter>
+              {{ t('footer') }}
+            </AutoSectionFooter>
+          </template>
+        </AutoSection>
+      </PagePaddings>
       <BottomBarTransition>
         <BottomBar v-if="isPageEntered">
           <BottomBarInner>

@@ -22,16 +22,12 @@ const createCustomIcon = <C extends Component>(
   component: C,
   bgColor: ColorReferenceAnyColor,
   size: number,
-) => ({
-  kind: 'custom' as const,
-  component,
-  bgColor,
-  size,
-});
+) => ({ kind: 'custom' as const, component, bgColor, size });
 const createStaticIcon = <C extends Component>(component: C) => ({
   kind: 'static' as const,
   component,
 });
+
 const items = computed(() => [{
   title: t('integration'),
   page: PAGE_NAME_APP_TG_INTEGRATION,
@@ -52,46 +48,44 @@ watch(items, items => {
 <template>
   <PageBase>
     <PageContent>
-      <VerticalPaddings>
-        <SidePaddings>
-          <AutoSection list-bg-color="secondary-bg">
-            <AutoList>
-              <AutoListItem
-                v-for="{icon, page, title} in items"
-                :key="page"
-                clickable
-                @click="navigateTo({name: page, query: {appId}})"
-              >
-                <template #left>
-                  <AutoListItemLeft>
-                    <AutoListItemLeftIcon>
-                      <AutoListItemLeftIconElement
-                         rounded
-                         :style="'bgColor' in icon && {backgroundColor: icon.bgColor}"
-                        >
-                        <component
-                          :is="icon.component"
-                          :size="'size' in icon ? icon.size : undefined"
-                        />
-                      </AutoListItemLeftIconElement>
-                    </AutoListItemLeftIcon>
-                  </AutoListItemLeft>
-                </template>
-                <template #bodyLeftLabel>
-                  <AutoListItemBodyLeftLabel>
-                    {{ title }}
-                  </AutoListItemBodyLeftLabel>
-                </template>
-                <template v-if="platform.isMappedIos" #bodyRight>
-                  <AutoListItemBodyRight>
-                    <AutoListItemBodyRightChevron/>
-                  </AutoListItemBodyRight>
-                </template>
-              </AutoListItem>
-            </AutoList>
-          </AutoSection>
-        </SidePaddings>
-      </VerticalPaddings>
+      <PagePaddings>
+        <AutoSection list-bg-color="secondary-bg">
+          <AutoList>
+            <AutoListItem
+              v-for="{icon, page, title} in items"
+              :key="page"
+              clickable
+              @click="navigateTo({name: page, query: {appId}})"
+            >
+              <template #left>
+                <AutoListItemLeft>
+                  <AutoListItemLeftIcon>
+                    <AutoListItemLeftIconElement
+                        rounded
+                        :style="'bgColor' in icon && {backgroundColor: icon.bgColor}"
+                      >
+                      <component
+                        :is="icon.component"
+                        :size="'size' in icon ? icon.size : undefined"
+                      />
+                    </AutoListItemLeftIconElement>
+                  </AutoListItemLeftIcon>
+                </AutoListItemLeft>
+              </template>
+              <template #bodyLeftLabel>
+                <AutoListItemBodyLeftLabel>
+                  {{ title }}
+                </AutoListItemBodyLeftLabel>
+              </template>
+              <template v-if="platform.isMappedIos" #bodyRight>
+                <AutoListItemBodyRight>
+                  <AutoListItemBodyRightChevron/>
+                </AutoListItemBodyRight>
+              </template>
+            </AutoListItem>
+          </AutoList>
+        </AutoSection>
+      </PagePaddings>
     </PageContent>
   </PageBase>
 </template>
