@@ -1,6 +1,3 @@
 import { SectionIosFooter, SectionAndroidFooter } from '#components';
 
-export default platformed({
-  common: SectionAndroidFooter,
-  ios: SectionIosFooter,
-});
+export default platformed({ common: SectionAndroidFooter, ios: SectionIosFooter });
