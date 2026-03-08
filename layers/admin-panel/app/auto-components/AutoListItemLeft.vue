@@ -13,7 +13,7 @@ const platform = useTmaPlatform();
   <component
     :is="platform.isMappedIos ? ListIosItemLeft : ListAndroidItemLeft"
     v-bind="$props"
-    :size="platform.isMappedAndroid || props.size !== 'large' ? props.size : 'default'"
+    :size="platform.isMappedIos && props.size === 'large' ? 'default' : props.size"
   >
     <slot/>
   </component>

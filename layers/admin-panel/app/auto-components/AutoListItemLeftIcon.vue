@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactiveOmit } from '@vueuse/core';
 
-import { ListAndroidItemLeftIconElement, ListIosItemLeftIconElement } from '#components';
+import { ListAndroidItemLeftIcon, ListIosItemLeftIcon } from '#components';
 
 defineProps<{
   /**
@@ -15,7 +15,7 @@ const platform = useTmaPlatform();
 
 <template>
   <component
-    :is="platform.isMappedIos ? ListIosItemLeftIconElement : ListAndroidItemLeftIconElement"
+    :is="platform.isMappedIos ? ListIosItemLeftIcon : ListAndroidItemLeftIcon"
     v-bind="platform.isMappedIos ? $props : reactiveOmit($props, 'padLeft')"
   >
     <slot/>
