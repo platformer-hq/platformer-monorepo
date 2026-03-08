@@ -52,10 +52,7 @@ const { data } = useQuery({
     queryKey: readonly [typeof AppGeneralPageDataDocument, number];
   }) => {
     return fp.function.pipe(
-      request({
-        document: options.queryKey[0],
-        variables: { appId: options.queryKey[1] },
-      }),
+      request(options.queryKey[0], { appId: options.queryKey[1] }),
       fp.taskEither.map(({ app }) => (
         app
           ? {
@@ -74,13 +71,10 @@ const updateAppFn = throwify((options: {
   title: string;
 }) => {
   return fp.function.pipe(
-    request({
-      document: UpdateAppDocument,
-      variables: {
-        appId: options.appId,
-        privacy: localAppPrivacyToApi(options.privacy),
-        title: options.title,
-      },
+    request(UpdateAppDocument, {
+      appId: options.appId,
+      privacy: localAppPrivacyToApi(options.privacy),
+      title: options.title,
     }),
     fp.taskEither.map(response => response.updateApp),
   );

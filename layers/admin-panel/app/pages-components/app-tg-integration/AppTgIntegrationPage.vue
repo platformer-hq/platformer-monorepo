@@ -34,7 +34,7 @@ const { data } = useQuery({
   queryFn: throwify(
     ({ queryKey}: { queryKey: readonly [typeof AppTgIntegrationPageDataDocument, number] }) => {
       return fn.pipe(
-        request({ document: queryKey[0], variables: { appId: queryKey[1] } }),
+        request(queryKey[0], { appId: queryKey[1] }),
         taskEither.map(({ app }) => (
           app
             ? {
@@ -53,13 +53,10 @@ const mutationFn = throwify((options: {
   botId?: number;
   proxy: boolean;
 }) => {
-  return request({
-    document: UpdateAppTelegramDataDocument,
-    variables: {
-      appId: options.appId,
-      telegramProxyLaunchParams: options.proxy,
-      telegramBotID: options.botId,
-    },
+  return request(UpdateAppTelegramDataDocument, {
+    appId: options.appId,
+    telegramProxyLaunchParams: options.proxy,
+    telegramBotID: options.botId,
   });
 });
 const { mutate: updateApp, isPending: isUpdatingApp } = useMutation({

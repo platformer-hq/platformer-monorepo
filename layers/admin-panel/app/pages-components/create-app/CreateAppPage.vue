@@ -22,10 +22,7 @@ const { t } = useI18n({
 const isPageEntered = useIsPageEntered(PAGE_NAME_CREATE_APP);
 const request = useMakeGqlApiRequest();
 const mutationFn = throwify((options: { title: string }) => {
-  return request({
-    document: CreateAppDocument,
-    variables: { title: options.title },
-  });
+  return request(CreateAppDocument, { title: options.title });
 });
 const { mutate: createApp, isPending: isCreatingApp } = useMutation({
   mutationKey: [CreateAppDocument],

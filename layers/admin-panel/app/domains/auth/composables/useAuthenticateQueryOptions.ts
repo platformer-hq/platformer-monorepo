@@ -10,7 +10,7 @@ export function useAuthenticateQueryOptions() {
     queryKey: [AuthenticateDocument],
     queryFn: throwify(() => {
       return fn.pipe(
-        request({ document: AuthenticateDocument, variables: { initData: initDataRaw } }),
+        request(AuthenticateDocument, { initData: initDataRaw }),
         taskEither.map(({ authenticateTelegram }) => ({
           token: authenticateTelegram.token,
           expiresAt: new Date(authenticateTelegram.expiresAt),

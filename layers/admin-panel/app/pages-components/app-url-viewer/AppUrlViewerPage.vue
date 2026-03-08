@@ -61,10 +61,7 @@ const { data } = useQuery({
     }];
   }) => {
     return fp.function.pipe(
-      request({
-        document: options.document,
-        variables: { appId: options.appId, userId: options.userId },
-      }),
+      request(options.document, { appId: options.appId, userId: options.userId }),
       fp.taskEither.map(response => {
         return response
           .userAppURLExplanations

@@ -12,7 +12,7 @@ const { data, isPending } = useQuery({
   queryKey: [AppsPageDataDocument],
   queryFn: throwify(() => {
     return fn.pipe(
-      request({ document: AppsPageDataDocument, variables: {} }),
+      request(AppsPageDataDocument, {}),
       taskEither.map(({ currentUser }) => {
         return {
           apps: currentUser.apps.map(({ app, role }) => ({

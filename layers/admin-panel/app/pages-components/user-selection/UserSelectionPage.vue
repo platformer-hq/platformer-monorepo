@@ -63,15 +63,12 @@ const { data: foundUsers, isPending: isSearchingUsers } = useQuery({
       ? skipToken
       : throwify(({ queryKey: [options] }: { queryKey: QueryKey }) => {
         return fp.function.pipe(
-          request({
-            document: options.document,
-            variables: {
-              canReceiveAppTransferReq: options.canAcceptAppTransfers,
-              canReceiveManagementInvite: options.canBeInvitedToManage,
-              input: options.input,
-              page: 0,
-              excludeUserIDs: options.excludedUserIds,
-            },
+          request(options.document, {
+            canReceiveAppTransferReq: options.canAcceptAppTransfers,
+            canReceiveManagementInvite: options.canBeInvitedToManage,
+            input: options.input,
+            page: 0,
+            excludeUserIDs: options.excludedUserIds,
           }),
           fp.taskEither.map(r => r.searchUsers),
         );

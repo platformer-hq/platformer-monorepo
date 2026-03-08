@@ -16,7 +16,7 @@ export function usePageDataQueryOptions() {
     queryKey,
     queryFn: throwify(() => {
       return fn.pipe(
-        request({ document: HomePageDataDocument, variables: {} }),
+        request(HomePageDataDocument, {}),
         taskEither.map(({ currentUser }) => ({
           transferRequestsCount: currentUser.appTransferRequests.length,
           invitesCount: currentUser.managementInvites.length,

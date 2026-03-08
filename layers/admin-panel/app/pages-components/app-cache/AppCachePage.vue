@@ -42,7 +42,7 @@ const { data: appData, isPending: isLoadingApp } = useQuery({
   queryKey,
   queryFn: throwify((data: { queryKey: typeof queryKey }) => {
     return fn.pipe(
-      request({ document: data.queryKey[0], variables: { appID: data.queryKey[1] } }),
+      request(data.queryKey[0], { appID: data.queryKey[1] }),
       taskEither.map(({ app }) => (
         app
           ? { urlsCacheResetAt: app.urlsCacheResetAt ? new Date(app.urlsCacheResetAt) : undefined }
@@ -52,7 +52,7 @@ const { data: appData, isPending: isLoadingApp } = useQuery({
   }),
 });
 const mutationFn = throwify((options: { appId: number }) => {
-  return request({ document: ResetAppCacheDocument, variables: { appID: options.appId } });
+  return request(ResetAppCacheDocument, { appID: options.appId });
 });
 const { mutate: resetCache, isPending: isResettingCache } = useMutation({
   mutationKey: [ResetAppCacheDocument],

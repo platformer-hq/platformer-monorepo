@@ -9,7 +9,7 @@ export function usePageDataQueryOptions() {
     queryKey: [PrivacyPageDataDocument],
     queryFn: throwify(() => {
       return fn.pipe(
-        request({ document: PrivacyPageDataDocument, variables: {} }),
+        request(PrivacyPageDataDocument, {}),
         taskEither.map(({ currentUser }) => ({
           canAcceptAppTransfers: currentUser.canAcceptAppTransfers,
           canBeInvitedToManage: currentUser.canBeInvitedToManage,
@@ -27,12 +27,9 @@ export function useUpdateMutationOptions() {
       canAcceptAppTransfers: boolean;
       canBeInvitedToManage: boolean;
     }) => {
-      return request({
-        document: UpdatePermissionsDocument,
-        variables: {
-          canAcceptAppTransfers: options.canAcceptAppTransfers,
-          canBeInvitedToManage: options.canBeInvitedToManage,
-        },
+      return request(UpdatePermissionsDocument, {
+        canAcceptAppTransfers: options.canAcceptAppTransfers,
+        canBeInvitedToManage: options.canBeInvitedToManage,
       });
     }),
   };

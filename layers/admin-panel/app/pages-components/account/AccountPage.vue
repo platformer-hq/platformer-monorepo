@@ -45,7 +45,7 @@ const { data, isPending } = useQuery({
   queryKey: [AccountPageDataDocument],
   queryFn: throwify(() => {
     return fn.pipe(
-      request({ document: AccountPageDataDocument, variables: {} }),
+      request(AccountPageDataDocument, {}),
       taskEither.map(({ currentUser }) => {
         const { telegramData } = currentUser;
         return {

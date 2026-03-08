@@ -90,7 +90,7 @@ const { data: appData, isPending: isLoadingApp } = useQuery({
   queryKey,
   queryFn: throwify((data: { queryKey: typeof queryKey }) => {
     return fn.pipe(
-      request({ document: data.queryKey[0], variables: { appID: data.queryKey[1] } }),
+      request(data.queryKey[0], { appID: data.queryKey[1] }),
       taskEither.map(({ app }) => (
         app
           ? { id: app.id, title: app.title, role: apiAppRoleToLocal(app.currentUserRole) }
@@ -102,7 +102,7 @@ const { data: appData, isPending: isLoadingApp } = useQuery({
 const { mutate: deleteApp, isPending: isDeletingApp } = useMutation({
   mutationKey: [DeleteAppDocument],
   mutationFn: throwify((options: { appId: number }) => {
-    return request({ document: DeleteAppDocument, variables: { appID: options.appId } });
+    return request(DeleteAppDocument, { appID: options.appId });
   }),
   onSuccess() {
     hapticNotificationOccurred('success');
