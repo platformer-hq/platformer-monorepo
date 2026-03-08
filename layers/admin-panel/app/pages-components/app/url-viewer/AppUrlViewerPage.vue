@@ -187,6 +187,7 @@ onMounted(() => {
               </AutoListItem>
             </AutoList>
           </AutoSection>
+
           <template v-if="explanations">
             <TransitionGroup :css="false" appear v-bind="expTransition">
               <AutoSection
@@ -199,9 +200,6 @@ onMounted(() => {
                   <AutoListItem>
                     <template #bodyLeftLabel>
                       <AutoListItemBodyLeftLabel>
-                        <i :class="e('platform-icon', 'telegram')">
-                          <IconTelegram24 :size="20"/>
-                        </i>
                         {{ explanation.platform }}
                       </AutoListItemBodyLeftLabel>
                     </template>
@@ -274,23 +272,8 @@ onMounted(() => {
   }
 
   &__url {
-    &--missin {
+    &--missing {
       color: var(--subtitle-text-color);
-    }
-  }
-
-  &__platform-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-    border-radius: 8px;
-    vertical-align: bottom;
-    margin-right: 6px;
-
-    &--telegram {
-      background-color: #007aff;
     }
   }
 }
