@@ -30,7 +30,7 @@ const appId = useQueryAppId();
 const queryCache = useQueryCache();
 const request = useMakeGqlApiRequest();
 const { data } = useQuery({
-  key: () => [AppTgIntegrationPageDataDocument, appId],
+  key: () => [AppTgIntegrationPageDataDocument, appId.value],
   query: throwify(() => {
     return fp.function.pipe(
       request(AppTgIntegrationPageDataDocument, { appId: appId.value }),
