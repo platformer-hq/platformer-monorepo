@@ -9,7 +9,7 @@ import {
   IconUserCircleFill28,
 } from '#components';
 
-import { usePageDataQueryOptions } from './_api/usePageDataQueryOptions';
+import { usePageDataQueryOptions } from './usePageDataQueryOptions';
 
 const { data, isPending } = useQuery(usePageDataQueryOptions());
 const { t } = useI18n({
