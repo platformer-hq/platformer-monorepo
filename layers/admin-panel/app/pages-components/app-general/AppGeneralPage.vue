@@ -47,7 +47,7 @@ const bottomBar = useTemplateRef('bottom-bar');
 const queryCache = useQueryCache();
 const request = useMakeGqlApiRequest();
 const { data } = useQuery({
-  key: () => [AppGeneralPageDataDocument, appId],
+  key: () => [AppGeneralPageDataDocument, appId.value],
   query: throwify(() => {
     return fp.function.pipe(
       request(AppGeneralPageDataDocument, { appId: appId.value }),
