@@ -7,7 +7,6 @@ function resolve(filePath: string) {
 export default defineNuxtConfig({
   alias: {
     '@ui-kit': resolve('app'),
-    '@ui-kit-mixins': resolve('app/scss/mixins'),
   },
   components: [
     {

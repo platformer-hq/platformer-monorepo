@@ -23,7 +23,7 @@ const { b } = bem('list-android-item-body-left-label');
 </template>
 
 <style lang="scss">
-@use "@ui-kit-mixins" as mixins;
+@use "@ui-kit/scss/mixins" as mixins;
 
 .list-android-item-body-left-label {
   width: 100%;

@@ -37,7 +37,7 @@ defineExpose({ element: root });
 </template>
 
 <style lang="scss">
-@use "@ui-kit-mixins" as mixins;
+@use "@ui-kit/scss/mixins" as mixins;
 
 .button-base {
   appearance: none;

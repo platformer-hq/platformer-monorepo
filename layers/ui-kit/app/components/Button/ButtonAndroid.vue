@@ -79,7 +79,7 @@ useRipples({
 </template>
 
 <style lang="scss">
-@use "@ui-kit-mixins" as mixins;
+@use "@ui-kit/scss/mixins" as mixins;
 
 .button-android {
   position: relative;

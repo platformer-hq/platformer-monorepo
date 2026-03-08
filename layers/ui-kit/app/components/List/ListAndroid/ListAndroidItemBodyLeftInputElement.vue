@@ -41,7 +41,7 @@ defineExpose({
 </template>
 
 <style lang="scss">
-@use "@ui-kit-mixins" as mixins;
+@use "@ui-kit/scss/mixins" as mixins;
 
 .list-android-item-body-input-element {
   border: none;
