@@ -163,7 +163,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <PageBase>
+  <PageBase colors="secondary-bg">
     <PageContent>
       <PagePaddings>
         <AppIcon :class="e('icon')"/>
@@ -188,7 +188,7 @@ onMounted(() => {
         <AutoSection
           v-for="(section, sectionIdx) in sections"
           :key="sectionIdx"
-          list-bg-color="secondary-bg"
+          list-bg-color="section-bg"
           :class="e('section', sectionIdx && 'offset-top')"
         >
           <template v-if="section.title" #header>

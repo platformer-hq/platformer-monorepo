@@ -134,10 +134,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <PageBase>
+  <PageBase colors="secondary-bg">
     <PageContent>
       <PagePaddings>
-        <AutoSection list-bg-color="secondary-bg">
+        <AutoSection list-bg-color="section-bg">
           <template #header>
             <AutoSectionHeader>
               {{ t('ownedApps.title') }}
@@ -207,7 +207,7 @@ onMounted(() => {
         <Transition v-bind="managedAppsTransition" :css="false">
           <AutoSection
             v-if="apps?.managed.length"
-            list-bg-color="secondary-bg"
+            list-bg-color="section-bg"
             :style="{marginTop: '16px'}"
           >
             <template #header>

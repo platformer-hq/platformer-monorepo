@@ -78,10 +78,10 @@ watch(pageData, data => {
 </script>
 
 <template>
-  <PageBase>
+  <PageBase colors="secondary-bg">
     <PageContent>
       <PagePaddings>
-        <AutoSection list-bg-color="secondary-bg">
+        <AutoSection list-bg-color="section-bg">
           <AutoList>
             <AutoListItem
               :clickable="platform.isMappedAndroid && !isLoading"
@@ -112,7 +112,7 @@ watch(pageData, data => {
           </template>
         </AutoSection>
 
-        <AutoSection list-bg-color="secondary-bg" style="margin-top: 16px;">
+        <AutoSection list-bg-color="section-bg" style="margin-top: 16px;">
           <AutoList>
             <AutoListItem
               :clickable="platform.isMappedAndroid && !isLoading"

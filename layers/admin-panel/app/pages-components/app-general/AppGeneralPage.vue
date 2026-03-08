@@ -124,10 +124,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <PageBase>
+  <PageBase colors="secondary-bg">
     <PageContent :style="{paddingBottom: toPx(bottomBar?.height)}">
       <PagePaddings>
-        <AutoSection list-bg-color="secondary-bg">
+        <AutoSection list-bg-color="section-bg">
           <template #header>
             <AutoSectionHeader>
               {{ t('id.title') }}
@@ -149,7 +149,7 @@ onMounted(() => {
           </template>
         </AutoSection>
 
-        <AutoSection list-bg-color="secondary-bg" style="margin-top: 16px">
+        <AutoSection list-bg-color="section-bg" style="margin-top: 16px">
           <template #header>
             <AutoSectionHeader>
               {{ t('title.title') }}
@@ -179,7 +179,7 @@ onMounted(() => {
           </template>
         </AutoSection>
 
-        <AutoSection list-bg-color="secondary-bg" style="margin-top: 16px">
+        <AutoSection list-bg-color="section-bg" style="margin-top: 16px">
           <template #header>
             <AutoSectionHeader>
               {{ t('privacy.title') }}

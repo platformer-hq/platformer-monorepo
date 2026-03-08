@@ -98,13 +98,13 @@ const saveLocale = async (locale: 'ru' | 'en') => {
 </script>
 
 <template>
-  <PageBase>
+  <PageBase colors="secondary-bg">
     <PageContent>
       <PagePaddings>
         <AutoSection
           v-for="(section, sectionIdx) in sections"
           :key="sectionIdx"
-          list-bg-color="secondary-bg"
+          list-bg-color="section-bg"
           :class="e('section', sectionIdx > 0 && 'margin-top')"
         >
           <template #header>
@@ -137,7 +137,7 @@ const saveLocale = async (locale: 'ru' | 'en') => {
             </AutoSectionFooter>
           </template>
         </AutoSection>
-        <AutoSection :class="e('section', 'margin-top')" list-bg-color="secondary-bg">
+        <AutoSection :class="e('section', 'margin-top')" list-bg-color="section-bg">
           <template #header>
             <AutoSectionHeader>
               {{ t('lang.title') }}

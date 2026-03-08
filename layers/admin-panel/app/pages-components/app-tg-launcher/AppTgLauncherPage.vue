@@ -93,10 +93,10 @@ const handleCopy = () => {
 </script>
 
 <template>
-  <PageBase>
+  <PageBase colors="secondary-bg">
     <PageContent :style="{paddingBottom: toPx(bottomBar?.height)}">
       <PagePaddings>
-        <AutoSection list-bg-color="secondary-bg">
+        <AutoSection list-bg-color="section-bg">
           <template #header>
             <AutoSectionHeader>
               {{ t('launcherUrl.title') }}
@@ -124,7 +124,7 @@ const handleCopy = () => {
         <AutoSection
           v-for="field in fields"
           :key="field.param"
-          list-bg-color="secondary-bg"
+          list-bg-color="section-bg"
           :style="{marginTop: '16px'}"
         >
           <template #header>

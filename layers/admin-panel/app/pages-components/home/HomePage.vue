@@ -100,14 +100,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <PageBase :back="false">
+  <PageBase colors="secondary-bg" :back="false">
     <PageContent>
       <PagePaddings>
         <AutoSection
           v-for="(section, sectionIdx) in sections"
           :key="sectionIdx"
           :style="sectionIdx > 0 ? {marginTop: '16px'} : undefined"
-          list-bg-color="secondary-bg"
+          list-bg-color="section-bg"
         >
           <AutoList>
             <AutoListItem

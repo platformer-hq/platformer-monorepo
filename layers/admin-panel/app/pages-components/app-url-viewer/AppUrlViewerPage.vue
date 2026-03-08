@@ -149,11 +149,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <PageBase>
+  <PageBase colors="secondary-bg">
     <PageContent>
       <PagePaddings>
         <template v-if="lastSelectedUser">
-          <AutoSection list-bg-color="secondary-bg">
+          <AutoSection list-bg-color="section-bg">
             <template #header>
               <AutoSectionHeader>
                 {{ t('title.selected') }}
@@ -170,7 +170,7 @@ onMounted(() => {
               </AutoListItem>
             </AutoList>
           </AutoSection>
-          <AutoSection list-bg-color="secondary-bg" :class="e('section')">
+          <AutoSection list-bg-color="section-bg" :class="e('section')">
             <AutoList>
               <AutoListItem variant="accent" clickable @click="handleSelectUser">
                 <template #bodyLeftLabel>
@@ -187,7 +187,7 @@ onMounted(() => {
               <AutoSection
                 v-for="explanation in explanations"
                 :key="explanation.platform"
-                list-bg-color="secondary-bg"
+                list-bg-color="section-bg"
                 :class="e('section')"
               >
                 <AutoList>
@@ -221,7 +221,7 @@ onMounted(() => {
           <AutoLoadingIndicator v-else :class="e('loader')" :size="24"/>
         </template>
 
-        <AutoSection v-else list-bg-color="secondary-bg">
+        <AutoSection v-else list-bg-color="section-bg">
           <template #header>
             <AutoSectionHeader>
               {{ t('title.notSelected') }}

@@ -96,10 +96,10 @@ watch(data, data => {
 </script>
 
 <template>
-  <PageBase>
+  <PageBase colors="secondary-bg">
     <PageContent>
       <PagePaddings>
-        <AutoSection list-bg-color="secondary-bg">
+        <AutoSection list-bg-color="section-bg">
           <template #header>
             <AutoSectionHeader>
               {{ t('botId.title') }}
@@ -132,7 +132,7 @@ watch(data, data => {
           </template>
         </AutoSection>
 
-        <AutoSection list-bg-color="secondary-bg" :style="{marginTop: '16px'}">
+        <AutoSection list-bg-color="section-bg" :style="{marginTop: '16px'}">
           <AutoList>
             <AutoListItem
               :clickable="platform.isMappedAndroid && !readonly"

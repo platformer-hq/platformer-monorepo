@@ -92,10 +92,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <PageBase>
+  <PageBase colors="secondary-bg">
     <PageContent>
       <PagePaddings>
-        <AutoSection list-bg-color="secondary-bg">
+        <AutoSection list-bg-color="section-bg">
           <AutoList>
             <AutoListItem
               :variant="isSendingRequest ? 'placeholder' : 'accent'"

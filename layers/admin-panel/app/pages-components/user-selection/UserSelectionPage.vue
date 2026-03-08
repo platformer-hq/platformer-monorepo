@@ -120,10 +120,10 @@ const removeUser = (idx: number) => {
 </script>
 
 <template>
-  <PageBase>
+  <PageBase colors="secondary-bg">
     <PageContent>
       <PagePaddings>
-        <AutoSection list-bg-color="secondary-bg">
+        <AutoSection list-bg-color="section-bg">
           <AutoList>
             <AutoListItem>
               <template #left>
@@ -152,7 +152,7 @@ const removeUser = (idx: number) => {
 
         <AutoSection
           v-if="selectedUsers.length"
-          list-bg-color="secondary-bg"
+          list-bg-color="section-bg"
           :class="e('users')"
         >
           <template #header>
@@ -189,7 +189,7 @@ const removeUser = (idx: number) => {
 
         <AutoSection
           v-if="displayedFoundUsers?.length || (input && !isSearching)"
-          list-bg-color="secondary-bg"
+          list-bg-color="section-bg"
           :class="e('users')"
         >
           <template #header>

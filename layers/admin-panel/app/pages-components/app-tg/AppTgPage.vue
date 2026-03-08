@@ -47,10 +47,10 @@ watch(items, items => {
 </script>
 
 <template>
-  <PageBase>
+  <PageBase colors="secondary-bg">
     <PageContent>
       <PagePaddings>
-        <AutoSection list-bg-color="secondary-bg">
+        <AutoSection list-bg-color="section-bg">
           <AutoList>
             <AutoListItem
               v-for="{icon, page, title} in items"
