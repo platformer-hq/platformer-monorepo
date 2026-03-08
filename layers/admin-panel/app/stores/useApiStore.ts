@@ -1,6 +1,6 @@
 import { useSessionStorage } from '@vueuse/core';
 import { GraphQLClient } from 'graphql-request';
-import { date, looseObject, parse, parseJson, pipe, string, transform } from 'valibot';
+import * as v from 'valibot';
 
 export const useApiStore = defineStore('api', () => {
   const baseUrl = new URL(
@@ -12,13 +12,13 @@ export const useApiStore = defineStore('api', () => {
   const token = useSessionStorage<{ token: string; expiresAt: Date } | null>('@platformer/auth-token', null, {
     serializer: {
       read(value) {
-        return parse(
-          pipe(
-            string(),
-            parseJson(),
-            looseObject({
-              token: string(),
-              expiresAt: pipe(string(), transform(v => new Date(v)), date()),
+        return v.parse(
+          v.pipe(
+            v.string(),
+            v.parseJson(),
+            v.looseObject({
+              token: v.string(),
+              expiresAt: v.pipe(v.string(), v.transform(v => new Date(v)), v.date()),
             }),
           ),
           value,

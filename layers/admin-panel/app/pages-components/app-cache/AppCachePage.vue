@@ -2,12 +2,12 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query';
 import { popup } from '@tma.js/sdk-vue';
 import { taskEither, function as fn } from 'fp-ts';
-import { looseObject, parse, pipe, string, transform } from 'valibot';
+import * as v from 'valibot';
 
 import { AppCachePageDataDocument, ResetAppCacheDocument } from './operations';
 
-const query = parse(
-  looseObject({ appId: pipe(string(), transform(Number)) }),
+const query = v.parse(
+  v.looseObject({ appId: v.pipe(v.string(), v.transform(Number)) }),
   useRoute().query,
 );
 

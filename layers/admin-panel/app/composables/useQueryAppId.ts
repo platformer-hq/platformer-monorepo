@@ -1,10 +1,10 @@
-import { looseObject, parse, pipe, string, transform } from 'valibot';
+import * as v from 'valibot';
 
 export function useQueryAppId() {
   const route = useRoute();
   return computed(() => {
-    return parse(
-      looseObject({ appId: pipe(string(), transform(Number)) }),
+    return v.parse(
+      v.looseObject({ appId: v.pipe(v.string(), v.transform(Number)) }),
       route.query,
     ).appId;
   });

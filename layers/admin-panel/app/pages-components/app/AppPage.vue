@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useMutation, useQuery } from '@tanstack/vue-query';
 import { popup } from '@tma.js/sdk-vue';
-import { taskEither, function as fn } from 'fp-ts';
-import { looseObject, parse, pipe, string, transform } from 'valibot';
+import * as fp from 'fp-ts';
+import * as v from 'valibot';
 
 import {
   IconAdvancedSettings30,
@@ -38,8 +38,8 @@ const TransferIcon = createCustomIconComponent(IconPersonLineDottedFill28, 20, '
 const TelegramIcon = createCustomIconComponent(IconTelegram24, 20, '#007AFF');
 const UrlViewerIcon = createCustomIconComponent(IconEyeFillIOS28, 22, '#FF2D55');
 
-const query = parse(
-  looseObject({ appId: pipe(string(), transform(Number)) }),
+const query = v.parse(
+  v.looseObject({ appId: v.pipe(v.string(), v.transform(Number)) }),
   useRoute().query,
 );
 const { e } = bem('app-page');
@@ -89,9 +89,9 @@ const queryKey = [AppPageDataDocument, query.appId] as const;
 const { data: appData, isPending: isLoadingApp } = useQuery({
   queryKey,
   queryFn: throwify((data: { queryKey: typeof queryKey }) => {
-    return fn.pipe(
+    return fp.function.pipe(
       request(data.queryKey[0], { appID: data.queryKey[1] }),
-      taskEither.map(({ app }) => (
+      fp.taskEither.map(({ app }) => (
         app
           ? { id: app.id, title: app.title, role: apiAppRoleToLocal(app.currentUserRole) }
           : null

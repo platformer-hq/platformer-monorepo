@@ -1,5 +1,5 @@
 import { ClientError } from 'graphql-request';
-import { is, literal, looseObject } from 'valibot';
+import * as v from 'valibot';
 
 export class ApiGraphQLError extends ClientError {
   constructor(...args: ConstructorParameters<typeof ClientError>) {
@@ -12,9 +12,9 @@ export class ApiGraphQLError extends ClientError {
   }
 
   isOfType(type: string): boolean {
-    return is(looseObject({
-      errorData: looseObject({
-        code: literal(type),
+    return v.is(v.looseObject({
+      errorData: v.looseObject({
+        code: v.literal(type),
       }),
     }), this.response.extensions);
   }

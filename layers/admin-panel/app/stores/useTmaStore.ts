@@ -4,22 +4,22 @@ import {
   retrieveRawInitDataFp,
 } from '@tma.js/sdk-vue';
 import { useSessionStorage } from '@vueuse/core';
-import { function as fn, either, option } from 'fp-ts';
-import { boolean, looseObject, number, optional, parse, parseJson, pipe, string } from 'valibot';
+import * as fp from 'fp-ts';
+import * as v from 'valibot';
 
 export const useTmaStore = defineStore('tma', () => {
-  const { initDataRaw, launchParams } = fn.pipe(
-    either.Do,
-    either.bindW('launchParams', retrieveLaunchParamsFp),
-    either.bindW('initDataRaw', () => {
-      return fn.pipe(
+  const { initDataRaw, launchParams } = fp.function.pipe(
+    fp.either.Do,
+    fp.either.bindW('launchParams', retrieveLaunchParamsFp),
+    fp.either.bindW('initDataRaw', () => {
+      return fp.function.pipe(
         retrieveRawInitDataFp(),
-        either.map(initDataOption => {
-          return fn.pipe(initDataOption, option.match(() => '', v => v));
+        fp.either.map(initDataOption => {
+          return fp.function.pipe(initDataOption, fp.option.match(() => '', v => v));
         }),
       );
     }),
-    either.matchW(e => {
+    fp.either.matchW(e => {
       throw e;
     }, v => v),
   );
@@ -43,19 +43,19 @@ export const useTmaStore = defineStore('tma', () => {
     {
       serializer: {
         read(value) {
-          return parse(
-            pipe(
-              string(),
-              parseJson(),
-              looseObject({
-                firstName: string(),
-                id: number(),
-                allowsWriteToPm: optional(boolean()),
-                isPremium: optional(boolean()),
-                languageCode: optional(string()),
-                lastName: optional(string()),
-                photoUrl: optional(string()),
-                username: optional(string()),
+          return v.parse(
+            v.pipe(
+              v.string(),
+              v.parseJson(),
+              v.looseObject({
+                firstName: v.string(),
+                id: v.number(),
+                allowsWriteToPm: v.optional(v.boolean()),
+                isPremium: v.optional(v.boolean()),
+                languageCode: v.optional(v.string()),
+                lastName: v.optional(v.string()),
+                photoUrl: v.optional(v.string()),
+                username: v.optional(v.string()),
               }),
             ),
             value,

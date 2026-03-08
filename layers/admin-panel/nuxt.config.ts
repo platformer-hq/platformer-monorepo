@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { looseObject, nonEmpty, parse, pipe, string } from 'valibot';
+import * as v from 'valibot';
 
 function resolve(filePath: string) {
   return path.resolve(__dirname, filePath);
@@ -10,9 +10,9 @@ const componentsIgnore = [
   '**/_*',
 ];
 
-const env = parse(
-  looseObject({
-    API_BASE_URL: pipe(string(), nonEmpty()),
+const env = v.parse(
+  v.looseObject({
+    API_BASE_URL: v.pipe(v.string(), v.nonEmpty()),
   }),
   process.env,
 );
