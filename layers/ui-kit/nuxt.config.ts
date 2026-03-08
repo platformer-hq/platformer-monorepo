@@ -8,7 +8,6 @@ export default defineNuxtConfig({
   alias: {
     '@ui-kit': resolve('app'),
     '@ui-kit-mixins': resolve('app/scss/mixins'),
-    '#ui-kit-icons': resolve('app/icons'),
   },
   components: [
     {

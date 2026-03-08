@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { IosChevronSubheadline1Semibold20Props } from '#ui-kit-icons';
+import type { IosChevronSubheadline1Semibold20Props } from '@ui-kit/icons';
 
 defineProps<IosChevronSubheadline1Semibold20Props>();
 </script>

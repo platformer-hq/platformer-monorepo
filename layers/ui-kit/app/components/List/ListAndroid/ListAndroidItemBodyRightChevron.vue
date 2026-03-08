@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ChevronRight28Props } from '#ui-kit-icons';
+import type { ChevronRight28Props } from '@ui-kit/icons';
 
 defineProps<ChevronRight28Props>();
 </script>

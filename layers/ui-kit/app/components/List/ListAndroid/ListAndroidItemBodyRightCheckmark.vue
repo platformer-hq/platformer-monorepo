@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CheckmarkIOS28Props } from '#ui-kit-icons';
+import type { CheckmarkIOS28Props } from '@ui-kit/icons';
 
 defineProps<CheckmarkIOS28Props>();
 </script>
