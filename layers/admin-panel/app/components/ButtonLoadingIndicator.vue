@@ -23,7 +23,3 @@ const transition = createReversibleTransition({
     <AutoLoadingIndicator v-if="show" :size="20"/>
   </Transition>
 </template>
-
-<style scoped>
-
-</style>
