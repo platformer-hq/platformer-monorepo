@@ -1,3 +1,3 @@
 import { ListAndroidItemBodyLeftLabel, ListIosItemBodyLeftLabel } from '#components';
 
-export default platformed({ common: ListAndroidItemBodyLeftLabel, ios: ListIosItemBodyLeftLabel });
+export default platformed({ fallback: ListAndroidItemBodyLeftLabel, ios: ListIosItemBodyLeftLabel });

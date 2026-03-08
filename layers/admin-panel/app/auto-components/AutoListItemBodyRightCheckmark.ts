@@ -1,6 +1,6 @@
 import { ListAndroidItemBodyRightCheckmark, ListIosItemBodyRightCheckmark } from '#components';
 
 export default platformed({
-  common: ListAndroidItemBodyRightCheckmark,
+  fallback: ListAndroidItemBodyRightCheckmark,
   ios: ListIosItemBodyRightCheckmark,
 });

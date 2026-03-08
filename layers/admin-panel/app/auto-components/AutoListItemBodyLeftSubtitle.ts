@@ -1,6 +1,6 @@
 import { ListAndroidItemBodyLeftSubtitle, ListIosItemBodyLeftSubtitle } from '#components';
 
 export default platformed({
-  common: ListAndroidItemBodyLeftSubtitle,
+  fallback: ListAndroidItemBodyLeftSubtitle,
   ios: ListIosItemBodyLeftSubtitle,
 });

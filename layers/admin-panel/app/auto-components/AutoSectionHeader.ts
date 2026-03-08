@@ -1,3 +1,3 @@
 import { SectionIosHeader, SectionAndroidHeader } from '#components';
 
-export default platformed({ common: SectionAndroidHeader, ios: SectionIosHeader });
+export default platformed({ fallback: SectionAndroidHeader, ios: SectionIosHeader });

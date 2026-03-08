@@ -5,10 +5,10 @@ import type { ComponentExposed } from 'vue-component-type-helpers';
 import type { KnownPlatform } from '../types.js';
 
 interface Options<C> extends Partial<Record<KnownPlatform, C>> {
-  common: C;
+  fallback: C;
 }
 
-export function platformed<C extends Component>({ common, ios, android }: Options<C>): C {
+export function platformed<C extends Component>({ fallback, ios, android }: Options<C>): C {
   return defineComponent({
     name: 'Platformed',
     setup(props, { attrs, slots, expose }) {
@@ -39,7 +39,7 @@ export function platformed<C extends Component>({ common, ios, android }: Option
 
       return () => {
         return h(
-          ({ android, ios })[platform.value.mapped] || common,
+          ({ android, ios })[platform.value.mapped] || fallback,
           {
             ref: innerRef,
             ...(attrs as any),

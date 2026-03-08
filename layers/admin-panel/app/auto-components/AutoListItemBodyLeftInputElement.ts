@@ -1,6 +1,6 @@
 import { ListAndroidItemBodyLeftInputElement, ListIosItemBodyLeftInputElement } from '#components';
 
 export default platformed({
-  common: ListAndroidItemBodyLeftInputElement,
+  fallback: ListAndroidItemBodyLeftInputElement,
   ios: ListIosItemBodyLeftInputElement,
 });
