@@ -1,9 +1,8 @@
-import * as fp from 'fp-ts';
+import type * as fp from 'fp-ts';
 
-type RequiredFn = (...args: never[]) => (
-  | fp.either.Either<unknown, unknown>
-  | fp.taskEither.TaskEither<unknown, unknown>
-);
+import type { AnyEither } from './throwifyAnyEither';
+
+type RequiredFn = (...args: never[]) => AnyEither;
 
 type WrappedFn<Fn extends RequiredFn> =
   (...args: Parameters<Fn>) => ReturnType<Fn> extends fp.either.Either<unknown, infer R>
@@ -14,12 +13,6 @@ type WrappedFn<Fn extends RequiredFn> =
 
 export function throwify<Fn extends RequiredFn>(fn_: Fn): WrappedFn<Fn> {
   return ((...args) => {
-    const result = fn_(...args);
-    const onError = (e: unknown) => {
-      throw e;
-    };
-    return typeof result === 'function'
-      ? fp.function.pipe(result, fp.taskEither.match(onError, d => d))()
-      : fp.function.pipe(result, fp.either.match(onError, d => d));
+    return throwifyAnyEither(fn_(...args));
   }) as WrappedFn<Fn>;
 }
