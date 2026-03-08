@@ -1,19 +1,11 @@
 <script setup lang="ts">
-import { skipToken, useQuery } from '@tanstack/vue-query';
+import { useQuery } from '@pinia/colada';
 import { refDebounced } from '@vueuse/core';
 import * as fp from 'fp-ts';
 
 import type { UserSelectionStoreSelectedUser } from '~/stores/useUserSelectionStore';
 
 import { UserSelectionPageDataDocument } from './operations';
-
-type QueryKey = [{
-  document: typeof UserSelectionPageDataDocument;
-  canAcceptAppTransfers?: boolean;
-  canBeInvitedToManage?: boolean;
-  excludedUserIds?: number[];
-  input: string;
-}];
 
 const { t } = useI18n({
   messages: {
@@ -51,28 +43,25 @@ const excludedUserIds = computed(() => [
 const request = useMakeGqlApiRequest();
 const { data: foundUsers, isPending: isSearchingUsers } = useQuery({
   staleTime: 0,
-  queryKey: computed(() => [{
+  enabled: () => inputDebounced.value.length > 0,
+  key: () => [{
     document: UserSelectionPageDataDocument,
     canAcceptAppTransfers: store.canAcceptAppTransfers,
     canBeInvitedToManage: store.canBeInvitedToManage,
     excludedUserIds: excludedUserIds.value,
     input: inputDebounced.value,
-  }] satisfies QueryKey),
-  queryFn: computed(() => {
-    return !inputDebounced.value
-      ? skipToken
-      : throwify(({ queryKey: [options] }: { queryKey: QueryKey }) => {
-        return fp.function.pipe(
-          request(options.document, {
-            canReceiveAppTransferReq: options.canAcceptAppTransfers,
-            canReceiveManagementInvite: options.canBeInvitedToManage,
-            input: options.input,
-            page: 0,
-            excludeUserIDs: options.excludedUserIds,
-          }),
-          fp.taskEither.map(r => r.searchUsers),
-        );
-      });
+  }],
+  query: throwify(() => {
+    return fp.function.pipe(
+      request(UserSelectionPageDataDocument, {
+        canReceiveAppTransferReq: store.canAcceptAppTransfers,
+        canReceiveManagementInvite: store.canBeInvitedToManage,
+        input: inputDebounced.value,
+        page: 0,
+        excludeUserIDs: excludedUserIds.value,
+      }),
+      fp.taskEither.map(r => r.searchUsers),
+    );
   }),
 });
 const lastFoundUsers = ref(foundUsers.value || []);

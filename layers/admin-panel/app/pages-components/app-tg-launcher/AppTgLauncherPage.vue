@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useMutation } from '@tanstack/vue-query';
+import { useMutation } from '@pinia/colada';
 import { copyTextToClipboard } from '@tma.js/sdk-vue';
 
 const { t } = useI18n({
@@ -35,7 +35,8 @@ const { t } = useI18n({
 
 const displayCopied = ref(false);
 const { mutate: copy } = useMutation({
-  mutationFn: copyTextToClipboard,
+  key: ['copy-launcher-url-to-clipboard'],
+  mutation: copyTextToClipboard,
   onSuccess() {
     hapticNotificationOccurred('success');
     displayCopied.value = true;

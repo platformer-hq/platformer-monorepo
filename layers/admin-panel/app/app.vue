@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useQuery } from '@tanstack/vue-query';
+import { useQuery } from '@pinia/colada';
 import { miniApp } from '@tma.js/sdk-vue';
 
 const apiStore = useApiStore();

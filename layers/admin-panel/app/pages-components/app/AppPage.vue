@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useMutation, useQuery } from '@tanstack/vue-query';
+import { useMutation, useQuery } from '@pinia/colada';
 import { popup } from '@tma.js/sdk-vue';
 import * as fp from 'fp-ts';
 import * as v from 'valibot';
@@ -85,12 +85,11 @@ const { t } = useI18n({
 });
 const isDark = useIsDark();
 const request = useMakeGqlApiRequest();
-const queryKey = [AppPageDataDocument, query.appId] as const;
 const { data: appData, isPending: isLoadingApp } = useQuery({
-  queryKey,
-  queryFn: throwify((data: { queryKey: typeof queryKey }) => {
+  key: [AppPageDataDocument, query.appId],
+  query: throwify(() => {
     return fp.function.pipe(
-      request(data.queryKey[0], { appID: data.queryKey[1] }),
+      request(AppPageDataDocument, { appID: query.appId }),
       fp.taskEither.map(({ app }) => (
         app
           ? { id: app.id, title: app.title, role: apiAppRoleToLocal(app.currentUserRole) }
@@ -99,9 +98,9 @@ const { data: appData, isPending: isLoadingApp } = useQuery({
     );
   }),
 });
-const { mutate: deleteApp, isPending: isDeletingApp } = useMutation({
-  mutationKey: [DeleteAppDocument],
-  mutationFn: throwify((options: { appId: number }) => {
+const { mutate: deleteApp, isLoading: isDeletingApp } = useMutation({
+  key: [DeleteAppDocument],
+  mutation: throwify((options: { appId: number }) => {
     return request(DeleteAppDocument, { appID: options.appId });
   }),
   onSuccess() {

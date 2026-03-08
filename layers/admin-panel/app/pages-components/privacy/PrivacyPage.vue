@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { useMutation, useQuery } from '@tanstack/vue-query';
+import { useMutation, useQuery } from '@pinia/colada';
+import * as fp from 'fp-ts';
 
-import { usePageDataMutator, usePageDataQueryOptions, useUpdateMutationOptions } from './api';
+import { PrivacyPageDataDocument, UpdatePermissionsDocument } from './operations';
 
 const { t } = useI18n({
   messages: {
@@ -23,13 +24,35 @@ const { t } = useI18n({
 });
 
 const platform = useTmaPlatform();
-const mutatePageData = usePageDataMutator();
-const { data, isPending: isLoadingPageData } = useQuery(usePageDataQueryOptions());
-const { mutate: updatePermissions, isPending: isUpdating } = useMutation({
-  ...useUpdateMutationOptions(),
+const request = useMakeGqlApiRequest();
+const queryCache = useQueryCache();
+const { data: pageData, isPending: isLoadingPageData } = useQuery({
+  key: [PrivacyPageDataDocument],
+  query: throwify(() => {
+    return fp.function.pipe(
+      request(PrivacyPageDataDocument, {}),
+      fp.taskEither.map(({ currentUser }) => ({
+        canAcceptAppTransfers: currentUser.canAcceptAppTransfers,
+        canBeInvitedToManage: currentUser.canBeInvitedToManage,
+      })),
+    );
+  }),
+});
+const { mutate: updatePermissions, isLoading: isUpdating } = useMutation({
+  mutation(options: { canAcceptAppTransfers: boolean; canBeInvitedToManage: boolean }) {
+    return throwifyAnyEither(
+      request(UpdatePermissionsDocument, {
+        canAcceptAppTransfers: options.canAcceptAppTransfers,
+        canBeInvitedToManage: options.canBeInvitedToManage,
+      }),
+    );
+  },
   onSuccess(_, variables) {
     hapticNotificationOccurred('success');
-    mutatePageData(variables);
+    queryCache.setQueryData([PrivacyPageDataDocument], {
+      canAcceptAppTransfers: variables.canAcceptAppTransfers,
+      canBeInvitedToManage: variables.canBeInvitedToManage,
+    });
   },
   onError(error) {
     hapticNotificationOccurred('error');
@@ -39,14 +62,14 @@ const { mutate: updatePermissions, isPending: isUpdating } = useMutation({
 });
 
 const isLoading = computed(() => isLoadingPageData.value || isUpdating.value);
-const canAcceptAppTransfers = ref(data.value?.canAcceptAppTransfers || false);
-const canBeInvitedToManage = ref(data.value?.canBeInvitedToManage || false);
+const canAcceptAppTransfers = ref(pageData.value?.canAcceptAppTransfers || false);
+const canBeInvitedToManage = ref(pageData.value?.canBeInvitedToManage || false);
 
 onMounted(() => {
   preloadRouteComponents({ name: PAGE_NAME_MAIN });
 });
 
-watch(data, data => {
+watch(pageData, data => {
   if (data) {
     canAcceptAppTransfers.value = data.canAcceptAppTransfers;
     canBeInvitedToManage.value = data.canBeInvitedToManage;
@@ -124,8 +147,8 @@ watch(data, data => {
     <BottomBarTransition>
       <BottomBar
         v-if="!isLoadingPageData && (
-          data?.canAcceptAppTransfers !== canAcceptAppTransfers
-          || data?.canBeInvitedToManage !== canBeInvitedToManage
+          pageData?.canAcceptAppTransfers !== canAcceptAppTransfers
+          || pageData?.canBeInvitedToManage !== canBeInvitedToManage
         )"
       >
         <BottomBarInner>

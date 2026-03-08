@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query';
+import { useMutation, useQuery, useQueryCache } from '@pinia/colada';
 import * as fp from 'fp-ts';
 
 import { AppGeneralPageDataDocument, UpdateAppDocument } from './operations';
@@ -44,15 +44,13 @@ const isPageEntered = useIsCurrentPageEntered();
 const bottomBar = useTemplateRef('bottom-bar');
 
 //#region Requests.
-const queryClient = useQueryClient();
+const queryCache = useQueryCache();
 const request = useMakeGqlApiRequest();
 const { data } = useQuery({
-  queryKey: [AppGeneralPageDataDocument, appId] as const,
-  queryFn: throwify((options: {
-    queryKey: readonly [typeof AppGeneralPageDataDocument, number];
-  }) => {
+  key: () => [AppGeneralPageDataDocument, appId],
+  query: throwify(() => {
     return fp.function.pipe(
-      request(options.queryKey[0], { appId: options.queryKey[1] }),
+      request(AppGeneralPageDataDocument, { appId: appId.value }),
       fp.taskEither.map(({ app }) => (
         app
           ? {
@@ -65,26 +63,24 @@ const { data } = useQuery({
     );
   }),
 });
-const updateAppFn = throwify((options: {
-  appId: number;
-  privacy: LocalPrivacy;
-  title: string;
-}) => {
-  return fp.function.pipe(
-    request(UpdateAppDocument, {
-      appId: options.appId,
-      privacy: localAppPrivacyToApi(options.privacy),
-      title: options.title,
-    }),
-    fp.taskEither.map(response => response.updateApp),
-  );
-});
-const { mutate: updateApp, isPending: isUpdatingApp } = useMutation({
-  mutationKey: [UpdateAppDocument],
-  mutationFn: updateAppFn,
+const { mutate: updateApp, isLoading: isUpdatingApp } = useMutation({
+  key: [UpdateAppDocument],
+  mutation(options: { appId: number; privacy: LocalPrivacy; title: string }) {
+    return throwifyAnyEither(
+      fp.function.pipe(
+        request(UpdateAppDocument, {
+          appId: options.appId,
+          privacy: localAppPrivacyToApi(options.privacy),
+          title: options.title,
+        }),
+        fp.taskEither.map(response => response.updateApp),
+      ),
+    );
+  },
   onSuccess({ privacy, title }) {
     hapticNotificationOccurred('success');
-    queryClient.setQueryData([AppGeneralPageDataDocument, appId], data => (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    queryCache.setQueryData([AppGeneralPageDataDocument, appId], (data: any) => (
       data
         ? { ...data, privacy: apiAppPrivacyToLocal(privacy), title }
         : data

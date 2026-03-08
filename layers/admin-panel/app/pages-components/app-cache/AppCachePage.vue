@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query';
+import { useMutation, useQuery, useQueryCache } from '@pinia/colada';
 import { popup } from '@tma.js/sdk-vue';
 import * as fp from 'fp-ts';
 import * as v from 'valibot';
@@ -36,13 +36,12 @@ const { t, locale } = useI18n({
   },
 });
 const request = useMakeGqlApiRequest();
-const queryClient = useQueryClient();
-const queryKey = [AppCachePageDataDocument, query.appId] as const;
+const queryCache = useQueryCache();
 const { data: appData, isPending: isLoadingApp } = useQuery({
-  queryKey,
-  queryFn: throwify((data: { queryKey: typeof queryKey }) => {
+  key: () => [AppCachePageDataDocument, query.appId],
+  query: throwify(() => {
     return fp.function.pipe(
-      request(data.queryKey[0], { appID: data.queryKey[1] }),
+      request(AppCachePageDataDocument, { appID: query.appId }),
       fp.taskEither.map(({ app }) => (
         app
           ? { urlsCacheResetAt: app.urlsCacheResetAt ? new Date(app.urlsCacheResetAt) : undefined }
@@ -51,16 +50,15 @@ const { data: appData, isPending: isLoadingApp } = useQuery({
     );
   }),
 });
-const mutationFn = throwify((options: { appId: number }) => {
-  return request(ResetAppCacheDocument, { appID: options.appId });
-});
-const { mutate: resetCache, isPending: isResettingCache } = useMutation({
-  mutationKey: [ResetAppCacheDocument],
-  mutationFn,
+const { mutate: resetCache, isLoading: isResettingCache } = useMutation({
+  key: [ResetAppCacheDocument],
+  mutation(options: { appId: number }) {
+    return throwifyAnyEither(request(ResetAppCacheDocument, { appID: options.appId }));
+  },
   onSuccess({ updateApp: { urlsCacheResetAt } }) {
     hapticNotificationOccurred('success');
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    queryClient.setQueryData([AppCachePageDataDocument, query.appId], (data: any) => (
+    queryCache.setQueryData([AppCachePageDataDocument, query.appId], (data: any) => (
       data
         ? { ...data, urlsCacheResetAt: urlsCacheResetAt ? new Date(urlsCacheResetAt) : undefined }
         : data

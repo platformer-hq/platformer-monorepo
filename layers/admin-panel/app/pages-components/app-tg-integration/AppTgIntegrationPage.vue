@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query';
+import { useMutation, useQuery, useQueryCache } from '@pinia/colada';
 import * as fp from 'fp-ts';
 
 import { AppTgIntegrationPageDataDocument, UpdateAppTelegramDataDocument } from './operations';
@@ -27,45 +27,40 @@ const { t } = useI18n({
 const isPageEntered = useIsCurrentPageEntered();
 const platform = useTmaPlatform();
 const appId = useQueryAppId();
-const queryClient = useQueryClient();
+const queryCache = useQueryCache();
 const request = useMakeGqlApiRequest();
 const { data } = useQuery({
-  queryKey: [AppTgIntegrationPageDataDocument, appId] as const,
-  queryFn: throwify(
-    ({ queryKey}: { queryKey: readonly [typeof AppTgIntegrationPageDataDocument, number] }) => {
-      return fp.function.pipe(
-        request(queryKey[0], { appId: queryKey[1] }),
-        fp.taskEither.map(({ app }) => (
-          app
-            ? {
-              role: apiAppRoleToLocal(app.currentUserRole),
-              botId: app.telegramBotID || undefined,
-              proxy: app.telegramProxyLaunchParams,
-            }
-            : null
-        )),
-      );
-    },
-  ),
+  key: () => [AppTgIntegrationPageDataDocument, appId],
+  query: throwify(() => {
+    return fp.function.pipe(
+      request(AppTgIntegrationPageDataDocument, { appId: appId.value }),
+      fp.taskEither.map(({ app }) => (
+        app
+          ? {
+            role: apiAppRoleToLocal(app.currentUserRole),
+            botId: app.telegramBotID || undefined,
+            proxy: app.telegramProxyLaunchParams,
+          }
+          : null
+      )),
+    );
+  }),
 });
-const mutationFn = throwify((options: {
-  appId: number;
-  botId?: number;
-  proxy: boolean;
-}) => {
-  return request(UpdateAppTelegramDataDocument, {
-    appId: options.appId,
-    telegramProxyLaunchParams: options.proxy,
-    telegramBotID: options.botId,
-  });
-});
-const { mutate: updateApp, isPending: isUpdatingApp } = useMutation({
-  mutationKey: [UpdateAppTelegramDataDocument],
-  mutationFn,
+const { mutate: updateApp, isLoading: isUpdatingApp } = useMutation({
+  key: [UpdateAppTelegramDataDocument],
+  mutation(options: { appId: number; botId?: number; proxy: boolean }) {
+    return throwifyAnyEither(
+      request(UpdateAppTelegramDataDocument, {
+        appId: options.appId,
+        telegramProxyLaunchParams: options.proxy,
+        telegramBotID: options.botId,
+      }),
+    );
+  },
   onSuccess({ updateApp: { telegramProxyLaunchParams, telegramBotID } }) {
     hapticNotificationOccurred('success');
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    queryClient.setQueryData([AppTgIntegrationPageDataDocument, appId], (data: any) => (
+    queryCache.setQueryData([AppTgIntegrationPageDataDocument, appId], (data: any) => (
       data
         ? {
           ...data,

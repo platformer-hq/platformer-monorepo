@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useQuery } from '@tanstack/vue-query';
+import { useQuery } from '@pinia/colada';
 import * as fp from 'fp-ts';
 
 import { AccountPageDataDocument } from './operations';
@@ -42,8 +42,8 @@ const { t, locale, setLocale } = useI18n({
 });
 const request = useMakeGqlApiRequest();
 const { data, isPending } = useQuery({
-  queryKey: [AccountPageDataDocument],
-  queryFn: throwify(() => {
+  key: [AccountPageDataDocument],
+  query: throwify(() => {
     return fp.function.pipe(
       request(AccountPageDataDocument, {}),
       fp.taskEither.map(({ currentUser }) => {

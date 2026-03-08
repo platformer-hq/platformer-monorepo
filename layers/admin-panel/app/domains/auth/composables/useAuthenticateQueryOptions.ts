@@ -1,4 +1,4 @@
-import { queryOptions } from '@tanstack/vue-query';
+import { defineQueryOptions } from '@pinia/colada';
 import * as fp from 'fp-ts';
 
 import { AuthenticateDocument } from './_api/operations';
@@ -6,9 +6,9 @@ import { AuthenticateDocument } from './_api/operations';
 export function useAuthenticateQueryOptions() {
   const request = useMakeGqlApiRequest();
   const { initDataRaw } = useTmaStore();
-  return queryOptions({
-    queryKey: [AuthenticateDocument],
-    queryFn: throwify(() => {
+  return defineQueryOptions({
+    key: [AuthenticateDocument],
+    query: throwify(() => {
       return fp.function.pipe(
         request(AuthenticateDocument, { initData: initDataRaw }),
         fp.taskEither.map(({ authenticateTelegram }) => ({

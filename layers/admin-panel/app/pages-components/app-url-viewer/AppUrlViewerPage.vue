@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useQuery } from '@tanstack/vue-query';
+import { useQuery } from '@pinia/colada';
 import * as fp from 'fp-ts';
 
 import type { LocalAppSimpleExplanationKind } from '~/domains/api/utils/dto';
@@ -47,21 +47,18 @@ const lastSelectedUser = ref<UserSelectionStoreSelectedUser | undefined>(
 );
 
 const { data } = useQuery({
-  enabled: computed(() => lastSelectedUser.value !== undefined),
-  queryKey: [{
+  enabled: () => lastSelectedUser.value !== undefined,
+  key: () => [{
     document: AppUrlViewerPageDataDocument,
-    appId,
-    userId: computed(() => lastSelectedUser.value?.id || 0),
-  }] as const,
-  queryFn: throwify(({ queryKey: [options]}: {
-    queryKey: readonly [{
-      document: typeof AppUrlViewerPageDataDocument;
-      appId: number;
-      userId: number;
-    }];
-  }) => {
+    appId: appId.value,
+    userId: lastSelectedUser.value?.id,
+  }],
+  query: throwify(() => {
     return fp.function.pipe(
-      request(options.document, { appId: options.appId, userId: options.userId }),
+      request(AppUrlViewerPageDataDocument, {
+        appId: appId.value,
+        userId: lastSelectedUser.value?.id || 0,
+      }),
       fp.taskEither.map(response => {
         return response
           .userAppURLExplanations

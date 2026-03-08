@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { useQuery } from '@tanstack/vue-query';
+import { useQuery } from '@pinia/colada';
+import * as fp from 'fp-ts';
 
 import {
   IconApps30,
@@ -9,9 +10,21 @@ import {
   IconUserCircleFill28,
 } from '#components';
 
-import { usePageDataQueryOptions } from './usePageDataQueryOptions';
+import { HomePageDataDocument } from './operations';
 
-const { data, isPending } = useQuery(usePageDataQueryOptions());
+const request = useMakeGqlApiRequest();
+const { data, isPending } = useQuery({
+  key: [HomePageDataDocument],
+  query: throwify(() => {
+    return fp.function.pipe(
+      request(HomePageDataDocument, {}),
+      fp.taskEither.map(({ currentUser }) => ({
+        transferRequestsCount: currentUser.appTransferRequests.length,
+        invitesCount: currentUser.managementInvites.length,
+      })),
+    );
+  }),
+});
 const { t } = useI18n({
   messages: {
     en: {

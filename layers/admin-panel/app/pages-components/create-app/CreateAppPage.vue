@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useMutation } from '@tanstack/vue-query';
+import { useMutation } from '@pinia/colada';
 
 import { CreateAppDocument } from './operations';
 
@@ -21,12 +21,11 @@ const { t } = useI18n({
 });
 const isPageEntered = useIsPageEntered(PAGE_NAME_CREATE_APP);
 const request = useMakeGqlApiRequest();
-const mutationFn = throwify((options: { title: string }) => {
-  return request(CreateAppDocument, { title: options.title });
-});
-const { mutate: createApp, isPending: isCreatingApp } = useMutation({
-  mutationKey: [CreateAppDocument],
-  mutationFn,
+const { mutate: createApp, isLoading: isCreatingApp } = useMutation({
+  key: [CreateAppDocument],
+  mutation(options: { title: string }) {
+    return throwifyAnyEither(request(CreateAppDocument, { title: options.title }));
+  },
   onSuccess(data) {
     hapticNotificationOccurred('success');
     navigateToApp(data.createApp.id);

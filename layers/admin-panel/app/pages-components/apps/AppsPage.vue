@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useQuery } from '@tanstack/vue-query';
+import { useQuery } from '@pinia/colada';
 import { popup } from '@tma.js/sdk-vue';
 import * as fp from 'fp-ts';
 
@@ -9,8 +9,8 @@ import { AppsPageDataDocument } from './operations';
 
 const request = useMakeGqlApiRequest();
 const { data, isPending } = useQuery({
-  queryKey: [AppsPageDataDocument],
-  queryFn: throwify(() => {
+  key: [AppsPageDataDocument],
+  query: throwify(() => {
     return fp.function.pipe(
       request(AppsPageDataDocument, {}),
       fp.taskEither.map(({ currentUser }) => {
