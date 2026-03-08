@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useQuery } from '@tanstack/vue-query';
-import { taskEither, function as fn } from 'fp-ts';
+import * as fp from 'fp-ts';
 
 import { AccountPageDataDocument } from './operations';
 
@@ -44,9 +44,9 @@ const request = useMakeGqlApiRequest();
 const { data, isPending } = useQuery({
   queryKey: [AccountPageDataDocument],
   queryFn: throwify(() => {
-    return fn.pipe(
+    return fp.function.pipe(
       request(AccountPageDataDocument, {}),
-      taskEither.map(({ currentUser }) => {
+      fp.taskEither.map(({ currentUser }) => {
         const { telegramData } = currentUser;
         return {
           id: currentUser.id,

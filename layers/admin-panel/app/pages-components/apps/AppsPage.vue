@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useQuery } from '@tanstack/vue-query';
 import { popup } from '@tma.js/sdk-vue';
-import { taskEither, function as fn } from 'fp-ts';
+import * as fp from 'fp-ts';
 
 import { AppPrivacy, AppRole } from '#layers/api/schema';
 
@@ -11,9 +11,9 @@ const request = useMakeGqlApiRequest();
 const { data, isPending } = useQuery({
   queryKey: [AppsPageDataDocument],
   queryFn: throwify(() => {
-    return fn.pipe(
+    return fp.function.pipe(
       request(AppsPageDataDocument, {}),
-      taskEither.map(({ currentUser }) => {
+      fp.taskEither.map(({ currentUser }) => {
         return {
           apps: currentUser.apps.map(({ app, role }) => ({
             id: app.id,

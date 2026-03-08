@@ -14,7 +14,7 @@ import {
   swipeBehavior,
   miniApp,
 } from '@tma.js/sdk-vue';
-import { function as fn, taskEither } from 'fp-ts';
+import * as fp from 'fp-ts';
 import type { TransitionProps } from 'vue';
 
 import { UseIosPageTransition, UseAndroidPageTransition } from '#components';
@@ -152,9 +152,9 @@ await callOnce(async () => {
 
 // Configuring the current locale.
 await callOnce(async () => {
-  let locale = await fn.pipe(
+  let locale = await fp.function.pipe(
     csGetLocale(),
-    taskEither.matchW(
+    fp.taskEither.matchW(
       e => {
         console.error('Error when restoring locale from the cloud storage', e);
       },

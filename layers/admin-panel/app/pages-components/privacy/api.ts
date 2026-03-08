@@ -1,5 +1,5 @@
 import { queryOptions, useQueryClient } from '@tanstack/vue-query';
-import { function as fn, taskEither } from 'fp-ts';
+import * as fp from 'fp-ts';
 
 import { PrivacyPageDataDocument, UpdatePermissionsDocument } from './operations';
 
@@ -8,9 +8,9 @@ export function usePageDataQueryOptions() {
   return queryOptions({
     queryKey: [PrivacyPageDataDocument],
     queryFn: throwify(() => {
-      return fn.pipe(
+      return fp.function.pipe(
         request(PrivacyPageDataDocument, {}),
-        taskEither.map(({ currentUser }) => ({
+        fp.taskEither.map(({ currentUser }) => ({
           canAcceptAppTransfers: currentUser.canAcceptAppTransfers,
           canBeInvitedToManage: currentUser.canBeInvitedToManage,
         })),

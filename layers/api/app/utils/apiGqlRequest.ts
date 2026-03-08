@@ -1,5 +1,5 @@
 import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
-import { taskEither, function as fn } from 'fp-ts';
+import * as fp from 'fp-ts';
 import type { GraphQLClient, Variables } from 'graphql-request';
 
 /**
@@ -10,9 +10,9 @@ export function apiGqlRequest<T, V extends Variables>({ client, document, variab
   client: GraphQLClient;
   document: TypedDocumentNode<T, V>;
   variables: V;
-}): taskEither.TaskEither<ApiGraphQLError, T> {
-  return fn.pipe(
+}): fp.taskEither.TaskEither<ApiGraphQLError, T> {
+  return fp.function.pipe(
     gqlRequest({ client, document, variables }),
-    taskEither.mapLeft(e => new ApiGraphQLError(e.response, e.request)),
+    fp.taskEither.mapLeft(e => new ApiGraphQLError(e.response, e.request)),
   );
 }

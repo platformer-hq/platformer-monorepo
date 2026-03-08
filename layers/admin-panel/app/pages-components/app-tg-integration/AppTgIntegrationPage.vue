@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query';
-import { function as fn, taskEither } from 'fp-ts';
+import * as fp from 'fp-ts';
 
 import { AppTgIntegrationPageDataDocument, UpdateAppTelegramDataDocument } from './operations';
 
@@ -33,9 +33,9 @@ const { data } = useQuery({
   queryKey: [AppTgIntegrationPageDataDocument, appId] as const,
   queryFn: throwify(
     ({ queryKey}: { queryKey: readonly [typeof AppTgIntegrationPageDataDocument, number] }) => {
-      return fn.pipe(
+      return fp.function.pipe(
         request(queryKey[0], { appId: queryKey[1] }),
-        taskEither.map(({ app }) => (
+        fp.taskEither.map(({ app }) => (
           app
             ? {
               role: apiAppRoleToLocal(app.currentUserRole),

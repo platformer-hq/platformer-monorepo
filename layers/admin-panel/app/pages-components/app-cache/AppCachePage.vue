@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query';
 import { popup } from '@tma.js/sdk-vue';
-import { taskEither, function as fn } from 'fp-ts';
+import * as fp from 'fp-ts';
 import * as v from 'valibot';
 
 import { AppCachePageDataDocument, ResetAppCacheDocument } from './operations';
@@ -41,9 +41,9 @@ const queryKey = [AppCachePageDataDocument, query.appId] as const;
 const { data: appData, isPending: isLoadingApp } = useQuery({
   queryKey,
   queryFn: throwify((data: { queryKey: typeof queryKey }) => {
-    return fn.pipe(
+    return fp.function.pipe(
       request(data.queryKey[0], { appID: data.queryKey[1] }),
-      taskEither.map(({ app }) => (
+      fp.taskEither.map(({ app }) => (
         app
           ? { urlsCacheResetAt: app.urlsCacheResetAt ? new Date(app.urlsCacheResetAt) : undefined }
           : null

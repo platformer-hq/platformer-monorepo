@@ -1,5 +1,5 @@
 import { queryOptions } from '@tanstack/vue-query';
-import { function as fn, taskEither } from 'fp-ts';
+import * as fp from 'fp-ts';
 
 import { HomePageDataDocument } from './operations';
 
@@ -15,9 +15,9 @@ export function usePageDataQueryOptions() {
   return queryOptions<Result, Err, Result, typeof queryKey>({
     queryKey,
     queryFn: throwify(() => {
-      return fn.pipe(
+      return fp.function.pipe(
         request(HomePageDataDocument, {}),
-        taskEither.map(({ currentUser }) => ({
+        fp.taskEither.map(({ currentUser }) => ({
           transferRequestsCount: currentUser.appTransferRequests.length,
           invitesCount: currentUser.managementInvites.length,
         })),
