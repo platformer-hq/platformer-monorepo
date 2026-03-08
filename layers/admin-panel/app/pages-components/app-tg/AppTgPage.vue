@@ -20,9 +20,10 @@ const appId = useQueryAppId();
 
 const createCustomIcon = <C extends Component>(
   component: C,
+  color: ColorReferenceAnyColor,
   bgColor: ColorReferenceAnyColor,
   size: number,
-) => ({ kind: 'custom' as const, component, bgColor, size });
+) => ({ kind: 'custom' as const, component, color, bgColor, size });
 const createStaticIcon = <C extends Component>(component: C) => ({
   kind: 'static' as const,
   component,
@@ -31,7 +32,7 @@ const createStaticIcon = <C extends Component>(component: C) => ({
 const items = computed(() => [{
   title: t('integration'),
   page: PAGE_NAME_APP_TG_INTEGRATION,
-  icon: createCustomIcon(IconGearFillIOS28, '#8E8E93', 24),
+  icon: createCustomIcon(IconGearFillIOS28, 'white', '#8E8E93', 24),
 }, {
   title: t('launcher'),
   page: PAGE_NAME_APP_TG_LAUNCHER,
@@ -67,6 +68,7 @@ watch(items, items => {
                       <component
                         :is="icon.component"
                         :size="'size' in icon ? icon.size : undefined"
+                        :color="'color' in icon ? icon.color : undefined"
                       />
                     </AutoListItemLeftIconElement>
                   </AutoListItemLeftIcon>

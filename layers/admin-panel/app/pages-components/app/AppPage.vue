@@ -18,9 +18,10 @@ import {
 import AppIcon from './_components/AppIcon.vue';
 import { AppPageDataDocument, DeleteAppDocument } from './operations';
 
-const createIconComponent = <C extends Component>(component: C) => ({
+const createIconComponent = <C extends Component>(component: C, size?: number) => ({
   kind: 'component' as const,
   component,
+  size,
 });
 const createCustomIconComponent = <C extends Component>(
   component: C,
@@ -32,10 +33,10 @@ const GeneralIcon = createIconComponent(IconAdvancedSettings30);
 const ManagersIcon = createIconComponent(IconUsers30);
 const TestGroupsIcon = createIconComponent(IconSurveys30);
 const URLsIcon = createIconComponent(IconLink30);
-const CacheIcon = createIconComponent(IconDataAndStorage30);
-const TransferIcon = createCustomIconComponent(IconPersonLineDottedFill28, 22, '#34C759');
-const TelegramIcon = createCustomIconComponent(IconTelegram24, 24, '#007AFF');
-const UrlViewerIcon = createCustomIconComponent(IconEyeFillIOS28, 24, '#FF2D55');
+const CacheIcon = createIconComponent(IconDataAndStorage30, 24);
+const TransferIcon = createCustomIconComponent(IconPersonLineDottedFill28, 20, '#34C759');
+const TelegramIcon = createCustomIconComponent(IconTelegram24, 20, '#007AFF');
+const UrlViewerIcon = createCustomIconComponent(IconEyeFillIOS28, 22, '#FF2D55');
 
 const query = parse(
   looseObject({ appId: pipe(string(), transform(Number)) }),
@@ -82,6 +83,7 @@ const { t } = useI18n({
     },
   },
 });
+const isDark = useIsDark();
 const request = useMakeGqlApiRequest();
 const queryKey = [AppPageDataDocument, query.appId] as const;
 const { data: appData, isPending: isLoadingApp } = useQuery({
@@ -239,7 +241,11 @@ onMounted(() => {
         </AutoSection>
         <AutoSection
           :class="e('section', 'offset-top')"
-          :list-bg-color="isSendingRequest ? 'secondary-bg' : 'rgb(221 4 4 / 19%)'"
+          :list-bg-color="isSendingRequest
+            ? 'secondary-bg'
+            : isDark
+              ? 'rgb(221 4 4 / 19%)'
+              : 'rgb(221 4 4 / 10%)'"
         >
           <AutoList>
             <AutoListItem
