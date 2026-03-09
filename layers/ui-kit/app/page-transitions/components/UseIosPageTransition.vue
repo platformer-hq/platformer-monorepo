@@ -14,15 +14,15 @@ const options: UsePageTransitionProps = {
     el.classList.add(...b(page, transition).split(' '));
   },
   animate({ transition, page, el, done }) {
-    const leftTransform = ['-100px', '0'];
-    const rightTransform = ['100%', '0'];
+    const leftTransform = ['translateX(-100px)', 'translateX(0)'];
+    const rightTransform = ['translateX(100%)', 'translateX(0)'];
     if (transition === 'leave') {
       [leftTransform, rightTransform].forEach(arr => arr.reverse());
     }
     el
-      .animate({ left: page === 'right' ? rightTransform : leftTransform }, {
+      .animate({ transform: page === 'right' ? rightTransform : leftTransform }, {
         duration: 300,
-        easing: 'ease-out',
+        easing: 'ease-in-out',
       })
       .finished
       .then(() => {
@@ -45,8 +45,6 @@ const options: UsePageTransitionProps = {
 <style lang="scss">
 .use-ios-page-transition {
   position: fixed;
-  width: 100vw;
-  height: 100vh;
   top: 0;
   left: 0;
 

@@ -16,9 +16,9 @@ const options: UsePageTransitionProps = {
     if (page === 'left') {
       return setTimeout(done, 300);
     }
-    const left = ['100%', '0'];
+    const transform = ['translateX(100%)', 'translateX(0)'];
     el
-      .animate({ left: transition === 'leave' ? left.reverse() : left }, {
+      .animate({ transform: transition === 'leave' ? transform.reverse() : transform }, {
         duration: 300,
         easing: 'ease-out',
       })
@@ -42,8 +42,6 @@ const options: UsePageTransitionProps = {
 <style lang="scss">
 .use-android-page-transition {
   position: fixed;
-  width: 100vw;
-  height: 100vh;
   top: 0;
   left: 0;
 
