@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { TransitionProps } from 'vue';
 
-import type { UsePageTransitionProps } from './UsePageTransition.vue';
+import UsePageTransition, { type UsePageTransitionProps } from './UsePageTransition.vue';
 
 defineSlots<{
   default(props: TransitionProps): void;
