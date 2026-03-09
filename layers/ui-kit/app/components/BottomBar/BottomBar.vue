@@ -19,10 +19,10 @@ defineExpose({
 
 <style lang="scss">
 .bottom-bar {
-  position: fixed;
+  position: sticky;
   bottom: 0;
   left: 0;
-  width: 100%;
+  right: 0;
   transition: 300ms ease-out;
 }
 
