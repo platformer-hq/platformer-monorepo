@@ -120,7 +120,7 @@ const removeUser = (idx: number) => {
 </script>
 
 <template>
-  <PageBase colors="secondary-bg">
+  <PageRoot colors="secondary-bg">
     <PageContent>
       <PagePaddings>
         <AutoSection list-bg-color="section-bg">
@@ -231,7 +231,7 @@ const removeUser = (idx: number) => {
         </AutoSection>
       </PagePaddings>
     </PageContent>
-  </PageBase>
+  </PageRoot>
 </template>
 
 <style lang="scss">

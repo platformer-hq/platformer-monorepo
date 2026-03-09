@@ -124,7 +124,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <PageBase colors="secondary-bg">
+  <PageRoot colors="secondary-bg">
     <PageContent :style="{paddingBottom: toPx(bottomBar?.height)}">
       <PagePaddings>
         <AutoSection list-bg-color="section-bg">
@@ -236,5 +236,5 @@ onMounted(() => {
         </BottomBarInner>
       </BottomBar>
     </BottomBarTransition>
-  </PageBase>
+  </PageRoot>
 </template>

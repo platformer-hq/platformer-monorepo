@@ -134,7 +134,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <PageBase colors="secondary-bg">
+  <PageRoot colors="secondary-bg">
     <PageContent>
       <PagePaddings>
         <AutoSection list-bg-color="section-bg">
@@ -248,5 +248,5 @@ onMounted(() => {
         </Transition>
       </PagePaddings>
     </PageContent>
-  </PageBase>
+  </PageRoot>
 </template>

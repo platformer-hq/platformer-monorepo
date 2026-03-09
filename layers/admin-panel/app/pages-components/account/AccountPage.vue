@@ -98,7 +98,7 @@ const saveLocale = async (locale: 'ru' | 'en') => {
 </script>
 
 <template>
-  <PageBase colors="secondary-bg">
+  <PageRoot colors="secondary-bg">
     <PageContent>
       <PagePaddings>
         <AutoSection
@@ -174,7 +174,7 @@ const saveLocale = async (locale: 'ru' | 'en') => {
         </AutoSection>
       </PagePaddings>
     </PageContent>
-  </PageBase>
+  </PageRoot>
 </template>
 
 <style lang="scss">

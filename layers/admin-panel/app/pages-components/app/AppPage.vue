@@ -163,7 +163,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <PageBase colors="secondary-bg">
+  <PageRoot colors="secondary-bg">
     <PageContent>
       <PagePaddings>
         <AppIcon :class="e('icon')"/>
@@ -271,7 +271,7 @@ onMounted(() => {
         </AutoSection>
       </PagePaddings>
     </PageContent>
-  </PageBase>
+  </PageRoot>
 </template>
 
 <style lang="scss">

@@ -47,7 +47,7 @@ watch(items, items => {
 </script>
 
 <template>
-  <PageBase colors="secondary-bg">
+  <PageRoot colors="secondary-bg">
     <PageContent>
       <PagePaddings>
         <AutoSection list-bg-color="section-bg">
@@ -89,5 +89,5 @@ watch(items, items => {
         </AutoSection>
       </PagePaddings>
     </PageContent>
-  </PageBase>
+  </PageRoot>
 </template>

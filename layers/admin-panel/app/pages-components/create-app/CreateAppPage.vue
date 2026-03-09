@@ -43,7 +43,7 @@ const isButtonEnabled = computed(() => {
 </script>
 
 <template>
-  <PageBase colors="secondary-bg">
+  <PageRoot colors="secondary-bg">
     <PageContent>
       <PagePaddings>
         <AutoSection list-bg-color="section-bg">
@@ -91,7 +91,7 @@ const isButtonEnabled = computed(() => {
         </BottomBar>
       </BottomBarTransition>
     </PageContent>
-  </PageBase>
+  </PageRoot>
 </template>
 
 <style scoped>

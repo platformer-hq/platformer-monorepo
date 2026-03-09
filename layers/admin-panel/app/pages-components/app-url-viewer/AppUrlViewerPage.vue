@@ -149,7 +149,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <PageBase colors="secondary-bg">
+  <PageRoot colors="secondary-bg">
     <PageContent>
       <PagePaddings>
         <template v-if="lastSelectedUser">
@@ -244,7 +244,7 @@ onMounted(() => {
         </AutoSection>
       </PagePaddings>
     </PageContent>
-  </PageBase>
+  </PageRoot>
 </template>
 
 <style lang="scss">
