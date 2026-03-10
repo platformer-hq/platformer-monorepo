@@ -162,23 +162,25 @@ watch(data, data => {
         </AutoSection>
       </PagePaddings>
     </PageContent>
-    <BottomBarTransition>
-      <BottomBar v-if="isPageEntered && isDirty">
-        <BottomBarInner>
-          <AutoButton
-            :palette="isUpdatingApp ? 'disabled' : 'filled'"
-            full-width
-            :disabled="isUpdatingApp"
-            :active="!isUpdatingApp"
-            @click="updateApp({appId, botId: parseInt(botId) || undefined, proxy})"
-          >
-            <AutoTypography variant="body" weight="semibold">
-              {{ t('apply') }}
-            </AutoTypography>
-            <ButtonLoadingIndicator :show="isUpdatingApp"/>
-          </AutoButton>
-        </BottomBarInner>
-      </BottomBar>
-    </BottomBarTransition>
+    <template #bottomBar>
+      <BottomBarTransition>
+        <BottomBar v-if="isPageEntered && isDirty">
+          <BottomBarInner>
+            <AutoButton
+              :palette="isUpdatingApp ? 'disabled' : 'filled'"
+              full-width
+              :disabled="isUpdatingApp"
+              :active="!isUpdatingApp"
+              @click="updateApp({appId, botId: parseInt(botId) || undefined, proxy})"
+            >
+              <AutoTypography variant="body" weight="semibold">
+                {{ t('apply') }}
+              </AutoTypography>
+              <ButtonLoadingIndicator :show="isUpdatingApp"/>
+            </AutoButton>
+          </BottomBarInner>
+        </BottomBar>
+      </BottomBarTransition>
+    </template>
   </PageRoot>
 </template>

@@ -144,31 +144,33 @@ watch(pageData, data => {
         </AutoSection>
       </PagePaddings>
     </PageContent>
-    <BottomBarTransition>
-      <BottomBar
-        v-if="!isLoadingPageData && (
-          pageData?.canAcceptAppTransfers !== canAcceptAppTransfers
-          || pageData?.canBeInvitedToManage !== canBeInvitedToManage
-        )"
-      >
-        <BottomBarInner>
-          <AutoButton
-            :palette="isLoading ? 'disabled' : 'filled'"
-            full-width
-            elevated
-            :disabled="isLoading"
-            :active="!isLoading"
-            @click="updatePermissions({
-              canAcceptAppTransfers: canAcceptAppTransfers,
-              canBeInvitedToManage: canBeInvitedToManage
-            })"
-          >
-            <AutoTypography variant="body" weight="medium">
-              {{ t('button.save') }}
-            </AutoTypography>
-          </AutoButton>
-        </BottomBarInner>
-      </BottomBar>
-    </BottomBarTransition>
+    <template #bottomBar>
+      <BottomBarTransition>
+        <BottomBar
+          v-if="!isLoadingPageData && (
+            pageData?.canAcceptAppTransfers !== canAcceptAppTransfers
+            || pageData?.canBeInvitedToManage !== canBeInvitedToManage
+          )"
+        >
+          <BottomBarInner>
+            <AutoButton
+              :palette="isLoading ? 'disabled' : 'filled'"
+              full-width
+              elevated
+              :disabled="isLoading"
+              :active="!isLoading"
+              @click="updatePermissions({
+                canAcceptAppTransfers: canAcceptAppTransfers,
+                canBeInvitedToManage: canBeInvitedToManage
+              })"
+            >
+              <AutoTypography variant="body" weight="medium">
+                {{ t('button.save') }}
+              </AutoTypography>
+            </AutoButton>
+          </BottomBarInner>
+        </BottomBar>
+      </BottomBarTransition>
+    </template>
   </PageRoot>
 </template>

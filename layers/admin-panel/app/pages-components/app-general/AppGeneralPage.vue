@@ -218,23 +218,25 @@ onMounted(() => {
         </AutoSection>
       </PagePaddings>
     </PageContent>
-    <BottomBarTransition>
-      <BottomBar v-if="isPageEntered && isDirty" ref="bottom-bar">
-        <BottomBarInner>
-          <AutoButton
-            :palette="isButtonDisabled ? 'disabled' : 'filled'"
-            full-width
-            :active="!isButtonDisabled"
-            :disabled="isButtonDisabled"
-            @click="updateApp({appId, privacy, title: title.trim()})"
-          >
-            <AutoTypography variant="body" weight="semibold">
-              {{ t(title ? 'button.apply' : 'button.titleWarning') }}
-            </AutoTypography>
-            <ButtonLoadingIndicator :show="isUpdatingApp"/>
-          </AutoButton>
-        </BottomBarInner>
-      </BottomBar>
-    </BottomBarTransition>
+    <template #bottomBar>
+      <BottomBarTransition>
+        <BottomBar v-if="isPageEntered && isDirty" ref="bottom-bar">
+          <BottomBarInner>
+            <AutoButton
+              :palette="isButtonDisabled ? 'disabled' : 'filled'"
+              full-width
+              :active="!isButtonDisabled"
+              :disabled="isButtonDisabled"
+              @click="updateApp({appId, privacy, title: title.trim()})"
+            >
+              <AutoTypography variant="body" weight="semibold">
+                {{ t(title ? 'button.apply' : 'button.titleWarning') }}
+              </AutoTypography>
+              <ButtonLoadingIndicator :show="isUpdatingApp"/>
+            </AutoButton>
+          </BottomBarInner>
+        </BottomBar>
+      </BottomBarTransition>
+    </template>
   </PageRoot>
 </template>

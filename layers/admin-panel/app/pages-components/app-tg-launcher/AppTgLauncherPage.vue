@@ -151,22 +151,24 @@ const handleCopy = () => {
         </AutoSection>
       </PagePaddings>
     </PageContent>
-    <BottomBarTransition>
-      <BottomBar v-if="isPageEntered" ref="bottom-bar">
-        <BottomBarInner>
-          <AutoButton
-            palette="filled"
-            full-width
-            :active="!displayCopied"
-            :disabled="displayCopied"
-            @click="handleCopy"
-          >
-            <AutoTypography variant="body" weight="semibold">
-              {{ t(displayCopied ? 'button.copied' : 'button.copy') }}
-            </AutoTypography>
-          </AutoButton>
-        </BottomBarInner>
-      </BottomBar>
-    </BottomBarTransition>
+    <template #bottomBar>
+      <BottomBarTransition>
+        <BottomBar v-if="isPageEntered" ref="bottom-bar">
+          <BottomBarInner>
+            <AutoButton
+              palette="filled"
+              full-width
+              :active="!displayCopied"
+              :disabled="displayCopied"
+              @click="handleCopy"
+            >
+              <AutoTypography variant="body" weight="semibold">
+                {{ t(displayCopied ? 'button.copied' : 'button.copy') }}
+              </AutoTypography>
+            </AutoButton>
+          </BottomBarInner>
+        </BottomBar>
+      </BottomBarTransition>
+    </template>
   </PageRoot>
 </template>
