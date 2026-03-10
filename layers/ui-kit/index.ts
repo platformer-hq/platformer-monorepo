@@ -104,16 +104,17 @@ export { useRipples } from './app/composables/useRipples';
 //#endregion
 
 //#region Page transitions.
-export { default as UseAndroidPageTransition } from './app/page-transitions/components/UseAndroidPageTransition.vue';
 export {
-  default as UsePageTransition,
-  type PageTransitionState,
-  type UsePageTransitionAfterEnterFn,
-  type UsePageTransitionAnimateFn,
-  type UsePageTransitionBeforeAnimateFn,
-  type UsePageTransitionProps,
-} from './app/page-transitions/components/UsePageTransition.vue';
-export { default as UseIosPageTransition } from './app/page-transitions/components/UseIosPageTransition.vue';
+  usePageTransition,
+  type UsePageTransitionNavigationDirection,
+  type UsePageTransitionOptions,
+  type UsePageTransitionPageType,
+  type UsePageTransitionReturn,
+  type UsePageTransitionState,
+  type UsePageTransitionTransitionType,
+} from './app/page-transitions/composables/usePageTransition';
+export { getAndroidPageTransitionOptions } from './app/page-transitions/utils/getAndroidPageTransitionOptions';
+export { getIosPageTransitionOptions } from './app/page-transitions/utils/getIosPageTransitionOptions';
 //#endregion
 
 //#region Types.

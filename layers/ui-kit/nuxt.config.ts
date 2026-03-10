@@ -30,6 +30,7 @@ export default defineNuxtConfig({
     dirs: [
       resolve('app/composables/**/*.ts'),
       resolve('app/page-transitions/composables/*.ts'),
+      resolve('app/page-transitions/utils/*.ts'),
     ],
   },
 });
