@@ -17,8 +17,6 @@ import {
 import * as fp from 'fp-ts';
 import type { TransitionProps } from 'vue';
 
-import { UseIosPageTransition, UseAndroidPageTransition } from '#components';
-
 defineSlots<{
   default(props: { transition: TransitionProps }): unknown;
 }>();
@@ -183,10 +181,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <component
-    :is="tmaStore.platform.isMappedIos ? UseIosPageTransition : UseAndroidPageTransition"
-    v-slot="transition"
-  >
+  <UsePageTransition v-slot="transition">
     <slot :transition="transition"/>
-  </component>
+  </UsePageTransition>
 </template>

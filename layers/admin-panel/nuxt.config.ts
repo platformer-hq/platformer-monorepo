@@ -70,6 +70,12 @@ export default defineNuxtConfig({
     pattern: '**/components/*.vue',
     ignore: componentsIgnore,
     priority: 100,
+  }, {
+    path: resolve('app/navigation'),
+    pathPrefix: false,
+    pattern: '**/components/*.vue',
+    ignore: componentsIgnore,
+    priority: 100,
   }],
   extends: [
     '../api',
