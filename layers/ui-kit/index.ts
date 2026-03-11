@@ -135,6 +135,7 @@ export type * from './app/types';
 
 //#region Utils.
 export { bem } from './app/utils/bem';
+export { toPx } from './app/utils/toPx';
 //#endregion
 
 export * from './app/icons';
