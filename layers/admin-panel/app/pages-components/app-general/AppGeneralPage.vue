@@ -106,8 +106,9 @@ const privacyLevels = computed(() => [{
   value: 'private' as const,
 }]);
 const isDirty = computed(() => {
-  return privacy.value !== data.value?.privacy
-    || title.value.trim() !== data.value.title.trim();
+  return data.value
+    ? privacy.value !== data.value.privacy || title.value.trim() !== data.value.title.trim()
+    : false;
 });
 const isButtonDisabled = computed(() => (isUpdatingApp.value || !title.value));
 
