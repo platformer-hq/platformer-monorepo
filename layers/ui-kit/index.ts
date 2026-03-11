@@ -45,6 +45,9 @@ export { default as ListIosItemLeftLabel } from './app/components/List/ListIos/L
 export { default as LoadingIndicatorAndroid } from './app/components/LoadingIndicator/LoadingIndicatorAndroid.vue';
 export { default as LoadingIndicatorIos } from './app/components/LoadingIndicator/LoadingIndicatorIos.vue';
 
+export { default as RoundedPanelAndroid } from './app/components/RoundedPanel/RoundedPanelAndroid.vue';
+export { default as RoundedPanelIos } from './app/components/RoundedPanel/RoundedPanelIos.vue';
+
 export { default as PageRoot, type PageRootProps } from './app/components/PageRoot.vue';
 
 export { default as SafeAreaInsets, type SafeAreaInset, type SafeAreaInsetsProps } from './app/components/SafeAreaInsets/SafeAreaInsets.vue';
