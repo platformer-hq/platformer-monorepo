@@ -80,19 +80,7 @@ watch(foundUsers, users => {
   }
 });
 
-const userTransition = createReversibleTransition({
-  animatedProperties({ transition, el }) {
-    return reverseTransitionKeyframesIfLeave({
-      overflow: ['hidden', 'hidden'],
-      height: ['0px', el.clientHeight + 'px'],
-      opacity: [0, 1],
-    }, transition);
-  },
-  animationOptions: {
-    duration: 300,
-    easing: 'ease-out',
-  },
-});
+const userTransition = createListItemTransition();
 const indicatorTransition = createReversibleTransition({
   animatedProperties: {
     opacity: [0, 1],
