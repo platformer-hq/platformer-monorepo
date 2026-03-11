@@ -1,0 +1,29 @@
+query AppUrlsPageData($appId: ID!) {
+  app(appID: $appId) {
+    currentUserRole
+    urls {
+      platform {
+        id
+      }
+      url
+    }
+  }
+  platforms {
+    id
+    title
+    vendor {
+      title
+    }
+  }
+}
+
+mutation UpdateAppUrls($appId: ID!, $urls: [InputAppURL!]!) {
+  updateApp(appID: $appId, urls: $urls) {
+    urls {
+      url
+      platform {
+        id
+      }
+    }
+  }
+}
