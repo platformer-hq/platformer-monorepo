@@ -117,6 +117,15 @@ export { getAndroidPageTransitionOptions } from './app/page-transitions/utils/ge
 export { getIosPageTransitionOptions } from './app/page-transitions/utils/getIosPageTransitionOptions';
 //#endregion
 
+//#region Transitions.
+export { createListItemTransition } from './app/transitions/utils/createListItemTransition';
+export {
+  createReversibleTransition,
+  reverseTransitionKeyframes,
+  reverseTransitionKeyframesIfLeave,
+} from './app/transitions/utils/transitions';
+//#endregion
+
 //#region Types.
 export type * from './app/types';
 //#endregion

@@ -29,8 +29,8 @@ export default defineNuxtConfig({
   imports: {
     dirs: [
       resolve('app/composables/**/*.ts'),
-      resolve('app/page-transitions/composables/*.ts'),
-      resolve('app/page-transitions/utils/*.ts'),
+      resolve('app/page-transitions/{composables,utils}/*.ts'),
+      resolve('app/transitions/utils/*.ts'),
     ],
   },
 });
