@@ -18,6 +18,7 @@ export { default as ListAndroidItemBodyRight } from './app/components/List/ListA
 export { default as ListAndroidItemBodyRightBadge } from './app/components/List/ListAndroid/ListAndroidItemBodyRightBadge.vue';
 export { default as ListAndroidItemBodyRightCheckmark } from './app/components/List/ListAndroid/ListAndroidItemBodyRightCheckmark.vue';
 export { default as ListAndroidItemBodyRightChevron } from './app/components/List/ListAndroid/ListAndroidItemBodyRightChevron.vue';
+export { default as ListAndroidItemBodyRightClear } from './app/components/List/ListAndroid/ListAndroidItemBodyRightClear.vue';
 export { default as ListAndroidItemBodyRightLabel } from './app/components/List/ListAndroid/ListAndroidItemBodyRightLabel.vue';
 export { default as ListAndroidItemLeft } from './app/components/List/ListAndroid/ListAndroidItemLeft.vue';
 export { default as ListAndroidItemLeftIcon } from './app/components/List/ListAndroid/ListAndroidItemLeftIcon.vue';
@@ -36,6 +37,7 @@ export { default as ListIosItemBodyRight } from './app/components/List/ListIos/L
 export { default as ListIosItemBodyRightBadge } from './app/components/List/ListIos/ListIosItemBodyRightBadge.vue';
 export { default as ListIosItemBodyRightCheckmark } from './app/components/List/ListIos/ListIosItemBodyRightCheckmark.vue';
 export { default as ListIosItemBodyRightChevron } from './app/components/List/ListIos/ListIosItemBodyRightChevron.vue';
+export { default as ListIosItemBodyRightClear } from './app/components/List/ListIos/ListIosItemBodyRightClear.vue';
 export { default as ListIosItemBodyRightLabel } from './app/components/List/ListIos/ListIosItemBodyRightLabel.vue';
 export { default as ListIosItemLeft } from './app/components/List/ListIos/ListIosItemLeft.vue';
 export { default as ListIosItemLeftIcon } from './app/components/List/ListIos/ListIosItemLeftIcon.vue';
