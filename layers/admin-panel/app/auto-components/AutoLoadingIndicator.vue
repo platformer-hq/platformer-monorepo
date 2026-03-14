@@ -13,6 +13,6 @@ const platform = useTmaPlatform();
   <component
     :is="platform.isMappedIos ? LoadingIndicatorIos : LoadingIndicatorAndroid"
     :size
-    :color="colorReference(color) || undefined"
+    :style="{color: colorReference(color) || undefined}"
   />
 </template>
