@@ -22,7 +22,7 @@ export function getAndroidPageTransitionOptions(): Required<Pick<
     },
     animate({ transition, page, el, done }) {
       if (page === 'left') {
-        return setTimeout(done, duration);
+        return setTimeout(done, duration - 5);
       }
       tr[transition === 'enter' ? 'onEnter' : 'onLeave'](el, done);
     },
