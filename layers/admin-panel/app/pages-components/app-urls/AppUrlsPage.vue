@@ -157,7 +157,6 @@ const isDirty = computed(() => {
 });
 const invalidUrl = computed(() => {
   if (isSingleUrl.value) {
-    console.log(isValidUrl(singleUrl.value), singleUrl.value);
     return isValidUrl(singleUrl.value) ? undefined : { kind: 'single' as const };
   }
   for (const platformId in urls.value) {
@@ -347,7 +346,6 @@ onMounted(() => {
   }
 
   &__loader {
-    display: block;
     margin: 16px auto 0;
     color: var(--subtitle-text-color);
   }
