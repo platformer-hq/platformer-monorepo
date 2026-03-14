@@ -4,7 +4,8 @@ import * as v from 'valibot';
 export class ApiGraphQLError extends ClientError {
   constructor(...args: ConstructorParameters<typeof ClientError>) {
     super(...args);
-    this.name = 'GraphQLError';
+    this.name = 'ApiGraphQLError';
+    Object.setPrototypeOf(this, ApiGraphQLError.prototype);
   }
 
   static is(value: unknown): value is ApiGraphQLError {
