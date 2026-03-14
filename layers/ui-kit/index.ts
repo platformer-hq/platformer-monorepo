@@ -1,4 +1,7 @@
 //#region Components.
+export { default as BadgeAndroid, type BadgeAndroidProps } from './app/components/Badge/BadgeAndroid.vue';
+export { default as BadgeIos, type BadgeIosProps } from './app/components/Badge/BadgeIos.vue';
+
 export { default as BottomBar } from './app/components/BottomBar/BottomBar.vue';
 export { default as BottomBarTransition } from './app/components/BottomBar/BottomBarTransition.vue';
 
@@ -13,6 +16,7 @@ export { default as ListAndroidItemBodyLeft } from './app/components/List/ListAn
 export { default as ListAndroidItemBodyLeftInput } from './app/components/List/ListAndroid/ListAndroidItemBodyLeftInput.vue';
 export { default as ListAndroidItemBodyLeftInputElement } from './app/components/List/ListAndroid/ListAndroidItemBodyLeftInputElement.vue';
 export { default as ListAndroidItemBodyLeftLabel } from './app/components/List/ListAndroid/ListAndroidItemBodyLeftLabel.vue';
+export { default as ListAndroidItemBodyLeftLabelBadge } from './app/components/List/ListAndroid/ListAndroidItemBodyLeftLabelBadge.vue';
 export { default as ListAndroidItemBodyLeftSubtitle } from './app/components/List/ListAndroid/ListAndroidItemBodyLeftSubtitle.vue';
 export { default as ListAndroidItemBodyRight } from './app/components/List/ListAndroid/ListAndroidItemBodyRight.vue';
 export { default as ListAndroidItemBodyRightBadge } from './app/components/List/ListAndroid/ListAndroidItemBodyRightBadge.vue';
@@ -32,6 +36,7 @@ export { default as ListIosItemBodyLeft } from './app/components/List/ListIos/Li
 export { default as ListIosItemBodyLeftInput } from './app/components/List/ListIos/ListIosItemBodyLeftInput.vue';
 export { default as ListIosItemBodyLeftInputElement } from './app/components/List/ListIos/ListIosItemBodyLeftInputElement.vue';
 export { default as ListIosItemBodyLeftLabel } from './app/components/List/ListIos/ListIosItemBodyLeftLabel.vue';
+export { default as ListIosItemBodyLeftLabelBadge } from './app/components/List/ListIos/ListIosItemBodyLeftLabelBadge.vue';
 export { default as ListIosItemBodyLeftSubtitle } from './app/components/List/ListIos/ListIosItemBodyLeftSubtitle.vue';
 export { default as ListIosItemBodyRight } from './app/components/List/ListIos/ListIosItemBodyRight.vue';
 export { default as ListIosItemBodyRightBadge } from './app/components/List/ListIos/ListIosItemBodyRightBadge.vue';

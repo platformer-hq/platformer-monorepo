@@ -3,18 +3,21 @@ defineProps<{
   size: number;
   color?: string;
 }>();
+const { b, e } = bem('loading-indicator-android');
 </script>
 
 <template>
-  <svg class="loading-indicator-android" :width="size" :height="size">
-    <circle
-      cx="50%"
-      cy="50%"
-      r="50%"
-      stroke-linecap="round"
-      stroke="currentcolor"
-    />
-  </svg>
+  <span :class="b()">
+    <svg :class="e('icon')" :width="size" :height="size">
+      <circle
+        cx="50%"
+        cy="50%"
+        r="50%"
+        stroke-linecap="round"
+        stroke="currentcolor"
+      />
+    </svg>
+  </span>
 </template>
 
 <style lang="scss">
@@ -22,13 +25,16 @@ defineProps<{
 @use "sass:list" as list;
 
 .loading-indicator-android {
-  color: currentColor;
-  fill: transparent;
-  overflow: visible;
   display: block;
-  animation: 1.4s ease-in-out infinite loading-indicator-android-stroke,
-  1.4s linear infinite loading-indicator-android-spin;
-  stroke-width: 9%;
+
+  &__icon {
+    fill: transparent;
+    overflow: visible;
+    display: block;
+    animation: 1.4s ease-in-out infinite loading-indicator-android-stroke,
+    1.4s linear infinite loading-indicator-android-spin;
+    stroke-width: 9%;
+  }
 }
 
 @keyframes loading-indicator-android-spin {

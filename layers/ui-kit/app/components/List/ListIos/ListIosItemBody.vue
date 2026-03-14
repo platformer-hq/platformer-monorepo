@@ -23,7 +23,7 @@ const { large } = injectListItemOptions();
   grid-template-columns: 1fr auto;
   gap: 16px;
   box-shadow: 0 0.33px 0 var(--section-separator-color);
-  padding-right: 16px;
+  margin-right: 16px;
 
   &--no-right {
     grid-template-columns: 1fr;
