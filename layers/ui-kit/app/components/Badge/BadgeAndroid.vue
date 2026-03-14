@@ -17,10 +17,11 @@ const { b } = bem('badge-android');
 
 <style lang="scss">
 .badge-android {
-  display: inline-block;
   padding: 2px 4px;
   border-radius: 5px;
-  vertical-align: text-top;
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: -3px;
 
   @each $palette in ('filled') {
     &--#{$palette} {

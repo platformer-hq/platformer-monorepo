@@ -17,10 +17,11 @@ const { b } = bem('badge-ios');
 
 <style lang="scss">
 .badge-ios {
-  display: inline-block;
-  padding: 2px 4px 1px;
+  padding: 2px 4px;
   border-radius: 6px;
-  vertical-align: text-top;
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: -3px;
 
   @each $palette in ('filled') {
     &--#{$palette} {
