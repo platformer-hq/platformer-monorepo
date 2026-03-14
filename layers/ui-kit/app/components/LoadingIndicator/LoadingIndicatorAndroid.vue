@@ -25,7 +25,9 @@ const { b, e } = bem('loading-indicator-android');
 @use "sass:list" as list;
 
 .loading-indicator-android {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &__icon {
     fill: transparent;
