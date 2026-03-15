@@ -2,19 +2,17 @@
 </script>
 
 <template>
-  <i class="list-android-item-body-right-clear">
+  <ButtonAndroid class="list-android-item-body-right-clear">
     <IconXmark24 :size="20"/>
-  </i>
+  </ButtonAndroid>
 </template>
 
 <style lang="scss">
-@use "@ui-kit/scss/mixins" as mixins;
-
 .list-android-item-body-right-clear {
   display: flex;
-  padding: 4px;
-  margin-right: -4px;
+  padding: 8px;
+  margin-right: -8px;
+  min-height: 0;
   color: var(--list-android-item-body-right-clear-color);
-  @include mixins.clickable;
 }
 </style>
