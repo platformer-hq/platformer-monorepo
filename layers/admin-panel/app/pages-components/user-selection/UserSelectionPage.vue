@@ -96,14 +96,28 @@ const selectUser = (user: { id: number; name: string }) => {
   hapticSelectionChanged();
   if (store.autoConfirmOnLimit && store.limit === selectedUsers.value.length + 1) {
     store.setSelectedUsers([...selectedUsers.value, user]);
-    router.back();
-    return;
+    confirm();
+  } else {
+    selectedUsers.value.push(user);
   }
-  selectedUsers.value.push(user);
 };
 const removeUser = (idx: number) => {
   hapticSelectionChanged();
   selectedUsers.value.splice(idx, 1);
+};
+const confirm = () => {
+  const action = store.onConfirmAction;
+  if (!action) {
+    router.back();
+    return;
+  }
+  if (action.kind === 'navigate-to') {
+    navigateTo({
+      name: action.page,
+      replace: action.replace,
+      query: 'query' in action ? action.query : undefined,
+    });
+  }
 };
 </script>
 
