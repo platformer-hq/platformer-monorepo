@@ -33,6 +33,8 @@
   --switch-android-checked-bg: var(--button-color);
   --switch-android-knob-color: var(--hint-color);
   --switch-android-knob-checked-color: var(--button-color);
+  --radio-android-checked-color: var(--button-color);
+  --radio-android-color: var(--hint-color);
 
   --list-ios-item-placeholder-color: var(--subtitle-text-color);
   --list-ios-item-accent-color: var(--link-color);
@@ -54,6 +56,9 @@
   --switch-ios-knob-bg: var(--button-text-color);
   --switch-ios-mark-left-color: black;
   --switch-ios-mark-right-color: var(--subtitle-text-color);
+  --radio-ios-checked-color: var(--button-color);
+  --radio-ios-icon-color: var(--button-text-color);
+  --radio-ios-border-color: var(--hint-color);
 
   --button-base-filled-bg-color: var(--button-color);
   --button-base-filled-text-color: var(--button-text-color);
