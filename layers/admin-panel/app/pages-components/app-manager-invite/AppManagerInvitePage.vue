@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import * as fp from 'fp-ts';
 
-import { useAppManagersPageQueryMeta } from '@/pages-components/app-managers/queries';
-
 import { InviteToManageDocument } from './operations';
 
 const userSelectionStore = useUserSelectionStore();
