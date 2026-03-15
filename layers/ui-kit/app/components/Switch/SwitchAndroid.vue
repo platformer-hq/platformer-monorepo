@@ -7,29 +7,32 @@ defineProps<{
 
 const { b, e } = bem('switch-android');
 const checked = defineModel<boolean>('checked', { default: false });
-
-watch(checked, () => {
-  hapticFeedback.selectionChanged.ifAvailable();
-});
 </script>
 
 <template>
   <label :class="b({ checked, disabled })">
-    <input v-show="false" v-model="checked" :disabled type="checkbox">
+    <input
+      v-show="false"
+      v-model="checked"
+      :disabled
+      type="checkbox"
+      @change="hapticFeedback.selectionChanged.ifAvailable()"
+    >
     <span :class="e('track', {checked})"/>
     <span :class="e('knob', {checked})" />
   </label>
 </template>
 
 <style lang="scss">
+@use "@ui-kit/scss/mixins";
+
 .switch-android {
   display: inline-block;
   height: 16px;
   width: 32px;
   position: relative;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
   transition: 300ms;
+  @include mixins.clickable;
 
   &--disabled {
     cursor: default;

@@ -36,13 +36,18 @@ watch(checked, checked => {
     makeKeyframes(checked),
     { duration: 350, easing: 'linear', fill: 'both' },
   );
-  hapticFeedback.selectionChanged.ifAvailable();
 });
 </script>
 
 <template>
   <label :class="b({ checked, disabled })">
-    <input v-show="false" v-model="checked" :disabled type="checkbox">
+    <input
+      v-show="false"
+      v-model="checked"
+      :disabled
+      type="checkbox"
+      @change="hapticFeedback.selectionChanged.ifAvailable()"
+    >
     <span :class="e('mark', 'left', checked && 'visible')"/>
     <span :class="e('mark', 'right', !checked && 'visible')"/>
     <span
@@ -53,6 +58,8 @@ watch(checked, checked => {
 </template>
 
 <style lang="scss">
+@use "@ui-kit/scss/mixins";
+
 .switch-ios {
   display: inline-block;
   height: 28px;
@@ -61,8 +68,7 @@ watch(checked, checked => {
   background: var(--switch-ios-bg, #747480);
   position: relative;
   transition: 350ms ease;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
+  @include mixins.clickable;
 
   &--disabled {
     cursor: default;
