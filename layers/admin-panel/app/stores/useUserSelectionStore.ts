@@ -6,11 +6,25 @@ export interface UserSelectionStoreSelectedUser {
   name: string;
 }
 
+export type UserSelectionStoreOnConfirmAction = (
+  {
+    kind: 'navigate-to';
+  } & ({
+    page: PageNames.AppManagerInvite;
+    query: {
+      appId: number;
+    };
+  } | {
+    page: Exclude<PageNames, PageNames.AppManagerInvite>;
+  })
+);
+
 interface State {
   limit?: number;
   excludedUserIds?: number[];
   selectedUsers?: UserSelectionStoreSelectedUser[];
   autoConfirmOnLimit?: boolean;
+  onConfirmAction?: UserSelectionStoreOnConfirmAction;
   canBeInvitedToManage?: boolean;
   canAcceptAppTransfers?: boolean;
 }
@@ -32,6 +46,17 @@ export const useUserSelectionStore = defineStore('user-selection', () => {
                 name: v.string(),
               }))),
               autoConfirmOnLimit: v.optional(v.boolean()),
+              onConfirmAction: v.optional(v.variant('kind', [
+                v.variant('page', [
+                  v.looseObject({
+                    kind: v.literal('navigate-to'),
+                    page: v.literal(PageNames.AppManagerInvite),
+                    query: v.looseObject({
+                      appId: v.number(),
+                    }),
+                  }),
+                ]),
+              ])),
               canBeInvitedToManage: v.optional(v.boolean()),
               canAcceptAppTransfers: v.optional(v.boolean()),
             }),
@@ -67,6 +92,10 @@ export const useUserSelectionStore = defineStore('user-selection', () => {
     canAcceptAppTransfers: computed(() => state.value.canBeInvitedToManage),
     setCanAcceptAppTransfers(value: boolean | undefined) {
       state.value.canAcceptAppTransfers = value;
+    },
+    onConfirmAction: computed(() => state.value.onConfirmAction),
+    setOnConfirmAction(value: UserSelectionStoreOnConfirmAction | undefined) {
+      state.value.onConfirmAction = value;
     },
     reset() {
       state.value = defaultState;
