@@ -91,6 +91,7 @@ export default defineNuxtConfig({
       resolve('app/domains/*/{composables,utils}/**'),
       resolve('app/components/**/{composables,utils}/**'),
       resolve('app/components/**/{composables,utils}.ts'),
+      resolve('app/pages-components/*/composables/**'),
     ],
   },
   i18n: {
