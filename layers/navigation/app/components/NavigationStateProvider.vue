@@ -10,7 +10,7 @@ const direction = ref<RoutingDirection>('initial');
 onUnmounted(
   router.afterEach(() => {
     const nextPosition = router.options.history.state.position as number;
-    direction.value = nextPosition > prevPosition ? 'forward' : 'backward';
+    direction.value = nextPosition >= prevPosition ? 'forward' : 'backward';
     prevPosition = nextPosition;
   }),
 );
