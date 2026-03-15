@@ -80,7 +80,6 @@ watch(foundUsers, users => {
   }
 });
 
-const userTransition = createListItemTransition();
 const indicatorTransition = createReversibleTransition({
   animatedProperties: {
     opacity: [0, 1],
@@ -163,7 +162,7 @@ const confirm = () => {
             </AutoSectionHeader>
           </template>
           <AutoList>
-            <TransitionGroup :css="false" v-bind="userTransition" appear>
+            <TransitionGroup :css="false" v-bind="createListItemTransition()" appear>
               <AutoListItem v-for="(user, idx) in selectedUsers" :key="user.id">
                 <template #bodyLeftLabel>
                   <AutoListItemBodyLeftLabel>
@@ -200,7 +199,7 @@ const confirm = () => {
             </AutoSectionHeader>
           </template>
           <AutoList>
-            <TransitionGroup :css="false" v-bind="userTransition" appear>
+            <TransitionGroup :css="false" v-bind="createListItemTransition()" appear>
               <AutoListItem v-if="!displayedFoundUsers?.length" key="not-found">
                 <template #bodyLeftLabel>
                   <AutoListItemBodyLeftLabel>
