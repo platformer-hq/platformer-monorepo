@@ -65,7 +65,7 @@ const { data } = useQuery({
 });
 const { mutate: updateApp, isLoading: isUpdatingApp } = useMutation({
   key: [UpdateAppDocument],
-  mutation(options: { appId: number; privacy: LocalPrivacy; title: string }) {
+  mutation(options: { appId: number; privacy: LocalAppPrivacy; title: string }) {
     return throwifyAnyEither(
       fp.function.pipe(
         request(UpdateAppDocument, {
@@ -93,7 +93,7 @@ const { mutate: updateApp, isLoading: isUpdatingApp } = useMutation({
 });
 //#endregion
 
-const privacy = ref<LocalPrivacy>(data.value?.privacy || 'public');
+const privacy = ref<LocalAppPrivacy>(data.value?.privacy || 'public');
 const title = ref(data.value?.title.trim() || '');
 
 const privacyLevels = computed(() => [{

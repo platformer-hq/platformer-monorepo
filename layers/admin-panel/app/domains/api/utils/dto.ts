@@ -1,14 +1,14 @@
 import { AppManagementInviteRole, AppPrivacy, AppRole, AppUrlSimpleExplanationKind } from '#layers/api/schema';
 
-export type LocalRole = 'owner' | 'admin' | 'member';
+export type LocalAppRole = 'owner' | 'admin' | 'member';
 export type LocalAppManagementInviteRole = 'admin' | 'member';
-export type LocalPrivacy = 'private' | 'public';
+export type LocalAppPrivacy = 'private' | 'public';
 export type LocalAppSimpleExplanationKind =
   | 'access-not-allowed'
   | 'app-is-public'
   | 'user-is-manager';
 
-export function apiAppRoleToLocal(role: AppRole): LocalRole {
+export function apiAppRoleToLocal(role: AppRole): LocalAppRole {
   return ({
     [AppRole.Admin]: 'admin',
     [AppRole.Member]: 'member',
@@ -16,14 +16,14 @@ export function apiAppRoleToLocal(role: AppRole): LocalRole {
   } as const)[role];
 }
 
-export function localAppPrivacyToApi(privacy: LocalPrivacy): AppPrivacy {
+export function localAppPrivacyToApi(privacy: LocalAppPrivacy): AppPrivacy {
   return ({
     private: AppPrivacy.Hidden,
     public: AppPrivacy.Visible,
   } as const)[privacy];
 }
 
-export function apiAppPrivacyToLocal(privacy: AppPrivacy): LocalPrivacy {
+export function apiAppPrivacyToLocal(privacy: AppPrivacy): LocalAppPrivacy {
   return ({
     [AppPrivacy.Hidden]: 'private',
     [AppPrivacy.Visible]: 'public',
