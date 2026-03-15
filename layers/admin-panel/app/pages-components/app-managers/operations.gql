@@ -1,0 +1,30 @@
+query AppManagersPageData($appId: ID!) {
+  currentUser {
+    id
+  }
+  app(appID: $appId) {
+    currentUserRole
+    managers {
+      role
+      user {
+        id
+        name
+      }
+    }
+    managementInvites {
+      id
+      from {
+        name
+      }
+      to {
+        id
+        name
+      }
+      role
+    }
+  }
+}
+
+mutation RevokeManageInvite($inviteId: ID!) {
+  revokeAppManagementInvite(inviteID: $inviteId)
+}
