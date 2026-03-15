@@ -9,6 +9,7 @@ export interface UserSelectionStoreSelectedUser {
 export type UserSelectionStoreOnConfirmAction = (
   {
     kind: 'navigate-to';
+    replace?: boolean;
   } & ({
     page: PageNames.AppManagerInvite;
     query: {
@@ -51,6 +52,7 @@ export const useUserSelectionStore = defineStore('user-selection', () => {
                   v.looseObject({
                     kind: v.literal('navigate-to'),
                     page: v.literal(PageNames.AppManagerInvite),
+                    replace: v.optional(v.boolean()),
                     query: v.looseObject({
                       appId: v.number(),
                     }),
