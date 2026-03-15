@@ -143,8 +143,8 @@ watch(() => userSelectionStore.selectedUsers, users => {
 });
 
 onMounted(() => {
-  preloadRouteComponents({ name: PAGE_NAME_MAIN });
-  preloadRouteComponents({ name: PAGE_NAME_USER_SELECTION });
+  preloadRouteComponents({ name: PageNames.Main });
+  preloadRouteComponents({ name: PageNames.UserSelection });
 });
 </script>
 

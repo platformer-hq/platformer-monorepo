@@ -118,24 +118,24 @@ const isSendingRequest = computed(() => isLoadingApp.value || isDeletingApp.valu
 const sections = computed(() => [
   {
     items: [
-      { icon: GeneralIcon, title: t('common.general'), name: PAGE_NAME_APP_GENERAL },
-      { icon: ManagersIcon, title: t('common.managers'), name: PAGE_NAME_APP_MANAGERS },
-      { icon: URLsIcon, title: t('common.urls'), name: PAGE_NAME_APP_URLS },
-      { icon: TestGroupsIcon, title: t('common.testGroups'), name: PAGE_NAME_APP_TEST_GROUPS },
-      { icon: TransferIcon, title: t('common.transfer'), name: PAGE_NAME_APP_TRANSFER },
+      { icon: GeneralIcon, title: t('common.general'), name: PageNames.AppGeneral },
+      { icon: ManagersIcon, title: t('common.managers'), name: PageNames.AppManagers },
+      { icon: URLsIcon, title: t('common.urls'), name: PageNames.AppUrls },
+      { icon: TestGroupsIcon, title: t('common.testGroups'), name: PageNames.AppTestGroups },
+      { icon: TransferIcon, title: t('common.transfer'), name: PageNames.AppTransfer },
     ],
   },
   {
     title: t('integrations.title'),
     items: [
-      { icon: TelegramIcon, title: t('integrations.tg'), name: PAGE_NAME_APP_TG },
+      { icon: TelegramIcon, title: t('integrations.tg'), name: PageNames.AppTg },
     ],
   },
   {
     title: t('utils.title'),
     items: [
-      { icon: UrlViewerIcon, title: t('utils.urlViewer'), name: PAGE_NAME_APP_URL_VIEWER },
-      { icon: CacheIcon, title: t('utils.cache'), name: PAGE_NAME_APP_CACHE },
+      { icon: UrlViewerIcon, title: t('utils.urlViewer'), name: PageNames.AppUrlViewer },
+      { icon: CacheIcon, title: t('utils.cache'), name: PageNames.AppCache },
     ],
   },
 ]);
@@ -155,7 +155,7 @@ const handleDelete = async () => {
 };
 
 onMounted(() => {
-  preloadRouteComponents({ name: PAGE_NAME_APPS });
+  preloadRouteComponents({ name: PageNames.Apps });
   sections.value.flatMap(s => s.items).forEach(item => {
     preloadRouteComponents({ name: item.name });
   });

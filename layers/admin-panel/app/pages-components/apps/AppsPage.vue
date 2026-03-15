@@ -113,23 +113,23 @@ const handleCreateClick = async () => {
   if (!canCreate.value) {
     await popup.show({ message: t('popup.limitReached.message') });
   } else {
-    navigateTo({ name: PAGE_NAME_CREATE_APP });
+    navigateTo({ name: PageNames.CreateApp });
   }
 };
 
 watch(canCreate, value => {
   if (value) {
-    preloadRouteComponents({ name: PAGE_NAME_CREATE_APP });
+    preloadRouteComponents({ name: PageNames.CreateApp });
   }
 });
 watch(apps, apps => {
   if (apps?.owned?.length || apps?.managed.length) {
-    preloadRouteComponents({ name: PAGE_NAME_APP });
+    preloadRouteComponents({ name: PageNames.App });
   }
 });
 
 onMounted(() => {
-  preloadRouteComponents({ name: PAGE_NAME_MAIN });
+  preloadRouteComponents({ name: PageNames.Main });
 });
 </script>
 

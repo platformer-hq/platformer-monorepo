@@ -66,7 +66,7 @@ const canAcceptAppTransfers = ref(pageData.value?.canAcceptAppTransfers || false
 const canBeInvitedToManage = ref(pageData.value?.canBeInvitedToManage || false);
 
 onMounted(() => {
-  preloadRouteComponents({ name: PAGE_NAME_MAIN });
+  preloadRouteComponents({ name: PageNames.Main });
 });
 
 watch(pageData, data => {

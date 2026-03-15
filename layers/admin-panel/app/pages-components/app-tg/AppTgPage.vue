@@ -31,11 +31,11 @@ const createStaticIcon = <C extends Component>(component: C) => ({
 
 const items = computed(() => [{
   title: t('integration'),
-  page: PAGE_NAME_APP_TG_INTEGRATION,
+  page: PageNames.AppTgIntegration,
   icon: createCustomIcon(IconGearFillIOS28, 'white', '#8E8E93', 24),
 }, {
   title: t('launcher'),
-  page: PAGE_NAME_APP_TG_LAUNCHER,
+  page: PageNames.AppTgLauncher,
   icon: createStaticIcon(IconLevels30),
 }]);
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ name: PAGE_NAME_APP_TG_INTEGRATION });
+definePageMeta({ name: PageNames.AppTgIntegration });
 </script>
 
 <template>

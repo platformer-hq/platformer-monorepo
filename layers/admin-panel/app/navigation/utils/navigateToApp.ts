@@ -1,6 +1,6 @@
 export function navigateToApp(appId: number) {
   return navigateTo({
-    name: PAGE_NAME_APP,
+    name: PageNames.App,
     query: { appId },
   });
 }

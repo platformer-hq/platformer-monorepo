@@ -20,7 +20,7 @@ if (import.meta.client) {
   }, { immediate: true });
 
   if (!isPageReload()) {
-    await navigateTo({ name: PAGE_NAME_MAIN, replace: true });
+    await navigateTo({ name: PageNames.Main, replace: true });
   }
 }
 </script>

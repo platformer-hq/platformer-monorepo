@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ name: PAGE_NAME_APP_URL_VIEWER });
+definePageMeta({ name: PageNames.AppUrlViewer });
 </script>
 
 <template>

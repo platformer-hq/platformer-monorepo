@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ name: PAGE_NAME_PRIVACY });
+definePageMeta({ name: PageNames.Privacy });
 </script>
 
 <template>

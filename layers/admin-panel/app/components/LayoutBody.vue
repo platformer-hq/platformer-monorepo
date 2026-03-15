@@ -171,7 +171,7 @@ await callOnce(async () => {
 // Setting the initial route.
 await callOnce(async () => {
   if (!isPageReload()) {
-    await router.replace({ name: PAGE_NAME_MAIN });
+    await router.replace({ name: PageNames.Main });
   }
 });
 

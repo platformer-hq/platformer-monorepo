@@ -63,39 +63,39 @@ const sections = computed(() => {
   return [
     [{
       title: t('apps'),
-      name: PAGE_NAME_APPS,
+      name: PageNames.Apps,
       icon: createIconComponent(IconApps30),
     }, {
       title: t('invites'),
-      name: PAGE_NAME_MANAGEMENT_INVITES,
+      name: PageNames.ManagementInvites,
       icon: createCustomIconComponent(IconPersonHanshakeFill28, 20, '#FF9500'),
       count: data.value?.invitesCount,
       hasCounter: true,
     }, {
       title: t('transferRequests'),
-      name: PAGE_NAME_TRANSFER_REQUESTS,
+      name: PageNames.TransferRequests,
       icon: createIconComponent(IconTrades30),
       count: data.value?.transferRequestsCount,
       hasCounter: true,
     }],
     [{
       title: t('account'),
-      name: PAGE_NAME_ACCOUNT,
+      name: PageNames.Account,
       icon: createCustomIconComponent(IconUserCircleFill28, 24, '#FF3B30'),
     }, {
       title: t('privacy'),
-      name: PAGE_NAME_PRIVACY,
+      name: PageNames.Privacy,
       icon: createCustomIconComponent(IconLockFill28, 24, '#8E8E93'),
     }],
   ];
 });
 
 onMounted(() => {
-  preloadRouteComponents({ name: PAGE_NAME_APPS });
-  preloadRouteComponents({ name: PAGE_NAME_MANAGEMENT_INVITES });
-  preloadRouteComponents({ name: PAGE_NAME_TRANSFER_REQUESTS });
-  preloadRouteComponents({ name: PAGE_NAME_ACCOUNT });
-  preloadRouteComponents({ name: PAGE_NAME_PRIVACY });
+  preloadRouteComponents({ name: PageNames.Apps });
+  preloadRouteComponents({ name: PageNames.ManagementInvites });
+  preloadRouteComponents({ name: PageNames.TransferRequests });
+  preloadRouteComponents({ name: PageNames.Account });
+  preloadRouteComponents({ name: PageNames.Privacy });
 });
 </script>
 
