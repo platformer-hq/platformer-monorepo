@@ -6,6 +6,7 @@ export enum PageNames {
   AppGeneral = 'app-general',
   AppManagers = 'app-managers',
   AppManager = 'app-manager',
+  AppManagerInvite = 'app-manager-invite',
   AppNotFound = 'app-not-found',
   AppTestGroup = 'app-test-group',
   AppTestGroups = 'app-test-groups',
