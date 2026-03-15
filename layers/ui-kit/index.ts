@@ -52,6 +52,9 @@ export { default as ListIosItemLeftLabel } from './app/components/List/ListIos/L
 export { default as LoadingIndicatorAndroid } from './app/components/LoadingIndicator/LoadingIndicatorAndroid.vue';
 export { default as LoadingIndicatorIos } from './app/components/LoadingIndicator/LoadingIndicatorIos.vue';
 
+export { default as RadioAndroid } from './app/components/Radio/RadioAndroid.vue';
+export { default as RadioIos } from './app/components/Radio/RadioIos.vue';
+
 export { default as RoundedPanelAndroid } from './app/components/RoundedPanel/RoundedPanelAndroid.vue';
 export { default as RoundedPanelIos } from './app/components/RoundedPanel/RoundedPanelIos.vue';
 
