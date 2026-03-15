@@ -1,4 +1,4 @@
-import type { UserSelectionStoreSelectedUser } from '~/stores/useUserSelectionStore';
+import type { UserSelectionStoreSelectedUser, UserSelectionStoreOnConfirmAction } from '~/stores/useUserSelectionStore';
 
 export function useNavigateToUserSelection() {
   const store = useUserSelectionStore();
@@ -8,6 +8,7 @@ export function useNavigateToUserSelection() {
     excludedUserIds?: number[];
     selectedUsers?: UserSelectionStoreSelectedUser[];
     autoConfirmOnLimit?: boolean;
+    onConfirmAction?: UserSelectionStoreOnConfirmAction;
     canBeInvitedToManage?: boolean;
     canAcceptAppTransfers?: boolean;
   } = {}) => {
@@ -18,6 +19,7 @@ export function useNavigateToUserSelection() {
     store.setCanBeInvitedToManage(options.canBeInvitedToManage);
     store.setExcludedUserIds(options.excludedUserIds);
     store.setSelectedUsers(options.selectedUsers);
-    navigateTo({ name: PAGE_NAME_USER_SELECTION });
+    store.setOnConfirmAction(options.onConfirmAction);
+    navigateTo({ name: PageNames.UserSelection });
   };
 }
