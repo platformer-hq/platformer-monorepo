@@ -93,17 +93,17 @@ const { mutate: updateApp, isLoading: isUpdatingApp } = useMutation({
 });
 //#endregion
 
-const privacy = ref<LocalAppPrivacy>(data.value?.privacy || 'public');
+const privacy = ref<LocalAppPrivacy>(data.value?.privacy || LocalAppPrivacy.Public);
 const title = ref(data.value?.title.trim() || '');
 
 const privacyLevels = computed(() => [{
   title: t('privacy.public.title'),
   subtitle: t('privacy.public.subtitle'),
-  value: 'public' as const,
+  value: LocalAppPrivacy.Public,
 }, {
   title: t('privacy.private.title'),
   subtitle: t('privacy.private.subtitle'),
-  value: 'private' as const,
+  value: LocalAppPrivacy.Private,
 }]);
 const isDirty = computed(() => {
   return data.value

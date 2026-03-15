@@ -79,13 +79,13 @@ const user = userSelectionStore.selectedUsers![0]!;
 const roles = computed(() => [{
   title: t('role.admin.title'),
   subtitle: t('role.admin.subtitle'),
-  value: 'admin' as const,
+  value: LocalAppManagementInviteRole.Admin,
 }, {
   title: t('role.member.title'),
   subtitle: t('role.member.subtitle'),
-  value: 'member' as const,
+  value: LocalAppManagementInviteRole.Member,
 }]);
-const role = ref<LocalAppManagementInviteRole>('admin');
+const role = ref(LocalAppManagementInviteRole.Admin);
 </script>
 
 <template>

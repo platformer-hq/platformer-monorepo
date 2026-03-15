@@ -1,32 +1,46 @@
 import { AppManagementInviteRole, AppPrivacy, AppRole, AppUrlSimpleExplanationKind } from '#layers/api/schema';
 
-export type LocalAppRole = 'owner' | 'admin' | 'member';
-export type LocalAppManagementInviteRole = 'admin' | 'member';
-export type LocalAppPrivacy = 'private' | 'public';
-export type LocalAppSimpleExplanationKind =
-  | 'access-not-allowed'
-  | 'app-is-public'
-  | 'user-is-manager';
+export enum LocalAppRole {
+  Owner = 'owner',
+  Admin = 'admin',
+  Member = 'member',
+}
+
+export enum LocalAppPrivacy {
+  Private = 'private',
+  Public = 'public',
+}
+
+export enum LocalAppManagementInviteRole {
+  Admin = 'admin',
+  Member = 'member',
+}
+
+export enum LocalAppSimpleExplanationKind {
+  AccessNotAllowed = 'access-not-allowed',
+  AppIsPublic = 'app-is-public',
+  UserIsManager = 'user-is-manager',
+}
 
 export function apiAppRoleToLocal(role: AppRole): LocalAppRole {
   return ({
-    [AppRole.Admin]: 'admin',
-    [AppRole.Member]: 'member',
-    [AppRole.Owner]: 'owner',
+    [AppRole.Admin]: LocalAppRole.Admin,
+    [AppRole.Member]: LocalAppRole.Member,
+    [AppRole.Owner]: LocalAppRole.Owner,
   } as const)[role];
 }
 
 export function localAppPrivacyToApi(privacy: LocalAppPrivacy): AppPrivacy {
   return ({
-    private: AppPrivacy.Hidden,
-    public: AppPrivacy.Visible,
+    [LocalAppPrivacy.Private]: AppPrivacy.Hidden,
+    [LocalAppPrivacy.Public]: AppPrivacy.Visible,
   } as const)[privacy];
 }
 
 export function apiAppPrivacyToLocal(privacy: AppPrivacy): LocalAppPrivacy {
   return ({
-    [AppPrivacy.Hidden]: 'private',
-    [AppPrivacy.Visible]: 'public',
+    [AppPrivacy.Hidden]: LocalAppPrivacy.Private,
+    [AppPrivacy.Visible]: LocalAppPrivacy.Public,
   } as const)[privacy];
 }
 
@@ -34,8 +48,8 @@ export function apiAppManagementInviteRoleToLocal(
   role: AppManagementInviteRole,
 ): LocalAppManagementInviteRole {
   return ({
-    [AppManagementInviteRole.Admin]: 'admin',
-    [AppManagementInviteRole.Member]: 'member',
+    [AppManagementInviteRole.Admin]: LocalAppManagementInviteRole.Admin,
+    [AppManagementInviteRole.Member]: LocalAppManagementInviteRole.Member,
   } as const)[role];
 }
 
@@ -43,8 +57,8 @@ export function localAppManagementInviteRoleToApi(
   role: LocalAppManagementInviteRole,
 ): AppManagementInviteRole {
   return ({
-    admin: AppManagementInviteRole.Admin,
-    member: AppManagementInviteRole.Member,
+    [LocalAppManagementInviteRole.Admin]: AppManagementInviteRole.Admin,
+    [LocalAppManagementInviteRole.Member]: AppManagementInviteRole.Member,
   } as const)[role];
 }
 
@@ -52,8 +66,8 @@ export function apiAppSimpleExpKindToLocal(
   value: AppUrlSimpleExplanationKind,
 ): LocalAppSimpleExplanationKind {
   return ({
-    [AppUrlSimpleExplanationKind.AccessNotAllowed]: 'access-not-allowed',
-    [AppUrlSimpleExplanationKind.AppIsPublic]: 'app-is-public',
-    [AppUrlSimpleExplanationKind.UserIsManager]: 'user-is-manager',
+    [AppUrlSimpleExplanationKind.AccessNotAllowed]: LocalAppSimpleExplanationKind.AccessNotAllowed,
+    [AppUrlSimpleExplanationKind.AppIsPublic]: LocalAppSimpleExplanationKind.AppIsPublic,
+    [AppUrlSimpleExplanationKind.UserIsManager]: LocalAppSimpleExplanationKind.UserIsManager,
   } as const)[value];
 }

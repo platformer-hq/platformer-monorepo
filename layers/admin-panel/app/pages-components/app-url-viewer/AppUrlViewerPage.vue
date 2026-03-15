@@ -2,9 +2,6 @@
 import { useQuery } from '@pinia/colada';
 import * as fp from 'fp-ts';
 
-import type { LocalAppSimpleExplanationKind } from '~/domains/api/utils/dto';
-import { useNavigateToUserSelection } from '~/navigation/composables/useNavigateToUserSelection';
-
 import { AppUrlViewerPageDataDocument } from './operations';
 
 const { e } = bem('app-url-viewer-page');
