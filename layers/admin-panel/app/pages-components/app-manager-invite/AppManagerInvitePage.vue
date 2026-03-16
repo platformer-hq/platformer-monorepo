@@ -50,9 +50,9 @@ const { mutate: invite, isLoading } = useMutation({
       ),
     );
   },
-  onSuccess({ from, id, role, to }) {
+  onSuccess({ from, id, role, to }, { appId }) {
     hapticNotificationOccurred('success');
-    appManagersPageQueryMeta.setData(appId.value, prev => (
+    appManagersPageQueryMeta.setData(appId, prev => (
       prev
         ? {
           ...prev,
