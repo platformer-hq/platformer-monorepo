@@ -1,0 +1,9 @@
+mutation RemoveManager($appId: ID!, $userId: ID!) {
+  removeAppManager(appID: $appId, userID: $userId)
+}
+
+mutation UpdateManager($appId: ID!, $role: AppManagementInviteRole!, $userId: ID!) {
+  updateAppManagerRole(appID: $appId, role: $role, userID: $userId) {
+    __typename
+  }
+}
