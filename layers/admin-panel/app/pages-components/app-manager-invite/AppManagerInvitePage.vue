@@ -65,7 +65,7 @@ const { mutate: invite, isLoading } = useMutation({
         }
         : prev
     ));
-    router.go(-2);
+    router.go(-1);
   },
   onError() {
     hapticNotificationOccurred('error');
