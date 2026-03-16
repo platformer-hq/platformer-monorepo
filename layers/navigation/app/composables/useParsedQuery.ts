@@ -4,7 +4,7 @@ import type { LocationQuery, LocationQueryValue } from 'vue-router';
 
 type AnyLocationQueryValue = LocationQueryValue | LocationQueryValue[];
 type AnyLocationQueryInputValue = AnyLocationQueryValue | undefined;
-type AnyLocationQueryOutputValue = AnyLocationQueryValue | undefined;
+type AnyLocationQueryOutputValue = AnyLocationQueryValue;
 
 interface FieldOptions<T> {
   schema: v.BaseSchema<AnyLocationQueryInputValue, T, v.BaseIssue<unknown>>;
@@ -49,15 +49,35 @@ export function useParsedQuery<F extends AnyFields>(fields: F) {
     [K in keyof ResolvedSchema<F>]: v.InferOutput<ResolvedSchema<F>[K]>
   }>(parseQuery(route.query));
 
-  watch(parsedQuery, q => {
-    const query: LocationQuery = {};
-    for (const field in resolvedFields) {
-      query[field] = resolvedFields[field].serialize(q[field]) ?? null;
-    }
-    navigateTo({ query });
-  }, { deep: true });
+  watch(() => route.query, () => {
+    parsedQuery.value = parseQuery(route.query);
+  });
 
-  watch(() => route.query, parseQuery);
+  return {
+    query: readonly(parsedQuery),
+    update(
+      state: { [K in keyof ResolvedSchema<F>]?: v.InferOutput<ResolvedSchema<F>[K]> },
+      options: { replace?: boolean } = {},
+    ) {
+      parsedQuery.value = {
+        ...parsedQuery.value,
+        ...Object
+          .entries(state)
+          .reduce<{
+          [K in keyof ResolvedSchema<F>]?: v.InferOutput<ResolvedSchema<F>[K]>
+        }>((acc, [key, value]) => {
+            if (value !== undefined) {
+              (acc as any)[key] = value;
+            }
+            return acc;
+          }, {}),
+      };
 
-  return parsedQuery;
+      const query: LocationQuery = {};
+      for (const field in resolvedFields) {
+        query[field] = resolvedFields[field].serialize(parsedQuery.value[field]) ?? null;
+      }
+      navigateTo({ query, replace: options.replace });
+    },
+  };
 }
