@@ -1,0 +1,16 @@
+query ManagementInvitesPageData {
+  currentUser {
+    managementInvites {
+      id
+      from {
+        id
+        name
+      }
+      role
+      app {
+        id
+        title
+      }
+    }
+  }
+}

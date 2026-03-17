@@ -1,0 +1,3 @@
+mutation RespondManagementInvite($inviteId: ID!, $accept: Boolean!) {
+  respondAppManagementInvite(inviteID: $inviteId, accept: $accept)
+}

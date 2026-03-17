@@ -23,4 +23,5 @@ export enum PageNames {
   Privacy = 'privacy',
   TransferRequests = 'transfer-requests',
   ManagementInvites = 'management-invites',
+  ManagementInvite = 'management-invite',
 }
