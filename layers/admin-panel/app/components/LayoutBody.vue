@@ -13,6 +13,7 @@ import {
   initData,
   swipeBehavior,
   miniApp,
+  toRGBFull,
 } from '@tma.js/sdk-vue';
 import * as fp from 'fp-ts';
 import type { TransitionProps } from 'vue';
@@ -145,6 +146,20 @@ await callOnce(async () => {
 
   subAndApplyToValue(themeParams.isDark, isDark => {
     document.documentElement.dataset['theme'] = isDark ? 'dark' : 'light';
+  });
+
+  // We require this text color parts to make "secondary-accent-color" to work properly.
+  subAndApplyToValue(themeParams.accentTextColor, color => {
+    if (color) {
+      const pureColor = toRGBFull(color).slice(1);
+      document.documentElement.style.setProperty(
+        '--accent-text-color-parts',
+        new Array(3)
+          .fill('')
+          .map((_, idx) => parseInt(pureColor.slice(idx * 2, (idx + 1) * 2), 16))
+          .join(', '),
+      );
+    }
   });
 });
 

@@ -15,6 +15,8 @@
     --#{$key}: var(--#{$fallback});
   }
 
+  --secondary-accent-color: rgba(var(--accent-text-color-parts), 10%);
+
   --list-android-item-placeholder-color: var(--subtitle-text-color);
   --list-android-item-accent-color: var(--link-color);
   --list-android-item-destructive-color: var(--destructive-text-color);
@@ -62,6 +64,8 @@
 
   --button-base-filled-bg-color: var(--button-color);
   --button-base-filled-text-color: var(--button-text-color);
+  --button-base-tinted-bg-color: var(--secondary-accent-color);
+  --button-base-tinted-text-color: var(--accent-text-color);
   --button-base-disabled-bg-color: var(--button-main-disabled-color);
   --button-base-disabled-text-color: var(--text-main-disabled-color);
 
