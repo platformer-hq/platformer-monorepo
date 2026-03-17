@@ -1,36 +1,10 @@
 <script setup lang="ts">
 import { useQuery } from '@pinia/colada';
 import { popup } from '@tma.js/sdk-vue';
-import * as fp from 'fp-ts';
 
-import { AppPrivacy, AppRole } from '#layers/api/schema';
+import { useAppsPageQueryMeta } from './composables/useAppsPageQueryMeta';
 
-import { AppsPageDataDocument } from './operations';
-
-const request = useMakeGqlApiRequest();
-const { data, isPending } = useQuery({
-  key: [AppsPageDataDocument],
-  query: throwify(() => {
-    return fp.function.pipe(
-      request(AppsPageDataDocument, {}),
-      fp.taskEither.map(({ currentUser }) => {
-        return {
-          apps: currentUser.apps.map(({ app, role }) => ({
-            id: app.id,
-            title: app.title,
-            isPublic: app.privacy === AppPrivacy.Visible,
-            role: ({
-              [AppRole.Admin]: 'admin',
-              [AppRole.Owner]: 'owner',
-              [AppRole.Member]: 'member',
-            } as const)[role],
-          })),
-          maxOwnedAppsCount: currentUser.limits.maxOwnedAppsCount ?? undefined,
-        };
-      }),
-    );
-  }),
-});
+const { data, isPending } = useQuery(useAppsPageQueryMeta().options);
 const platform = useTmaPlatform();
 const { t } = useI18n({
   messages: {
