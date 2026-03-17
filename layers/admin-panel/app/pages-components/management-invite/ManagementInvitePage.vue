@@ -172,7 +172,7 @@ const respond = (value: boolean) => {
               :palette="isResponding ? 'disabled' : 'filled'"
               :disabled="isResponding"
               :active="!isResponding"
-              @click="respond(false)"
+              @click="respond(true)"
             >
               <AutoTypography variant="body" weight="medium">
                 {{ t('button.accept') }}
