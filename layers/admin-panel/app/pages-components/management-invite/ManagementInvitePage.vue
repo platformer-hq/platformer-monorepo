@@ -57,10 +57,12 @@ const { mutate: respondInvite, isLoading: isResponding } = useMutation({
       ),
     );
   },
-  onSuccess(_, { inviteId }) {
+  onSuccess(_, { inviteId, accept }) {
     hapticNotificationOccurred('success');
     setManagementInvitesPageQueryData(data => data.filter(item => item.id !== inviteId));
-    invalidateAppsPageQuery();
+    if (accept) {
+      invalidateAppsPageQuery();
+    }
     router.back();
   },
   onError() {
