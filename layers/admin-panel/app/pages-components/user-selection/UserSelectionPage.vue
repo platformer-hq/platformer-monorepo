@@ -28,8 +28,8 @@ const { t } = useI18n({
 const { e } = bem('user-selection-page');
 
 const store = useUserSelectionStore();
-const platform = useTmaPlatform();
 const router = useRouter();
+const isPageEntered = useIsCurrentPageEntered();
 
 const selectedUsers = ref<UserSelectionStoreSelectedUser[]>(store.selectedUsers || []);
 const input = ref('');
@@ -159,6 +159,7 @@ const confirm = () => {
           <template #header>
             <AutoSectionHeader>
               {{ t('selectedUsers.title') }}
+              {{ store.limit ? `(${selectedUsers.length} / ${store.limit})` : '' }}
             </AutoSectionHeader>
           </template>
           <AutoList>
@@ -171,16 +172,7 @@ const confirm = () => {
                 </template>
                 <template #bodyRight>
                   <AutoListItemBodyRight>
-                    <AutoButton
-                      :class="e('remove-user')"
-                      :palette="{text: 'subtitle-text'}"
-                      :active="platform.isMappedAndroid"
-                      clickable
-                      @click="removeUser(idx)"
-                    >
-                      <IconXmark24 v-if="platform.isMappedAndroid"/>
-                      <IconXmarkFill28 v-else :size="24"/>
-                    </AutoButton>
+                    <AutoListItemBodyRightClear @click="removeUser(idx)"/>
                   </AutoListItemBodyRight>
                 </template>
               </AutoListItem>
@@ -232,6 +224,22 @@ const confirm = () => {
         </AutoSection>
       </PagePaddings>
     </PageContent>
+
+    <template #bottomBar>
+      <BottomBarTransition>
+        <BottomBar v-if="isPageEntered && store.alwaysShowConfirm">
+          <PageContent>
+            <BottomBarInner>
+              <AutoButton palette="filled" full-width @click="confirm">
+                <AutoTypography variant="body" weight="medium">
+                  {{ t('done') }}
+                </AutoTypography>
+              </AutoButton>
+            </BottomBarInner>
+          </PageContent>
+        </BottomBar>
+      </BottomBarTransition>
+    </template>
   </PageRoot>
 </template>
 
@@ -247,12 +255,6 @@ const confirm = () => {
 
   &__user-id {
     color: var(--subtitle-text-color);
-  }
-
-  &__remove-user {
-    min-height: 0;
-    padding: 6px;
-    border-radius: 50%;
   }
 }
 </style>
