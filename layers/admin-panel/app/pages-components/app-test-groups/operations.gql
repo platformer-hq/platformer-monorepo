@@ -1,0 +1,19 @@
+query AppTestGroupsPageData($appId: ID!) {
+  app(appID: $appId) {
+    currentUserRole
+    testGroups {
+      id
+      title
+      users {
+        __typename
+      }
+      enabled
+      platforms {
+        __typename
+      }
+    }
+    limits {
+      maxTestGroupsCount
+    }
+  }
+}
