@@ -17,7 +17,6 @@ export enum PageNames {
   AppUrls = 'app-urls',
   AppUrlViewer = 'app-url-viewer',
   AppCache = 'app-cache',
-  CreateTestGroup = 'create-test-group',
   CreateApp = 'create-app',
   Account = 'profile',
   Privacy = 'privacy',
