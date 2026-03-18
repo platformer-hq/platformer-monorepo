@@ -92,7 +92,13 @@ const handleCreate = async () => {
                   : idx"
                 large
                 :clickable="typeof itemOrWidth === 'object'"
-                @click="console.warn(123)"
+                @click="typeof itemOrWidth === 'object' && navigateTo({
+                  name: PageNames.AppTestGroup,
+                  query: {
+                    appId,
+                    testGroupId: itemOrWidth.id
+                  }
+                })"
               >
                 <template #bodyLeftLabel>
                   <AutoListItemBodyLeftLabel>
