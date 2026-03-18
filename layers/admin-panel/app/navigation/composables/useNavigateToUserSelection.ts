@@ -4,15 +4,18 @@ export function useNavigateToUserSelection() {
   const store = useUserSelectionStore();
 
   return (options: {
-    limit?: number;
-    excludedUserIds?: number[];
-    selectedUsers?: UserSelectionStoreSelectedUser[];
     autoConfirmOnLimit?: boolean;
-    onConfirmAction?: UserSelectionStoreOnConfirmAction;
+    alwaysShowConfirm?: boolean;
     canBeInvitedToManage?: boolean;
     canAcceptAppTransfers?: boolean;
+    excludedUserIds?: number[];
+    limit?: number;
+    onConfirmAction?: UserSelectionStoreOnConfirmAction;
+    requestedBy?: PageNames;
+    selectedUsers?: UserSelectionStoreSelectedUser[];
   } = {}) => {
     store.reset();
+    store.setAlwaysShowConfirm(options.alwaysShowConfirm);
     store.setLimit(options.limit);
     store.setAutoConfirmOnLimit(options.autoConfirmOnLimit);
     store.setCanAcceptAppTransfers(options.canAcceptAppTransfers);
@@ -20,6 +23,7 @@ export function useNavigateToUserSelection() {
     store.setExcludedUserIds(options.excludedUserIds);
     store.setSelectedUsers(options.selectedUsers);
     store.setOnConfirmAction(options.onConfirmAction);
+    store.setRequestedBy(options.requestedBy);
     navigateTo({ name: PageNames.UserSelection });
   };
 }
