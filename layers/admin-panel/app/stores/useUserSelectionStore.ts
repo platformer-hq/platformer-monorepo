@@ -20,21 +20,49 @@ export type UserSelectionStoreOnConfirmAction = (
   })
 );
 
-interface State {
-  requestedBy?: PageNames;
-  limit?: number;
-  excludedUserIds?: number[];
-  selectedUsers?: UserSelectionStoreSelectedUser[];
+export interface UserSelectionStoreState {
+  /**
+   * Auto confirms whenever the selection limit is reached.
+   */
   autoConfirmOnLimit?: boolean;
+  /**
+   * Always shows the confirmation button.
+   */
   alwaysShowConfirm?: boolean;
-  onConfirmAction?: UserSelectionStoreOnConfirmAction;
-  canBeInvitedToManage?: boolean;
+  /**
+   * True of only users available to receive apps can be selected.
+   */
   canAcceptAppTransfers?: boolean;
+  /**
+   * True of only users available to manage apps can be selected.
+   */
+  canBeInvitedToManage?: boolean;
+  /**
+   * A list of users to exclude.
+   */
+  excludedUserIds?: number[];
+  /**
+   * How many users can be selected.
+  */
+  limit?: number;
+  /**
+   * A unique identifier for the current selection. This one can be used by other pages in order
+   * to deremine if the current store state may be used by the page.
+   */
+  navId?: number;
+  /**
+   * Action to perform whenever the confirm button is pressed.
+   */
+  onConfirmAction?: UserSelectionStoreOnConfirmAction;
+  /**
+   * A list of selected users.
+   */
+  selectedUsers?: UserSelectionStoreSelectedUser[];
 }
 
 export const useUserSelectionStore = defineStore('user-selection', () => {
   const defaultState = {};
-  const state = useSessionStorage<State>('selected-users', defaultState, {
+  const state = useSessionStorage<UserSelectionStoreState>('selected-users', defaultState, {
     serializer: {
       read(value) {
         return v.parse(
@@ -42,12 +70,13 @@ export const useUserSelectionStore = defineStore('user-selection', () => {
             v.string(),
             v.parseJson(),
             v.looseObject({
-              alwaysShowConfirm: v.optional(v.boolean()),
               autoConfirmOnLimit: v.optional(v.boolean()),
-              canBeInvitedToManage: v.optional(v.boolean()),
+              alwaysShowConfirm: v.optional(v.boolean()),
               canAcceptAppTransfers: v.optional(v.boolean()),
+              canBeInvitedToManage: v.optional(v.boolean()),
               excludedUserIds: v.optional(v.array(v.number())),
               limit: v.optional(v.number()),
+              navId: v.optional(v.number()),
               onConfirmAction: v.optional(v.variant('kind', [
                 v.variant('page', [
                   v.looseObject({
@@ -60,7 +89,6 @@ export const useUserSelectionStore = defineStore('user-selection', () => {
                   }),
                 ]),
               ])),
-              requestedBy: v.optional(v.enum(PageNames)),
               selectedUsers: v.optional(v.array(v.looseObject({
                 id: v.number(),
                 name: v.string(),
@@ -75,21 +103,21 @@ export const useUserSelectionStore = defineStore('user-selection', () => {
   });
 
   return {
-    alwaysShowConfirm: computed(() => state.value.alwaysShowConfirm),
-    setAlwaysShowConfirm(value: boolean | undefined) {
-      state.value.alwaysShowConfirm = value;
-    },
     autoConfirmOnLimit: computed(() => state.value.autoConfirmOnLimit),
     setAutoConfirmOnLimit(value: boolean | undefined) {
       state.value.autoConfirmOnLimit = value;
     },
-    canBeInvitedToManage: computed(() => state.value.canBeInvitedToManage),
-    setCanBeInvitedToManage(value: boolean | undefined) {
-      state.value.canBeInvitedToManage = value;
+    alwaysShowConfirm: computed(() => state.value.alwaysShowConfirm),
+    setAlwaysShowConfirm(value: boolean | undefined) {
+      state.value.alwaysShowConfirm = value;
     },
     canAcceptAppTransfers: computed(() => state.value.canBeInvitedToManage),
     setCanAcceptAppTransfers(value: boolean | undefined) {
       state.value.canAcceptAppTransfers = value;
+    },
+    canBeInvitedToManage: computed(() => state.value.canBeInvitedToManage),
+    setCanBeInvitedToManage(value: boolean | undefined) {
+      state.value.canBeInvitedToManage = value;
     },
     excludedUserIds: computed(() => state.value.excludedUserIds),
     setExcludedUserIds(value: number[] | undefined) {
@@ -99,13 +127,13 @@ export const useUserSelectionStore = defineStore('user-selection', () => {
     setLimit(value: number | undefined) {
       state.value.limit = value;
     },
+    navId: computed(() => state.value.navId),
+    setNavId(value: number | undefined) {
+      state.value.navId = value;
+    },
     onConfirmAction: computed(() => state.value.onConfirmAction),
     setOnConfirmAction(value: UserSelectionStoreOnConfirmAction | undefined) {
       state.value.onConfirmAction = value;
-    },
-    requestedBy: computed(() => state.value.requestedBy),
-    setRequestedBy(value: PageNames | undefined) {
-      state.value.requestedBy = value;
     },
     selectedUsers: computed(() => state.value.selectedUsers),
     setSelectedUsers(value: UserSelectionStoreSelectedUser[] | undefined) {
