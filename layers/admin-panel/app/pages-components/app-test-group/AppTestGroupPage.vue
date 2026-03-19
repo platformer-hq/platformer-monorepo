@@ -65,6 +65,10 @@ const url = ref('');
 const platformIds = ref<number[]>([]);
 const users = ref<{ id: number; name: string }[]>([]);
 
+const readonly = computed(() => (
+  !!data.value?.currentUserRole && !isEditorRole(data.value.currentUserRole)
+));
+// const readonly = computed(() => true);
 const isUrlValid = computed(() => isValidUrl(url.value));
 const isUpdateMode = computed(() => typeof query.value.testGroupId === 'number');
 const isLoadingForUpdate = computed(() => isUpdateMode.value && isRefreshingPageData.value);
@@ -129,18 +133,22 @@ onMounted(() => {
   <PageRoot colors="secondary-bg">
     <PageContent>
       <PagePaddings>
-        <EnabledSection v-model="enabled" :disabled="isSendingRequest"/>
+        <EnabledSection v-model="enabled" :disabled="isSendingRequest || readonly" :readonly/>
         <TitleSection
           v-model.trim="title"
-          :disabled="isSendingRequest"
+          :disabled="isSendingRequest || readonly"
           :loading="isLoadingForUpdate"
         />
-        <UrlSection v-model.trim="url" :disabled="isSendingRequest" :loading="isLoadingForUpdate"/>
+        <UrlSection
+          v-model.trim="url"
+          :disabled="isSendingRequest || readonly"
+          :loading="isLoadingForUpdate"
+        />
         <HttpWarning :show="url.startsWith('http:')"/>
         <PlatformsSection
           v-model="platformIds"
           :platforms="data?.platforms"
-          :disabled="isSendingRequest"
+          :disabled="isSendingRequest || readonly"
         />
         <UsersSection
           v-model="users"
@@ -148,8 +156,13 @@ onMounted(() => {
           :disabled="isSendingRequest"
           :loading="isLoadingForUpdate"
           :nav-id="userSelectionNavId"
+          :readonly
         />
-        <ActionsSection v-if="isUpdateMode" :disabled="isSendingRequest" @delete="handleDelete"/>
+        <ActionsSection
+          v-if="isUpdateMode && !readonly"
+          :disabled="isSendingRequest"
+          @delete="handleDelete"
+        />
       </PagePaddings>
     </PageContent>
     <template #bottomBar>

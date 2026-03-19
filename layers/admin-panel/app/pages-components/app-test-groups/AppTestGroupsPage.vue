@@ -35,6 +35,7 @@ const appId = useQueryAppId();
 const { data } = useQuery(() => query.options(appId.value));
 const hadInitialData = !!data.value;
 
+const readonly = computed(() => !data.value || !isEditorRole(data.value.currentUserRole));
 const handleCreate = async () => {
   if (!data.value) {
     return;
@@ -74,9 +75,9 @@ const handleCreate = async () => {
           </template>
           <AutoList>
             <AutoListItem
-              :clickable="!!data"
-              :variant="data ? 'accent' : 'placeholder'"
-              @click="data && handleCreate()"
+              :clickable="!!data && !readonly"
+              :variant="data && !readonly ? 'accent' : 'placeholder'"
+              @click="data && !readonly && handleCreate()"
             >
               <template #bodyLeftLabel>
                 <AutoListItemBodyLeftLabel>

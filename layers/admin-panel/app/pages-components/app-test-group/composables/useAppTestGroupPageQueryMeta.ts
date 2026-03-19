@@ -18,11 +18,7 @@ export function useAppTestGroupPageQueryMeta() {
           }),
           fp.taskEither.map(({ app, appTestGroup, platforms }) => ({
             maxTestGroupsCount: app?.limits.maxTestGroupUsersCount,
-            app: app
-              ? {
-                currentUserRole: apiAppRoleToLocal(app.currentUserRole),
-              }
-              : null,
+            currentUserRole: app ? apiAppRoleToLocal(app.currentUserRole) : undefined,
             testGroup: appTestGroup
               ? {
                 id: appTestGroup.id,

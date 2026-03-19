@@ -44,7 +44,6 @@ const handlePlatformClick = (platformId: number) => {
           :key="hadInitialData && typeof itemOrWidth === 'object'
             ? itemOrWidth.id
             : idx"
-          :variant="disabled ? 'placeholder' : undefined"
           :clickable="typeof itemOrWidth === 'object' && !disabled"
           @click="
             typeof itemOrWidth === 'object'
