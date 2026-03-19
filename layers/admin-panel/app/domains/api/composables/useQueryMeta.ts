@@ -24,6 +24,7 @@ export function useQueryMeta<
   options: DefineQueryOptionsTagged<TData, TError, TDataInitial>;
   setData(updater: SetDataUpdater<TData, TDataInitial>): void;
   invalidate(): void;
+  getData(): TData | TDataInitial | undefined;
 };
 export function useQueryMeta<
   TData = unknown,
@@ -35,6 +36,7 @@ export function useQueryMeta<
   options(): DefineQueryOptionsTagged<TData, TError, TDataInitial>;
   setData(updater: SetDataUpdater<TData, TDataInitial>): void;
   invalidate(): void;
+  getData(): TData | TDataInitial | undefined;
 };
 export function useQueryMeta<
   Params,
@@ -49,6 +51,7 @@ export function useQueryMeta<
   options(params: Params): DefineQueryOptionsTagged<TData, TError, TDataInitial>;
   setData(params: Params, updater: SetDataUpdater<TData, TDataInitial>): void;
   invalidate(params: Params): void;
+  getData(params: Params): TData | TDataInitial | undefined;
 };
 export function useQueryMeta<
   Params,
@@ -72,6 +75,7 @@ export function useQueryMeta<
     | ((params: Params, updater: SetDataUpdater<TData, TDataInitial>) => void)
   );
   invalidate(params?: Params): void;
+  getData(params?: Params): TData | TDataInitial | undefined;
 } {
   const request = useMakeGqlApiRequest();
   const queryCache = useQueryCache();
@@ -114,6 +118,11 @@ export function useQueryMeta<
       queryCache.invalidateQueries({
         key: (typeof options === 'function' ? options(params as Params) : options).key,
       });
+    },
+    getData(params?: Params) {
+      return queryCache.getQueryData(
+        (typeof options === 'function' ? options(params as Params) : options).key,
+      );
     },
   };
 }
