@@ -1,29 +1,19 @@
-import type { UserSelectionStoreSelectedUser, UserSelectionStoreOnConfirmAction } from '~/stores/useUserSelectionStore';
+import type { UserSelectionStoreState } from '~/stores/useUserSelectionStore';
 
 export function useNavigateToUserSelection() {
   const store = useUserSelectionStore();
 
-  return (options: {
-    autoConfirmOnLimit?: boolean;
-    alwaysShowConfirm?: boolean;
-    canBeInvitedToManage?: boolean;
-    canAcceptAppTransfers?: boolean;
-    excludedUserIds?: number[];
-    limit?: number;
-    onConfirmAction?: UserSelectionStoreOnConfirmAction;
-    requestedBy?: PageNames;
-    selectedUsers?: UserSelectionStoreSelectedUser[];
-  } = {}) => {
+  return (options: Partial<UserSelectionStoreState> = {}) => {
     store.reset();
-    store.setAlwaysShowConfirm(options.alwaysShowConfirm);
-    store.setLimit(options.limit);
     store.setAutoConfirmOnLimit(options.autoConfirmOnLimit);
+    store.setAlwaysShowConfirm(options.alwaysShowConfirm);
     store.setCanAcceptAppTransfers(options.canAcceptAppTransfers);
     store.setCanBeInvitedToManage(options.canBeInvitedToManage);
     store.setExcludedUserIds(options.excludedUserIds);
-    store.setSelectedUsers(options.selectedUsers);
+    store.setLimit(options.limit);
+    store.setNavId(options.navId);
     store.setOnConfirmAction(options.onConfirmAction);
-    store.setRequestedBy(options.requestedBy);
+    store.setSelectedUsers(options.selectedUsers);
     navigateTo({ name: PageNames.UserSelection });
   };
 }
