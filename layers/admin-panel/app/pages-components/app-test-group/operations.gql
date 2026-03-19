@@ -1,0 +1,96 @@
+query AppTestGroupPageData(
+  $appId: ID!, 
+  $testGroupId: ID!,
+  $skipTestGroup: Boolean!
+) {
+  app(appID: $appId) {
+    currentUserRole
+    subscription {
+      endsAt
+    }
+    limits {
+      maxTestGroupUsersCount
+    }
+  }
+  appTestGroup(testGroupID: $testGroupId) @skip(if: $skipTestGroup) {
+    id
+    title
+    platforms {
+      id
+    }
+    url
+    users {
+      id
+      name
+    }
+    enabled
+  }
+  platforms {
+    id
+    completeTitle
+  }
+}
+
+mutation DeleteTestGroup($testGroupId: ID!) {
+  deleteAppTestGroup(testGroupID: $testGroupId)
+}
+
+mutation UpdateTestGroup(
+  $testGroupId: ID!,
+  $title: String!,
+  $enabled: Boolean!,
+  $url: String!,
+  $platformIds: [ID!]!,
+  $userIds: [ID!]!
+) {
+  updateAppTestGroup(
+    testGroupID: $testGroupId,
+    title: $title,
+    enabled: $enabled,
+    url: $url,
+    platformIDs: $platformIds,
+    userIDs: $userIds,
+  ) {
+    id
+    title
+    platforms {
+      id
+    }
+    enabled
+    url
+    users {
+      id
+      name
+    }
+  }
+}
+
+mutation CreateTestGroup(
+  $appId: ID!,
+  $title: String!,
+  $enabled: Boolean!,
+  $url: String!,
+  $platformIds: [ID!]!,
+  $userIds: [ID!]!
+) {
+  createAppTestGroup(
+    title: $title,
+    enabled: $enabled,
+    appID: $appId,
+    url: $url,
+    platformIDs: $platformIds,
+    userIDs: $userIds,
+  ) {
+    id
+    title
+    platforms {
+      id
+    }
+    enabled
+    url
+    users {
+      id
+      name
+    }
+  }
+}
