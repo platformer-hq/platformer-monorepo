@@ -28,7 +28,8 @@ export type KnownCustomColorKey =
   | 'secondary-fill-bg'
   | 'button-confirm'
   | 'text-main-disabled'
-  | 'button-main-disabled';
+  | 'button-main-disabled'
+  | 'destructive-opaque-bg';
 
 /**
  * List of all known color keys.

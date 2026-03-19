@@ -32,6 +32,7 @@ const knownCustomColorKeyMap = {
   'button-confirm': 1,
   'text-main-disabled': 1,
   'button-main-disabled': 1,
+  'destructive-opaque-bg': 1,
 } satisfies Record<KnownCustomColorKey, 1>;
 
 const knownMiniAppColorKeyMap = {

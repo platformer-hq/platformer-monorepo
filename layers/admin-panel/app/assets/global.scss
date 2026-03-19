@@ -76,6 +76,7 @@
     --button-confirm-color: #2FB250;
     --text-main-disabled-color: #B9B9BA;
     --button-main-disabled-color: #E8E8E9;
+    --destructive-opaque-bg-color: rgba(221, 4, 4, 0.1);
   }
 
   &[data-theme="dark"] {
@@ -85,6 +86,7 @@
     --button-confirm-color: #30D158;
     --text-main-disabled-color: #606060;
     --button-main-disabled-color: #2F2F2F;
+    --destructive-opaque-bg-color: rgba(221, 4, 4, 0.19);
   }
 
   --elevated-box-shadow: -0.6px -0.5px 0 0 rgba(255, 255, 255, 0.30) inset,
