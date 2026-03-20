@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { popup } from '@tma.js/sdk-vue';
 import * as v from 'valibot';
 
 import { RemoveManagerDocument, UpdateManagerDocument } from './operations';
@@ -29,6 +30,10 @@ const { t } = useI18n({
       'role.member.title': 'Member',
       'role.member.subtitle': 'Read-only access',
       remove: 'Remove manager',
+      'removeConfirmPopup.title': 'Confirm manager removal',
+      'removeConfirmPopup.message': 'Are you sure you want to remove the manager? This action is irreversible.',
+      'removeConfirmPopup.button.cancel': 'Cancel',
+      'removeConfirmPopup.button.confirm': 'Remove',
       'button.update': 'Save',
     },
     ru: {
@@ -39,13 +44,16 @@ const { t } = useI18n({
       'role.member.title': 'Участник',
       'role.member.subtitle': 'Доступ только на чтение',
       remove: 'Удалить менеджера',
+      'removeConfirmPopup.title': 'Подтвердите удаление менеджера',
+      'removeConfirmPopup.message': 'Вы уверены, что хотите удалить менеджера? Это действие необратимо.',
+      'removeConfirmPopup.button.cancel': 'Отмена',
+      'removeConfirmPopup.button.confirm': 'Удалить',
       'button.update': 'Сохранить',
     },
   },
 });
 const platform = useTmaPlatform();
 const isPageEntered = useIsCurrentPageEntered();
-const isDark = useIsDark();
 const router = useRouter();
 const appManagersPageQueryMeta = useAppManagersPageQueryMeta();
 
@@ -126,6 +134,23 @@ const roles = computed(() => [{
 }]);
 const role = ref(query.value.role);
 
+const handleRemoveManager = async () => {
+  const response = await popup.show({
+    title: t('removeConfirmPopup.title'),
+    message: t('removeConfirmPopup.message'),
+    buttons: [
+      { id: 'no', type: 'default', text: t('removeConfirmPopup.button.cancel') },
+      { id: 'yes', type: 'destructive', text: t('removeConfirmPopup.button.confirm') },
+    ],
+  });
+  if (response === 'yes') {
+    removeManager({
+      userId: query.value.user.id,
+      appId: query.value.appId,
+    });
+  }
+};
+
 watch(role, hapticSelectionChanged);
 </script>
 
@@ -192,22 +217,12 @@ watch(role, hapticSelectionChanged);
           </AutoList>
         </AutoSection>
 
-        <AutoSection
-          style="margin-top: 16px"
-          :list-bg-color="isSendingRequest
-            ? 'section-bg'
-            : isDark
-              ? 'rgb(221 4 4 / 19%)'
-              : 'rgb(221 4 4 / 10%)'"
-        >
+        <AutoSection style="margin-top: 16px" list-bg-color="destructive-opaque-bg">
           <AutoList>
             <AutoListItem
-              :variant="isSendingRequest ? 'placeholder' : 'destructive'"
+              variant="destructive"
               :clickable="!isSendingRequest"
-              @click="!isSendingRequest && removeManager({
-                userId: query.user.id,
-                appId: query.appId
-              })"
+              @click="!isSendingRequest && handleRemoveManager()"
             >
               <template #bodyLeftLabel>
                 <AutoListItemBodyLeftLabel>

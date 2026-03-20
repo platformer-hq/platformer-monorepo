@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { popup } from '@tma.js/sdk-vue';
+
 import InvitesSection from './_components/InvitesSection.vue';
 import ManagersSection from './_components/ManagersSection.vue';
 import { RevokeManageInviteDocument } from './operations';
@@ -9,11 +11,19 @@ const { t } = useI18n({
       'role.owner': 'Владелец',
       'role.admin': 'Админ',
       'role.member': 'Менеджер',
+      'removeInviteConfirmPopup.title': 'Подтвердите удаление приглашения',
+      'removeInviteConfirmPopup.message': 'Вы уверены, что хотите удалить приглашение?',
+      'removeInviteConfirmPopup.button.cancel': 'Отмена',
+      'removeInviteConfirmPopup.button.confirm': 'Удалить',
     },
     en: {
       'role.owner': 'Owner',
       'role.admin': 'Admin',
       'role.member': 'Member',
+      'removeInviteConfirmPopup.title': 'Confirm invite removal',
+      'removeInviteConfirmPopup.message': 'Are you sure you want to delete the invite?',
+      'removeInviteConfirmPopup.button.cancel': 'Cancel',
+      'removeInviteConfirmPopup.button.confirm': 'Delete',
     },
   },
 });
@@ -69,9 +79,19 @@ const handleInvite = () => {
       : [],
   });
 };
-const handleRemoveInvite = (id: number) => {
-  revokeManageInvite({ inviteId: id });
-  revokingInviteId.value = id;
+const handleRemoveInvite = async (id: number) => {
+  const response = await popup.show({
+    title: t('removeInviteConfirmPopup.title'),
+    message: t('removeInviteConfirmPopup.message'),
+    buttons: [
+      { id: 'no', type: 'default', text: t('removeInviteConfirmPopup.button.cancel') },
+      { id: 'yes', type: 'destructive', text: t('removeInviteConfirmPopup.button.confirm') },
+    ],
+  });
+  if (response === 'yes') {
+    revokeManageInvite({ inviteId: id });
+    revokingInviteId.value = id;
+  }
 };
 const handleManagerClick = (managerId: number) => {
   const manager = data.value?.managers.find(m => m.user.id === managerId);
