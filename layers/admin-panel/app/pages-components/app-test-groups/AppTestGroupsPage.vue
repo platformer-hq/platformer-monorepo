@@ -50,6 +50,16 @@ const handleCreate = async () => {
     query: { appId: appId.value },
   });
 };
+
+watch(() => data.value?.testGroups, testGroups => {
+  if (testGroups?.length) {
+    preloadRouteComponents({ name: PageNames.AppTestGroup });
+  }
+});
+
+onMounted(() => {
+  preloadRouteComponents({ name: PageNames.App });
+});
 </script>
 
 <template>
