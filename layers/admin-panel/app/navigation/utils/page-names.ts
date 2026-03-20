@@ -21,6 +21,7 @@ export enum PageNames {
   CreateApp = 'create-app',
   Account = 'profile',
   Privacy = 'privacy',
+  TransferRequest = 'transfer-request',
   TransferRequests = 'transfer-requests',
   ManagementInvites = 'management-invites',
   ManagementInvite = 'management-invite',

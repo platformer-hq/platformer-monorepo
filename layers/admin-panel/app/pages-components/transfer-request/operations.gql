@@ -1,0 +1,3 @@
+mutation RespondAppTransferRequest($requestId: ID!, $accept: Boolean!) {
+  respondAppTransferRequest(requestID: $requestId, accept: $accept)
+}

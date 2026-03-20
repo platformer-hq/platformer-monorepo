@@ -1,0 +1,15 @@
+query TransferRequestsPageData {
+  currentUser {
+    appTransferRequests {
+      id
+      from {
+        id
+        name
+      }
+      app {
+        id
+        title
+      }
+    }
+  }
+}
