@@ -71,7 +71,7 @@ const { t } = useI18n({
       'common.testGroups': 'Тестовые группы',
       'common.transfer': 'Передача приложения',
       'integrations.title': 'Интеграции',
-      'integrations.tg': 'Телеграм',
+      'integrations.tg': 'Telegram',
       'utils.title': 'Утилиты',
       'utils.urlViewer': 'Обозреватель ссылок',
       'utils.cache': 'Кеширование',
