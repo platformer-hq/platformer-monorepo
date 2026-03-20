@@ -80,6 +80,10 @@ const respond = (value: boolean) => {
   accept.value = value;
   respondInvite({ inviteId: query.value.inviteId, accept: value });
 };
+
+onMounted(() => {
+  preloadRouteComponents({ name: PageNames.ManagementInvites });
+});
 </script>
 
 <template>
@@ -93,95 +97,99 @@ const respond = (value: boolean) => {
             </AutoSectionHeader>
           </template>
 
-          <AutoListItem large>
-            <template #bodyLeft>
-              <AutoListItemBodyLeft reversed>
-                <template #label>
-                  <AutoListItemBodyLeftLabel>
-                    {{ query.app.title }}
-                    <ColorBox as="span" text="subtitle-text">
-                      #{{ query.app.id }}
-                    </ColorBox>
-                  </AutoListItemBodyLeftLabel>
-                </template>
-                <template #subtitle>
-                  <AutoListItemBodyLeftSubtitle>
-                    {{ t('app') }}
-                  </AutoListItemBodyLeftSubtitle>
-                </template>
-              </AutoListItemBodyLeft>
-            </template>
-          </AutoListItem>
+          <AutoList>
+            <AutoListItem large>
+              <template #bodyLeft>
+                <AutoListItemBodyLeft reversed>
+                  <template #label>
+                    <AutoListItemBodyLeftLabel>
+                      {{ query.app.title }}
+                      <ColorBox as="span" text="subtitle-text">
+                        #{{ query.app.id }}
+                      </ColorBox>
+                    </AutoListItemBodyLeftLabel>
+                  </template>
+                  <template #subtitle>
+                    <AutoListItemBodyLeftSubtitle>
+                      {{ t('app') }}
+                    </AutoListItemBodyLeftSubtitle>
+                  </template>
+                </AutoListItemBodyLeft>
+              </template>
+            </AutoListItem>
 
-          <AutoListItem large>
-            <template #bodyLeft>
-              <AutoListItemBodyLeft reversed>
-                <template #label>
-                  <AutoListItemBodyLeftLabel>
-                    {{ query.sender.name }}
-                    <ColorBox as="span" text="subtitle-text">
-                      #{{ query.sender.id }}
-                    </ColorBox>
-                  </AutoListItemBodyLeftLabel>
-                </template>
-                <template #subtitle>
-                  <AutoListItemBodyLeftSubtitle>
-                    {{ t('sender') }}
-                  </AutoListItemBodyLeftSubtitle>
-                </template>
-              </AutoListItemBodyLeft>
-            </template>
-          </AutoListItem>
+            <AutoListItem large>
+              <template #bodyLeft>
+                <AutoListItemBodyLeft reversed>
+                  <template #label>
+                    <AutoListItemBodyLeftLabel>
+                      {{ query.sender.name }}
+                      <ColorBox as="span" text="subtitle-text">
+                        #{{ query.sender.id }}
+                      </ColorBox>
+                    </AutoListItemBodyLeftLabel>
+                  </template>
+                  <template #subtitle>
+                    <AutoListItemBodyLeftSubtitle>
+                      {{ t('sender') }}
+                    </AutoListItemBodyLeftSubtitle>
+                  </template>
+                </AutoListItemBodyLeft>
+              </template>
+            </AutoListItem>
 
-          <AutoListItem large>
-            <template #bodyLeft>
-              <AutoListItemBodyLeft reversed>
-                <template #label>
-                  <AutoListItemBodyLeftLabel>
-                    {{ {
-                      [LocalAppManagementInviteRole.Admin]: t('role.admin'),
-                      [LocalAppManagementInviteRole.Member]: t('role.member'),
-                    }[query.role] }}
-                  </AutoListItemBodyLeftLabel>
-                </template>
-                <template #subtitle>
-                  <AutoListItemBodyLeftSubtitle>
-                    {{ t('role.title') }}
-                  </AutoListItemBodyLeftSubtitle>
-                </template>
-              </AutoListItemBodyLeft>
-            </template>
-          </AutoListItem>
+            <AutoListItem large>
+              <template #bodyLeft>
+                <AutoListItemBodyLeft reversed>
+                  <template #label>
+                    <AutoListItemBodyLeftLabel>
+                      {{ {
+                        [LocalAppManagementInviteRole.Admin]: t('role.admin'),
+                        [LocalAppManagementInviteRole.Member]: t('role.member'),
+                      }[query.role] }}
+                    </AutoListItemBodyLeftLabel>
+                  </template>
+                  <template #subtitle>
+                    <AutoListItemBodyLeftSubtitle>
+                      {{ t('role.title') }}
+                    </AutoListItemBodyLeftSubtitle>
+                  </template>
+                </AutoListItemBodyLeft>
+              </template>
+            </AutoListItem>
+          </AutoList>
         </AutoSection>
       </PagePaddings>
     </PageContent>
     <template #bottomBar>
       <BottomBarTransition>
         <BottomBar v-if="isPageEntered">
-          <BottomBarInner variant="2-columns">
-            <AutoButton
-              :palette="isResponding ? 'disabled' : 'tinted'"
-              :disabled="isResponding"
-              :active="!isResponding"
-              @click="respond(false)"
-            >
-              <AutoTypography variant="body" weight="medium">
-                {{ t('button.decline') }}
-              </AutoTypography>
-              <ButtonLoadingIndicator :show="accept === false"/>
-            </AutoButton>
-            <AutoButton
-              :palette="isResponding ? 'disabled' : 'filled'"
-              :disabled="isResponding"
-              :active="!isResponding"
-              @click="respond(true)"
-            >
-              <AutoTypography variant="body" weight="medium">
-                {{ t('button.accept') }}
-              </AutoTypography>
-              <ButtonLoadingIndicator :show="accept === true"/>
-            </AutoButton>
-          </BottomBarInner>
+          <PageContent>
+            <BottomBarInner variant="2-columns">
+              <AutoButton
+                :palette="isResponding ? 'disabled' : 'tinted'"
+                :disabled="isResponding"
+                :active="!isResponding"
+                @click="respond(false)"
+              >
+                <AutoTypography variant="body" weight="medium">
+                  {{ t('button.decline') }}
+                </AutoTypography>
+                <ButtonLoadingIndicator :show="accept === false"/>
+              </AutoButton>
+              <AutoButton
+                :palette="isResponding ? 'disabled' : 'filled'"
+                :disabled="isResponding"
+                :active="!isResponding"
+                @click="respond(true)"
+              >
+                <AutoTypography variant="body" weight="medium">
+                  {{ t('button.accept') }}
+                </AutoTypography>
+                <ButtonLoadingIndicator :show="accept === true"/>
+              </AutoButton>
+            </BottomBarInner>
+          </PageContent>
         </BottomBar>
       </BottomBarTransition>
     </template>

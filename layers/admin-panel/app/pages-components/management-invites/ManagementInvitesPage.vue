@@ -35,6 +35,12 @@ const invites = computed(() => {
     invite,
   }));
 });
+
+watch(invites, invites => {
+  if (invites[0]?.kind === 'invite') {
+    preloadRouteComponents({ name: PageNames.ManagementInvite });
+  }
+});
 </script>
 
 <template>
