@@ -14,6 +14,7 @@ export enum PageNames {
   AppTgIntegration = 'app-tg-intergration',
   AppTgLauncher = 'app-tg-launcher',
   AppTransfer = 'app-transfer',
+  AppTransferCreate = 'app-transfer-create',
   AppUrls = 'app-urls',
   AppUrlViewer = 'app-url-viewer',
   AppCache = 'app-cache',

@@ -1,0 +1,13 @@
+mutation CreateAppTransferRequest($appId: ID!, $toUserId: ID!) {
+  createAppTransferRequest(appID: $appId, toUserID: $toUserId) {
+    id
+    from {
+      id
+      name
+    }
+    to {
+      id
+      name
+    }
+  }
+}
