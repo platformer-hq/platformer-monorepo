@@ -6,18 +6,21 @@ export interface UserSelectionStoreSelectedUser {
   name: string;
 }
 
+type TypedNavPages =
+  | {
+    page: PageNames.AppManagerInvite;
+    query: { appId: number };
+  }
+  | {
+    page: PageNames.AppTransferCreate;
+    query: { appId: number };
+  };
+
 export type UserSelectionStoreOnConfirmAction = (
   {
     kind: 'navigate-to';
     replace?: boolean;
-  } & ({
-    page: PageNames.AppManagerInvite;
-    query: {
-      appId: number;
-    };
-  } | {
-    page: Exclude<PageNames, PageNames.AppManagerInvite>;
-  })
+  } & (TypedNavPages | { page: Exclude<PageNames, TypedNavPages['page']> })
 );
 
 export interface UserSelectionStoreState {
@@ -65,6 +68,11 @@ export const useUserSelectionStore = defineStore('user-selection', () => {
   const state = useSessionStorage<UserSelectionStoreState>('selected-users', defaultState, {
     serializer: {
       read(value) {
+        const sharedNavigateToActionSchema = {
+          kind: v.literal('navigate-to'),
+          replace: v.optional(v.boolean()),
+        };
+
         return v.parse(
           v.pipe(
             v.string(),
@@ -80,12 +88,14 @@ export const useUserSelectionStore = defineStore('user-selection', () => {
               onConfirmAction: v.optional(v.variant('kind', [
                 v.variant('page', [
                   v.looseObject({
-                    kind: v.literal('navigate-to'),
+                    ...sharedNavigateToActionSchema,
                     page: v.literal(PageNames.AppManagerInvite),
-                    replace: v.optional(v.boolean()),
-                    query: v.looseObject({
-                      appId: v.number(),
-                    }),
+                    query: v.looseObject({ appId: v.number() }),
+                  }),
+                  v.looseObject({
+                    ...sharedNavigateToActionSchema,
+                    page: v.literal(PageNames.AppTransferCreate),
+                    query: v.looseObject({ appId: v.number() }),
                   }),
                 ]),
               ])),
