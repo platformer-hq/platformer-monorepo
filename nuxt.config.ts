@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  extends: ['./layers/admin-panel'],
+  extends: process.env.PROJECT === 'admin-panel'
+    ? ['./apps/admin-panel']
+    : ['./apps/launcher'],
 });
