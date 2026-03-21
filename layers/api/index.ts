@@ -1,1 +1,1 @@
-export { ApiGraphQLError } from './app/utils/ApiGraphQLError';
+export { ApiGraphQLResponseError } from './app/utils/ApiGraphQLResponseError';

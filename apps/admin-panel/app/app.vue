@@ -9,7 +9,7 @@ if (import.meta.client) {
     ...useAuthenticateQueryOptions(),
     staleTime: 0,
     retry(_, error) {
-      return !ApiGraphQLError.is(error) || !error.isOfType('ERR_INIT_DATA_INVALID');
+      return !ApiGraphQLResponseError.is(error) || !error.hasErrorWithCode('ERR_INIT_DATA_INVALID');
     },
   });
 

@@ -5,7 +5,7 @@ import type { Variables } from 'graphql-request';
 export type GqlApiRequestFn = <T, V extends Variables>(
   document: TypedDocumentNode<T, V>,
   variables: V,
-) => fp.taskEither.TaskEither<ApiGraphQLError, T>;
+) => fp.taskEither.TaskEither<ApiGraphQLResponseError, T>;
 
 export function useMakeApiGqlRequest(): GqlApiRequestFn {
   const store = useApiStore();
@@ -13,7 +13,7 @@ export function useMakeApiGqlRequest(): GqlApiRequestFn {
   return (document, variables) => {
     return fp.function.pipe(
       gqlRequest({ client: store.client, document, variables }),
-      fp.taskEither.mapLeft(e => new ApiGraphQLError(e.response, e.request)),
+      fp.taskEither.mapLeft(e => new ApiGraphQLResponseError(e.response, e.request)),
     );
   };
 }

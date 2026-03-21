@@ -10,9 +10,9 @@ export function apiGqlRequest<T, V extends Variables>({ client, document, variab
   client: GraphQLClient;
   document: TypedDocumentNode<T, V>;
   variables: V;
-}): fp.taskEither.TaskEither<ApiGraphQLError, T> {
+}): fp.taskEither.TaskEither<ApiGraphQLResponseError, T> {
   return fp.function.pipe(
     gqlRequest({ client, document, variables }),
-    fp.taskEither.mapLeft(e => new ApiGraphQLError(e.response, e.request)),
+    fp.taskEither.mapLeft(e => new ApiGraphQLResponseError(e.response, e.request)),
   );
 }

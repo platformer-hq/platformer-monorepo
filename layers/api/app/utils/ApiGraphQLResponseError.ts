@@ -1,15 +1,15 @@
 import { ClientError } from 'graphql-request';
 import * as v from 'valibot';
 
-export class ApiGraphQLError extends ClientError {
+export class ApiGraphQLResponseError extends ClientError {
   constructor(...args: ConstructorParameters<typeof ClientError>) {
     super(...args);
-    this.name = 'ApiGraphQLError';
-    Object.setPrototypeOf(this, ApiGraphQLError.prototype);
+    this.name = 'ApiGraphQLResponseError';
+    Object.setPrototypeOf(this, ApiGraphQLResponseError.prototype);
   }
 
-  static is(value: unknown): value is ApiGraphQLError {
-    return value instanceof ApiGraphQLError;
+  static is(value: unknown): value is ApiGraphQLResponseError {
+    return value instanceof ApiGraphQLResponseError;
   }
 
   hasErrorWithCode(code: string): boolean {
