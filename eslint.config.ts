@@ -7,7 +7,7 @@ import withNuxt from './.nuxt/eslint.config.mjs';
 export default withNuxt(
   {
     name: 'app/files-to-lint',
-    files: ['layers/*/*.{ts,mts,tsx,vue}'],
+    files: ['{layers,apps}/*/*.{ts,mts,tsx,vue}'],
   },
   //#region Vue Composition API overrides.
   {
