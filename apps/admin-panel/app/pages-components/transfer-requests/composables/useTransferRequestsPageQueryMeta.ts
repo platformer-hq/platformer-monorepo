@@ -3,11 +3,11 @@ import * as fp from 'fp-ts';
 import { TransferRequestsPageDataDocument } from '../operations';
 
 export function useTransferRequestsPageQueryMeta() {
-  return useQueryMeta(({ request }) => defineQueryOptions({
+  return useNonParametrizedQueryMeta(({ apiGqlRequest }) => defineQueryOptions({
     key: [TransferRequestsPageDataDocument],
     query: throwify(() => {
       return fp.function.pipe(
-        request(TransferRequestsPageDataDocument, {}),
+        apiGqlRequest(TransferRequestsPageDataDocument, {}),
         fp.taskEither.map(r => r.currentUser.appTransferRequests),
       );
     }),

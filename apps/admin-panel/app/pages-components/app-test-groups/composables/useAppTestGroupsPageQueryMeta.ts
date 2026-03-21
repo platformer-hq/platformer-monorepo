@@ -3,12 +3,12 @@ import * as fp from 'fp-ts';
 import { AppTestGroupsPageDataDocument } from '../operations';
 
 export function useAppTestGroupsPageQueryMeta() {
-  return useQueryMeta(({ request }) => {
+  return useParametrizedQueryMeta(({ apiGqlRequest }) => {
     return defineQueryOptions((appId: number) => ({
       key: [AppTestGroupsPageDataDocument, appId],
       query: throwify(() => {
         return fp.function.pipe(
-          request(AppTestGroupsPageDataDocument, { appId }),
+          apiGqlRequest(AppTestGroupsPageDataDocument, { appId }),
           fp.taskEither.map(({ app }) => (
             app
               ? {

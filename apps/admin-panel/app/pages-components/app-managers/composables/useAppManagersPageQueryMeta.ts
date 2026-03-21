@@ -3,12 +3,12 @@ import * as fp from 'fp-ts';
 import { AppManagersPageDataDocument } from '../operations';
 
 export function useAppManagersPageQueryMeta() {
-  return useQueryMeta(({ request }) => {
+  return useParametrizedQueryMeta(({ apiGqlRequest }) => {
     return defineQueryOptions((appId: number) => ({
       key: [AppManagersPageDataDocument, appId],
       query: throwify(() => {
         return fp.function.pipe(
-          request(AppManagersPageDataDocument, { appId }),
+          apiGqlRequest(AppManagersPageDataDocument, { appId }),
           fp.taskEither.map(({ app, currentUser }) => (
             app
               ? {

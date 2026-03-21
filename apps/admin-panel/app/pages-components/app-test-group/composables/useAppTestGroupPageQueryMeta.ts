@@ -3,7 +3,7 @@ import * as fp from 'fp-ts';
 import { AppTestGroupPageDataDocument } from '../operations';
 
 export function useAppTestGroupPageQueryMeta() {
-  return useQueryMeta(({ request }) => {
+  return useParametrizedQueryMeta(({ apiGqlRequest }) => {
     return defineQueryOptions((options: {
       appId: number;
       testGroupId?: number;
@@ -11,7 +11,7 @@ export function useAppTestGroupPageQueryMeta() {
       key: [AppTestGroupPageDataDocument, options.appId, options.testGroupId || 0],
       query: throwify(() => {
         return fp.function.pipe(
-          request(AppTestGroupPageDataDocument, {
+          apiGqlRequest(AppTestGroupPageDataDocument, {
             appId: options.appId,
             testGroupId: options.testGroupId || 0,
             skipTestGroup: options.testGroupId === undefined,
