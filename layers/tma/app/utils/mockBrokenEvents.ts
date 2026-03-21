@@ -3,7 +3,7 @@ import { emitEvent, mockTelegramEnv, themeParams, viewport } from '@tma.js/sdk-v
 /**
  * Intercepts broken Telegram Mini Apps events and responds with a correct data.
  *
- * This. function requires viewport and theme params to be mounted.
+ * This function requires viewport and theme params to be mounted.
  */
 export function interceptBrokenEvents(options: {
   macOS: boolean;
