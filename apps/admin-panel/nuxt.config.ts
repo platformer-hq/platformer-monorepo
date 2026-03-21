@@ -86,11 +86,11 @@ export default defineNuxtConfig({
     priority: 100,
   }],
   extends: [
-    resolvePackage('../layers/api'),
-    resolvePackage('../layers/base'),
-    resolvePackage('../layers/navigation'),
-    resolvePackage('../layers/ui-kit'),
-    resolvePackage('../layers/pinia'),
+    resolvePackage('../../layers/api'),
+    resolvePackage('../../layers/base'),
+    resolvePackage('../../layers/navigation'),
+    resolvePackage('../../layers/ui-kit'),
+    resolvePackage('../../layers/pinia'),
   ],
   imports: {
     imports: [
