@@ -13,10 +13,7 @@ function higherPriorityImport(name: string, from: string) {
   return { name, from, priority: 10 };
 }
 
-const componentsIgnore = [
-  '**/_/**',
-  '**/_*',
-];
+const componentsIgnore = ['**/_/**', '**/_*'];
 
 const env = v.parse(
   v.looseObject({
@@ -91,6 +88,7 @@ export default defineNuxtConfig({
     resolvePackage('../../layers/navigation'),
     resolvePackage('../../layers/ui-kit'),
     resolvePackage('../../layers/pinia'),
+    resolvePackage('../../layers/tma'),
   ],
   imports: {
     imports: [
