@@ -6,8 +6,6 @@ import {
   setTargetOrigin,
   init,
   request2,
-  mockTelegramEnv,
-  emitEvent,
   themeParams,
   viewport,
   initData,
@@ -61,57 +59,18 @@ await callOnce(async () => {
     isInlineMode: !!launchParams.tgWebAppBotInline,
   });
 
-  // Telegram for macOS has a ton of bugs, including cases, when the client doesn't
-  // even respond to the "web_app_request_theme" method. It also generates an incorrect
-  // event for the "web_app_request_safe_area" method.
-  //
-  // In turn, Telegram Web K doesn't respond to both "web_app_request_safe_area" and
-  // "web_app_request_content_safe_area" methods. That's why we have to intercept some of these
-  // calls in order to get an expected behavior.
-  const mockForMacOS = platform.raw === 'macos';
-  const mockForWebK = platform.raw === 'web';
-  if (mockForMacOS || mockForWebK) {
-    const noInsets = { left: 0, top: 0, right: 0, bottom: 0 };
-    mockTelegramEnv({
-      onEvent(event, next) {
-        if (mockForMacOS) {
-          if (event.name === 'web_app_request_theme') {
-            return emitEvent('theme_changed', { theme_params: themeParams.state() });
-          }
-          if (event.name === 'web_app_request_viewport') {
-            return emitEvent('viewport_changed', {
-              height: viewport.height(),
-              width: viewport.width(),
-              is_expanded: viewport.isExpanded(),
-              is_state_stable: viewport.isStable(),
-            });
-          }
-        }
-        if (mockForWebK) {
-          if (event.name === 'web_app_request_safe_area') {
-            return emitEvent('safe_area_changed', noInsets);
-          }
-        }
-        if (event.name === 'web_app_request_content_safe_area') {
-          return emitEvent('content_safe_area_changed', noInsets);
-        }
-        next();
-      },
-    });
-  }
+  // Intercept broken mini apps events and respond with a correct data.
+  interceptBrokenEvents({ macOS: platform.raw === 'macos', webK: platform.raw === 'web' });
 
   // Initialize required components.
   initData.restore();
   backButton.mount();
-
   if (swipeBehavior.mount.isSupported()) {
     swipeBehavior.mount();
     swipeBehavior.disableVertical();
   }
-
   themeParams.mount();
   themeParams.bindCssVars(key => `--${key.replace(/_[a-z]/g, match => `-${match[1]}`)}`);
-
   miniApp.mount();
   miniApp.bindCssVars(key => `--app-${camelToKebab(key)}`);
 
