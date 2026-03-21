@@ -4,7 +4,7 @@ import * as fp from 'fp-ts';
 import { AuthenticateDocument } from './_api/operations';
 
 export function useAuthenticateQueryOptions() {
-  const request = useMakeGqlApiRequest();
+  const request = useMakeApiGqlRequest();
   const { initDataRaw } = useTmaStore();
   return defineQueryOptions({
     key: [AuthenticateDocument],

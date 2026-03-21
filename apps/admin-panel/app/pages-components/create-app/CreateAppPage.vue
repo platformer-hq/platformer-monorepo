@@ -20,7 +20,7 @@ const { t } = useI18n({
   },
 });
 const isPageEntered = useIsPageEntered(PageNames.CreateApp);
-const request = useMakeGqlApiRequest();
+const request = useMakeApiGqlRequest();
 const { mutate: createApp, isLoading: isCreatingApp } = useMutation({
   key: [CreateAppDocument],
   mutation(options: { title: string }) {

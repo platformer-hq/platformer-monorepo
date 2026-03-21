@@ -35,7 +35,7 @@ const { query } = useParsedQuery({
 const isPageEntered = useIsCurrentPageEntered();
 
 //#region Requests.
-const request = useMakeGqlApiRequest();
+const request = useMakeApiGqlRequest();
 const router = useRouter();
 const { setData: setTransferRequestsPageQueryData } = useTransferRequestsPageQueryMeta();
 const { invalidate: invalidateAppsPageQuery } = useAppsPageQueryMeta();

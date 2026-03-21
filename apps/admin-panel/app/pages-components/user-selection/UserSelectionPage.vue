@@ -40,7 +40,7 @@ const excludedUserIds = computed(() => [
   ...selectedUsers.value.map(u => u.id),
 ]);
 
-const request = useMakeGqlApiRequest();
+const request = useMakeApiGqlRequest();
 const { data: foundUsers, isPending: isSearchingUsers } = useQuery({
   staleTime: 0,
   enabled: () => inputDebounced.value.length > 0,

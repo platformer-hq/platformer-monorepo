@@ -84,7 +84,7 @@ const { t } = useI18n({
   },
 });
 const isDark = useIsDark();
-const request = useMakeGqlApiRequest();
+const request = useMakeApiGqlRequest();
 const { data: appData, isPending: isLoadingApp } = useQuery({
   key: [AppPageDataDocument, query.appId],
   query: throwify(() => {

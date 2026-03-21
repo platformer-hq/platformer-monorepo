@@ -54,7 +54,7 @@ export function useNonParametrizedQueryMeta<
   invalidate(): void;
   getData(): TData | TDataInitial | undefined;
 } {
-  const apiGqlRequest = useMakeGqlApiRequest();
+  const apiGqlRequest = useMakeApiGqlRequest();
   const options = createOptions({ apiGqlRequest });
   const queryMeta = useParametrizedQueryMeta(() => {
     return () => (typeof options === 'function' ? options() : options);

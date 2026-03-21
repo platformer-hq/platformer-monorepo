@@ -38,7 +38,7 @@ const { t } = useI18n({
 const platform = useTmaPlatform();
 const isPageEntered = useIsCurrentPageEntered();
 const appId = useQueryAppId();
-const request = useMakeGqlApiRequest();
+const request = useMakeApiGqlRequest();
 const queryCache = useQueryCache();
 const queryOptions = defineQueryOptions((appId: number) => ({
   key: [AppUrlsPageDataDocument, appId],

@@ -47,7 +47,7 @@ const { t } = useI18n({
 const { options, setData } = useAppTransferPageQueryMeta();
 const { data, isPending } = useQuery(() => options(query.value.appId));
 const navigateToUserSelection = useNavigateToUserSelection();
-const request = useMakeGqlApiRequest();
+const request = useMakeApiGqlRequest();
 const { mutate: revokeTransferRequest, isLoading: isRevokingTransferRequest } = useMutation({
   key: [RevokeAppTransferRequestDocument],
   mutation(options: { requestId: number }) {

@@ -58,7 +58,7 @@ const router = useRouter();
 const appManagersPageQueryMeta = useAppManagersPageQueryMeta();
 
 //#region Requests.
-const request = useMakeGqlApiRequest();
+const request = useMakeApiGqlRequest();
 const { mutate: removeManager, isLoading: isDeletingManager } = useMutation({
   key: [RemoveManagerDocument],
   mutation(options: { appId: number; userId: number }) {

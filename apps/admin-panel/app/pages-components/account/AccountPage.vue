@@ -40,7 +40,7 @@ const { t, locale, setLocale } = useI18n({
     },
   },
 });
-const request = useMakeGqlApiRequest();
+const request = useMakeApiGqlRequest();
 const { data, isPending } = useQuery({
   key: [AccountPageDataDocument],
   query: throwify(() => {

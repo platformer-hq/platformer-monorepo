@@ -31,7 +31,7 @@ const platform = useTmaPlatform();
 const isPageEntered = useIsCurrentPageEntered();
 const router = useRouter();
 const appManagersPageQueryMeta = useAppManagersPageQueryMeta();
-const request = useMakeGqlApiRequest();
+const request = useMakeApiGqlRequest();
 const { mutate: invite, isLoading } = useMutation({
   key: [InviteToManageDocument],
   mutation(options: {

@@ -24,7 +24,7 @@ const { t } = useI18n({
 });
 
 const platform = useTmaPlatform();
-const request = useMakeGqlApiRequest();
+const request = useMakeApiGqlRequest();
 const queryCache = useQueryCache();
 const { data: pageData, isPending: isLoadingPageData } = useQuery({
   key: [PrivacyPageDataDocument],

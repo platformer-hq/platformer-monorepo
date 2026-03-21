@@ -3,7 +3,7 @@ import * as fp from 'fp-ts';
 import { CreateTestGroupDocument } from '../operations';
 
 export function useCreateTestGroup() {
-  const request = useMakeGqlApiRequest();
+  const request = useMakeApiGqlRequest();
   const {
     setData: setAppTestGroupPageQueryData,
     getData: getAppTestGroupPageQueryData,

@@ -35,7 +35,7 @@ const { t, locale } = useI18n({
     },
   },
 });
-const request = useMakeGqlApiRequest();
+const request = useMakeApiGqlRequest();
 const queryCache = useQueryCache();
 const { data: appData, isPending: isLoadingApp } = useQuery({
   key: () => [AppCachePageDataDocument, query.appId],

@@ -29,7 +29,7 @@ const { t } = useI18n({
 });
 const navigateToUserSelection = useNavigateToUserSelection();
 const appId = useQueryAppId();
-const request = useMakeGqlApiRequest();
+const request = useMakeApiGqlRequest();
 const queryMeta = useAppManagersPageQueryMeta();
 const { data, isPending } = useQuery(() => queryMeta.options(appId.value));
 const { mutate: revokeManageInvite, isLoading: isRevokingInvite } = useMutation({

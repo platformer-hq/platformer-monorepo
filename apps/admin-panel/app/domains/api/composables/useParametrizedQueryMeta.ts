@@ -29,7 +29,7 @@ export function useParametrizedQueryMeta<
   invalidate(params: Params): void;
   getData(params: Params): TData | TDataInitial | undefined;
 } {
-  const apiGqlRequest = useMakeGqlApiRequest();
+  const apiGqlRequest = useMakeApiGqlRequest();
   const options = createOptions({ apiGqlRequest });
   return {
     options,

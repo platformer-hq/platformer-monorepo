@@ -3,7 +3,7 @@ import * as fp from 'fp-ts';
 import { UpdateTestGroupDocument } from '../operations';
 
 export function useUpdateTestGroup(appId: number) {
-  const request = useMakeGqlApiRequest();
+  const request = useMakeApiGqlRequest();
   const { setData: setAppTestGroupPageQueryData } = useAppTestGroupPageQueryMeta();
   const { setData: setAppTestGroupsPageQueryData } = useAppTestGroupsPageQueryMeta();
 

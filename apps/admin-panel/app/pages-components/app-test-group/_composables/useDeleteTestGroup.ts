@@ -1,7 +1,7 @@
 import { DeleteTestGroupDocument } from '../operations';
 
 export function useDeleteTestGroup(appId: number) {
-  const request = useMakeGqlApiRequest();
+  const request = useMakeApiGqlRequest();
   const { setData: setAppTestGroupsPageQueryData } = useAppTestGroupsPageQueryMeta();
   const router = useRouter();
 

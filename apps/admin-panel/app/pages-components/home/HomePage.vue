@@ -12,7 +12,7 @@ import {
 
 import { HomePageDataDocument } from './operations';
 
-const request = useMakeGqlApiRequest();
+const request = useMakeApiGqlRequest();
 const { data, isPending } = useQuery({
   key: [HomePageDataDocument],
   query: throwify(() => {

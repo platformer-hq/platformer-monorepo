@@ -7,7 +7,7 @@ export type GqlApiRequestFn = <T, V extends Variables>(
   variables: V,
 ) => fp.taskEither.TaskEither<ApiGraphQLError, T>;
 
-export function useMakeGqlApiRequest(): GqlApiRequestFn {
+export function useMakeApiGqlRequest(): GqlApiRequestFn {
   const store = useApiStore();
 
   return (document, variables) => {

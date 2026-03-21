@@ -40,7 +40,7 @@ const { query } = useParsedQuery({
 const isPageEntered = useIsCurrentPageEntered();
 
 //#region Requests.
-const request = useMakeGqlApiRequest();
+const request = useMakeApiGqlRequest();
 const router = useRouter();
 const { setData: setManagementInvitesPageQueryData } = useManagementInvitesPageQueryMeta();
 const { invalidate: invalidateAppsPageQuery } = useAppsPageQueryMeta();
