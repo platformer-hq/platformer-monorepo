@@ -34,14 +34,6 @@ const { setLocale } = useI18n();
 
 // Initializing the SDK.
 await callOnce(async () => {
-  /**
-   * Converts value from camel case to kebab case.
-   * @param value - value to convert.
-   */
-  const camelToKebab = (value: string): string => {
-    return value.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`);
-  };
-
   const { startParam, launchParams, platform } = tmaStore;
 
   // Init eruda.
