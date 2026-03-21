@@ -30,20 +30,25 @@ const tmaStore = useTmaStore();
 const router = useRouter();
 const { setLocale } = useI18n();
 
-// Initializing the SDK.
+// Init eruda.
 await callOnce(async () => {
-  const { startParam, launchParams, platform } = tmaStore;
-
-  // Init eruda.
   if (
-    startParam.includes('eruda')
-    || (import.meta.env.DEV && !['tdesktop', 'web', 'weba', 'webk', 'macos'].includes(platform.raw))
+    tmaStore.startParam.includes('eruda')
+    || (
+      import.meta.env.DEV
+        && !['tdesktop', 'web', 'weba', 'webk', 'macos'].includes(tmaStore.platform.raw)
+    )
   ) {
     await import('eruda').then(({ default: eruda }) => {
       eruda.init();
       eruda.position({ x: window.innerWidth - 50, y: window.innerHeight / 2 });
     });
   }
+});
+
+// Initializing the SDK.
+await callOnce(async () => {
+  const { startParam, launchParams, platform } = tmaStore;
 
   // Configure @tma.js SDK.
   setDebug(startParam.includes('debug') || import.meta.env.DEV);
@@ -70,17 +75,11 @@ await callOnce(async () => {
     swipeBehavior.disableVertical();
   }
   themeParams.mount();
-  themeParams.bindCssVars(key => `--${key.replace(/_[a-z]/g, match => `-${match[1]}`)}`);
+  themeParams.bindCssVars(formatThemeParamsCssVar);
   miniApp.mount();
-  miniApp.bindCssVars(key => `--app-${camelToKebab(key)}`);
-
+  miniApp.bindCssVars(formatMiniAppCssVar);
   await viewport.mount();
-  viewport.bindCssVars(key => {
-    const kebabed = camelToKebab(key);
-    return key.startsWith('safeArea') || key.startsWith('contentSafeArea')
-      ? `--${kebabed}`
-      : `--viewport-${kebabed}`;
-  });
+  viewport.bindCssVars(formatViewportCssVar);
   viewport.expand();
 
   // Set global properties required by styles - platform identifier and scheme.
