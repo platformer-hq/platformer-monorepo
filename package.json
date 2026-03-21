@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev --port 5174 --host",
+    "admin:dev": "cross-env PROJECT=admin-panel nuxt dev --port 5174 --host",
+    "launcher:dev": "cross-env PROJECT=launcher nuxt dev --port 5174 --host",
     "gql-codegen": "graphql-codegen --config graphql.config.ts",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
@@ -45,6 +46,7 @@
     "@vue/eslint-config-typescript": "^14.6.0",
     "baseline-browser-mapping": "^2.9.19",
     "browserslist-to-esbuild": "^2.1.1",
+    "cross-env": "^10.1.0",
     "dotenv": "^17.2.3",
     "eslint": "^9.39.2",
     "eslint-import-resolver-typescript": "^4.4.4",
