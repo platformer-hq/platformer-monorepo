@@ -12,11 +12,12 @@ export class ApiGraphQLError extends ClientError {
     return value instanceof ApiGraphQLError;
   }
 
-  isOfType(type: string): boolean {
-    return v.is(v.looseObject({
+  hasErrorWithCode(code: string): boolean {
+    const schema = v.looseObject({
       errorData: v.looseObject({
-        code: v.literal(type),
+        code: v.literal(code),
       }),
-    }), this.response.extensions);
+    });
+    return this.response.errors?.some(err => v.is(schema, err.extensions)) || false;
   }
 }
