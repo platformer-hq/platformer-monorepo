@@ -5,6 +5,14 @@ function resolve(filePath: string) {
   return path.resolve(__dirname, filePath);
 }
 
+function resolvePackage(pkgPath: string) {
+  return path.resolve(__dirname, pkgPath);
+}
+
+function higherPriorityImport(name: string, from: string) {
+  return { name, from, priority: 10 };
+}
+
 const componentsIgnore = [
   '**/_/**',
   '**/_*',
@@ -78,12 +86,17 @@ export default defineNuxtConfig({
     priority: 100,
   }],
   extends: [
-    '../api',
-    '../base',
-    '../navigation',
-    '../ui-kit',
+    resolvePackage('../layers/api'),
+    resolvePackage('../layers/base'),
+    resolvePackage('../layers/navigation'),
+    resolvePackage('../layers/ui-kit'),
+    resolvePackage('../layers/pinia'),
   ],
   imports: {
+    imports: [
+      higherPriorityImport('useParametrizedQueryMeta', '~/domains/api/composables/useParametrizedQueryMeta'),
+      higherPriorityImport('useNonParametrizedQueryMeta', '~/domains/api/composables/useNonParametrizedQueryMeta'),
+    ],
     dirs: [
       resolve('app/stores/*.ts'),
       resolve('app/navigation/{composables,utils}/*.ts'),
