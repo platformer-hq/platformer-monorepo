@@ -1,9 +1,11 @@
 <script setup lang="ts">
 
+const state = ref<StatusPageState>({ kind: 'loading', step: 'getting-data' });
+// const state = ref<StatusPageState>({ kind: 'error' });
 </script>
 
 <template>
-  <StatusPage status="loading" title="Loading something" subtitle="Something is loading"/>
+  <StatusPage :state="state"/>
   <ClientOnly>
     <AppInitializer>
       <NuxtPage/>
