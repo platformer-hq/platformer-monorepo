@@ -52,6 +52,12 @@ export { default as ListIosItemLeftLabel } from './app/components/List/ListIos/L
 export { default as LoadingIndicatorAndroid } from './app/components/LoadingIndicator/LoadingIndicatorAndroid.vue';
 export { default as LoadingIndicatorIos } from './app/components/LoadingIndicator/LoadingIndicatorIos.vue';
 
+export { default as ProgressiveImage } from './app/components/ProgressiveImage/ProgressiveImage.vue';
+export { default as ProgressiveImageElement } from './app/components/ProgressiveImage/ProgressiveImageElement.vue';
+export { default as ProgressiveImagePlaceholder } from './app/components/ProgressiveImage/ProgressiveImagePlaceholder.vue';
+export { default as ProgressiveImageShimmer } from './app/components/ProgressiveImage/ProgressiveImageShimmer.vue';
+export { default as ProgressiveImageTransition } from './app/components/ProgressiveImage/ProgressiveImageTransition.vue';
+
 export { default as RadioAndroid } from './app/components/Radio/RadioAndroid.vue';
 export { default as RadioIos } from './app/components/Radio/RadioIos.vue';
 
