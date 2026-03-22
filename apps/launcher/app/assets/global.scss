@@ -1,0 +1,41 @@
+:root {
+  // For each inset type, declare CSS variables.
+  @each $inset-type in ("top", "left", "right", "bottom") {
+    --sum-inset-#{$inset-type}: calc(var(--safe-area-inset-#{$inset-type}, 0px) + var(--content-safe-area-inset-#{$inset-type}, 0px));
+  }
+
+  // Palette fallbacks.
+  @each $key, $fallback in (
+    "section-bg-color": "bg-color",
+    "accent-text-color": "link-color",
+    "subtitle-text-color": "hint-color",
+    "section-header-text-color": "hint-color",
+    "destructive-text-color": "text-destructive-color",
+  ) {
+    --#{$key}: var(--#{$fallback});
+  }
+
+  &[data-theme="light"] {
+    --quaternary-fill-bg-color: rgba(116, 116, 128, .08);
+  }
+
+  &[data-theme="dark"] {
+    --quaternary-fill-bg-color: rgba(118, 118, 128, .18);
+  }
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  margin: 0;
+  color: var(--text-color, white);
+  background: var(--app-bg-color);
+  overflow: hidden;
+}
+
+* {
+  box-sizing: border-box;
+  // There is no user selection in mobile applications. We are enabling this feature per-case.
+  user-select: none;
+}
