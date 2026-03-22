@@ -5,6 +5,10 @@ function resolve(filePath: string) {
   return path.resolve(__dirname, filePath);
 }
 
+function resolvePackage(pkg: string) {
+  return path.resolve(__dirname, '../../packages', pkg);
+}
+
 function higherPriorityImport(name: string, from: string) {
   return { name, from, priority: 10 };
 }
@@ -79,12 +83,12 @@ export default defineNuxtConfig({
     priority: 100,
   }],
   extends: [
-    '../../layers/api',
-    '../../layers/base',
-    '../../layers/navigation',
-    '../../layers/ui-kit',
-    '../../layers/pinia',
-    '../../layers/tma',
+    resolvePackage('api'),
+    resolvePackage('base'),
+    resolvePackage('navigation'),
+    resolvePackage('ui-kit'),
+    resolvePackage('pinia'),
+    resolvePackage('tma'),
   ],
   imports: {
     imports: [
