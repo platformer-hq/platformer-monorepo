@@ -1,56 +1,66 @@
 <script setup lang="ts">
-import platformerLogoSrc from '@/assets/platformer-logo.svg';
+import platformerLogoSrc from '@/assets/platformer-logo.svg?url';
+
+export type StatusPageState = (
+  | { kind: 'loading'; step: 'getting-data' | 'waiting-load' }
+  | { kind: 'error' }
+  | { kind: 'warning' }
+);
 
 defineProps<{
-  state?: 'error' | 'loading' | 'warning';
-  title?: string;
+  state: StatusPageState;
 }>();
 
+const { t } = useI18n({
+  messages: {
+    en: {
+      'loading.title': 'Loading application',
+      'loading.subtitle.gettingData': 'Getting app information',
+      'loading.subtitle.waitingLoad': 'Waiting for the app to load',
+    },
+    ru: {
+      'loading.title': 'Загрузка приложения',
+      'loading.subtitle.gettingData': 'Получение информации о приложении',
+      'loading.subtitle.waitingLoad': 'Ожидание загрузки приложения',
+    },
+  },
+});
+
 const { b, e } = bem('status-page');
+const locales = ['ru', 'en'] as const;
 </script>
 
 <template>
   <div :class="b()">
-    <div />
-    <div :class="e('main')">
-      <div :class="e('image')">
-        <ProgressiveImage
-          v-slot="{src, srcset, onError, onLoad, isLoaded, isLoading, isError}"
-          :src="platformerLogoSrc"
-          :class="e('logo')"
-          width="80"
-          height="80"
-        >
-          <ProgressiveImageTransition>
-            <ProgressiveImageShimmer v-if="isLoading"/>
-            <ProgressiveImagePlaceholder v-else-if="isError"/>
-          </ProgressiveImageTransition>
-          <ProgressiveImageElement v-bind="{src, srcset, onError, onLoad, show: isLoaded}"/>
-        </ProgressiveImage>
-        <IconXmark28 v-if="state === 'error'" :class="e('icon', 'error')"/>
+    <div :class="e('body')">
+      <div :class="e('logo')">
+        <img :src="platformerLogoSrc" :class="e('image')" :width="80" :height="80">
+        <IconXmark28 v-if="state.kind === 'error'" :class="e('status-icon', 'error')"/>
         <IconExclamationMarkTriangleFill28
-          v-else-if="state === 'warning'"
-          :class="e('icon', 'warning')"
+          v-else-if="state.kind === 'warning'"
+          :class="e('status-icon', 'warning')"
         />
+        <div v-else-if="state.kind === 'loading'" :class="e('status-icon', 'loading')">
+          <LoadingIndicatorIos :class="e('loader', 'ios')" :size="14"/>
+          <LoadingIndicatorAndroid :class="e('loader', 'android')" :size="14"/>
+        </div>
       </div>
       <div :class="e('content')">
-        <ClientOnly>
-          <VTypography v-if="title" as="h1" variant="title">
-            {{ title }}
-          </VTypography>
-          <VTypography v-if="$slots.default" :class="e('subtitle')" variant="body">
-            <slot />
-          </VTypography>
-          <template #fallback>
-            Server side
+        <template v-if="state.kind === 'loading'">
+          <template v-for="locale in locales" :key="locale">
+            <VTypography :class="e('title', `loading-${locale}`)" as="h1" variant="heading">
+              {{ t('loading.title', {}, { locale }) }}
+            </VTypography>
+            <VTypography :class="e('subtitle', `loading-${locale}`)" as="h2" variant="body">
+              {{ t(state.step === 'waiting-load'
+                ? 'loading.subtitle.waitingLoad'
+                : 'loading.subtitle.gettingData', {}, { locale }) }}
+            </VTypography>
           </template>
-        </ClientOnly>
-      </div>
-      <div v-if="state === 'loading'" :class="e('loader')">
-        <!-- <AutoLoadingIndicator :size="28"/> -->
+        </template>
       </div>
     </div>
-    <!-- <Disclaimer /> -->
+    <ProjectDisclaimer :class="e('disclaimer')"/>
   </div>
 </template>
 
@@ -58,33 +68,39 @@ const { b, e } = bem('status-page');
 @use "sass:map" as map;
 @use "sass:list" as list;
 
-$baseLoaderSize: 28px;
-$statusIconShift: translate(20%, 20%);
-
 .status-page {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: column;
   position: absolute;
-  background: var(--theme-bg-color);
-  padding-top: calc(var(--sum-inset-top) + 8px);
-  padding-bottom: calc(var(--sum-inset-bottom) + 8px);
+  inset: 0;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  text-align: center;
+  background: var(--bg-color);
+  padding:
+    var(--sum-inset-top)
+    var(--sum-inset-right)
+    calc(var(--sum-inset-bottom) + 8px)
+    var(--sum-inset-left);
 
-  &__image {
-    margin-bottom: 16px;
-    position: relative;
+  &__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-inline: 16px;
   }
 
   &__logo {
+    position: relative;
+  }
+
+  &__image {
     display: block;
     border-radius: 16px;
     overflow: hidden;
   }
 
-  &__icon {
+  &__status-icon {
+    $statusIconShift: translate(-75%, -75%);
     @keyframes status-page-error-icon-appear {
       from {
         opacity: 0;
@@ -99,10 +115,11 @@ $statusIconShift: translate(20%, 20%);
       }
     }
     position: absolute;
-    right: 0;
-    bottom: 0;
-    transform: $statusIconShift;
-    display: block;
+    top: 100%;
+    left: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 16px;
     height: 16px;
     padding: 4px;
@@ -112,7 +129,7 @@ $statusIconShift: translate(20%, 20%);
     animation: status-page-error-icon-appear 400ms ease forwards;
 
     &--error {
-      background: var(--theme-destructive-text-color);
+      background: var(--destructive-text-color);
 
       path {
         stroke-width: 4;
@@ -122,27 +139,47 @@ $statusIconShift: translate(20%, 20%);
     &--warning {
       background: orange;
     }
+
+    &--loading {
+      background: var(--secondary-bg-color);
+    }
   }
 
   &__loader {
-    padding-top: 16px;
-    color: var(--theme-hint-color);
+    display: none;
+    @each $platform in ("ios", "android") {
+      [data-platform="#{$platform}"] & {
+        &--#{$platform} {
+          display: flex;
+        }
+      }
+    }
   }
 
-  &__main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding-right: calc(var(--sum-inset-right) + 16px);
-    padding-left: calc(var(--sum-inset-left) + 16px);
+  &__title {
+    margin: 16px 0 4px;
+  }
+
+  &__subtitle {
+    color: var(--subtitle-text-color);
+  }
+
+  &__title, &__subtitle {
+    display: none;
+    @each $locale in ("ru", "en") {
+      [data-locale="#{$locale}"] & {
+        &--loading-#{$locale} {
+          display: block;
+        }
+      }
+    }
   }
 
   &__content {
     @keyframes status-page-content-appear {
       from {
         opacity: 0;
-        max-height: $baseLoaderSize;
+        max-height: 28px;
       }
       to {
         opacity: 1;
@@ -152,11 +189,6 @@ $statusIconShift: translate(20%, 20%);
     text-align: center;
     text-wrap: balance;
     animation: status-page-content-appear 200ms ease forwards;
-  }
-
-  &__subtitle {
-    margin: 4px 0 0;
-    color: var(--theme-subtitle-text-color);
   }
 }
 </style>
