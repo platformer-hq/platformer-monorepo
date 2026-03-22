@@ -5,7 +5,7 @@
  */
 import type { AutoTypographyVariant } from '~/auto-components/AutoTypography/AutoTypography.vue';
 
-import type { KnownHtmlTag } from '#layers/ui-kit';
+import type { KnownHtmlTag } from '#packages/ui-kit';
 
 const { borderRadius = 5, as = 'div' } = defineProps<{
   /**

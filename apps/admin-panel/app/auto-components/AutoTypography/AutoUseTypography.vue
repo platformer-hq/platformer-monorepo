@@ -4,7 +4,7 @@ import { mergeProps } from 'vue';
 import type { UseColorBoxAnyColor } from '~/domains/colors/components/UseColorBox.vue';
 
 import { UseTypographyAndroid, UseTypographyIos } from '#components';
-import type { UseTypographyBaseProps, UseTypographyBaseSlotProps } from '#layers/ui-kit';
+import type { UseTypographyBaseProps, UseTypographyBaseSlotProps } from '#packages/ui-kit';
 
 export type AutoUseTypographyVariant =
   | 'title1'

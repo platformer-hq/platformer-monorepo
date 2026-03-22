@@ -1,5 +1,5 @@
 /* eslint-disable */
-import type * as Types from '#layers/api/schema';
+import type * as Types from '#packages/api/schema';
 
 import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type AppTestGroupPageDataQueryVariables = Types.Exact<{

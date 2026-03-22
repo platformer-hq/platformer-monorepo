@@ -4,7 +4,7 @@ import { useScroll } from '@vueuse/core';
 
 import type { KnownThemeParamsKey as SimpleThemeParamsKey } from '~/domains/colors/types';
 
-import { PageRoot as UiKitPageRoot, type PageRootProps as UiKitPageRootProps } from '#layers/ui-kit';
+import { PageRoot as UiKitPageRoot, type PageRootProps as UiKitPageRootProps } from '#packages/ui-kit';
 
 import { useScrollStatesStore } from './useScrollStates';
 

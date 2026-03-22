@@ -1,4 +1,4 @@
-import { AppManagementInviteRole, AppPrivacy, AppRole, AppUrlSimpleExplanationKind } from '#layers/api/schema';
+import { AppManagementInviteRole, AppPrivacy, AppRole, AppUrlSimpleExplanationKind } from '#packages/api/schema';
 
 export enum LocalAppRole {
   Owner = 'owner',

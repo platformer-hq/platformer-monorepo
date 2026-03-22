@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { KnownHtmlTag } from '#layers/ui-kit';
+import type { KnownHtmlTag } from '#packages/ui-kit';
 
 import type {
   AutoUseTypographyProps,

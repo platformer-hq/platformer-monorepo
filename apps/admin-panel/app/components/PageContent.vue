@@ -3,7 +3,7 @@
  * This component is responsible for providing a container with a restricted width, equal to
  * the max possible view content width.
  */
-import type { KnownHtmlTag } from '#layers/ui-kit';
+import type { KnownHtmlTag } from '#packages/ui-kit';
 
 const { as = 'div' } = defineProps<{
   /**

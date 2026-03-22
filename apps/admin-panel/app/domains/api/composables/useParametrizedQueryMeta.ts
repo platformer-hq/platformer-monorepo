@@ -3,7 +3,7 @@ import type { DefineQueryOptionsTagged } from '@pinia/colada';
 import {
   useParametrizedQueryMeta as _useParametrizedQueryMeta,
   type UseParametrizedQueryMetaSetDataUpdater,
-} from '#layers/pinia';
+} from '#packages/pinia';
 
 export type { UseParametrizedQueryMetaSetDataUpdater };
 

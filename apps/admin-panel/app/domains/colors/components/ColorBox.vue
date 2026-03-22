@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useTemplateRef, type StyleValue } from 'vue';
 
-import type { KnownHtmlTag } from '#layers/ui-kit';
+import type { KnownHtmlTag } from '#packages/ui-kit';
 
 import type { UseColorBoxProps } from './UseColorBox.vue';
 

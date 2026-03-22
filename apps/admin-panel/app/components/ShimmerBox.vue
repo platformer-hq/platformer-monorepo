@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { reactiveOmit } from '@vueuse/core';
 
-import { ShimmerBox, type ShimmerBoxProps } from '#layers/ui-kit';
+import { ShimmerBox, type ShimmerBoxProps } from '#packages/ui-kit';
 
 interface Props extends Omit<ShimmerBoxProps, 'bgColor' | 'shimmerColor'> {
   /**

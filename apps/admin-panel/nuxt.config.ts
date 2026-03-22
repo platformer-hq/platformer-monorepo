@@ -36,6 +36,7 @@ export default defineNuxtConfig({
   alias: {
     '@': resolve('app'),
     '~': resolve('app'),
+    '#packages': resolve('../../packages'),
   },
   app: {
     rootTag: 'main',

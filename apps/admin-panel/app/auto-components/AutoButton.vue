@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactivePick } from '@vueuse/core';
 
-import type { ButtonBaseProps } from '#layers/ui-kit';
+import type { ButtonBaseProps } from '#packages/ui-kit';
 
 interface IosSpecificProps {
   /**

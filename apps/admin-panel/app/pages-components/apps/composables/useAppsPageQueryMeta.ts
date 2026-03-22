@@ -1,6 +1,6 @@
 import * as fp from 'fp-ts';
 
-import { AppPrivacy, AppRole } from '#layers/api/schema';
+import { AppPrivacy, AppRole } from '#packages/api/schema';
 
 import { AppsPageDataDocument } from '../operations';
 
