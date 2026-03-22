@@ -6,7 +6,7 @@ const { as = 'p' } = defineProps<{
    * @default 'p'
    */
   as?: KnownHtmlTag;
-  variant: 'title' | 'body';
+  variant: 'heading' | 'body' | 'footnote';
 }>();
 
 const { b } = bem('v-typography');
@@ -20,11 +20,31 @@ const { b } = bem('v-typography');
 
 <style lang="scss">
 .v-typography {
-  .platform-ios & {
+  margin: 0;
+
+  &--footnote {
+    font-size: 13px;
+    line-height: 16px;
+    font-weight: 400;
+  }
+
+  &--body {
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+  }
+
+  &--heading {
+    line-height: 26px;
+    font-size: 22px;
+    font-weight: 500;
+  }
+
+  [data-platform="ios"] & {
     font-family: -apple-system, 'SF Pro', BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
   }
 
-  .platform-android & {
+  [data-platform="android"] & {
     font-family: Roboto, "Segoe UI", "Helvetica Neue", sans-serif;
   }
 }
