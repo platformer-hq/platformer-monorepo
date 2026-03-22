@@ -1,6 +1,8 @@
 import path from 'node:path';
 import * as v from 'valibot';
 
+import { iifeUrlPlugin } from './vite/iifeUrlPlugin';
+
 function resolve(filePath: string) {
   return path.resolve(__dirname, filePath);
 }
@@ -24,9 +26,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
     '@nuxt/eslint',
-    '@pinia/nuxt',
     '@nuxtjs/i18n',
-    '@pinia/colada-nuxt',
     // '@sentry/nuxt/module'
   ],
   alias: {
@@ -110,6 +110,9 @@ export default defineNuxtConfig({
     },
   },
   vite: {
+    plugins: [
+      iifeUrlPlugin(),
+    ],
     server: {
       proxy: {
         '/api/gql': {
