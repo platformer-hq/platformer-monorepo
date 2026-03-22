@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 import ShimmerBox, { type ShimmerBoxProps } from '@ui-kit/components/ShimmerBox.vue';
 
-defineProps<ShimmerBoxProps>();
+export type ProgressiveImageShimmerProps = ShimmerBoxProps;
+
+defineProps<ProgressiveImageShimmerProps>();
 </script>
 
 <template>

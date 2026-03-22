@@ -55,7 +55,7 @@ export { default as LoadingIndicatorIos } from './app/components/LoadingIndicato
 export { default as ProgressiveImage } from './app/components/ProgressiveImage/ProgressiveImage.vue';
 export { default as ProgressiveImageElement } from './app/components/ProgressiveImage/ProgressiveImageElement.vue';
 export { default as ProgressiveImagePlaceholder } from './app/components/ProgressiveImage/ProgressiveImagePlaceholder.vue';
-export { default as ProgressiveImageShimmer } from './app/components/ProgressiveImage/ProgressiveImageShimmer.vue';
+export { default as ProgressiveImageShimmer, type ProgressiveImageShimmerProps } from './app/components/ProgressiveImage/ProgressiveImageShimmer.vue';
 export { default as ProgressiveImageTransition } from './app/components/ProgressiveImage/ProgressiveImageTransition.vue';
 
 export { default as RadioAndroid } from './app/components/Radio/RadioAndroid.vue';
