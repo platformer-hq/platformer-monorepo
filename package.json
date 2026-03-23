@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "admin:dev": "cross-env PROJECT=admin-panel nuxt dev --port 5174 --host",
-    "admin:build": "cross-env PROJECT=admin-panel nuxt build --dotenv .env.production",
+    "admin:build": "cross-env PROJECT=admin-panel nuxt build --dotenv ./apps/admin-panel/.env.production",
     "launcher:dev": "cross-env PROJECT=launcher nuxt dev --port 5174 --host",
     "gql-codegen": "graphql-codegen --config graphql.config.ts",
     "generate": "nuxt generate",
