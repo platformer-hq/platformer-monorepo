@@ -8,7 +8,7 @@ import {
 export type { UseParametrizedQueryMetaSetDataUpdater };
 
 export type UseParametrizedQueryMetaCreateOptionsFn<R> = (context: {
-  apiGqlRequest: GqlApiRequestFn;
+  apiGqlRequest: ApiGqlRequestFn;
 }) => R;
 
 export function useParametrizedQueryMeta<

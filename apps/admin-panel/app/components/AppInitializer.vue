@@ -27,7 +27,6 @@ const emit = defineEmits<{
 callOnce(applyPolyfills);
 
 const tmaStore = useTmaStore();
-const router = useRouter();
 const { setLocale } = useI18n();
 
 // Init eruda.
@@ -131,13 +130,6 @@ await callOnce(async () => {
     }
   }
   await setLocale(locale || 'en');
-});
-
-// Setting the initial route.
-await callOnce(async () => {
-  if (!isPageReload()) {
-    await router.replace({ name: PageNames.Main });
-  }
 });
 
 onMounted(() => {

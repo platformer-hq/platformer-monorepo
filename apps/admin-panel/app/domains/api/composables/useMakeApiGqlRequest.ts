@@ -2,12 +2,12 @@ import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import * as fp from 'fp-ts';
 import type { Variables } from 'graphql-request';
 
-export type GqlApiRequestFn = <T, V extends Variables>(
+export type ApiGqlRequestFn = <T, V extends Variables>(
   document: TypedDocumentNode<T, V>,
   variables: V,
 ) => fp.taskEither.TaskEither<ApiGraphQLResponseError, T>;
 
-export function useMakeApiGqlRequest(): GqlApiRequestFn {
+export function useMakeApiGqlRequest(): ApiGqlRequestFn {
   const store = useApiStore();
 
   return (document, variables) => {
