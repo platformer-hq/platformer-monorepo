@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+/// <reference path="../../.nuxt/nuxt.node.d.ts" />
 import path from 'node:path';
 import * as v from 'valibot';
 
@@ -14,7 +16,7 @@ function higherPriorityImport(name: string, from: string) {
 }
 
 const componentsIgnore = ['**/_/**', '**/_*'];
-
+const isDev = process.env.NODE_ENV !== 'production';
 const env = v.parse(
   v.looseObject({
     API_BASE_URL: v.pipe(v.string(), v.nonEmpty()),
@@ -129,6 +131,9 @@ export default defineNuxtConfig({
     '/**': {
       prerender: true,
     },
+  },
+  typescript: {
+    typeCheck: !isDev,
   },
   vite: {
     server: {

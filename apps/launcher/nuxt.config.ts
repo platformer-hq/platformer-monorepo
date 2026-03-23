@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+/// <reference path="../../.nuxt/nuxt.node.d.ts" />
 import path from 'node:path';
 import * as v from 'valibot';
 
