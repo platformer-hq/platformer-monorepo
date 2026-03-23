@@ -26,6 +26,12 @@ if (import.meta.client) {
 </script>
 
 <template>
+  <Head>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    >
+  </Head>
   <ClientOnly>
     <NavigationStateProvider>
       <AppInitializer v-slot="{transition}" @ready="miniApp.ready">
