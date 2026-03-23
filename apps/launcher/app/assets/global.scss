@@ -14,14 +14,6 @@
   ) {
     --#{$key}: var(--#{$fallback});
   }
-
-  &[data-theme="light"] {
-    --quaternary-fill-bg-color: rgba(116, 116, 128, .08);
-  }
-
-  &[data-theme="dark"] {
-    --quaternary-fill-bg-color: rgba(118, 118, 128, .18);
-  }
 }
 
 body {
