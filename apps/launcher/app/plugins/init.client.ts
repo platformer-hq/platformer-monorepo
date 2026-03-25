@@ -58,6 +58,12 @@ export default defineNuxtPlugin({
       webK: tgWebAppPlatform === 'web',
     });
 
+    const initialColors = {
+      header: miniApp.headerColor(),
+      background: miniApp.bgColor(),
+      bottomBar: miniApp.bottomBarColor(),
+    };
+
     // Initialize required components.
     initData.restore();
     themeParams.mount();
@@ -83,5 +89,12 @@ export default defineNuxtPlugin({
     if (!isPageReload()) {
       await navigateTo({ replace: true });
     }
+    return {
+      provide: {
+        init: {
+          initialColors,
+        },
+      },
+    };
   },
 });
