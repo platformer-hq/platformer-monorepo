@@ -29,6 +29,8 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
     '@nuxtjs/i18n',
+    '@pinia/nuxt',
+    '@pinia/colada-nuxt',
     // '@sentry/nuxt/module'
   ],
   alias: {
