@@ -134,9 +134,13 @@ const texts = computed<
       };
     }
     const { kind } = params;
-    const title = t(kind === 'init-data-missing'
-      ? 'error.initDataMissing.title'
-      : 'error.defaultTitle');
+    const title = t(
+      ({
+        'init-data-missing': 'error.initDataMissing.title',
+        'http-web': 'error.httpWeb.title',
+      } as Partial<Record<typeof kind, string>>)[kind]
+      || 'error.defaultTitle',
+    );
 
     let message: string;
     if (kind === 'init-data-missing') {
@@ -151,6 +155,8 @@ const texts = computed<
           ? `: ${params.error.cause.message}`
           : '',
       });
+    } else if (kind === 'http-web') {
+      message = t('error.httpWeb.message');
     } else {
       // FIXME: Server error
       message = '';
