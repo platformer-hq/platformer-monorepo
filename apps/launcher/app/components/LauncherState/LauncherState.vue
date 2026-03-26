@@ -11,12 +11,13 @@ export type LauncherStateState = (
   | { kind: 'config-invalid'; error: v.ValiError<any> }
   | { kind: 'init-data-missing'; error: Error }
   | { kind: 'unknown-error'; error: Error }
-  | { kind: 'server-error'; cause: Error | ApiError }
   | { kind: 'loading'; step: 'getting-data' | 'waiting-load' }
   | { kind: 'app-not-found' }
   | { kind: 'app-device-inaccessible' }
+  | { kind: 'app-timeout' }
+  | { kind: 'app-error' }
   | { kind: 'app-http-url'; type: 'error' | 'warning' }
-  | { kind: 'app-init'; timeout?: boolean }
+  | { kind: 'api-error'; error: Error }
   | { kind: 'api-timeout'; timeout: number }
 );
 
@@ -38,8 +39,8 @@ const { t } = useI18n({
       'initDataMissing.message': 'It is the most likely that the application was launched improperly',
       'configInvalid.title': 'Incorrect configuration',
       'apiTimeout.message': 'Failed to get app information (timed out {time}ms)',
-      'appInit.timeout.message': 'The app took too long to load',
-      'appInit.unknown.message': 'An unknown error occurred while loading the application',
+      'appTimeout.message': 'The app took too long to load',
+      'appError.message': 'An unknown error occurred while loading the application',
       'appHttpUrl.title': 'HTTP URL detected',
       'appHttpUrl.error.message': 'Due to web restrictions, Platformer doesn\'t support HTTP links in web clients. Try using an HTTPS link or a different client',
       'appHttpUrl.warning.message': 'Due to web restrictions, Platformer doesn\'t support HTTP links, but can redirect you to them.\n\nIn this case Platformer\'s functionality will be unavailable',
@@ -60,8 +61,8 @@ const { t } = useI18n({
       'initDataMissing.message': 'Скорее всего приложение было запущено некорректно',
       'configInvalid.title': 'Некорректная настройка',
       'apiTimeout.message': 'Не удалось получить информацию о приложении (время истекло {time}ms)',
-      'appInit.timeout.message': 'Загрузка приложения оказалась слишком долгой',
-      'appInit.unknown.message': 'Произошла неизвестная ошибка при загрузке приложения',
+      'appTimeout.message': 'Загрузка приложения оказалась слишком долгой',
+      'appError.message': 'Произошла неизвестная ошибка при загрузке приложения',
       'appHttpUrl.error.message': 'Из-за веб-ограничений, Платформер не поддерживает HTTP-ссылки в веб-клиентах. Попробуйте указать HTTPS-ссылку, или использовать другой клиент',
       'appHttpUrl.title': 'Обнаружена HTTP-ссылка',
       'appHttpUrl.warning.message': 'Платформер не поддерживает HTTP-ссылки из-за веб-ограничений, но может перенаправить Вас на них.\n\nВ этом случае функционал Платформера не будет доступен',
@@ -112,7 +113,7 @@ const texts = computed<
       message: state.error.message,
     };
   }
-  if (state.kind === 'server-error') {
+  if (state.kind === 'api-error') {
     // FIXME:
     return { kind: 'none' };
   }
@@ -123,14 +124,13 @@ const texts = computed<
     message = state.type === 'error'
       ? t('appHttpUrl.error.message')
       : t('appHttpUrl.warning.message');
-  } else if (state.kind === 'app-init') {
-    title = t('defaultErrorTitle');
-    message = state.timeout ? t('appInit.timeout.message') : t('appInit.unknown.message');
   } else if (
     state.kind === 'app-device-inaccessible'
     || state.kind === 'app-not-found'
     || state.kind === 'init-data-missing'
     || state.kind === 'api-timeout'
+    || state.kind === 'app-timeout'
+    || state.kind === 'app-error'
   ) {
     [title, message] = ({
       'app-device-inaccessible': [
@@ -138,6 +138,8 @@ const texts = computed<
         t('appDeviceInaccessible.message'),
       ],
       'app-not-found': [t('appNotFound.title'), t('appNotFound.message')],
+      'app-timeout': [t('defaultErrorTitle'), t('appTimeout.message')],
+      'app-error': [t('defaultErrorTitle'), t('appError.message')],
       'init-data-missing': [t('initDataMissing.title'), t('initDataMissing.message')],
       'api-timeout': [t('defaultErrorTitle'), t('apiTimeout.message')],
     } as const)[state.kind];
