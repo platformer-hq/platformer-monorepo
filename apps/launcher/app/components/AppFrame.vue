@@ -5,8 +5,14 @@ import { useEventListener, useTimeoutFn } from '@vueuse/core';
 import * as v from 'valibot';
 
 const props = defineProps<{
-  loadTimeout: number;
-  url: string;
+  /**
+   * Amount of time given to the application to load.
+   */
+  initTimeout: number;
+  /**
+   * An URL to use to load the application.
+   */
+  src: string;
 }>();
 const emit = defineEmits<{
   error: [{ timeout?: boolean }];
@@ -25,7 +31,7 @@ const iframe = useTemplateRef('iframe');
 // When the timeout is reached, notify the parent component about it.
 const { stop: cleanupTimeout } = useTimeoutFn(
   () => emit('error', { timeout: true }),
-  () => props.loadTimeout,
+  () => props.initTimeout,
 );
 
 onMounted(() => {
@@ -144,7 +150,7 @@ onMounted(() => {
   <iframe
     ref="iframe"
     class="app-frame"
-    :src="url"
+    :src
     @error="
       cleanupTimeout();
       emit('error', {});
