@@ -21,6 +21,7 @@ export type LauncherStateState = (
       // | { type: 'server'; cause: Error | InstanceType<typeof ApiError> }
     );
   }
+  | { kind: 'warning'; params: { kind: 'http-url' } }
   | {
     kind: 'neutral';
     params: (
@@ -75,8 +76,8 @@ const { t } = useI18n({
       'error.iframe.unknown.message': 'Произошла неизвестная ошибка при загрузке приложения',
       'error.httpWeb.title': 'Обнаружена HTTP-ссылка',
       'error.httpWeb.message': 'Из-за веб-ограничений, Платформер не поддерживает HTTP-ссылки в веб-клиентах. Попробуйте указать HTTPS-ссылку, или использовать другой клиент',
-      'warning.http.title': 'Обнаружена HTTP-ссылкаОбнаружена HTTP-ссылка',
-      'warning.http.message': 'Платформер не поддерживает HTTP-ссылки из-за веб-ограничений, но может перенаправить Вас на них.\n\nВ этом случае функционал Платформера не будет доступен',
+      'warning.httpUrl.title': 'Обнаружена HTTP-ссылка',
+      'warning.httpUrl.message': 'Платформер не поддерживает HTTP-ссылки из-за веб-ограничений, но может перенаправить Вас на них.\n\nВ этом случае функционал Платформера не будет доступен',
       'disclaimer.base': 'Работает на {project}',
       'disclaimer.project': 'Платформере',
     },
@@ -117,10 +118,11 @@ const texts = computed<
     };
   }
   if (state.kind === 'warning') {
-    const { params } = state;
-    if (params.kind === 'http') {
-      return { kind: 'static', title: t('warning.http.title'), message: t('warning.http.message') };
-    }
+    return {
+      kind: 'static',
+      title: t('warning.httpUrl.title'),
+      message: t('warning.httpUrl.message'),
+    };
   }
   if (state.kind === 'error') {
     const { params } = state;
