@@ -24,7 +24,7 @@
     "@tma.js/bridge": "^2.2.3",
     "@tma.js/sdk-vue": "^1.0.16",
     "@vueuse/core": "^14.2.1",
-    "error-kid": "^1.0.2",
+    "error-kid": "^1.1.0",
     "eruda": "^3.4.3",
     "fp-ts": "^2.16.11",
     "graphql-request": "^7.4.0",
