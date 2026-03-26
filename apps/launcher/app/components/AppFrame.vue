@@ -26,6 +26,7 @@ const { $init: { initialColors } } = useNuxtApp();
 const pausedRequests: { eventType: string; eventData: unknown }[] = [];
 let isContainerReady = false;
 const iframe = useTemplateRef('iframe');
+const urlOrigin = computed(() => new URL(props.src).origin);
 
 // Give some time for the mini application to load.
 // When the timeout is reached, notify the parent component about it.
@@ -52,8 +53,7 @@ onMounted(() => {
     }
     if (source !== contentWindow) {
       // The event was sent from the Telegram application. Pass it to the wrapped mini app.
-      // TODO: Set target origin equal to the iframe's initial domain?
-      return contentWindow.postMessage(data, '*');
+      return contentWindow.postMessage(data, urlOrigin.value);
     }
     const { eventType, eventData } = request;
 
