@@ -21,7 +21,13 @@ export type LauncherStateState = (
       // | { type: 'server'; cause: Error | InstanceType<typeof ApiError> }
     );
   }
-  | { kind: 'warning'; params: { kind: 'http' } }
+  | {
+    kind: 'neutral';
+    params: (
+      | { kind: 'app-not-found' }
+      | { kind: 'app-device-inaccessible' }
+    );
+  }
 );
 
 const props = defineProps<{ state: LauncherStateState }>();
@@ -29,6 +35,10 @@ const props = defineProps<{ state: LauncherStateState }>();
 const { t } = useI18n({
   messages: {
     en: {
+      'neutral.appNotFound.title': 'App not found',
+      'neutral.appNotFound.message': 'This application was not found',
+      'neutral.appDeviceInaccessible.title': 'Nothing here',
+      'neutral.appDeviceInaccessible.message': 'The application is inaccessible on your device',
       'loading.title': 'Loading application',
       'loading.message.gettingData': 'Getting app information',
       'loading.message.waitingLoad': 'Waiting for the app to load',
@@ -42,12 +52,16 @@ const { t } = useI18n({
       'error.iframe.unknown.message': 'An unknown error occurred while loading the application',
       'error.httpWeb.title': 'HTTP URL detected',
       'error.httpWeb.message': 'Due to web restrictions, Platformer doesn\'t support HTTP links in web clients. Try using an HTTPS link or a different client',
-      'warning.http.title': 'HTTP URL detected',
-      'warning.http.message': 'Due to web restrictions, Platformer doesn\'t support HTTP links, but can redirect you to them.\n\nIn this case Platformer\'s functionality will be unavailable',
+      'warning.httpUrl.title': 'HTTP URL detected',
+      'warning.httpUrl.message': 'Due to web restrictions, Platformer doesn\'t support HTTP links, but can redirect you to them.\n\nIn this case Platformer\'s functionality will be unavailable',
       'disclaimer.base': 'Works on {project}',
       'disclaimer.project': 'Platformer',
     },
     ru: {
+      'neutral.appNotFound.title': 'Приложение не найдено',
+      'neutral.appNotFound.message': 'Это приложение не было найдено',
+      'neutral.appDeviceInaccessible.title': 'Тут пусто',
+      'neutral.appDeviceInaccessible.message': 'Приложение недоступно на Вашем устройстве',
       'loading.title': 'Загрузка приложения',
       'loading.message.gettingData': 'Получение информации о приложении',
       'loading.message.waitingLoad': 'Ожидание загрузки приложения',
@@ -79,6 +93,20 @@ const texts = computed<
   | { kind: 'none' }
 >(() => {
   const { state } = props;
+  if (state.kind === 'neutral') {
+    const { kind } = state.params;
+    return {
+      kind: 'static',
+      title: t({
+        'app-not-found': 'neutral.appNotFound.title',
+        'app-device-inaccessible': 'neutral.appDeviceInaccessible.title',
+      }[kind]),
+      message: t({
+        'app-not-found': 'neutral.appNotFound.message',
+        'app-device-inaccessible': 'neutral.appDeviceInaccessible.message',
+      }[kind]),
+    };
+  }
   if (state.kind === 'loading') {
     return {
       kind: 'locale-dependent',
