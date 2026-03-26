@@ -15,7 +15,8 @@ const props = defineProps<{
   src: string;
 }>();
 const emit = defineEmits<{
-  error: [{ timeout?: boolean }];
+  error: [];
+  timeout: [];
   ready: [];
 }>();
 
@@ -30,10 +31,16 @@ const urlOrigin = computed(() => new URL(props.src).origin);
 
 // Give some time for the mini application to load.
 // When the timeout is reached, notify the parent component about it.
-const { stop: cleanupTimeout } = useTimeoutFn(
-  () => emit('error', { timeout: true }),
+const { stop: removeTimeout, start: startTimeout } = useTimeoutFn(
+  () => emit('timeout'),
   () => props.initTimeout,
 );
+
+watch(() => props.src, () => {
+  // TODO: Check if this one is correct
+  removeTimeout();
+  startTimeout();
+});
 
 onMounted(() => {
   const { contentWindow } = iframe.value || {};
@@ -120,7 +127,7 @@ onMounted(() => {
           miniApp.setBottomBarColor.ifAvailable(color);
         }
       });
-      cleanupTimeout();
+      removeTimeout();
       return emit('ready');
     }
 
@@ -152,8 +159,8 @@ onMounted(() => {
     class="app-frame"
     :src
     @error="
-      cleanupTimeout();
-      emit('error', {});
+      removeTimeout();
+      emit('error');
     "
   />
 </template>
