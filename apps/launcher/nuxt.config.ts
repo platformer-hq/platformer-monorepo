@@ -58,18 +58,6 @@ export default defineNuxtConfig({
     extensions: ['.vue'],
     ignore: componentsIgnore,
     priority: 100,
-  }, {
-    path: resolve('app/domains'),
-    pathPrefix: false,
-    pattern: '**/components/*.vue',
-    ignore: componentsIgnore,
-    priority: 100,
-  }, {
-    path: resolve('app/auto-components'),
-    pathPrefix: false,
-    extensions: ['.vue'],
-    ignore: componentsIgnore,
-    priority: 100,
   }],
   extends: [
     // '../api',
@@ -81,9 +69,6 @@ export default defineNuxtConfig({
   imports: {
     dirs: [
       resolve('app/stores/*.ts'),
-      // resolve('app/navigation/{composables,utils}/*.ts'),
-      resolve('app/domains/*/{composables,utils}.ts'),
-      resolve('app/domains/*/{composables,utils}/**'),
       // resolve('app/components/**/{composables,utils}/**'),
       // resolve('app/components/**/{composables,utils}.ts'),
       // resolve('app/pages-components/*/composables/**'),
