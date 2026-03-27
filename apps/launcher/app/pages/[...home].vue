@@ -108,7 +108,11 @@ onErrorCaptured(error => {
       @ready="state = {kind: 'ready'}"
       @api-timeout="state = {kind: 'api-timeout', timeout: $event.timeout}"
       @api-error="state = {kind: 'api-error', error: $event.error}"
-      @app-http-url="state = {kind: 'app-http-url', type: $event.type}"
+      @app-http-url="state = {
+        kind: 'app-http-url',
+        type: $event.type,
+        url: $event.url
+      }"
       @app-data-retrieved="state = {kind: 'loading', step: 'waiting-load'}"
       @app-device-inaccessible="state = {kind: 'app-device-inaccessible'}"
       @app-not-found="state = {kind: 'app-not-found'}"

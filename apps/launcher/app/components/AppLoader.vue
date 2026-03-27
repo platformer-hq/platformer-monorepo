@@ -49,10 +49,7 @@ const { data, isPending, error } = useQuery({
     return throwifyAnyEither(
       fp.function.pipe(
         fp.taskEither.tryCatch(() => {
-          const url = new URL(
-            `apps/${props.appId}/telegram-url`,
-            new URL(props.apiBaseUrl, window.location.origin),
-          );
+          const url = new URL(`apps/${props.appId}/telegram-url`, props.apiBaseUrl);
           url.searchParams.set('lp', launcherParamsRawSecured.value);
           signal.onabort = controller.abort.bind(controller);
 

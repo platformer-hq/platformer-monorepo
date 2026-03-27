@@ -16,7 +16,7 @@ export type LauncherStateState = (
   | { kind: 'app-device-inaccessible' }
   | { kind: 'app-timeout' }
   | { kind: 'app-error' }
-  | { kind: 'app-http-url'; type: 'error' | 'warning' }
+  | { kind: 'app-http-url'; type: 'error' | 'warning'; url: string }
   | { kind: 'api-error'; error: Error }
   | { kind: 'api-timeout'; timeout: number }
 );
@@ -77,6 +77,8 @@ const { b, e } = bem('launcher-state');
 const locales = ['ru', 'en'] as const;
 const channelLink = 'https://t.me/platformer_hq';
 
+const redirecting = ref(false);
+
 const icon = computed<'loading' | 'warning' | 'error' | undefined>(() => {
   const { state } = props;
   switch (state.kind) {
@@ -91,16 +93,22 @@ const icon = computed<'loading' | 'warning' | 'error' | undefined>(() => {
       return 'error';
   }
 });
-const canRetry = computed(() => [
-  'unknown-error',
-  'app-not-found',
-  'app-device-inaccessible',
-  'app-timeout',
-  'app-error',
-  'app-http-url',
-  'api-error',
-  'api-timeout',
-].includes(props.state.kind));
+const canRetry = computed(() => {
+  const { state } = props;
+  return [
+    'unknown-error',
+    'app-not-found',
+    'app-device-inaccessible',
+    'app-timeout',
+    'app-error',
+    'api-error',
+    'api-timeout',
+  ].includes(state.kind)
+  || (state.kind === 'app-http-url' && state.type === 'error');
+});
+const canRedirect = computed(() => {
+  return props.state.kind === 'app-http-url' && props.state.type === 'warning';
+});
 const texts = computed<
   | ({ kind: 'locale-dependent'; titleKey: string } & ({ messageKey: string } | { message: string }))
   | { kind: 'static'; title: string; message: string }
@@ -164,6 +172,13 @@ const texts = computed<
   }
   return { kind: 'static', title, message };
 });
+
+const handleRedirect = () => {
+  if (props.state.kind === 'app-http-url') {
+    redirecting.value = true;
+    window.location.href = props.state.url;
+  }
+};
 </script>
 
 <template>
@@ -209,7 +224,17 @@ const texts = computed<
         </template>
       </Translation>
     </VTypography>
-    <LauncherStateBottomBar :show="canRetry" @button-click="$emit('retry')"/>
+    <LauncherStateBottomBar
+      :action="redirecting
+        ? 'redirecting'
+        : canRetry
+          ? 'retry'
+          : canRedirect
+            ? 'redirect'
+            : undefined"
+      @redirect="handleRedirect"
+      @retry="$emit('retry')"
+    />
   </div>
 </template>
 
