@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "admin:dev": "cross-env PROJECT=admin-panel nuxt dev --port 5174 --host",
-    "admin:build": "cross-env PROJECT=admin-panel nuxt generate --dotenv ./apps/admin-panel/.env.production",
+    "admin:build": "cross-env PROJECT=admin-panel nuxt build --dotenv ./apps/admin-panel/.env.production",
     "launcher:dev": "cross-env PROJECT=launcher nuxt dev --port 5174 --host",
-    "launcher:build": "cross-env PROJECT=launcher nuxt generate --dotenv ./apps/launcher/.env.production",
+    "launcher:build": "cross-env PROJECT=launcher nuxt build --dotenv ./apps/launcher/.env.production",
     "gql-codegen": "graphql-codegen --config graphql.config.ts",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
