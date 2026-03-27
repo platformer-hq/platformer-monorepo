@@ -128,6 +128,7 @@ watch(data, data => {
       type: isWeb ? 'error' : 'warning',
     });
   }
+  emit('appDataRetrieved');
   frameUrl.value = { kind: 'original', src: data.url };
 });
 
