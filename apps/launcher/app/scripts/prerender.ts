@@ -1,4 +1,4 @@
-import { postEvent, request2, retrieveLaunchParams } from '@tma.js/bridge';
+import { postEvent, request2, retrieveLaunchParams } from '@tma.js/sdk-vue';
 
 const { tgWebAppData, tgWebAppPlatform, tgWebAppThemeParams } = retrieveLaunchParams();
 const languageCode = tgWebAppData?.user?.language_code || '';
