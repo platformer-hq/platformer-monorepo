@@ -85,6 +85,7 @@ export default defineNuxtConfig({
       prerender: true,
     },
   },
+  ssr: false,
   vite: {
     plugins: [
       iifeUrlPlugin(),
