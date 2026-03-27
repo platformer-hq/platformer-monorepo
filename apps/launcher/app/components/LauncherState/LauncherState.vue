@@ -90,6 +90,16 @@ const icon = computed<'loading' | 'warning' | 'error' | undefined>(() => {
       return 'error';
   }
 });
+const canRetry = computed(() => [
+  'unknown-error',
+  'app-not-found',
+  'app-device-inaccessible',
+  'app-timeout',
+  'app-error',
+  'app-http-url',
+  'api-error',
+  'api-timeout',
+].includes(props.state.kind));
 const texts = computed<
   | ({ kind: 'locale-dependent'; titleKey: string } & ({ messageKey: string } | { message: string }))
   | { kind: 'static'; title: string; message: string }
@@ -206,6 +216,7 @@ const texts = computed<
         </template>
       </Translation>
     </VTypography>
+    <LauncherStateBottomBar :show="canRetry" @button-click="$emit('retry')"/>
   </div>
 </template>
 
@@ -217,13 +228,13 @@ const texts = computed<
   position: absolute;
   inset: 0;
   display: grid;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: 1fr auto auto;
   text-align: center;
   background: var(--bg-color);
   padding:
     var(--sum-inset-top)
     var(--sum-inset-right)
-    calc(var(--sum-inset-bottom) + 8px)
+    0
     var(--sum-inset-left);
 
   &__body {
@@ -330,6 +341,11 @@ const texts = computed<
 
   &__disclaimer {
     color: var(--hint-color);
+    padding-bottom: 8px;
+
+    &--inset-bottom {
+      padding-bottom: calc(var(--sum-inset-bottom) + 8px);
+    }
   }
 
   &__disclaimer-link {
