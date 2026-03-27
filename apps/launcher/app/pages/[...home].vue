@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/no-multiple-template-root vue/multi-word-component-names -->
 <script setup lang="ts">
-import { retrieveRawInitDataFp, retrieveRawLaunchParamsFp } from '@tma.js/sdk-vue';
+import { hapticFeedback, retrieveRawInitDataFp, retrieveRawLaunchParamsFp } from '@tma.js/sdk-vue';
 import * as fp from 'fp-ts';
 import * as v from 'valibot';
 
@@ -46,6 +46,7 @@ const onLauncherPageLeave = (el: Element, done: () => void) => {
 
 const initDataRaw = ref<string>();
 const launchParamsRaw = ref<string>();
+const hapticError = () => hapticFeedback.notificationOccurred.ifAvailable('error');
 
 if (import.meta.client) {
   onMounted(() => {
@@ -105,19 +106,41 @@ onErrorCaptured(error => {
       :fallback-url="launcherOptions.fallbackUrl
         ? appendLaunchParams(launcherOptions.fallbackUrl, launchParamsRaw)
         : undefined"
-      @ready="state = {kind: 'ready'}"
-      @api-timeout="state = {kind: 'api-timeout', timeout: $event.timeout}"
-      @api-error="state = {kind: 'api-error', error: $event.error}"
-      @app-http-url="state = {
-        kind: 'app-http-url',
-        type: $event.type,
-        url: $event.url
-      }"
-      @app-data-retrieved="state = {kind: 'loading', step: 'waiting-load'}"
-      @app-device-inaccessible="state = {kind: 'app-device-inaccessible'}"
+      @ready="
+        state = {kind: 'ready'};
+        hapticFeedback.notificationOccurred('success');
+      "
+      @api-timeout="
+        state = {kind: 'api-timeout', timeout: $event.timeout};
+        hapticError();
+      "
+      @api-error="
+        state = {kind: 'api-error', error: $event.error};
+        hapticError();
+      "
+      @app-http-url="
+        state = {kind: 'app-http-url', type: $event.type, url: $event.url};
+        if ($event.type) {
+          hapticError();
+        }
+      "
+      @app-data-retrieved="
+        state = {kind: 'loading', step: 'waiting-load'};
+        hapticError();
+      "
+      @app-device-inaccessible="
+        state = {kind: 'app-device-inaccessible'};
+        hapticError();
+      "
       @app-not-found="state = {kind: 'app-not-found'}"
-      @app-error="state = {kind: 'app-error'}"
-      @app-timeout="state = {kind: 'app-timeout'}"
+      @app-error="
+        state = {kind: 'app-error'};
+        hapticError();
+      "
+      @app-timeout="
+        state = {kind: 'app-timeout'};
+        hapticError();
+      "
     />
   </div>
 </template>
