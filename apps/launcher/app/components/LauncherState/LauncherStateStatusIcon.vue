@@ -57,7 +57,8 @@ const { b, e } = bem('launcher-state-status-icon');
   }
 
   &--loading {
-    background: var(--secondary-bg-color);
+    background: var(--text-color);
+    color: var(--bg-color);
   }
 
   &__loading-indicator {
