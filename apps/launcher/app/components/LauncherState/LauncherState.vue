@@ -337,7 +337,7 @@ const handleRedirect = () => {
 
   &__disclaimer {
     color: var(--hint-color);
-    padding-bottom: calc(var(--sum-inset-bottom) + 8px);
+    padding-bottom: calc(var(--sum-inset-bottom) + 12px);
     transition: 200ms ease-out;
 
     &--bottom-bar-shown {
