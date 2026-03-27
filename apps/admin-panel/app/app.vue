@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useQuery } from '@pinia/colada';
 import { miniApp } from '@tma.js/sdk-vue';
 
 const apiStore = useApiStore();
@@ -16,6 +15,7 @@ if (import.meta.client) {
   watch(response, data => {
     if (data) {
       apiStore.setToken({ token: data.token, expiresAt: data.expiresAt });
+      miniApp.ready();
     }
   }, { immediate: true });
 
