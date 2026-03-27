@@ -1,7 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="../../.nuxt/nuxt.node.d.ts" />
 import path from 'node:path';
-import * as v from 'valibot';
 
 import { iifeUrlPlugin } from './vite/iifeUrlPlugin';
 
@@ -14,13 +13,6 @@ function resolvePackage(pkg: string) {
 }
 
 const componentsIgnore = ['**/_/**', '**/_*'];
-
-const env = v.parse(
-  v.looseObject({
-    API_BASE_URL: v.pipe(v.string(), v.nonEmpty()),
-  }),
-  process.env,
-);
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -86,11 +78,6 @@ export default defineNuxtConfig({
     plugins: {
       autoprefixer: {},
       cssnano: {},
-    },
-  },
-  runtimeConfig: {
-    public: {
-      apiBaseUrl: env.API_BASE_URL,
     },
   },
   routeRules: {
