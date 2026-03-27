@@ -82,7 +82,7 @@ const locales = ['ru', 'en'] as const;
 const channelLink = 'https://t.me/platformer_hq';
 const contentTransition = createReversibleTransition({
   animatedProperties: {
-    maxHeight: ['100px', '260px'],
+    maxHeight: ['130px', '260px'],
     opacity: [0, 1],
     transform: ['scale(0.95)', 'scale(1)'],
   },
@@ -337,8 +337,8 @@ const handleRedirect = () => {
 
   &__disclaimer {
     color: var(--hint-color);
-    padding-bottom: calc(var(--sum-inset-bottom) + 16px);
-    transition: 200ms ease-out all;
+    padding-bottom: calc(var(--sum-inset-bottom) + 8px);
+    transition: 200ms ease-out;
 
     &--bottom-bar-shown {
       padding-bottom: 0;
