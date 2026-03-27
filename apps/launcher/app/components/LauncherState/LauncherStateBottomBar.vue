@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { miniApp, useSignal } from '@tma.js/sdk-vue';
+
 import { ButtonAndroid, ButtonIos, LoadingIndicatorAndroid, LoadingIndicatorIos } from '#packages/ui-kit';
 
-defineProps<{
+const props = defineProps<{
   action?: 'retry' | 'redirect' | 'redirecting';
 }>();
 defineEmits<{
@@ -41,6 +43,9 @@ const loadingIndicatorTransition = createReversibleTransition({
   },
   animationOptions: { duration: 300, easing: 'ease-out', fill: 'both' },
 });
+
+const isButtonEnabled = computed(() => props.action !== 'redirecting');
+const isDark = useSignal(miniApp.isDark);
 </script>
 
 <template>
@@ -51,10 +56,15 @@ const loadingIndicatorTransition = createReversibleTransition({
           :is="button.component"
           v-for="button in buttons"
           :key="button.os"
-          :class="e('button', button.os)"
+          :class="e(
+            'button',
+            button.os,
+            {disabled: !isButtonEnabled},
+            !isButtonEnabled && `disabled-${isDark ? 'dark' : 'light'}`
+          )"
           full-width
-          :active="action !== 'redirecting'"
-          :disabled="action === 'redirecting'"
+          :active="isButtonEnabled"
+          :disabled="!isButtonEnabled"
           @click="action === 'redirect' ? $emit('redirect') : $emit('retry')"
         >
           <VTypography variant="body" weight="medium">
@@ -82,7 +92,6 @@ const loadingIndicatorTransition = createReversibleTransition({
   &__button {
     background-color: var(--button-color);
     color: var(--button-text-color);
-
     display: none;
     @each $platform in ("ios", "android") {
       [data-platform="#{$platform}"] & {
@@ -90,6 +99,18 @@ const loadingIndicatorTransition = createReversibleTransition({
           display: flex;
         }
       }
+    }
+
+    &--disabled {
+      color: var(--text-color);
+    }
+
+    &--disabled-dark {
+      background-color: rgba(255,255,255,0.1);
+    }
+
+    &--disabled-light {
+      background-color: rgba(0,0,0,0.1);
     }
   }
 }
