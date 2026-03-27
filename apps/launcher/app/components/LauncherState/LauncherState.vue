@@ -243,7 +243,10 @@ const handleRedirect = () => {
         </div>
       </Transition>
     </div>
-    <VTypography :class="e('disclaimer', !canRetry && 'bottom-inset')" variant="footnote">
+    <VTypography
+      :class="e('disclaimer', (canRetry || canRedirect || redirecting) && 'bottom-bar-shown')"
+      variant="footnote"
+    >
       <Translation keypath="disclaimer.base">
         <template #project>
           <a
@@ -334,16 +337,18 @@ const handleRedirect = () => {
 
   &__disclaimer {
     color: var(--hint-color);
-    padding-bottom: 8px;
+    padding-bottom: calc(var(--sum-inset-bottom) + 16px);
+    transition: 200ms ease-out all;
 
-    &--inset-bottom {
-      padding-bottom: calc(var(--sum-inset-bottom) + 8px);
+    &--bottom-bar-shown {
+      padding-bottom: 0;
     }
   }
 
   &__disclaimer-link {
     text-decoration: none;
     color: var(--link-color);
+    font-weight: 500;
   }
 }
 </style>

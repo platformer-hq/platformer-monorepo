@@ -43,7 +43,6 @@ const launcherParamsRawSecured = computed(() => {
 });
 
 const { data, isPending, error } = useQuery({
-  staleTime: 0,
   key: () => [props.appId, props.apiBaseUrl, launcherParamsRawSecured.value],
   query({ signal }) {
     return throwifyAnyEither(
@@ -129,20 +128,26 @@ watch(data, data => {
   frameUrl.value = { kind: 'original', src: data.url };
 });
 
-watchEffect(() => {
-  if (!error.value) {
+watch([
+  error,
+  () => ({
+    fallbackUrl: props.fallbackUrl,
+    loadTimeout: props.loadTimeout,
+  }),
+], ([error, { fallbackUrl, loadTimeout }]) => {
+  if (!error) {
     return;
   }
-  if (isAppNotFoundError(error.value)) {
+  if (isAppNotFoundError(error)) {
     return emit('appNotFound');
   }
-  if (!props.fallbackUrl) {
-    if (isTimeoutError(error.value)) {
-      return emit('apiTimeout', { timeout: props.loadTimeout });
+  if (!fallbackUrl) {
+    if (isTimeoutError(error)) {
+      return emit('apiTimeout', { timeout: loadTimeout });
     }
-    return emit('apiError', { error: error.value });
+    return emit('apiError', { error });
   }
-  frameUrl.value = { kind: 'original', src: props.fallbackUrl };
+  frameUrl.value = { kind: 'original', src: fallbackUrl };
 });
 </script>
 

@@ -88,7 +88,7 @@ onErrorCaptured(error => {
     <Transition :css="false" @leave="onLauncherPageLeave">
       <LauncherState
         v-if="state.kind !== 'ready'"
-        :state="state"
+        :state
         @retry="state = {kind: 'loading', step: 'getting-data'}"
       />
     </Transition>
@@ -100,8 +100,8 @@ onErrorCaptured(error => {
         && (state.kind === 'ready' || state.kind === 'loading')
       "
       v-bind="launcherOptions"
-      :init-data-raw="initDataRaw"
-      :launch-params-raw="launchParamsRaw"
+      :init-data-raw
+      :launch-params-raw
       :fallback-url="launcherOptions.fallbackUrl
         ? appendLaunchParams(launcherOptions.fallbackUrl, launchParamsRaw)
         : undefined"
