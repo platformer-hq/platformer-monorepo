@@ -104,7 +104,7 @@ export default defineNuxtConfig({
     ],
     server: {
       proxy: {
-        '/api/gql': {
+        '/api': {
           target: 'https://mini-apps.store',
           changeOrigin: true,
         },
