@@ -7,13 +7,14 @@ const { as = 'p' } = defineProps<{
    */
   as?: KnownHtmlTag;
   variant: 'heading' | 'body' | 'footnote';
+  weight?: 'regular' | 'medium';
 }>();
 
 const { b } = bem('v-typography');
 </script>
 
 <template>
-  <component :is="as" :class="b(variant)">
+  <component :is="as" :class="b(variant, weight)">
     <slot/>
   </component>
 </template>
@@ -37,6 +38,14 @@ const { b } = bem('v-typography');
   &--heading {
     line-height: 26px;
     font-size: 22px;
+    font-weight: 500;
+  }
+
+  &--regular {
+    font-weight: 400;
+  }
+
+  &--medium {
     font-weight: 500;
   }
 
