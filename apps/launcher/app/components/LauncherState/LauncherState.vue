@@ -22,6 +22,7 @@ export type LauncherStateState = (
 );
 
 const props = defineProps<{ state: LauncherStateState }>();
+defineEmits<{ retry: [] }>();
 
 const { t } = useI18n({
   messages: {
@@ -37,7 +38,7 @@ const { t } = useI18n({
       defaultErrorMessage: 'Unknown error occurred{error}',
       'initDataMissing.title': 'Init data is missing',
       'initDataMissing.message': 'It is the most likely that the application was launched improperly',
-      'configInvalid.title': 'Incorrect configuration',
+      'configInvalid.title': 'Incorrect launcher configuration',
       'apiTimeout.message': 'Failed to get app information (timed out {time}ms)',
       'appTimeout.message': 'The app took too long to load',
       'appError.message': 'An unknown error occurred while loading the application',
@@ -59,7 +60,7 @@ const { t } = useI18n({
       defaultErrorMessage: 'Произошла неизвестная ошибка{error}',
       'initDataMissing.title': 'Данные инициализации отсутствуют',
       'initDataMissing.message': 'Скорее всего приложение было запущено некорректно',
-      'configInvalid.title': 'Некорректная настройка',
+      'configInvalid.title': 'Некорректная настройка лаунчера',
       'apiTimeout.message': 'Не удалось получить информацию о приложении (время истекло {time}ms)',
       'appTimeout.message': 'Загрузка приложения оказалась слишком долгой',
       'appError.message': 'Произошла неизвестная ошибка при загрузке приложения',
@@ -170,40 +171,32 @@ const texts = computed<
     <div :class="e('body')">
       <div :class="e('logo')">
         <img :src="platformerLogoSrc" :class="e('image')" :width="80" :height="80">
-        <IconXmark28 v-if="icon === 'error'" :class="e('status-icon', 'error')"/>
-        <IconExclamationMarkTriangleFill28
-          v-else-if="icon === 'warning'"
-          :class="e('status-icon', 'warning')"
-        />
-        <div v-else-if="icon === 'loading'" :class="e('status-icon', 'loading')">
-          <LoadingIndicatorIos :class="e('loader', 'ios')" :size="14"/>
-          <LoadingIndicatorAndroid :class="e('loader', 'android')" :size="14"/>
-        </div>
+        <LauncherStateStatusIcon v-if="icon" :status="icon"/>
       </div>
       <div :class="e('content')">
         <template v-if="texts.kind === 'locale-dependent'">
           <template v-for="locale in locales" :key="locale">
             <div :class="e('locale-dependent', locale)" :locale="locale">
-              <StatusPageTitle>
+              <LauncherStateTitle>
                 {{ t(texts.titleKey || 'defaultErrorTitle', {}, { locale }) }}
-              </StatusPageTitle>
-              <StatusPageMessage>
+              </LauncherStateTitle>
+              <LauncherStateMessage>
                 {{ 'messageKey' in texts ? t(texts.messageKey, {}, { locale }) : texts.message }}
-              </StatusPageMessage>
+              </LauncherStateMessage>
             </div>
           </template>
         </template>
         <template v-else-if="texts.kind === 'static'">
-          <StatusPageTitle>
+          <LauncherStateTitle>
             {{ texts.title }}
-          </StatusPageTitle>
-          <StatusPageMessage>
+          </LauncherStateTitle>
+          <LauncherStateMessage>
             {{ texts.message }}
-          </StatusPageMessage>
+          </LauncherStateMessage>
         </template>
       </div>
     </div>
-    <VTypography :class="e('disclaimer')" variant="footnote">
+    <VTypography :class="e('disclaimer', !canRetry && 'bottom-inset')" variant="footnote">
       <Translation keypath="disclaimer.base">
         <template #project>
           <a
@@ -264,63 +257,6 @@ const texts = computed<
     display: block;
     border-radius: 16px;
     overflow: hidden;
-  }
-
-  &__status-icon {
-    $statusIconShift: translate3d(-75%, -75%, 0);
-    @keyframes status-page-error-icon-appear {
-      from {
-        opacity: 0;
-        transform: $statusIconShift scale(.65);
-      }
-      50% {
-        transform: $statusIconShift scale(1.2);
-      }
-      to {
-        opacity: 1;
-        transform: $statusIconShift scale(1);
-      }
-    }
-    position: absolute;
-    top: 100%;
-    left: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 16px;
-    height: 16px;
-    padding: 4px;
-    box-sizing: content-box;
-    border-radius: 50%;
-    color: white;
-    animation: status-page-error-icon-appear 400ms ease forwards;
-
-    &--error {
-      background: var(--destructive-text-color);
-
-      path {
-        stroke-width: 4;
-      }
-    }
-
-    &--warning {
-      background: orange;
-    }
-
-    &--loading {
-      background: var(--secondary-bg-color);
-    }
-  }
-
-  &__loader {
-    display: none;
-    @each $platform in ("ios", "android") {
-      [data-platform="#{$platform}"] & {
-        &--#{$platform} {
-          display: flex;
-        }
-      }
-    }
   }
 
   &__content {
