@@ -22,8 +22,8 @@ const transition = createReversibleTransition({
       <IconExclamationMarkTriangleFill28 :size="16"/>
     </div>
     <div v-else-if="status === 'loading'" :class="b('loading')">
-      <LoadingIndicatorIos :class="e('loading-indicator', 'ios')" :size="14"/>
-      <LoadingIndicatorAndroid :class="e('loading-indicator', 'android')" :size="14"/>
+      <LoadingIndicatorIos :class="e('loading-indicator', 'ios')" :size="16"/>
+      <LoadingIndicatorAndroid :class="e('loading-indicator', 'android')" :size="16"/>
     </div>
   </Transition>
 </template>
@@ -43,6 +43,8 @@ const transition = createReversibleTransition({
   border-radius: 50%;
   color: white;
   transform: translate3d(-75%, -75%, 0);
+  outline: 3px solid var(--bg-color);
+  outline-offset: -0.5px;
 
   &--error {
     background: var(--destructive-text-color);
@@ -57,8 +59,8 @@ const transition = createReversibleTransition({
   }
 
   &--loading {
-    background: var(--text-color);
-    color: var(--bg-color);
+    background: var(--secondary-bg-color);
+    color: var(--textcolor);
   }
 
   &__loading-indicator {

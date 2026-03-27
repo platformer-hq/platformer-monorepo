@@ -6,7 +6,7 @@ const { as = 'p' } = defineProps<{
    * @default 'p'
    */
   as?: KnownHtmlTag;
-  variant: 'heading' | 'body' | 'footnote';
+  variant?: 'heading' | 'body' | 'footnote';
   weight?: 'regular' | 'medium';
 }>();
 

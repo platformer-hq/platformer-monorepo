@@ -40,6 +40,8 @@ const { t } = useI18n({
       'initDataMissing.message': 'It is the most likely that the application was launched improperly',
       'configInvalid.title': 'Incorrect launcher configuration',
       'apiTimeout.message': 'Failed to get app information (timed out {time}ms)',
+      'apiError.unknown.message': 'Request error: {error}',
+      'apiError.known.message': 'Server returned error: {message}',
       'appTimeout.message': 'The app took too long to load',
       'appError.message': 'An unknown error occurred while loading the application',
       'appHttpUrl.title': 'HTTP URL detected',
@@ -62,6 +64,8 @@ const { t } = useI18n({
       'initDataMissing.message': 'Скорее всего приложение было запущено некорректно',
       'configInvalid.title': 'Некорректная настройка лаунчера',
       'apiTimeout.message': 'Не удалось получить информацию о приложении (время истекло {time}ms)',
+      'apiError.unknown.message': 'Ошибка отправки запроса: {error}',
+      'apiError.known.message': 'Сервер вернул ошибку: {message}',
       'appTimeout.message': 'Загрузка приложения оказалась слишком долгой',
       'appError.message': 'Произошла неизвестная ошибка при загрузке приложения',
       'appHttpUrl.error.message': 'Из-за веб-ограничений, Платформер не поддерживает HTTP-ссылки в веб-клиентах. Попробуйте указать HTTPS-ссылку, или использовать другой клиент',
@@ -76,6 +80,14 @@ const { t } = useI18n({
 const { b, e } = bem('launcher-state');
 const locales = ['ru', 'en'] as const;
 const channelLink = 'https://t.me/platformer_hq';
+const contentTransition = createReversibleTransition({
+  animatedProperties: {
+    maxHeight: ['100px', '260px'],
+    opacity: [0, 1],
+    transform: ['scale(0.95)', 'scale(1)'],
+  },
+  animationOptions: { duration: 300, easing: 'ease-out' },
+});
 
 const redirecting = ref(false);
 
@@ -112,7 +124,7 @@ const canRedirect = computed(() => {
 const texts = computed<
   | ({ kind: 'locale-dependent'; titleKey: string } & ({ messageKey: string } | { message: string }))
   | { kind: 'static'; title: string; message: string }
-  | { kind: 'none' }
+  | { kind: 'server-error'; title: string; message: string; code?: string }
 >(() => {
   const { state } = props;
 
@@ -133,8 +145,14 @@ const texts = computed<
     };
   }
   if (state.kind === 'api-error') {
-    // FIXME:
-    return { kind: 'none' };
+    return {
+      kind: 'server-error',
+      title: t('defaultErrorTitle'),
+      message: ApiError.is(state.error)
+        ? t('apiError.known.message', { message: state.error.data.message })
+        : t('apiError.unknown.message', { error: state.error.message }),
+      code: ApiError.is(state.error) ? state.error.data.code : undefined,
+    };
   }
   let title: string;
   let message: string;
@@ -172,6 +190,14 @@ const texts = computed<
   }
   return { kind: 'static', title, message };
 });
+const contentKey = computed(() => {
+  const { state } = props;
+  const { kind } = state;
+  if (kind === 'app-http-url') {
+    return `${kind}-${state.type}`;
+  }
+  return kind;
+});
 
 const handleRedirect = () => {
   if (props.state.kind === 'app-http-url') {
@@ -188,28 +214,34 @@ const handleRedirect = () => {
         <img :src="platformerLogoSrc" :class="e('image')" :width="80" :height="80">
         <LauncherStateStatusIcon v-if="icon" :status="icon"/>
       </div>
-      <div :class="e('content')">
-        <template v-if="texts.kind === 'locale-dependent'">
-          <template v-for="locale in locales" :key="locale">
-            <div :class="e('locale-dependent', locale)" :locale="locale">
-              <LauncherStateTitle>
-                {{ t(texts.titleKey || 'defaultErrorTitle', {}, { locale }) }}
-              </LauncherStateTitle>
-              <LauncherStateMessage>
-                {{ 'messageKey' in texts ? t(texts.messageKey, {}, { locale }) : texts.message }}
-              </LauncherStateMessage>
-            </div>
+      <Transition v-bind="contentTransition" :css="false" mode="out-in">
+        <div :key="contentKey" :class="e('content')">
+          <template v-if="texts.kind === 'locale-dependent'">
+            <template v-for="locale in locales" :key="locale">
+              <div :class="e('locale-dependent', locale)" :locale="locale">
+                <LauncherStateTitle>
+                  {{ t(texts.titleKey || 'defaultErrorTitle', {}, { locale }) }}
+                </LauncherStateTitle>
+                <LauncherStateMessage>
+                  {{ 'messageKey' in texts ? t(texts.messageKey, {}, { locale }) : texts.message }}
+                </LauncherStateMessage>
+              </div>
+            </template>
           </template>
-        </template>
-        <template v-else-if="texts.kind === 'static'">
-          <LauncherStateTitle>
-            {{ texts.title }}
-          </LauncherStateTitle>
-          <LauncherStateMessage>
-            {{ texts.message }}
-          </LauncherStateMessage>
-        </template>
-      </div>
+          <template v-else-if="texts.kind === 'static' || texts.kind === 'server-error'">
+            <LauncherStateTitle>
+              {{ texts.title }}
+            </LauncherStateTitle>
+            <LauncherStateMessage>
+              {{ texts.message }}<template v-if="texts.kind === 'server-error' && texts.code">
+                <VTypography as="span" weight="medium">
+                  ({{ texts.code }})
+                </VTypography>
+              </template>
+            </LauncherStateMessage>
+          </template>
+        </div>
+      </Transition>
     </div>
     <VTypography :class="e('disclaimer', !canRetry && 'bottom-inset')" variant="footnote">
       <Translation keypath="disclaimer.base">
