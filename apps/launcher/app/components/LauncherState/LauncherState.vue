@@ -234,7 +234,7 @@ const handleRedirect = () => {
             </LauncherStateTitle>
             <LauncherStateMessage>
               {{ texts.message }}<template v-if="texts.kind === 'server-error' && texts.code">
-                <VTypography as="span" weight="medium">
+                <VTypography as="span" weight="semibold">
                   ({{ texts.code }})
                 </VTypography>
               </template>

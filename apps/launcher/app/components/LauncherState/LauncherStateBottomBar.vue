@@ -67,7 +67,7 @@ const isDark = useSignal(miniApp.isDark);
           :disabled="!isButtonEnabled"
           @click="action === 'redirect' ? $emit('redirect') : $emit('retry')"
         >
-          <VTypography variant="body" weight="medium">
+          <VTypography variant="body" weight="semibold">
             {{ t({
               retry: 'button.label.retry',
               redirect: 'button.label.redirect',

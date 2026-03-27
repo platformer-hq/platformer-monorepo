@@ -7,7 +7,7 @@ const { as = 'p' } = defineProps<{
    */
   as?: KnownHtmlTag;
   variant?: 'heading' | 'body' | 'footnote';
-  weight?: 'regular' | 'medium';
+  weight?: 'regular' | 'semibold';
 }>();
 
 const { b } = bem('v-typography');
@@ -38,15 +38,15 @@ const { b } = bem('v-typography');
   &--heading {
     line-height: 26px;
     font-size: 22px;
-    font-weight: 500;
+    font-weight: 600;
   }
 
   &--regular {
     font-weight: 400;
   }
 
-  &--medium {
-    font-weight: 500;
+  &--semibold {
+    font-weight: 600;
   }
 
   [data-platform="ios"] & {
