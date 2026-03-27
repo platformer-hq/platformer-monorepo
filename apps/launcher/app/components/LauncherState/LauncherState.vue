@@ -214,7 +214,7 @@ const handleRedirect = () => {
         <img :src="platformerLogoSrc" :class="e('image')" :width="80" :height="80">
         <LauncherStateStatusIcon v-if="icon" :status="icon"/>
       </div>
-      <Transition v-bind="contentTransition" :css="false" mode="out-in">
+      <Transition v-bind="contentTransition" :css="false" mode="out-in" appear>
         <div :key="contentKey" :class="e('content')">
           <template v-if="texts.kind === 'locale-dependent'">
             <template v-for="locale in locales" :key="locale">
@@ -320,19 +320,8 @@ const handleRedirect = () => {
   }
 
   &__content {
-    @keyframes status-page-content-appear {
-      from {
-        opacity: 0;
-        max-height: 28px;
-      }
-      to {
-        opacity: 1;
-        max-height: 30vh;
-      }
-    }
     text-align: center;
     text-wrap: balance;
-    animation: status-page-content-appear 200ms ease forwards;
   }
 
   &__disclaimer {
