@@ -86,9 +86,9 @@ export default defineNuxtConfig({
     },
   },
   ssr: false,
-  typescript: {
-    typeCheck: 'build',
-  },
+  // typescript: {
+  //   typeCheck: 'build',
+  // },
   vite: {
     plugins: [
       iifeUrlPlugin(),
