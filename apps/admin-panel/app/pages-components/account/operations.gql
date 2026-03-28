@@ -1,0 +1,12 @@
+query AccountPageData {
+  currentUser {
+    id
+    name
+    telegramData {
+      id
+      firstName
+      lastName
+      login
+    }
+  }
+}

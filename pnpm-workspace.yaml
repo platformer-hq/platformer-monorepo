@@ -1,8 +1,5 @@
-packages:
-  - apps/*
-  - packages/*
+packages: []
 onlyBuiltDependencies:
   - '@parcel/watcher'
-  - core-js-pure
   - esbuild
-  - sharp
+  - unrs-resolver

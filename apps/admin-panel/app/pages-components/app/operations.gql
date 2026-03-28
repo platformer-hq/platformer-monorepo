@@ -1,0 +1,11 @@
+query AppPageData($appID: ID!) {
+  app(appID: $appID) {
+    currentUserRole
+    id
+    title
+  }
+}
+
+mutation DeleteApp($appID: ID!) {
+  deleteApp(appID: $appID)
+}

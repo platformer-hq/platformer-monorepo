@@ -1,0 +1,14 @@
+<script setup lang="ts">
+/* eslint-disable */
+import type { SVGAttributes } from 'vue';
+
+export interface Credits20Props extends /* @vue-ignore */ SVGAttributes {
+  size?: string | number;
+}
+
+const { size = 20 } = defineProps<Credits20Props>();
+</script>
+
+<template>
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" :width="size" :height="size"><path fill="currentColor" d="M14.695 4.706a4.46 4.46 0 0 0-6.304 0 .7.7 0 1 1-.99-.99A5.858 5.858 0 0 1 15.684 12a.7.7 0 1 1-.99-.99 4.457 4.457 0 0 0 0-6.304"/><path fill="currentColor" fill-rule="evenodd" d="M8.718 10.694a1.14 1.14 0 0 0-.37-.425.9.9 0 0 0-.501-.131.86.86 0 0 0-.721.352c-.176.233-.286.588-.286 1.056 0 .475.111.83.286 1.06a.86.86 0 0 0 .716.348.94.94 0 0 0 .523-.135 1.1 1.1 0 0 0 .35-.39l.001-.002a1 1 0 0 1 .28-.33.7.7 0 0 1 .4-.113c.177 0 .344.06.468.177a.64.64 0 0 1 .198.474.9.9 0 0 1-.084.366c-.306.748-1.19 1.243-2.15 1.243-.75 0-1.384-.255-1.83-.731-.444-.475-.685-1.151-.685-1.962 0-.807.238-1.485.68-1.965s1.075-.742 1.827-.742c.997 0 1.888.512 2.156 1.286a.9.9 0 0 1 .072.34c0 .19-.072.356-.2.473a.7.7 0 0 1-.47.17.7.7 0 0 1-.39-.107.9.9 0 0 1-.27-.312" clip-rule="evenodd"/><path fill="currentColor" fill-rule="evenodd" d="M2 11.541a5.858 5.858 0 1 1 11.716 0 5.858 5.858 0 0 1-11.716 0m5.858-4.458a4.458 4.458 0 1 0 0 8.916 4.458 4.458 0 0 0 0-8.916" clip-rule="evenodd"/></svg>
+</template>

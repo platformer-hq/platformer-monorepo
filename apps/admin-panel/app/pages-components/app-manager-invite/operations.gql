@@ -1,0 +1,13 @@
+mutation InviteToManage($appId: ID!, $userId: ID!, $role: AppManagementInviteRole!) {
+  createAppManagementInvite(appID: $appId, userID: $userId, role: $role) {
+    id
+    role
+    from {
+      name
+    }
+    to {
+      id
+      name
+    }
+  }
+}

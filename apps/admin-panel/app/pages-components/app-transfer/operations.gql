@@ -1,0 +1,19 @@
+query AppTransferPageData($appId: ID!) {
+  currentUser {
+    id
+  }
+  app(appID: $appId) {
+    currentUserRole
+    transferRequest {
+      to {
+        id
+        name
+      }
+      id
+    }
+  }
+}
+
+mutation RevokeAppTransferRequest($requestId: ID!) {
+  revokeAppTransferRequest(requestID: $requestId)
+}

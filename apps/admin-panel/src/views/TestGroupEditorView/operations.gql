@@ -1,7 +1,0 @@
-query TestGroupEditorViewData {
-  platforms {
-    id
-    name
-    completeTitle
-  }
-}
