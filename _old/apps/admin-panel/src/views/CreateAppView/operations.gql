@@ -1,8 +1,0 @@
-mutation CreateApp($title: String!) {
-  createApp(title: $title) {
-    id
-    title
-    privacy
-    currentUserRole
-  }
-}
