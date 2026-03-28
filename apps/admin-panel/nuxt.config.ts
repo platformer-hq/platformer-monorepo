@@ -16,7 +16,6 @@ function higherPriorityImport(name: string, from: string) {
 }
 
 const componentsIgnore = ['**/_/**', '**/_*'];
-const isDev = process.env.NODE_ENV !== 'production';
 const env = v.parse(
   v.looseObject({
     API_BASE_URL: v.pipe(v.string(), v.nonEmpty()),
@@ -132,8 +131,9 @@ export default defineNuxtConfig({
       prerender: true,
     },
   },
+  ssr: false,
   typescript: {
-    typeCheck: !isDev,
+    typeCheck: 'build',
   },
   vite: {
     server: {
