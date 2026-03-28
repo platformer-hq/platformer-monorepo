@@ -121,6 +121,12 @@ export default defineNuxtConfig({
       cssnano: {},
     },
   },
+  nitro: {
+    output: {
+      dir: '.admin-panel',
+      publicDir: '.admin-panel/public',
+    },
+  },
   runtimeConfig: {
     public: {
       apiBaseUrl: env.API_BASE_URL,

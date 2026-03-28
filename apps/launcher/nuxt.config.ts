@@ -80,6 +80,12 @@ export default defineNuxtConfig({
       cssnano: {},
     },
   },
+  nitro: {
+    output: {
+      dir: '.launcher',
+      publicDir: '.launcher/public',
+    },
+  },
   routeRules: {
     '/**': {
       prerender: true,

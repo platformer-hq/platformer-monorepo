@@ -5,6 +5,8 @@
 .nitro
 .cache
 dist
+.admin-panel
+.launcher
 
 # Node dependencies
 node_modules
