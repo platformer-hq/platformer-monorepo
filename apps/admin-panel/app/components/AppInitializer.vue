@@ -51,7 +51,7 @@ await callOnce(async () => {
 
   // Configure @tma.js SDK.
   setDebug(startParam.includes('debug') || import.meta.env.DEV);
-  setTargetOrigin(import.meta.env.DEV ? '*' : 'https://web.telegram.org');
+  setTargetOrigin(import.meta.env.DEV ? '*' : 'https://tgl.mini-apps.store');
   init({
     themeParams: platform.raw === 'ios'
       // We use this hack to fix a bug related to dark themes in iOS. For some reason, the initial
@@ -62,9 +62,6 @@ await callOnce(async () => {
     version: launchParams.tgWebAppVersion,
     isInlineMode: !!launchParams.tgWebAppBotInline,
   });
-
-  // Intercept broken mini apps events and respond with a correct data.
-  interceptBrokenEvents({ macOS: platform.raw === 'macos', webK: platform.raw === 'web' });
 
   // Initialize required components.
   initData.restore();
