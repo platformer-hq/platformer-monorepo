@@ -137,7 +137,6 @@ export default defineNuxtConfig({
       prerender: true,
     },
   },
-  ssr: false,
   // typescript: {
   //   typeCheck: 'build',
   // },
