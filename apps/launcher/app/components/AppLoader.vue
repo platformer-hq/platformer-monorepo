@@ -127,7 +127,7 @@ watch(data, data => {
     });
   }
   emit('appDataRetrieved');
-  frameUrl.value = { kind: 'original', src: data.url };
+  frameUrl.value = { kind: 'original', src: appendLaunchParams(data.url, props.launchParamsRaw) };
 });
 
 watch([
@@ -149,7 +149,7 @@ watch([
     }
     return emit('apiError', { error });
   }
-  frameUrl.value = { kind: 'original', src: fallbackUrl };
+  frameUrl.value = { kind: 'fallback', src: fallbackUrl };
 });
 </script>
 
