@@ -17,7 +17,7 @@ export function extractLauncherOptions(
   {
     appId: number;
     apiBaseUrl: string;
-    fallbackUrl?: string | null;
+    fallbackUrl?: string;
     initTimeout: number;
     loadTimeout: number;
   }
