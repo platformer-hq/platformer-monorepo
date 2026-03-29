@@ -97,6 +97,8 @@ const { data, isPending, error } = useQuery({
     // Not more than 3 retries.
     && failureCount < 4
   ),
+  refetchOnWindowFocus: false,
+  refetchOnReconnect: false,
 });
 
 watch(isPending, isPending => {
