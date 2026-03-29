@@ -118,13 +118,18 @@ onMounted(() => {
         (postEvent as any)(request.eventType, request.eventData);
       });
       uiRequests.forEach(({ name, color }) => {
-        console.log('Restoring UI color', { method: name, color });
-        if (name === 'web_app_set_header_color') {
-          miniApp.setHeaderColor.ifAvailable(color);
-        } else if (name === 'web_app_set_background_color') {
-          miniApp.setBgColor.ifAvailable(color);
-        } else {
-          miniApp.setBottomBarColor.ifAvailable(color);
+        try {
+          console.log('Restoring UI color', { method: name, color });
+          if (name === 'web_app_set_header_color') {
+            miniApp.setHeaderColor.ifAvailable(color);
+          } else if (name === 'web_app_set_background_color') {
+            miniApp.setBgColor.ifAvailable(color);
+          } else {
+            // This method may fail in Web version of Telegram.
+            miniApp.setBottomBarColor.ifAvailable(color);
+          }
+        } catch (e) {
+          console.warn('Failed to restore UI color', name, color, e);
         }
       });
       removeTimeout();
