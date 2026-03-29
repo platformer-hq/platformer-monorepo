@@ -23,7 +23,7 @@
     "@pinia/colada-plugin-retry": "^0.2.3",
     "@pinia/nuxt": "0.11.3",
     "@tma.js/bridge": "^2.2.3",
-    "@tma.js/sdk-vue": "^1.0.17",
+    "@tma.js/sdk-vue": "^1.0.18",
     "@vueuse/core": "^14.2.1",
     "error-kid": "^2.0.0",
     "eruda": "^3.4.3",
