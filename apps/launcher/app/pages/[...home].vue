@@ -85,7 +85,7 @@ onErrorCaptured(error => {
 </script>
 
 <template>
-  <div>
+  <div class="home-page">
     <Transition :css="false" @leave="onLauncherPageLeave">
       <LauncherState
         v-if="state.kind !== 'ready'"
@@ -138,3 +138,10 @@ onErrorCaptured(error => {
     />
   </div>
 </template>
+
+<style>
+.home-page {
+  height: 100vh;
+  width: 100vw;
+}
+</style>
