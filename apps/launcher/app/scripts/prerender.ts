@@ -10,7 +10,7 @@ document.documentElement.dataset['platform'] = ['macos', 'ios'].includes(tgWebAp
   ? 'ios'
   : 'android';
 
-(async () => {
+Promise.resolve().then(async () => {
   const themeParams = tgWebAppPlatform === 'ios'
     // We use this hack to fix a bug related to dark themes in iOS. For some reason, the initial
     // theme params state there is invalid and contains secondaryBgColor = bgColor. Requesting
@@ -33,4 +33,4 @@ document.documentElement.dataset['platform'] = ['macos', 'ios'].includes(tgWebAp
     postEvent('web_app_set_background_color', { color: bgColor });
     postEvent('web_app_set_bottom_bar_color', { color: bgColor });
   }
-})();
+});
