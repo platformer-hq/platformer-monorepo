@@ -106,10 +106,7 @@ onErrorCaptured(error => {
       :fallback-url="launcherOptions.fallbackUrl
         ? appendLaunchParams(launcherOptions.fallbackUrl, launchParamsRaw)
         : undefined"
-      @ready="
-        state = {kind: 'ready'};
-        hapticFeedback.notificationOccurred('success');
-      "
+      @ready="state = {kind: 'ready'}"
       @api-timeout="
         state = {kind: 'api-timeout', timeout: $event.timeout};
         hapticError();
@@ -120,7 +117,7 @@ onErrorCaptured(error => {
       "
       @app-http-url="
         state = {kind: 'app-http-url', type: $event.type, url: $event.url};
-        if ($event.type) {
+        if ($event.type === 'error') {
           hapticError();
         }
       "
@@ -128,10 +125,7 @@ onErrorCaptured(error => {
         state = {kind: 'loading', step: 'waiting-load'};
         hapticError();
       "
-      @app-device-inaccessible="
-        state = {kind: 'app-device-inaccessible'};
-        hapticError();
-      "
+      @app-device-inaccessible="state = {kind: 'app-device-inaccessible'}"
       @app-not-found="state = {kind: 'app-not-found'}"
       @app-error="
         state = {kind: 'app-error'};
