@@ -122,7 +122,7 @@ watch(data, data => {
       /* none */
     }
     return emit('appHttpUrl', {
-      url: data.url,
+      url: appendLaunchParams(data.url, props.launchParamsRaw),
       type: isWeb ? 'error' : 'warning',
     });
   }
