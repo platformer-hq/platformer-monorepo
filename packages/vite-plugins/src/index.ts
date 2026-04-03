@@ -1,0 +1,1 @@
+export { iifeUrlPlugin } from './iifeUrlPlugin';
