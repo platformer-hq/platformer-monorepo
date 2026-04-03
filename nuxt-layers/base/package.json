@@ -1,0 +1,19 @@
+{
+  "name": "base",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.33.0",
+  "dependencies": {
+    "@vueuse/core": "^14.2.1",
+    "@workspace/tsconfigs": "workspace:tsconfigs@*",
+    "fp-ts": "^2.16.11",
+    "vue": "^3.5.32"
+  }
+}

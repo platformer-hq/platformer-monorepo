@@ -1,0 +1,12 @@
+{
+  "extends": "@workspace/tsconfigs/vue.json",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./app/*"]
+    }
+  },
+  "include": [
+    "app/**/*",
+    "index.ts"
+  ]
+}

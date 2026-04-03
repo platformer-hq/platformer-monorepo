@@ -1,0 +1,17 @@
+{
+  "name": "pinia",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.33.0",
+  "dependencies": {
+    "@pinia/colada": "^1.1.0",
+    "@workspace/tsconfigs": "workspace:tsconfigs@*",
+    "pinia": "^3.0.4"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "ui-kit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.33.0",
+  "devDependencies": {
+    "@workspace/tsconfigs": "workspace:tsconfigs@*"
+  },
+  "dependencies": {
+    "@vueuse/core": "^14.2.1",
+    "vue": "^3.5.32"
+  }
+}
