@@ -1,0 +1,17 @@
+{
+  "name": "@platformer-layers/utils",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "index.ts",
+  "license": "ISC",
+  "dependencies": {
+    "@platformer/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "@platformer/tsconfigs": "workspace:*"
+  },
+  "peerDependencies": {
+    "nuxt": "^4.4.2"
+  }
+}
