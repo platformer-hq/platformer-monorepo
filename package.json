@@ -5,8 +5,13 @@
   "engines": {
     "node": ">=22"
   },
+  "scripts": {
+    "gql-codegen": "graphql-codegen --config graphql.config.ts",
+    "build-icons": "turbo run build-icons --filter=\"@platformer/ui-kit\"",
+    "launcher:dev": "turbo run dev --filter=\"@platformer/launcher\"",
+    "launcher:build": "turbo run build --filter=\"@platformer/launcher\""
+  },
   "dependencies": {
-    "@platformer/eslint-config": "workspace:*",
     "@graphql-codegen/add": "^6.0.0",
     "@graphql-codegen/cli": "^6.1.0",
     "@graphql-codegen/near-operation-file-preset": "^4.0.0",
@@ -15,23 +20,15 @@
     "@graphql-codegen/typescript-operations": "^5.0.7",
     "@nuxt/eslint-config": "^1.15.2",
     "@parcel/watcher": "^2.5.1",
-    "@stylistic/eslint-plugin": "^5.6.1",
-    "@vue/eslint-config-typescript": "^14.6.0",
+    "@platformer/eslint-config": "workspace:*",
     "baseline-browser-mapping": "^2.9.19",
     "browserslist-to-esbuild": "^2.1.1",
-    "cross-env": "^10.1.0",
-    "dotenv": "^17.2.3",
     "eslint": "^9.39.2",
-    "eslint-import-resolver-typescript": "^4.4.4",
-    "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-vue": "^10.6.2",
     "jiti": "^2.6.1",
     "sass-embedded": "^1.97.1",
-    "sharp": "^0.34.5",
-    "svgo": "^4.0.0",
     "tslib": "^2.8.1",
     "tsx": "^4.21.0",
-    "turbo": "^2.9.1",
+    "turbo": "^2.9.3",
     "typescript": "^5.9.3"
   },
   "packageManager": "pnpm@10.33.0"
