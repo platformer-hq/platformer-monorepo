@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@platformer/ui-kit": "workspace:*",
+    "@platformer/tma": "workspace:*",
+    "@platformer/navigation": "workspace:*",
     "@nuxtjs/i18n": "10.2.3",
     "@pinia/colada": "^1.0.0",
     "@pinia/colada-nuxt": "0.3.2",
