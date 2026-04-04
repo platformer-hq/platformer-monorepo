@@ -1,0 +1,14 @@
+{
+  "name": "@platformer/utils",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "license": "ISC",
+  "dependencies": {
+    "fp-ts": "^2.16.11"
+  },
+  "devDependencies": {
+    "@platformer/tsconfigs": "workspace:*"
+  }
+}

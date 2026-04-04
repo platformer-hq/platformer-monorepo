@@ -1,0 +1,6 @@
+{
+  "extends": "@platformer/tsconfigs/esnext.json",
+  "include": [
+    "src"
+  ]
+}
