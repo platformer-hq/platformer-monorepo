@@ -1,3 +1,10 @@
+import { isPageReload } from '@platformer/navigation';
+import {
+  formatMiniAppCssVar,
+  formatThemeParamsCssVar,
+  formatViewportCssVar,
+  interceptBrokenEvents,
+} from '@platformer/tma';
 import {
   applyPolyfills,
   setDebug,
