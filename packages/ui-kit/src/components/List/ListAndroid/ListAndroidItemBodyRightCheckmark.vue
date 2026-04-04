@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import CheckmarkIOS28, { type CheckmarkIOS28Props } from '@/icons/icons/28/CheckmarkIOS28.vue';
+import IconCheckmarkIOS28, { type IconCheckmarkIOS28Props } from '@/icons/icons/28/IconCheckmarkIOS28.vue';
 
-defineProps<CheckmarkIOS28Props>();
+defineProps<IconCheckmarkIOS28Props>();
 </script>
 
 <template>
-  <CheckmarkIOS28 v-bind="$props" class="list-android-item-body-right-checkmark"/>
+  <IconCheckmarkIOS28 v-bind="$props" class="list-android-item-body-right-checkmark"/>
 </template>
 
 <style lang="scss">

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { CheckmarkIOS28, type CheckmarkIOS28Props } from '@/icons';
+import { IconCheckmarkIOS28, type IconCheckmarkIOS28Props } from '@/icons';
 
-defineProps<CheckmarkIOS28Props>();
+defineProps<IconCheckmarkIOS28Props>();
 </script>
 
 <template>
-  <CheckmarkIOS28 v-bind="$props" class="list-ios-item-body-right-checkmark"/>
+  <IconCheckmarkIOS28 v-bind="$props" class="list-ios-item-body-right-checkmark"/>
 </template>
 
 <style lang="scss">

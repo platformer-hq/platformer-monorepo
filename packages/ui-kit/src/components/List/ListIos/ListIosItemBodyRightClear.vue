@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { XmarkFill28 } from '@/icons';
+import { IconXmarkFill28 } from '@/icons';
 </script>
 
 <template>
   <i class="list-ios-item-body-right-clear">
-    <XmarkFill28 :size="20"/>
+    <IconXmarkFill28 :size="20"/>
   </i>
 </template>
 

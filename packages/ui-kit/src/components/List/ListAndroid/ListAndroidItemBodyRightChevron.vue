@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import ChevronRight28, { type ChevronRight28Props } from '@/icons/icons/28/ChevronRight28.vue';
+import IconChevronRight28, { type IconChevronRight28Props } from '@/icons/icons/28/IconChevronRight28.vue';
 
-defineProps<ChevronRight28Props>();
+defineProps<IconChevronRight28Props>();
 </script>
 
 <template>
-  <ChevronRight28 class="list-android-item-body-right-chevron" v-bind="$props"/>
+  <IconChevronRight28 class="list-android-item-body-right-chevron" v-bind="$props"/>
 </template>
 
 <style lang="scss">

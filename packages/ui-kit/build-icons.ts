@@ -106,7 +106,8 @@ readdirSync(sourceDir).forEach(category => {
 
     const sizeNum = parseInt(size);
     readdirSync(resolve(sourceDir, category, size)).forEach(fileName => {
-      const componentName = (config?.prefix || '')
+      const componentName = 'Icon'
+        + (config?.prefix || '')
         + parse(fileName)
           .name
           .trim()

@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import type { IosChevronSubheadline1Semibold20Props } from '@/icons';
-import { IosChevronSubheadline1Semibold20 } from '@/icons';
+import { IconIosChevronSubheadline1Semibold20, type IconIosChevronSubheadline1Semibold20Props } from '@/icons';
 
-defineProps<IosChevronSubheadline1Semibold20Props>();
+defineProps<IconIosChevronSubheadline1Semibold20Props>();
 </script>
 
 <template>
-  <IosChevronSubheadline1Semibold20
+  <IconIosChevronSubheadline1Semibold20
     class="list-ios-item-body-right-chevron"
     v-bind="$props"
   />

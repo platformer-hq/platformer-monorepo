@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import ButtonAndroid from '@/components/Button/ButtonAndroid.vue';
-import { Xmark24 } from '@/icons';
+import { IconXmark24 } from '@/icons';
 </script>
 
 <template>
   <ButtonAndroid class="list-android-item-body-right-clear">
-    <Xmark24 :size="20"/>
+    <IconXmark24 :size="20"/>
   </ButtonAndroid>
 </template>
 
