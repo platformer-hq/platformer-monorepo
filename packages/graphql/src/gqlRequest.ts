@@ -1,6 +1,11 @@
 import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import * as fp from 'fp-ts';
-import type { ClientError, GraphQLClient, RequestExtendedOptions, Variables } from 'graphql-request';
+import type {
+  ClientError,
+  GraphQLClient,
+  RequestExtendedOptions,
+  Variables,
+} from 'graphql-request';
 
 /**
  * Performs a GraphQL request using specified client.
