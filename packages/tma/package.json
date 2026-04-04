@@ -8,6 +8,6 @@
   "dependencies": {
     "@tma.js/sdk-vue": "^1.0.18",
     "@platformer/tsconfigs": "workspace:*",
-    "@platformer/base": "workspace:*"
+    "@platformer/utils": "workspace:*"
   }
 }

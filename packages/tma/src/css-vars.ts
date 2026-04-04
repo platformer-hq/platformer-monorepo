@@ -1,4 +1,4 @@
-import { camelToKebab } from '@platformer/base';
+import { camelToKebab } from '@platformer/utils';
 import type {
   MiniAppGetCssVarNameFn,
   ThemeParamsGetCssVarNameFn,
