@@ -1,5 +1,5 @@
 import stylistic from '@stylistic/eslint-plugin';
-import { Linter } from 'eslint';
+import type { Linter } from 'eslint';
 import * as importPlugin from 'eslint-plugin-import';
 
 export const stylisticConfig: Linter.Config = {

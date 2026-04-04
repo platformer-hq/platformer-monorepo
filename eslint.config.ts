@@ -1,11 +1,4 @@
-import {
-  createNuxtConfig,
-  vueConfig,
-  importConfig,
-  importConfigBase,
-  importConfigTypescript,
-  stylisticConfig,
-} from '@platformer/eslint-config';
+import { createNuxtConfig, tsConfigs } from '@platformer/eslint-config';
 
 export default createNuxtConfig({
   srcDirs: [
@@ -18,16 +11,21 @@ export default createNuxtConfig({
       name: 'platformer/packages-and-layers',
       files: ['{packages,nuxt-layers}/**/*.{ts,mts,tsx,vue}'],
     },
-    { rules: vueConfig.rules },
-    stylisticConfig,
-    importConfigBase,
-    importConfigTypescript,
-    importConfig,
-  )
-  .append({
-    name: 'platformer/disable-multi-word-for-icons',
-    files: ['nuxt-layers/ui-kit/app/icons/**/*.vue'],
-    rules: {
-      'vue/multi-word-component-names': 'off',
+    {
+      name: 'platformer/vue-overrides',
+      files: ['**/*.vue'],
+      rules: {
+        // Not needed with SFC + TypeScript
+        // Optional props (variant?: string) don't require defaults
+        'vue/require-default-prop': 'off',
+      },
     },
-  });
+    {
+      name: 'platformer/disable-multi-word-for-ui-kit-icons',
+      files: ['./nuxt-layers/ui-kit/app/icons/**/*.vue'],
+      rules: {
+        'vue/multi-word-component-names': 'off',
+      },
+    },
+    ...tsConfigs,
+  );
