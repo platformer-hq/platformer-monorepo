@@ -1,4 +1,5 @@
 import { iifeUrlPlugin } from '@platformer/vite-plugins';
+import browserslistToEsbuild from 'browserslist-to-esbuild';
 import path from 'node:path';
 
 function resolve(...filePath: string[]) {
@@ -70,6 +71,9 @@ export default defineNuxtConfig({
     typeCheck: 'build',
   },
   vite: {
+    build: {
+      target: browserslistToEsbuild(),
+    },
     plugins: [
       iifeUrlPlugin(),
     ],
