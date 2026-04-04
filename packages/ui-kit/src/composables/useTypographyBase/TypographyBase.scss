@@ -1,0 +1,26 @@
+@use "@/scss/mixins" as mixins;
+
+.typography-base {
+  margin: 0;
+
+  @each $align in (left, center, right) {
+    &--#{$align} {
+      text-align: $align;
+    }
+  }
+
+  &--caps {
+    text-transform: uppercase;
+  }
+
+  &--single-line {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  &--clamped {
+    text-overflow: ellipsis;
+    @include mixins.lineClamp(var(--max-lines));
+  }
+}
