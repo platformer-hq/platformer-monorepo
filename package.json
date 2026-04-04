@@ -7,7 +7,8 @@
   },
   "scripts": {
     "gql-codegen": "graphql-codegen --config graphql.config.ts",
-    "build-icons": "turbo run build-icons --filter=\"@platformer/ui-kit\"",
+    "ui-kit:build": "turbo run build --filter=\"@platformer/ui-kit\"",
+    "ui-kit:build-icons": "turbo run build-icons --filter=\"@platformer/ui-kit\"",
     "launcher:dev": "turbo run dev --filter=\"@platformer/launcher\"",
     "launcher:build": "turbo run build --filter=\"@platformer/launcher\""
   },
