@@ -2,5 +2,8 @@
   "name": "@platformer/tsconfigs",
   "version": "0.0.2",
   "private": true,
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@vue/tsconfig": "^0.7.0"
+  }
 }

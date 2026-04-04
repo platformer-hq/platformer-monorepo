@@ -1,32 +1,12 @@
 {
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
   "compilerOptions": {
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "target": "ESNext",
     "allowJs": true,
-    "resolveJsonModule": true,
-    "moduleDetection": "force",
-    "isolatedModules": true,
-    "verbatimModuleSyntax": true,
     "allowArbitraryExtensions": true,
-    "strict": true,
+    "isolatedModules": true,
     "noUncheckedIndexedAccess": true,
-    "forceConsistentCasingInFileNames": true,
     "noImplicitOverride": true,
     "module": "preserve",
-    "noEmit": true,
-    "lib": [
-      "ESNext",
-      "dom",
-      "dom.iterable",
-      "webworker"
-    ],
-    "jsx": "preserve",
-    "jsxImportSource": "vue",
-    "types": [],
-    "moduleResolution": "Bundler",
-    "useDefineForClassFields": true,
-    "noImplicitThis": true,
-    "allowSyntheticDefaultImports": true
+    "lib": ["ESNext", "DOM", "DOM.Iterable"]
   }
 }
