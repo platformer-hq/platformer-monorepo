@@ -31,6 +31,5 @@
     "browserslist-to-esbuild": "^2.1.1",
     "sass-embedded": "^1.97.1",
     "@platformer/vite-plugins": "workspace:*"
-  },
-  "packageManager": "pnpm@10.33.0"
+  }
 }

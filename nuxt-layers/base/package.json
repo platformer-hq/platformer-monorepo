@@ -10,7 +10,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.33.0",
   "dependencies": {
     "@vueuse/core": "^14.2.1",
     "@platformer/ui-kit": "workspace:*",
