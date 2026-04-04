@@ -13,6 +13,7 @@
   "packageManager": "pnpm@10.33.0",
   "dependencies": {
     "@vueuse/core": "^14.2.1",
+    "@platformer/ui-kit": "workspace:*",
     "@platformer/tsconfigs": "workspace:*",
     "fp-ts": "^2.16.11",
     "vue": "^3.5.32"
