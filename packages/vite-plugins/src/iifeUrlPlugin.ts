@@ -67,7 +67,8 @@ export function iifeUrlPlugin(): Plugin {
                 }
               },
             },
-            //@ts-expect-error
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
             typescript(),
             alias({ entries: [{ find: '@', replacement: config.root }] }),
             nodeResolve({ browser: true, extensions: ['.js', '.ts'] }),
