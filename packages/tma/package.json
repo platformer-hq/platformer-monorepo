@@ -3,19 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
-  "main": "index.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
+  "main": "src/index.ts",
   "license": "ISC",
   "dependencies": {
     "@tma.js/sdk-vue": "^1.0.18",
     "@platformer/tsconfigs": "workspace:*",
     "@platformer/base": "workspace:*"
-  },
-  "peerDependencies": {
-    "nuxt": "^4.4.2"
   }
 }
