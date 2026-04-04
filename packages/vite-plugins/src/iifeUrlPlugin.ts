@@ -1,5 +1,5 @@
 import alias from '@rollup/plugin-alias';
-import resolve from '@rollup/plugin-node-resolve';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import path from 'node:path';
 import { rollup } from 'rollup';
@@ -67,9 +67,10 @@ export function iifeUrlPlugin(): Plugin {
                 }
               },
             },
+            //@ts-expect-error
             typescript(),
             alias({ entries: [{ find: '@', replacement: config.root }] }),
-            resolve({ browser: true, extensions: ['.js', '.ts'] }),
+            nodeResolve({ browser: true, extensions: ['.js', '.ts'] }),
             esbuild({ sourceMap: false, minify: !isDev }),
           ],
         })
