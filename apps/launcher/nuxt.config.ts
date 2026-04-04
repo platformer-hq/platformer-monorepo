@@ -44,9 +44,7 @@ export default defineNuxtConfig({
     priority: 100,
   }],
   extends: [
-    resolveLayer('base'),
-    resolveLayer('navigation'),
-    resolveLayer('tma'),
+    resolveLayer('utils'),
   ],
   i18n: {
     strategy: 'no_prefix',
