@@ -14,7 +14,7 @@ export default {
       preset: 'near-operation-file-preset',
       presetConfig: {
         extension: '.ts',
-        baseTypesPath: '~#layers/api/schema',
+        baseTypesPath: '~@platformer/api/schema',
       },
       plugins: [
         'typescript-operations',
