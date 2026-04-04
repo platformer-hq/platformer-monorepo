@@ -1,3 +1,3 @@
-export default defineNuxtConfig({
-  modules: ['@pinia/nuxt'],
-});
+import { defineNuxtConfig } from 'nuxt/config';
+
+export default defineNuxtConfig({});

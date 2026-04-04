@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { UseTypographyBaseOptions } from '~~/packages/ui-kit/src/composables/useTypographyBase/useTypographyBase';
 import type { StyleValue } from 'vue';
+
+import type { UseTypographyBaseOptions } from '~~/packages/ui-kit/src/composables/useTypographyBase/useTypographyBase';
 
 export interface UseTypographyBaseSlotProps {
   classes?: unknown[];

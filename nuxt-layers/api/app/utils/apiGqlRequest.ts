@@ -1,9 +1,9 @@
 import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
-import { gqlRequest } from '@workspace/graphql';
+import { gqlRequest } from '@platformer/graphql';
 import * as fp from 'fp-ts';
 import type { GraphQLClient, Variables } from 'graphql-request';
 
-import { ApiGraphQLResponseError } from './ApiGraphQLResponseError';
+import { ApiGraphQLResponseError } from './ApiGraphQLResponseError.js';
 
 /**
  * Performs a GraphQL request using specified client.

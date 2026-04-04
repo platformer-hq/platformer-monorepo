@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { UseTypographyIosOptions } from '~~/packages/ui-kit/src/composables/useTypographyIos/useTypographyIos';
 import type { StyleValue } from 'vue';
+
+import type { UseTypographyIosOptions } from '~~/packages/ui-kit/src/composables/useTypographyIos/useTypographyIos';
 
 export interface UseTypographyIosSlotProps {
   classes?: unknown[];

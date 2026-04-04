@@ -1,7 +1,8 @@
 {
-  "name": "graphql",
-  "version": "1.0.0",
-  "description": "",
+  "name": "@platformer/graphql",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
   "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,5 +15,11 @@
     "@graphql-typed-document-node/core": "^3.2.0",
     "fp-ts": "^2.16.11",
     "graphql-request": "^7.4.0"
+  },
+  "devDependencies": {
+    "@platformer/tsconfigs": "workspace:*"
+  },
+  "peerDependencies": {
+    "nuxt": "^4.4.2"
   }
 }

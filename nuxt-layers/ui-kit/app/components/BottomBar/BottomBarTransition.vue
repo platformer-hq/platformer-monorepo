@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { 
-  createReversibleTransition, 
-  reverseTransitionKeyframesIfLeave
- } from '@/transitions/utils/transitions';
+import {
+  createReversibleTransition,
+  reverseTransitionKeyframesIfLeave,
+} from '@/transitions/utils/transitions';
 
 const transition = createReversibleTransition({
   animatedProperties({ el, transition }) {

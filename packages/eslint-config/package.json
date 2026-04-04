@@ -1,0 +1,16 @@
+{
+  "name": "@platformer/eslint-config",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "devDependencies": {
+    "@platformer/tsconfigs": "workspace:*"
+  },
+  "peerDependencies": {
+    "@nuxt/eslint-config": "^1.15.2",
+    "@stylistic/eslint-plugin": "^5.6.1",
+    "eslint": "^9.39.2",
+    "eslint-plugin-import": "^2.32.0"
+  }
+}

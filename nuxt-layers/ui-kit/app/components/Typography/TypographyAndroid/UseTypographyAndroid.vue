@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { UseTypographyAndroidOptions } from '~~/packages/ui-kit/src/composables/useTypographyAndroid/useTypographyAndroid';
 import type { StyleValue } from 'vue';
+
+import type { UseTypographyAndroidOptions } from '~~/packages/ui-kit/src/composables/useTypographyAndroid/useTypographyAndroid';
 
 export interface UseTypographyAndroidSlotProps {
   classes?: unknown[];

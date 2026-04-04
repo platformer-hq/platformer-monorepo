@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import type { KnownHtmlTag } from '~~/packages/ui-kit/app/types';
 import type {
   UseTypographyAndroidOptions,
   UseTypographyAndroidAlign,
   UseTypographyAndroidVariant,
 } from '~~/packages/ui-kit/src/composables/useTypographyAndroid/useTypographyAndroid';
-import type { KnownHtmlTag } from '~~/packages/ui-kit/app/types';
 
 export type TypographyAndroidAlign = UseTypographyAndroidAlign;
 export type TypographyAndroidVariant = UseTypographyAndroidVariant;

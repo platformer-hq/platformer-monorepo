@@ -1,6 +1,6 @@
 import type * as fp from 'fp-ts';
 
-import type { AnyEither } from './throwifyAnyEither';
+import { throwifyAnyEither, type AnyEither } from './throwifyAnyEither.js';
 
 type RequiredFn = (...args: never[]) => AnyEither;
 

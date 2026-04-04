@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { useRouter } from 'vue-router';
 import { computed, onUnmounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
-import { provideRoutingState, type RoutingDirection } from '../routing-state';
+import { provideRoutingState, type RoutingDirection } from '../routing-state.js';
 
 const router = useRouter();
 

@@ -1,5 +1,6 @@
 {
-  "name": "vite-plugins",
+  "name": "@platformer/vite-plugins",
+  "private": true,
   "version": "1.0.0",
   "description": "",
   "main": "src/index.ts",
@@ -10,7 +11,10 @@
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.33.0",
-  "dependencies": {
+  "devDependencies": {
+    "@platformer/tsconfigs": "workspace:*"
+  },
+  "peerDependencies": {
     "@rollup/plugin-alias": "^6.0.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-typescript": "^12.3.0",

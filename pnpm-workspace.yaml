@@ -1,4 +1,7 @@
-packages: []
+packages:
+  - 'packages/*'
+  # - 'apps/*'
+  - 'nuxt-layers/*'
 onlyBuiltDependencies:
   - '@parcel/watcher'
   - esbuild

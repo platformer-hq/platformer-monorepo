@@ -1,5 +1,5 @@
 {
-  "extends": "@workspace/tsconfigs/vue.json",
+  "extends": "@platformer/tsconfigs/vue.json",
   "compilerOptions": {
     "paths": {
       "@/*": ["./app/*"]

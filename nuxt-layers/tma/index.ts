@@ -1,2 +1,2 @@
-export * from './app/utils/css-vars';
-export * from './app/utils/mockBrokenEvents';
+export * from './app/utils/css-vars.js';
+export * from './app/utils/mockBrokenEvents.js';

@@ -1,1 +1,1 @@
-export { iifeUrlPlugin } from './iifeUrlPlugin';
+export { iifeUrlPlugin } from './iifeUrlPlugin.js';

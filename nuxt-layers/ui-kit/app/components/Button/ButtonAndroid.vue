@@ -1,10 +1,13 @@
 <script lang="ts" setup>
 import { useMousePressed } from '@vueuse/core';
 
-import ButtonBase, { type ButtonBaseProps } from './ButtonBase.vue';
-import { useRipples } from '@/composables/useRipples';
-import { bem } from '@/utils/bem';
 import { useTemplateRef, ref, computed } from 'vue';
+
+import { useRipples } from '@/composables/useRipples';
+
+import { bem } from '@/utils/bem';
+
+import ButtonBase, { type ButtonBaseProps } from './ButtonBase.vue';
 
 export interface ButtonAndroidProps extends ButtonBaseProps {
   /**

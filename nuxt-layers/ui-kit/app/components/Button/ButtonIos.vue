@@ -2,8 +2,9 @@
 import { useMousePressed } from '@vueuse/core';
 import { useTemplateRef, computed } from 'vue';
 
-import ButtonBase, { type ButtonBaseProps } from './ButtonBase.vue';
 import { bem } from '@/utils/bem';
+
+import ButtonBase, { type ButtonBaseProps } from './ButtonBase.vue';
 
 export interface ButtonIosProps extends ButtonBaseProps {
   /**

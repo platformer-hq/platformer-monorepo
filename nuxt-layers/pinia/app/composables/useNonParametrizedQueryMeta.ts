@@ -3,7 +3,7 @@ import type { DefineQueryOptionsTagged } from '@pinia/colada';
 import {
   type UseParametrizedQueryMetaSetDataUpdater,
   useParametrizedQueryMeta,
-} from './useParametrizedQueryMeta';
+} from './useParametrizedQueryMeta.js';
 
 export function useNonParametrizedQueryMeta<
   TData = unknown,

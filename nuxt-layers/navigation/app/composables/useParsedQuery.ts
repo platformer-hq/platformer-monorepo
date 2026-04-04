@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as v from 'valibot';
-import { useRoute, useRouter, type LocationQuery, type LocationQueryValue } from 'vue-router';
 import { ref, watch, readonly } from 'vue';
+import { useRoute, useRouter, type LocationQuery, type LocationQueryValue } from 'vue-router';
 
 type AnyLocationQueryValue = LocationQueryValue | LocationQueryValue[];
 type AnyLocationQueryInputValue = AnyLocationQueryValue | undefined;
