@@ -7,7 +7,7 @@
   </VTypography>
 </template>
 
-<style lang="scss">
+<style>
 .launcher-state-message {
   color: var(--subtitle-text-color);
 }

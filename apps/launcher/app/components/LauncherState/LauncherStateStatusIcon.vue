@@ -1,4 +1,11 @@
 <script setup lang="ts">
+import {
+  IconXmark28,
+  IconExclamationMarkTriangleFill28,
+  LoadingIndicatorAndroid,
+  LoadingIndicatorIos,
+} from '@platformer/ui-kit';
+
 defineProps<{
   status: 'error' | 'warning' | 'loading';
 }>();

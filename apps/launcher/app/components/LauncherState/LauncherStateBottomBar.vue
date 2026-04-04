@@ -1,7 +1,14 @@
 <script setup lang="ts">
+import {
+  ButtonAndroid,
+  ButtonIos,
+  LoadingIndicatorAndroid,
+  LoadingIndicatorIos,
+  BottomBar,
+  BottomBarTransition,
+  BottomBarInner,
+} from '@platformer/ui-kit';
 import { miniApp, useSignal } from '@tma.js/sdk-vue';
-
-import { ButtonAndroid, ButtonIos, LoadingIndicatorAndroid, LoadingIndicatorIos } from '#packages/ui-kit';
 
 const props = defineProps<{
   action?: 'retry' | 'redirect' | 'redirecting';
