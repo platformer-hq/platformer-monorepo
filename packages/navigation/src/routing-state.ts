@@ -1,4 +1,4 @@
-import { createProviderTuple } from '@platformer/base';
+import { createProviderTuple } from '@platformer/utils';
 import type { ComputedRef } from 'vue';
 
 export type RoutingDirection = 'initial' | 'forward' | 'backward';
