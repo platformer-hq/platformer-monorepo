@@ -1,0 +1,15 @@
+{
+  "name": "@platformer/pinia",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "license": "ISC",
+  "dependencies": {
+    "@pinia/colada": "^1.1.0",
+    "pinia": "^3.0.4"
+  },
+  "devDependencies": {
+    "@platformer/tsconfigs": "workspace:*"
+  }
+}
