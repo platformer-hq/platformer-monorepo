@@ -3,6 +3,7 @@ export { default as BadgeAndroid, type BadgeAndroidProps } from './components/Ba
 export { default as BadgeIos, type BadgeIosProps } from './components/Badge/BadgeIos.vue';
 
 export { default as BottomBar } from './components/BottomBar/BottomBar.vue';
+export { default as BottomBarInner } from './components/BottomBar/BottomBarInner.vue';
 export { default as BottomBarTransition } from './components/BottomBar/BottomBarTransition.vue';
 
 export { default as ButtonBase, type ButtonBaseProps } from './components/Button/ButtonBase.vue';
