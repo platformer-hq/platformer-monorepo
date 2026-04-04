@@ -1,9 +1,9 @@
 export {
-  baseConfigs,
+  tsConfigs,
   importConfig,
   importConfigBase,
   importConfigTypescript,
   stylisticConfig,
-  vueConfig,
-} from './base.js';
+} from './typescript.js';
+export { vueConfigs } from './vueConfigs.js';
 export { createNuxtConfig } from './createNuxtConfig.js';

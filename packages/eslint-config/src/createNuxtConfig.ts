@@ -1,6 +1,6 @@
 import { createConfigForNuxt } from '@nuxt/eslint-config/flat';
 
-import { baseConfigs } from './base.js';
+import { tsConfigs } from './typescript.js';
 
 /**
  * Creates a Nuxt ESLint config with shared base rules.
@@ -22,5 +22,5 @@ export function createNuxtConfig(options: {
   })
     .removePlugins('import')
     .remove('nuxt/import/rules')
-    .append(...baseConfigs);
+    .append(...tsConfigs);
 }

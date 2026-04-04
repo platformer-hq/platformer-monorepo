@@ -1,16 +1,6 @@
 import stylistic from '@stylistic/eslint-plugin';
-import type { Linter } from 'eslint';
+import { Linter } from 'eslint';
 import * as importPlugin from 'eslint-plugin-import';
-
-export const vueConfig: Linter.Config = {
-  name: 'platformer/vue-overrides',
-  files: ['**/*.vue'],
-  rules: {
-    // Not needed with SFC + TypeScript
-    // Optional props (variant?: string) don't require defaults
-    'vue/require-default-prop': 'off',
-  },
-};
 
 export const stylisticConfig: Linter.Config = {
   name: 'platformer/stylistic',
@@ -170,12 +160,9 @@ export const importConfig: Linter.Config = {
   },
 };
 
-export const baseConfigs: Linter.Config[] = [
-  vueConfig,
+export const tsConfigs: Linter.Config[] = [
   stylisticConfig,
   importConfigBase,
   importConfigTypescript,
   importConfig,
 ];
-
-export default baseConfigs;
