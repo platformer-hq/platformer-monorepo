@@ -10,28 +10,29 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@platformer/ui-kit": "workspace:*",
-    "@platformer/tma": "workspace:*",
-    "@platformer/navigation": "workspace:*",
     "@nuxtjs/i18n": "10.2.3",
     "@pinia/colada": "^1.0.0",
     "@pinia/colada-nuxt": "0.3.2",
     "@pinia/colada-plugin-retry": "^0.2.3",
     "@pinia/nuxt": "0.11.3",
+    "@platformer/navigation": "workspace:*",
+    "@platformer/tma": "workspace:*",
+    "@platformer/ui-kit": "workspace:*",
     "@tma.js/sdk-vue": "^1.0.18",
     "@vueuse/core": "^14.2.1",
     "error-kid": "^2.0.0",
     "eruda": "^3.4.3",
     "fp-ts": "^2.16.11",
     "nuxt": "^4.3.1",
+    "pinia": "^3.0.4",
     "valibot": "^1.2.0",
     "vue": "^3.5.28",
     "vue-tsc": "^3.2.6"
   },
   "devDependencies": {
+    "@platformer/vite-plugins": "workspace:*",
     "baseline-browser-mapping": "^2.9.19",
     "browserslist-to-esbuild": "^2.1.1",
-    "sass-embedded": "^1.97.1",
-    "@platformer/vite-plugins": "workspace:*"
+    "sass-embedded": "^1.97.1"
   }
 }
