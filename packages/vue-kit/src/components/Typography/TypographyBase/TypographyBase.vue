@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { useTemplateRef } from 'vue';
 
-import {
-  type UseTypographyBaseOptions,
-  type UseTypographyBaseAlign,
-  useTypographyBase,
-} from '@/composables/useTypographyBase/useTypographyBase';
 import type { KnownHtmlTag } from '@/types';
 
-export type TypographyBaseAlign = UseTypographyBaseAlign;
-export interface TypographyBaseProps extends UseTypographyBaseOptions {
+import {
+  type UseTypographyBaseAttrsOptions,
+  type UseTypographyBaseAttrsAlign,
+  useTypographyBaseAttrs,
+} from './useTypographyBaseAttrs';
+
+export type TypographyBaseAlign = UseTypographyBaseAttrsAlign;
+export interface TypographyBaseProps extends UseTypographyBaseAttrsOptions {
   /**
    * @default 'p'
    */
@@ -17,14 +18,14 @@ export interface TypographyBaseProps extends UseTypographyBaseOptions {
 }
 
 const props = withDefaults(defineProps<TypographyBaseProps>(), { as: 'p' });
-const element = useTemplateRef('element');
-const typography = useTypographyBase(props);
+const element = useTemplateRef<HTMLElement>('element');
+const baseAttrs = useTypographyBaseAttrs(() => props);
 
 defineExpose({ element });
 </script>
 
 <template>
-  <component :is="as" ref="element" :class="typography.classes" :style="typography.style">
+  <component :is="as" ref="element" :class="baseAttrs.classes" :style="baseAttrs.style">
     <slot/>
   </component>
 </template>
