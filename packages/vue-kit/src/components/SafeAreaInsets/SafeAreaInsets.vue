@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { useTemplateRef } from 'vue';
 
+import type { KnownHtmlTag } from '@/types';
+
 import {
   useSafeAreaInsetsAttrs,
   type UseSafeAreaInsetsAttrsOptions,
-} from '@/composables/useSafeAreaInsetsAttrs/useSafeAreaInsetsAttrs';
-import type { KnownHtmlTag } from '@/types';
+} from './useSafeAreaInsetsAttrs';
 
 export interface SafeAreaInsetsProps extends UseSafeAreaInsetsAttrsOptions {
   /**

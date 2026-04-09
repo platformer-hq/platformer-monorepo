@@ -4,14 +4,14 @@ import type { StyleValue } from 'vue';
 import {
   useSafeAreaInsetsAttrs,
   type UseSafeAreaInsetsAttrsOptions,
-} from '@/composables/useSafeAreaInsetsAttrs/useSafeAreaInsetsAttrs';
+} from './useSafeAreaInsetsAttrs';
 
-export interface UseSafeAreaInsetsProps extends UseSafeAreaInsetsAttrsOptions {
+export interface UseSafeAreaInsetsAttrsProps extends UseSafeAreaInsetsAttrsOptions {
   class?: unknown;
   style?: StyleValue;
 }
 
-const props = defineProps<UseSafeAreaInsetsProps>();
+const props = defineProps<UseSafeAreaInsetsAttrsProps>();
 defineSlots<{
   default(props: { classes: unknown[]; style: StyleValue }): unknown;
 }>();
