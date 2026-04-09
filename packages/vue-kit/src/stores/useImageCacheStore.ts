@@ -1,7 +1,6 @@
 import { useSessionStorage } from '@vueuse/core';
 import { defineStore } from 'pinia';
-import type { MaybeRefOrGetter } from 'vue';
-import { toValue, computed } from 'vue';
+import { toValue, computed, type MaybeRefOrGetter } from 'vue';
 
 type ItemState =
   | { state: 'error' }
