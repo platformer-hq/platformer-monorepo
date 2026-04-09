@@ -19,7 +19,7 @@ export interface ShimmerBoxProps {
 }
 
 const { as = 'div', bgColor } = defineProps<ShimmerBoxProps>();
-const { b, e } = bem('shimmer-box');
+const { b, e } = bem('tgui-shimmer-box');
 </script>
 
 <template>
@@ -33,7 +33,7 @@ const { b, e } = bem('shimmer-box');
       borderRadius: toPx(borderRadius),
       margin: toPx(margin),
       display,
-      '--shimmer-box-color': shimmerColor,
+      '--tgui-shimmer-box-shine-color': shimmerColor,
     }"
   >
     <span :class="e('shine')"/>
@@ -42,7 +42,7 @@ const { b, e } = bem('shimmer-box');
 </template>
 
 <style lang="scss">
-.shimmer-box {
+.tgui-shimmer-box {
   position: relative;
   overflow: hidden;
 
@@ -51,7 +51,7 @@ const { b, e } = bem('shimmer-box');
   }
 
   &__shine {
-    @keyframes shimmer-box-shine {
+    @keyframes tgui-shimmer-box-shine {
       0% {
         left: -200px;
       }
@@ -68,10 +68,10 @@ const { b, e } = bem('shimmer-box');
     background-image: linear-gradient(
       90deg,
       transparent,
-      var(--shimmer-box-color),
+      var(--tgui-shimmer-box-shine-color),
       transparent
     );
-    animation: shimmer-box-shine 2.5s linear infinite;
+    animation: tgui-shimmer-box-shine 2.5s linear infinite;
   }
 }
 </style>
