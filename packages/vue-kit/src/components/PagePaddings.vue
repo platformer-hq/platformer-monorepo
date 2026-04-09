@@ -33,7 +33,7 @@ const {
   top = true,
 } = defineProps<PagePaddingsProps>();
 
-const { b } = bem('page-paddings');
+const { b } = bem('tgui-page-paddings');
 </script>
 
 <template>
@@ -43,10 +43,10 @@ const { b } = bem('page-paddings');
 </template>
 
 <style lang="scss">
-.page-paddings {
+.tgui-page-paddings {
   @each $side in ("top", "left", "right", "bottom") {
     &--#{$side} {
-      padding-#{$side}: 16px;
+      padding-#{$side}: var(--tgui-page-paddings-#{$side}, 16px);
     }
   }
 }
