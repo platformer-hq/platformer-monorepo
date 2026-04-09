@@ -1,19 +1,14 @@
 <script setup lang="ts">
 import { onClickOutside, useTextareaAutosize } from '@vueuse/core';
-import { computed, mergeProps, useTemplateRef } from 'vue';
+import { computed, useTemplateRef } from 'vue';
 
-import UseTypographyAndroid from '@/components/Typography/TypographyAndroid/UseTypographyAndroid.vue';
+import { useTypographyAndroidAttrs } from '@/components/Typography/TypographyAndroid/useTypographyAndroidAttrs.js';
 
-import { bem } from '@/utils/bem';
+defineProps<{ multiline?: boolean }>();
 
-defineProps<{
-  multiline?: boolean;
-}>();
-defineOptions({ inheritAttrs: false });
-
-const { b } = bem('list-android-item-body-input-element');
 const model = defineModel<string | undefined>({ default: '' });
 const inputRef = useTemplateRef<HTMLInputElement | HTMLTextAreaElement>('input');
+const typographyAttrs = useTypographyAndroidAttrs({ variant: 'body' });
 
 useTextareaAutosize({
   input: computed(() => model.value || ''),
@@ -27,21 +22,18 @@ onClickOutside(inputRef, () => {
   inputRef.value?.blur();
 });
 
-defineExpose({
-  input: inputRef,
-});
+defineExpose({ input: inputRef });
 </script>
 
 <template>
-  <UseTypographyAndroid v-slot="{classes, style}" variant="body">
-    <component
-      :is="multiline ? 'textarea' : 'input'"
-      ref="input"
-      v-bind="mergeProps($attrs, { class: [b(), classes], style })"
-      :value="model"
-      @input="model = $event.target.value"
-    />
-  </UseTypographyAndroid>
+  <component
+    :is="multiline ? 'textarea' : 'input'"
+    ref="input"
+    :class="['tgui-list-android-item-body-input-element', typographyAttrs.classes]"
+    :style="typographyAttrs.style"
+    :value="model"
+    @input="model = $event.target.value"
+  />
 </template>
 
 <style lang="scss">

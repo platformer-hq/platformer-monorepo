@@ -1,19 +1,15 @@
 <script setup lang="ts">
 import { onClickOutside, useTextareaAutosize } from '@vueuse/core';
-import { computed, mergeProps, useTemplateRef } from 'vue';
+import { computed, useTemplateRef } from 'vue';
 
-import UseTypographyIos from '@/components/Typography/TypographyIos/UseTypographyIos.vue';
+import { useTypographyIosAttrs } from '@/components/Typography/TypographyIos/useTypographyIosAttrs';
 import { useKeyboardVisibility } from '@/composables/useKeyboardVisibility';
-import { bem } from '@/utils/bem';
 
-defineProps<{
-  multiline?: boolean;
-}>();
-defineOptions({ inheritAttrs: false });
+defineProps<{ multiline?: boolean }>();
 
-const { b } = bem('list-ios-item-body-input-element');
 const model = defineModel<string | undefined>({ default: '' });
 const inputRef = useTemplateRef<HTMLInputElement | HTMLTextAreaElement>('input');
+const typographyAttrs = useTypographyIosAttrs({ variant: 'body' });
 const keyboard = useKeyboardVisibility();
 
 useTextareaAutosize({
@@ -43,22 +39,19 @@ const onFocus = (e: FocusEvent) => {
   }
 };
 
-defineExpose({
-  input: inputRef,
-});
+defineExpose({ input: inputRef });
 </script>
 
 <template>
-  <UseTypographyIos v-slot="{classes, style}" variant="body">
-    <component
-      :is="multiline ? 'textarea' : 'input'"
-      ref="input"
-      v-bind="mergeProps($attrs, {class: [classes, b()], style})"
-      :value="model"
-      @input="model = $event.target.value"
-      @focus="onFocus"
-    />
-  </UseTypographyIos>
+  <component
+    :is="multiline ? 'textarea' : 'input'"
+    ref="input"
+    :class="['tgui-list-ios-item-body-input-element', typographyAttrs.classes]"
+    :style="typographyAttrs.style"
+    :value="model"
+    @input="model = $event.target.value"
+    @focus="onFocus"
+  />
 </template>
 
 <style lang="scss">
