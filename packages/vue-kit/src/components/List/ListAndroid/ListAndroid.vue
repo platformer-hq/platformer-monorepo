@@ -2,13 +2,13 @@
 </script>
 
 <template>
-  <ul class="list-android">
+  <ul class="tgui-list-android">
     <slot />
   </ul>
 </template>
 
-<style lang="scss">
-.list-android {
+<style>
+.tgui-list-android {
   appearance: none;
   display: block;
   margin: 0;

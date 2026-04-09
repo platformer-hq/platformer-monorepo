@@ -5,12 +5,12 @@ defineProps<IconCheckmarkIOS28Props>();
 </script>
 
 <template>
-  <IconCheckmarkIOS28 v-bind="$props" class="list-ios-item-body-right-checkmark"/>
+  <IconCheckmarkIOS28 v-bind="$props" class="tgui-list-ios-item-body-right-checkmark"/>
 </template>
 
-<style lang="scss">
-.list-ios-item-body-right-checkmark {
+<style>
+.tgui-list-ios-item-body-right-checkmark {
   margin: 0 -6px;
-  color: var(--list-ios-item-body-right-checkmark-color);
+  color: var(--tgui-list-ios-item-body-right-checkmark-color);
 }
 </style>

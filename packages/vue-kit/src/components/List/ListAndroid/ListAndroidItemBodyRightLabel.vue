@@ -3,13 +3,13 @@ import TypographyAndroid from '@/components/Typography/TypographyAndroid/Typogra
 </script>
 
 <template>
-  <TypographyAndroid class="list-android-item-body-right-label" variant="body">
+  <TypographyAndroid class="tgui-list-android-item-body-right-label" variant="body">
     <slot/>
   </TypographyAndroid>
 </template>
 
 <style>
-.list-android-item-body-right-label {
-  color: var(--list-android-item-body-right-label-color);
+.tgui-list-android-item-body-right-label {
+  color: var(--tgui-list-android-item-body-right-label-color);
 }
 </style>

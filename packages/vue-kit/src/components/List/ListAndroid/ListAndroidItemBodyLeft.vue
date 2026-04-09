@@ -13,7 +13,7 @@ defineSlots<{
   subtitle(): unknown;
 }>();
 
-const { b, e } = bem('list-android-item-body-left');
+const { b, e } = bem('tgui-list-android-item-body-left');
 </script>
 
 <template>
@@ -27,7 +27,7 @@ const { b, e } = bem('list-android-item-body-left');
 </template>
 
 <style lang="scss">
-.list-android-item-body-left {
+.tgui-list-android-item-body-left {
   min-width: 0;
 
   &__texts {

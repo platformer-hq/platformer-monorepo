@@ -64,7 +64,7 @@ defineExpose({
 <style lang="scss">
 @use "@/scss/mixins" as mixins;
 
-.list-ios-item-body-input-element {
+.tgui-list-ios-item-body-input-element {
   border: none;
   background: transparent;
   appearance: none;
@@ -75,7 +75,7 @@ defineExpose({
   resize: none;
   padding: 15px 0;
   width: 100%;
-  color: var(--list-ios-item-body-left-input-text-color);
+  color: var(--tgui-list-ios-item-body-left-input-text-color);
   @include mixins.hideScrollbar;
   @include mixins.noHighlight;
 
@@ -86,7 +86,7 @@ defineExpose({
   }
 
   &::placeholder {
-    color: var(--list-ios-item-body-left-input-placeholder-color);
+    color: var(--tgui-list-ios-item-body-left-input-placeholder-color);
   }
 }
 </style>

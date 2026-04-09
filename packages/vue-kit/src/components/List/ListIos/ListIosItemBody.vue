@@ -8,7 +8,7 @@ defineSlots<{
   right(): unknown;
 }>();
 
-const { b } = bem('list-ios-item-body');
+const { b } = bem('tgui-list-ios-item-body');
 const { large } = injectListItemOptions();
 </script>
 
@@ -20,7 +20,7 @@ const { large } = injectListItemOptions();
 </template>
 
 <style lang="scss">
-.list-ios-item-body {
+.tgui-list-ios-item-body {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 16px;

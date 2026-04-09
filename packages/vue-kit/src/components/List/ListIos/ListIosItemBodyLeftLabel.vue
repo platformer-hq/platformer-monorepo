@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import TypographyIos, { type TypographyIosProps } from '@/components/Typography/TypographyIos/TypographyIos.vue';
-import { bem } from '@/utils/bem';
+import TypographyIos, {
+  type TypographyIosProps,
+} from '@/components/Typography/TypographyIos/TypographyIos.vue';
 
 defineProps<{
   /**
@@ -9,13 +10,12 @@ defineProps<{
   medium?: boolean;
   maxLines?: TypographyIosProps['maxLines'];
 }>();
-const { b } = bem('list-ios-item-body-left-label');
 </script>
 
 <template>
   <TypographyIos
     variant="body"
-    :class="b()"
+    class="tgui-list-ios-item-body-left-label"
     :max-lines
     :weight="medium ? 'medium' : undefined"
   >
@@ -23,10 +23,8 @@ const { b } = bem('list-ios-item-body-left-label');
   </TypographyIos>
 </template>
 
-<style lang="scss">
-@use "@/scss/mixins" as mixins;
-
-.list-ios-item-body-left-label {
+<style>
+.tgui-list-ios-item-body-left-label {
   width: 100%;
 }
 </style>

@@ -8,7 +8,7 @@ defineProps<{
   padLeft?: boolean;
 }>();
 
-const { b } = bem('list-ios-item-left-icon');
+const { b } = bem('tgui-list-ios-item-left-icon');
 </script>
 
 <template>
@@ -18,7 +18,7 @@ const { b } = bem('list-ios-item-left-icon');
 </template>
 
 <style lang="scss">
-.list-ios-item-left-icon {
+.tgui-list-ios-item-left-icon {
   width: 100%;
   height: 100%;
   display: flex;

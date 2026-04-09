@@ -2,14 +2,16 @@
 import { bem } from '@/utils/bem';
 import { toPx } from '@/utils/toPx';
 
-const { size = 'default' } = defineProps<{
+withDefaults(defineProps<{
   width?: number | string;
   /**
    * @default 'default'
    */
   size?: 'default' | 'small' | 'large';
-}>();
-const { b } = bem('list-ios-item-left');
+}>(), {
+  size: 'default',
+});
+const { b } = bem('tgui-list-ios-item-left');
 </script>
 
 <template>
@@ -19,7 +21,7 @@ const { b } = bem('list-ios-item-left');
 </template>
 
 <style lang="scss">
-.list-ios-item-left {
+.tgui-list-ios-item-left {
   &--small {
     width: 32px;
   }

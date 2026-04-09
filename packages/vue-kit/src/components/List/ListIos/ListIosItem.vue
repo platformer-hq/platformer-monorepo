@@ -38,7 +38,7 @@ defineSlots<{
   bodyRight(): unknown;
 }>();
 
-const { b, e } = bem('list-ios-item');
+const { b, e } = bem('tgui-list-ios-item');
 
 provideListItemOptions({
   large: computed(() => props.large || false),
@@ -94,7 +94,7 @@ const onHighlightLeave = (el: Element, done: VoidFunction) => {
 <style lang="scss">
 @use "@/scss/mixins" as mixins;
 
-.list-ios-item {
+.tgui-list-ios-item {
   position: relative;
   appearance: none;
   border: none;
@@ -127,7 +127,7 @@ const onHighlightLeave = (el: Element, done: VoidFunction) => {
 
   @each $variant in ("regular", "destructive", "accent", "placeholder") {
     &--#{$variant} {
-      color: var(--list-ios-item-#{$variant}-color);
+      color: var(--tgui-list-ios-item-#{$variant}-color);
     }
   }
 }

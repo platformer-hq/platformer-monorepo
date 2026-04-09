@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <label class="list-android-item-body-input">
+  <label class="tgui-list-android-item-body-input">
     <slot/>
   </label>
 </template>

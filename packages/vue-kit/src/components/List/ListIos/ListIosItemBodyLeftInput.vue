@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <label class="list-ios-item-body-input">
+  <label class="tgui-list-ios-item-body-left-input">
     <slot/>
   </label>
 </template>

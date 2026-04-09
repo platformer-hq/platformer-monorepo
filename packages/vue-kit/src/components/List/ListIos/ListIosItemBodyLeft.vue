@@ -16,7 +16,7 @@ defineSlots<{
 }>();
 
 const { large } = injectListItemOptions();
-const { b, e } = bem('list-ios-item-body-left');
+const { b, e } = bem('tgui-list-ios-item-body-left');
 </script>
 
 <template>
@@ -37,7 +37,7 @@ const { b, e } = bem('list-ios-item-body-left');
 </template>
 
 <style lang="scss">
-.list-ios-item-body-left {
+.tgui-list-ios-item-body-left {
   height: 100%;
   min-width: 0;
 

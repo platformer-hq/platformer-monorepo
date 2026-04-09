@@ -1,17 +1,14 @@
 <script setup lang="ts">
-import { bem } from '@/utils/bem';
-
-const { b } = bem('list-ios-item-body-right');
 </script>
 
 <template>
-  <div :class="b()">
+  <div class="tgui-list-ios-item-body-right">
     <slot />
   </div>
 </template>
 
-<style lang="scss">
-.list-ios-item-body-right {
+<style>
+.tgui-list-ios-item-body-right {
   display: flex;
   align-items: center;
   height: 100%;

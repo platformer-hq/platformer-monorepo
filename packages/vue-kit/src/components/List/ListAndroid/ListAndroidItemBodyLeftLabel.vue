@@ -10,7 +10,7 @@ defineProps<{
   medium?: boolean;
   maxLines?: TypographyAndroidProps['maxLines'];
 }>();
-const { b } = bem('list-android-item-body-left-label');
+const { b } = bem('tgui-list-android-item-body-left-label');
 </script>
 
 <template>
@@ -24,10 +24,8 @@ const { b } = bem('list-android-item-body-left-label');
   </TypographyAndroid>
 </template>
 
-<style lang="scss">
-@use "@/scss/mixins" as mixins;
-
-.list-android-item-body-left-label {
+<style>
+.tgui-list-android-item-body-left-label {
   width: 100%;
 }
 </style>

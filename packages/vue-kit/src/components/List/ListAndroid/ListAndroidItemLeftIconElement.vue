@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { bem } from '@/utils/bem';
 
-const { size = 'small' } = defineProps<{
+withDefaults(defineProps<{
   /**
    * The icon size.
    * - `small` - 28px
@@ -10,9 +10,11 @@ const { size = 'small' } = defineProps<{
    */
   size?: 'small' | 'large';
   rounded?: boolean;
-}>();
+}>(), {
+  size: 'small',
+});
 
-const { b } = bem('list-android-item-left-icon-element');
+const { b } = bem('tgui-list-android-item-left-icon-element');
 </script>
 
 <template>
@@ -22,7 +24,7 @@ const { b } = bem('list-android-item-left-icon-element');
 </template>
 
 <style lang="scss">
-.list-android-item-left-icon-element {
+.tgui-list-android-item-left-icon-element {
   display: flex;
   align-items: center;
   justify-content: center;

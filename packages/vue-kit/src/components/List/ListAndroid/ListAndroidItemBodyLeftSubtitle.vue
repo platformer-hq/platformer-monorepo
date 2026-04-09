@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import type { TypographyAndroidProps } from '@/components/Typography/TypographyAndroid/TypographyAndroid.vue';
-import TypographyAndroid from '@/components/Typography/TypographyAndroid/TypographyAndroid.vue';
+import TypographyAndroid, {
+  type TypographyAndroidProps,
+} from '@/components/Typography/TypographyAndroid/TypographyAndroid.vue';
 import { bem } from '@/utils/bem';
 
 defineProps<{
   maxLines?: TypographyAndroidProps['maxLines'];
 }>();
-const { b } = bem('list-android-item-body-left-subtitle');
+const { b } = bem('tgui-list-android-item-body-left-subtitle');
 </script>
 
 <template>
@@ -15,11 +16,9 @@ const { b } = bem('list-android-item-body-left-subtitle');
   </TypographyAndroid>
 </template>
 
-<style lang="scss">
-@use "@/scss/mixins" as mixins;
-
-.list-android-item-body-left-subtitle {
+<style>
+.tgui-list-android-item-body-left-subtitle {
   width: 100%;
-  color: var(--list-android-item-body-left-subtitle-color);
+  color: var(--tgui-list-android-item-body-left-subtitle-color);
 }
 </style>

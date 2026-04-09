@@ -3,13 +3,13 @@ import TypographyIos from '@/components/Typography/TypographyIos/TypographyIos.v
 </script>
 
 <template>
-  <TypographyIos class="list-ios-item-body-right-label" variant="body">
+  <TypographyIos class="tgui-list-ios-item-body-right-label" variant="body">
     <slot/>
   </TypographyIos>
 </template>
 
 <style>
-.list-ios-item-body-right-label {
-  color: var(--list-ios-item-body-right-label-color);
+.tgui-list-ios-item-body-right-label {
+  color: var(--tgui-list-ios-item-body-right-label-color);
 }
 </style>

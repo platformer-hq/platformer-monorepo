@@ -2,12 +2,10 @@
 import { computed, useTemplateRef } from 'vue';
 
 import { useRipples } from '@/composables/useRipples.js';
-
 import { bem } from '@/utils/bem.js';
 
 import ListAndroidItemBody from './ListAndroidItemBody.vue';
 import ListAndroidItemBodyLeft from './ListAndroidItemBodyLeft.vue';
-
 import { provideListItemOptions } from './provider.js';
 
 export type ListAndroidItemVariant = 'regular' | 'accent' | 'destructive' | 'placeholder';
@@ -39,7 +37,7 @@ defineSlots<{
   bodyRight(): unknown;
 }>();
 
-const { b } = bem('list-android-item');
+const { b } = bem('tgui-list-android-item');
 
 provideListItemOptions({
   large: computed(() => props.large ?? false),
@@ -88,7 +86,7 @@ useRipples({
 <style lang="scss">
 @use "@/scss/mixins" as mixins;
 
-.list-android-item {
+.tgui-list-android-item {
   box-sizing: border-box;
   display: grid;
   grid-template-columns: auto 1fr;
@@ -108,7 +106,7 @@ useRipples({
 
   @each $variant in ("regular", "destructive", "accent", "placeholder") {
     &--#{$variant} {
-      color: var(--list-android-item-#{$variant}-color);
+      color: var(--tgui-list-android-item-#{$variant}-color);
     }
   }
 }

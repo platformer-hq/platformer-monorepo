@@ -9,7 +9,7 @@ const { size = 'default' } = defineProps<{
    */
   size?: 'default' | 'small' | 'large';
 }>();
-const { b } = bem('list-android-item-left');
+const { b } = bem('tgui-list-android-item-left');
 </script>
 
 <template>
@@ -19,7 +19,7 @@ const { b } = bem('list-android-item-left');
 </template>
 
 <style lang="scss">
-.list-android-item-left {
+.tgui-list-android-item-left {
   &--small {
     width: 32px;
   }

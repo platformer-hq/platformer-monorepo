@@ -5,13 +5,13 @@ defineProps<BadgeIosProps>();
 </script>
 
 <template>
-  <BadgeIos class="list-ios-item-body-left-label-badge" v-bind="$props">
+  <BadgeIos class="tgui-list-ios-item-body-left-label-badge" v-bind="$props">
     <slot/>
   </BadgeIos>
 </template>
 
 <style>
-.list-ios-item-body-left-label-badge {
+.tgui-list-ios-item-body-left-label-badge {
   margin-left: 6px;
 }
 </style>

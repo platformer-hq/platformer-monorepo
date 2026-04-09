@@ -47,7 +47,7 @@ defineExpose({
 <style lang="scss">
 @use "@/scss/mixins" as mixins;
 
-.list-android-item-body-input-element {
+.tgui-list-android-item-body-left-input-element {
   border: none;
   background: transparent;
   appearance: none;
@@ -57,7 +57,7 @@ defineExpose({
   resize: none;
   padding-block: 15px;
   width: 100%;
-  color: var(--list-android-item-body-left-input-text-color);
+  color: var(--tgui-list-android-item-body-left-input-text-color);
   @include mixins.hideScrollbar;
   @include mixins.noHighlight;
 
@@ -68,7 +68,7 @@ defineExpose({
   }
 
   &::placeholder {
-    color: var(--list-android-item-body-left-input-placeholder-color);
+    color: var(--tgui-list-android-item-body-left-input-placeholder-color);
   }
 }
 </style>
