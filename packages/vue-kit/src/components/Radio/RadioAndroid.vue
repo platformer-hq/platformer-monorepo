@@ -12,7 +12,7 @@ const props = defineProps<{
 const currentValue = defineModel<T>({ required: true });
 const checked = computed(() => currentValue.value === props.value);
 const initiallyChecked = checked.value;
-const { b, e } = bem('radio-android');
+const { b, e } = bem('tgui-radio-android');
 
 const rootRef = useTemplateRef('root');
 const innerRef = useTemplateRef('inner');
@@ -66,9 +66,9 @@ watch(checked, () => {
 <style lang="scss">
 @use "@/scss/mixins";
 
-.radio-android {
-  --unchecked-color: var(--radio-android-color, #C8C7CC);
-  --checked-color: var(--radio-android-checked-color, #007AFF);
+.tgui-radio-android {
+  --unchecked-color: var(--tgui-radio-android-color, #C8C7CC);
+  --checked-color: var(--tgui-radio-android-checked-color, #007AFF);
   @include mixins.clickable;
   display: inline-block;
   width: 20px;
