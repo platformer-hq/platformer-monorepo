@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import { useTemplateRef } from 'vue';
 
-import {
-  type UseTypographyIosOptions,
-  type UseTypographyIosVariant,
-  type UseTypographyIosAlign,
-  useTypographyIos,
-} from '@/composables/useTypographyIos/useTypographyIos';
 import type { KnownHtmlTag } from '@/types';
 
-export type TypographyIosAlign = UseTypographyIosAlign;
-export type TypographyIosVariant = UseTypographyIosVariant;
-export interface TypographyIosProps extends UseTypographyIosOptions {
+import {
+  type UseTypographyIosAttrsOptions,
+  type UseTypographyIosAttrsVariant,
+  type UseTypographyIosAttrsAlign,
+  useTypographyIosAttrs,
+} from './useTypographyIosAttrs';
+
+export type TypographyIosAlign = UseTypographyIosAttrsAlign;
+export type TypographyIosVariant = UseTypographyIosAttrsVariant;
+export interface TypographyIosProps extends UseTypographyIosAttrsOptions {
   /**
    * @default 'p'
    */
@@ -20,13 +21,13 @@ export interface TypographyIosProps extends UseTypographyIosOptions {
 
 const props = withDefaults(defineProps<TypographyIosProps>(), { as: 'p' });
 const element = useTemplateRef('element');
-const typography = useTypographyIos(props);
+const baseAttrs = useTypographyIosAttrs(() => props);
 
 defineExpose({ element });
 </script>
 
 <template>
-  <component :is="as" ref="element" :class="typography.classes" :style="typography.style">
+  <component :is="as" ref="element" :class="baseAttrs.classes" :style="baseAttrs.style">
     <slot/>
   </component>
 </template>

@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import { useTemplateRef } from 'vue';
 
-import {
-  type UseTypographyAndroidOptions,
-  type UseTypographyAndroidAlign,
-  type UseTypographyAndroidVariant,
-  useTypographyAndroid,
-} from '@/composables/useTypographyAndroid/useTypographyAndroid';
 import type { KnownHtmlTag } from '@/types';
 
-export type TypographyAndroidAlign = UseTypographyAndroidAlign;
-export type TypographyAndroidVariant = UseTypographyAndroidVariant;
-export interface TypographyAndroidProps extends UseTypographyAndroidOptions {
+import {
+  type UseTypographyAndroidAttrsOptions,
+  type UseTypographyAndroidAttrsAlign,
+  type UseTypographyAndroidAttrsVariant,
+  useTypographyAndroidAttrs,
+} from './useTypographyAndroidAttrs';
+
+export type TypographyAndroidAlign = UseTypographyAndroidAttrsAlign;
+export type TypographyAndroidVariant = UseTypographyAndroidAttrsVariant;
+export interface TypographyAndroidProps extends UseTypographyAndroidAttrsOptions {
   /**
    * @default 'p'
    */
@@ -20,13 +21,13 @@ export interface TypographyAndroidProps extends UseTypographyAndroidOptions {
 
 const props = withDefaults(defineProps<TypographyAndroidProps>(), { as: 'p' });
 const element = useTemplateRef('element');
-const typography = useTypographyAndroid(props);
+const baseAttrs = useTypographyAndroidAttrs(() => props);
 
 defineExpose({ element });
 </script>
 
 <template>
-  <component :is="as" ref="element" :class="typography.classes" :style="typography.style">
+  <component :is="as" ref="element" :class="baseAttrs.classes" :style="baseAttrs.style">
     <slot/>
   </component>
 </template>
