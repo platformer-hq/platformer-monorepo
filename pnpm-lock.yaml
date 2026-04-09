@@ -32,7 +32,7 @@ importers:
       '@parcel/watcher':
         specifier: ^2.5.1
         version: 2.5.6
-      '@platformer/eslint-config':
+      '@workspace/eslint-config':
         specifier: workspace:*
         version: link:packages/eslint-config
       baseline-browser-mapping:
@@ -60,6 +60,76 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
+  apps/admin-panel:
+    dependencies:
+      '@graphql-typed-document-node/core':
+        specifier: ^3.2.0
+        version: 3.2.0(graphql@16.12.0)
+      '@nuxtjs/i18n':
+        specifier: 10.2.3
+        version: 10.2.3(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@vue/compiler-dom@3.5.32)(db0@0.3.4)(eslint@9.39.2(jiti@2.6.1))(ioredis@5.10.1)(magicast@0.5.2)(rollup@4.60.1)(vue@3.5.32(typescript@5.9.3))
+      '@pinia/colada':
+        specifier: ^1.0.0
+        version: 1.1.0(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(vue@3.5.32(typescript@5.9.3))
+      '@pinia/colada-nuxt':
+        specifier: 0.3.2
+        version: 0.3.2(@pinia/colada@1.1.0(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(vue@3.5.32(typescript@5.9.3)))(magicast@0.5.2)
+      '@pinia/colada-plugin-retry':
+        specifier: ^0.2.3
+        version: 0.2.3(@pinia/colada@1.1.0(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(vue@3.5.32(typescript@5.9.3)))
+      '@pinia/nuxt':
+        specifier: 0.11.3
+        version: 0.11.3(magicast@0.5.2)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))
+      '@tma.js/sdk-vue':
+        specifier: ^1.0.18
+        version: 1.0.18(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3))
+      '@vueuse/core':
+        specifier: ^14.2.1
+        version: 14.2.1(vue@3.5.32(typescript@5.9.3))
+      '@workspace/api':
+        specifier: workspace:*
+        version: link:../../packages/api
+      '@workspace/ui-kit':
+        specifier: workspace:*
+        version: link:../../packages/ui-kit
+      error-kid:
+        specifier: ^2.0.0
+        version: 2.0.0
+      eruda:
+        specifier: ^3.4.3
+        version: 3.4.3
+      fp-ts:
+        specifier: ^2.16.11
+        version: 2.16.11
+      graphql-request:
+        specifier: ^7.4.0
+        version: 7.4.0(graphql@16.12.0)
+      nuxt:
+        specifier: ^4.3.1
+        version: 4.4.2(@babel/core@7.29.0)(@babel/plugin-syntax-jsx@7.28.6(@babel/core@7.29.0))(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.5.6)(@pinia/colada@1.1.0(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(vue@3.5.32(typescript@5.9.3)))(@types/node@25.5.2)(@vue/compiler-sfc@3.5.32)(cac@6.7.14)(db0@0.3.4)(eslint@9.39.2(jiti@2.6.1))(ioredis@5.10.1)(lightningcss@1.32.0)(magicast@0.5.2)(meow@13.2.0)(optionator@0.9.4)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(rolldown@1.0.0-rc.12(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1))(rollup-plugin-visualizer@7.0.1(rolldown@1.0.0-rc.12(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1))(rollup@4.60.1))(rollup@4.60.1)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.3)(vite@8.0.3(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@types/node@25.5.2)(esbuild@0.27.7)(jiti@2.6.1)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.2))(vue-tsc@3.2.6(typescript@5.9.3))(yaml@2.8.2)
+      valibot:
+        specifier: ^1.2.0
+        version: 1.3.1(typescript@5.9.3)
+      vue:
+        specifier: ^3.5.28
+        version: 3.5.32(typescript@5.9.3)
+      vue-component-type-helpers:
+        specifier: ^3.2.5
+        version: 3.2.6
+      vue-tsc:
+        specifier: ^3.2.6
+        version: 3.2.6(typescript@5.9.3)
+    devDependencies:
+      baseline-browser-mapping:
+        specifier: ^2.9.19
+        version: 2.9.19
+      browserslist-to-esbuild:
+        specifier: ^2.1.1
+        version: 2.1.1(browserslist@4.28.1)
+      sass-embedded:
+        specifier: ^1.97.1
+        version: 1.97.3
+
   apps/launcher:
     dependencies:
       '@nuxtjs/i18n':
@@ -77,15 +147,21 @@ importers:
       '@pinia/nuxt':
         specifier: 0.11.3
         version: 0.11.3(magicast@0.5.2)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))
-      '@platformer/ui-kit':
-        specifier: workspace:*
-        version: link:../../packages/ui-kit
       '@tma.js/sdk-vue':
         specifier: ^1.0.18
         version: 1.0.18(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3))
       '@vueuse/core':
         specifier: ^14.2.1
         version: 14.2.1(vue@3.5.32(typescript@5.9.3))
+      '@workspace/navigation':
+        specifier: workspace:*
+        version: link:../../packages/navigation
+      '@workspace/tma':
+        specifier: workspace:*
+        version: link:../../packages/tma
+      '@workspace/ui-kit':
+        specifier: workspace:*
+        version: link:../../packages/ui-kit
       error-kid:
         specifier: ^2.0.0
         version: 2.0.0
@@ -98,6 +174,9 @@ importers:
       nuxt:
         specifier: ^4.3.1
         version: 4.4.2(@babel/core@7.29.0)(@babel/plugin-syntax-jsx@7.28.6(@babel/core@7.29.0))(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.5.6)(@pinia/colada@1.1.0(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(vue@3.5.32(typescript@5.9.3)))(@types/node@25.5.2)(@vue/compiler-sfc@3.5.32)(cac@6.7.14)(db0@0.3.4)(eslint@9.39.2(jiti@2.6.1))(ioredis@5.10.1)(lightningcss@1.32.0)(magicast@0.5.2)(meow@13.2.0)(optionator@0.9.4)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(rolldown@1.0.0-rc.12(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1))(rollup-plugin-visualizer@7.0.1(rolldown@1.0.0-rc.12(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1))(rollup@4.60.1))(rollup@4.60.1)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.3)(vite@8.0.3(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@types/node@25.5.2)(esbuild@0.27.7)(jiti@2.6.1)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.2))(vue-tsc@3.2.6(typescript@5.9.3))(yaml@2.8.2)
+      pinia:
+        specifier: ^3.0.4
+        version: 3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3))
       valibot:
         specifier: ^1.2.0
         version: 1.3.1(typescript@5.9.3)
@@ -108,7 +187,7 @@ importers:
         specifier: ^3.2.6
         version: 3.2.6(typescript@5.9.3)
     devDependencies:
-      '@platformer/vite-plugins':
+      '@workspace/vite-plugins':
         specifier: workspace:*
         version: link:../../packages/vite-plugins
       baseline-browser-mapping:
@@ -121,117 +200,43 @@ importers:
         specifier: ^1.97.1
         version: 1.97.3
 
-  nuxt-layers/api:
+  nuxt-layers/utils:
     dependencies:
-      '@graphql-typed-document-node/core':
-        specifier: ^3.2.0
-        version: 3.2.0(graphql@16.12.0)
-      '@platformer/tsconfigs':
-        specifier: workspace:*
-        version: link:../../packages/tsconfigs
-      fp-ts:
-        specifier: ^2.16.11
-        version: 2.16.11
-      graphql-request:
-        specifier: ^7.4.0
-        version: 7.4.0(graphql@16.12.0)
-      nuxt:
-        specifier: ^4.4.2
-        version: 4.4.2(@babel/core@7.29.0)(@babel/plugin-syntax-jsx@7.28.6(@babel/core@7.29.0))(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.5.6)(@pinia/colada@1.1.0(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(vue@3.5.32(typescript@5.9.3)))(@types/node@25.5.2)(@vue/compiler-sfc@3.5.32)(cac@6.7.14)(db0@0.3.4)(eslint@9.39.2(jiti@2.6.1))(ioredis@5.10.1)(lightningcss@1.32.0)(magicast@0.5.2)(meow@13.2.0)(optionator@0.9.4)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(rolldown@1.0.0-rc.12(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1))(rollup-plugin-visualizer@7.0.1(rolldown@1.0.0-rc.12(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1))(rollup@4.60.1))(rollup@4.60.1)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.3)(vite@8.0.3(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@types/node@25.5.2)(esbuild@0.27.7)(jiti@2.6.1)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.2))(yaml@2.8.2)
-      valibot:
-        specifier: ^1.3.1
-        version: 1.3.1(typescript@5.9.3)
-
-  nuxt-layers/base:
-    dependencies:
-      '@platformer/tsconfigs':
-        specifier: workspace:*
-        version: link:../../packages/tsconfigs
-      '@platformer/ui-kit':
+      '@workspace/ui-kit':
         specifier: workspace:*
         version: link:../../packages/ui-kit
-      '@vueuse/core':
-        specifier: ^14.2.1
-        version: 14.2.1(vue@3.5.32(typescript@5.9.3))
-      fp-ts:
-        specifier: ^2.16.11
-        version: 2.16.11
-      nuxt:
-        specifier: ^4.4.2
-        version: 4.4.2(@babel/core@7.29.0)(@babel/plugin-syntax-jsx@7.28.6(@babel/core@7.29.0))(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.5.6)(@pinia/colada@1.1.0(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(vue@3.5.32(typescript@5.9.3)))(@types/node@25.5.2)(@vue/compiler-sfc@3.5.32)(cac@6.7.14)(db0@0.3.4)(eslint@9.39.2(jiti@2.6.1))(ioredis@5.10.1)(lightningcss@1.32.0)(magicast@0.5.2)(meow@13.2.0)(optionator@0.9.4)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(rolldown@1.0.0-rc.12(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1))(rollup-plugin-visualizer@7.0.1(rolldown@1.0.0-rc.12(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1))(rollup@4.60.1))(rollup@4.60.1)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.3)(vite@8.0.3(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@types/node@25.5.2)(esbuild@0.27.7)(jiti@2.6.1)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.2))(yaml@2.8.2)
-      vue:
-        specifier: ^3.5.32
-        version: 3.5.32(typescript@5.9.3)
-
-  nuxt-layers/graphql:
-    dependencies:
-      '@graphql-typed-document-node/core':
-        specifier: ^3.2.0
-        version: 3.2.0(graphql@16.12.0)
-      fp-ts:
-        specifier: ^2.16.11
-        version: 2.16.11
-      graphql-request:
-        specifier: ^7.4.0
-        version: 7.4.0(graphql@16.12.0)
+      '@workspace/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       nuxt:
         specifier: ^4.4.2
         version: 4.4.2(@babel/core@7.29.0)(@babel/plugin-syntax-jsx@7.28.6(@babel/core@7.29.0))(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.5.6)(@pinia/colada@1.1.0(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(vue@3.5.32(typescript@5.9.3)))(@types/node@25.5.2)(@vue/compiler-sfc@3.5.32)(cac@6.7.14)(db0@0.3.4)(eslint@9.39.2(jiti@2.6.1))(ioredis@5.10.1)(lightningcss@1.32.0)(magicast@0.5.2)(meow@13.2.0)(optionator@0.9.4)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(rolldown@1.0.0-rc.12(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1))(rollup-plugin-visualizer@7.0.1(rolldown@1.0.0-rc.12(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1))(rollup@4.60.1))(rollup@4.60.1)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.3)(vite@8.0.3(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@types/node@25.5.2)(esbuild@0.27.7)(jiti@2.6.1)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.2))(yaml@2.8.2)
     devDependencies:
-      '@platformer/tsconfigs':
+      '@workspace/tsconfigs':
         specifier: workspace:*
         version: link:../../packages/tsconfigs
 
-  nuxt-layers/navigation:
+  packages/api:
     dependencies:
-      '@platformer/base':
+      '@graphql-typed-document-node/core':
+        specifier: ^3.2.0
+        version: 3.2.0(graphql@16.12.0)
+      '@workspace/graphql':
         specifier: workspace:*
-        version: link:../base
-      '@platformer/tsconfigs':
-        specifier: workspace:*
-        version: link:../../packages/tsconfigs
-      nuxt:
-        specifier: ^4.4.2
-        version: 4.4.2(@babel/core@7.29.0)(@babel/plugin-syntax-jsx@7.28.6(@babel/core@7.29.0))(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.5.6)(@pinia/colada@1.1.0(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(vue@3.5.32(typescript@5.9.3)))(@types/node@25.5.2)(@vue/compiler-sfc@3.5.32)(cac@6.7.14)(db0@0.3.4)(eslint@9.39.2(jiti@2.6.1))(ioredis@5.10.1)(lightningcss@1.32.0)(magicast@0.5.2)(meow@13.2.0)(optionator@0.9.4)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(rolldown@1.0.0-rc.12(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1))(rollup-plugin-visualizer@7.0.1(rolldown@1.0.0-rc.12(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1))(rollup@4.60.1))(rollup@4.60.1)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.3)(vite@8.0.3(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@types/node@25.5.2)(esbuild@0.27.7)(jiti@2.6.1)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.2))(yaml@2.8.2)
+        version: link:../graphql
+      fp-ts:
+        specifier: ^2.16.11
+        version: 2.16.11
+      graphql-request:
+        specifier: ^7.4.0
+        version: 7.4.0(graphql@16.12.0)
       valibot:
         specifier: ^1.3.1
         version: 1.3.1(typescript@5.9.3)
-      vue:
-        specifier: ^3.5.32
-        version: 3.5.32(typescript@5.9.3)
-      vue-router:
-        specifier: ^5.0.4
-        version: 5.0.4(@pinia/colada@1.1.0(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(vue@3.5.32(typescript@5.9.3)))(@vue/compiler-sfc@3.5.32)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(vue@3.5.32(typescript@5.9.3))
-
-  nuxt-layers/pinia:
-    dependencies:
-      '@pinia/colada':
-        specifier: ^1.1.0
-        version: 1.1.0(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(vue@3.5.32(typescript@5.9.3))
-      '@platformer/tsconfigs':
+    devDependencies:
+      '@workspace/tsconfigs':
         specifier: workspace:*
-        version: link:../../packages/tsconfigs
-      nuxt:
-        specifier: ^4.4.2
-        version: 4.4.2(@babel/core@7.29.0)(@babel/plugin-syntax-jsx@7.28.6(@babel/core@7.29.0))(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.5.6)(@pinia/colada@1.1.0(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(vue@3.5.32(typescript@5.9.3)))(@types/node@25.5.2)(@vue/compiler-sfc@3.5.32)(cac@6.7.14)(db0@0.3.4)(eslint@9.39.2(jiti@2.6.1))(ioredis@5.10.1)(lightningcss@1.32.0)(magicast@0.5.2)(meow@13.2.0)(optionator@0.9.4)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(rolldown@1.0.0-rc.12(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1))(rollup-plugin-visualizer@7.0.1(rolldown@1.0.0-rc.12(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1))(rollup@4.60.1))(rollup@4.60.1)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.3)(vite@8.0.3(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@types/node@25.5.2)(esbuild@0.27.7)(jiti@2.6.1)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.2))(yaml@2.8.2)
-      pinia:
-        specifier: ^3.0.4
-        version: 3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3))
-
-  nuxt-layers/tma:
-    dependencies:
-      '@platformer/base':
-        specifier: workspace:*
-        version: link:../base
-      '@platformer/tsconfigs':
-        specifier: workspace:*
-        version: link:../../packages/tsconfigs
-      '@tma.js/sdk-vue':
-        specifier: ^1.0.18
-        version: 1.0.18(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3))
-      nuxt:
-        specifier: ^4.4.2
-        version: 4.4.2(@babel/core@7.29.0)(@babel/plugin-syntax-jsx@7.28.6(@babel/core@7.29.0))(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.5.6)(@pinia/colada@1.1.0(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(vue@3.5.32(typescript@5.9.3)))(@types/node@25.5.2)(@vue/compiler-sfc@3.5.32)(cac@6.7.14)(db0@0.3.4)(eslint@9.39.2(jiti@2.6.1))(ioredis@5.10.1)(lightningcss@1.32.0)(magicast@0.5.2)(meow@13.2.0)(optionator@0.9.4)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(rolldown@1.0.0-rc.12(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1))(rollup-plugin-visualizer@7.0.1(rolldown@1.0.0-rc.12(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1))(rollup@4.60.1))(rollup@4.60.1)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.3)(vite@8.0.3(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@types/node@25.5.2)(esbuild@0.27.7)(jiti@2.6.1)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.2))(yaml@2.8.2)
+        version: link:../tsconfigs
 
   packages/eslint-config:
     dependencies:
@@ -260,9 +265,69 @@ importers:
         specifier: ^10.6.2
         version: 10.8.0(@stylistic/eslint-plugin@5.10.0(eslint@9.39.2(jiti@2.6.1)))(@typescript-eslint/parser@8.56.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))(vue-eslint-parser@10.4.0(eslint@9.39.2(jiti@2.6.1)))
     devDependencies:
-      '@platformer/tsconfigs':
+      '@workspace/tsconfigs':
         specifier: workspace:*
         version: link:../tsconfigs
+
+  packages/graphql:
+    dependencies:
+      '@graphql-typed-document-node/core':
+        specifier: ^3.2.0
+        version: 3.2.0(graphql@16.12.0)
+      fp-ts:
+        specifier: ^2.16.11
+        version: 2.16.11
+      graphql-request:
+        specifier: ^7.4.0
+        version: 7.4.0(graphql@16.12.0)
+    devDependencies:
+      '@workspace/tsconfigs':
+        specifier: workspace:*
+        version: link:../tsconfigs
+
+  packages/navigation:
+    dependencies:
+      '@workspace/utils':
+        specifier: workspace:*
+        version: link:../utils
+      valibot:
+        specifier: ^1.3.1
+        version: 1.3.1(typescript@5.9.3)
+      vue:
+        specifier: ^3.5.32
+        version: 3.5.32(typescript@5.9.3)
+      vue-router:
+        specifier: ^5.0.4
+        version: 5.0.4(@pinia/colada@1.1.0(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(vue@3.5.32(typescript@5.9.3)))(@vue/compiler-sfc@3.5.32)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(vue@3.5.32(typescript@5.9.3))
+    devDependencies:
+      '@workspace/tsconfigs':
+        specifier: workspace:*
+        version: link:../tsconfigs
+
+  packages/pinia:
+    dependencies:
+      '@pinia/colada':
+        specifier: ^1.1.0
+        version: 1.1.0(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(vue@3.5.32(typescript@5.9.3))
+      pinia:
+        specifier: ^3.0.4
+        version: 3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3))
+    devDependencies:
+      '@workspace/tsconfigs':
+        specifier: workspace:*
+        version: link:../tsconfigs
+
+  packages/tma:
+    dependencies:
+      '@tma.js/sdk-vue':
+        specifier: ^1.0.18
+        version: 1.0.18(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3))
+      '@workspace/tsconfigs':
+        specifier: workspace:*
+        version: link:../tsconfigs
+      '@workspace/utils':
+        specifier: workspace:*
+        version: link:../utils
 
   packages/tsconfigs:
     dependencies:
@@ -288,9 +353,6 @@ importers:
         specifier: ^5.0.4
         version: 5.0.4(@pinia/colada@1.1.0(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(vue@3.5.32(typescript@5.9.3)))(@vue/compiler-sfc@3.5.32)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))(vue@3.5.32(typescript@5.9.3))
     devDependencies:
-      '@platformer/tsconfigs':
-        specifier: workspace:*
-        version: link:../tsconfigs
       '@types/node':
         specifier: ^25.5.2
         version: 25.5.2
@@ -300,6 +362,9 @@ importers:
       '@vue/tsconfig':
         specifier: ^0.7.0
         version: 0.7.0(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3))
+      '@workspace/tsconfigs':
+        specifier: workspace:*
+        version: link:../tsconfigs
       svgo:
         specifier: ^4.0.1
         version: 4.0.1
@@ -312,6 +377,22 @@ importers:
       vite-plugin-dts:
         specifier: ^4.5.4
         version: 4.5.4(@types/node@25.5.2)(rollup@4.60.1)(typescript@5.9.3)(vite@8.0.3(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@types/node@25.5.2)(esbuild@0.27.7)(jiti@2.6.1)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.2))
+
+  packages/utils:
+    dependencies:
+      '@vueuse/core':
+        specifier: ^14.2.1
+        version: 14.2.1(vue@3.5.32(typescript@5.9.3))
+      fp-ts:
+        specifier: ^2.16.11
+        version: 2.16.11
+      vue:
+        specifier: ^3.5.32
+        version: 3.5.32(typescript@5.9.3)
+    devDependencies:
+      '@workspace/tsconfigs':
+        specifier: workspace:*
+        version: link:../tsconfigs
 
   packages/vite-plugins:
     dependencies:
@@ -334,7 +415,7 @@ importers:
         specifier: ^7.0.0
         version: 7.3.1(@types/node@25.5.2)(jiti@2.6.1)(lightningcss@1.32.0)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.2)
     devDependencies:
-      '@platformer/tsconfigs':
+      '@workspace/tsconfigs':
         specifier: workspace:*
         version: link:../tsconfigs
 
@@ -7276,6 +7357,9 @@ packages:
 
   vue-bundle-renderer@2.2.0:
     resolution: {integrity: sha512-sz/0WEdYH1KfaOm0XaBmRZOWgYTEvUDt6yPYaUzl4E52qzgWLlknaPPTTZmp6benaPTlQAI/hN1x3tAzZygycg==}
+
+  vue-component-type-helpers@3.2.6:
+    resolution: {integrity: sha512-O02tnvIfOQVmnvoWwuSydwRoHjZVt8UEBR+2p4rT35p8GAy5VTlWP8o5qXfJR/GWCN0nVZoYWsVUvx2jwgdBmQ==}
 
   vue-devtools-stub@0.1.0:
     resolution: {integrity: sha512-RutnB7X8c5hjq39NceArgXg28WZtZpGc3+J16ljMiYnFhKvd8hITxSWQSQ5bvldxMDU6gG5mkxl1MTQLXckVSQ==}
@@ -15256,6 +15340,8 @@ snapshots:
   vue-bundle-renderer@2.2.0:
     dependencies:
       ufo: 1.6.3
+
+  vue-component-type-helpers@3.2.6: {}
 
   vue-devtools-stub@0.1.0: {}
 

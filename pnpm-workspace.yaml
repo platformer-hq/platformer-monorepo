@@ -1,6 +1,6 @@
 packages:
   - 'packages/*'
-  # - 'apps/*'
+  - 'apps/*'
   - 'nuxt-layers/*'
 onlyBuiltDependencies:
   - '@parcel/watcher'
