@@ -17,9 +17,8 @@ export interface UseTypographyBaseOptions {
   caps?: boolean;
   /**
    * Maximum lines allowed to display.
-   * @default 'infinite'
    */
-  maxLines?: number | 'infinite';
+  maxLines?: number;
 }
 
 export interface UseTypographyBaseReturn {
@@ -27,10 +26,10 @@ export interface UseTypographyBaseReturn {
   style: StyleValue;
 }
 
-export function useTypographyBase(
+export function useTypographyBaseAttrs(
   options: MaybeRefOrGetter<UseTypographyBaseOptions>,
 ): ComputedRef<UseTypographyBaseReturn> {
-  const { b } = bem('typography-base');
+  const { b } = bem('tgui-typography-base');
 
   return computed(() => {
     const opts = toValue(options);

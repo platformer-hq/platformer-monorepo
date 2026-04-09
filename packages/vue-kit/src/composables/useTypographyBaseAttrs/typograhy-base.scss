@@ -1,6 +1,6 @@
 @use "@/scss/mixins" as mixins;
 
-.typography-base {
+.tgui-typography-base {
   margin: 0;
 
   @each $align in (left, center, right) {
