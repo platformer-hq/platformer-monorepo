@@ -156,7 +156,7 @@ export type * from './types/index.js';
 
 //#region Utils.
 export { bem } from './utils/bem.js';
-export { createProviderTuple } from './utils/createProviderTuple.js';
+export { createProvider } from './utils/createProvider.js';
 export { toPx } from './utils/toPx.js';
 //#endregion
 

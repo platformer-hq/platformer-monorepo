@@ -1,7 +1,7 @@
 import type { ComputedRef } from 'vue';
 
-import { createProviderTuple } from '@/utils/createProviderTuple';
+import { createProvider } from '@/utils/createProvider';
 
-export const [provideListItemOptions, injectListItemOptions] = createProviderTuple<{
+export const { provide: provideListItemOptions, inject: injectListItemOptions } = createProvider<{
   large: ComputedRef<boolean>;
 }>();
