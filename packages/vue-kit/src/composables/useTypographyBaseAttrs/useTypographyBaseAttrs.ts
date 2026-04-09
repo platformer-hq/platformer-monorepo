@@ -10,10 +10,10 @@ import { bem } from '@/utils/bem';
 
 import './TypographyBase.scss';
 
-export type UseTypographyBaseAlign = 'left' | 'right' | 'center';
+export type UseTypographyBaseAttrsAlign = 'left' | 'right' | 'center';
 
-export interface UseTypographyBaseOptions {
-  align?: UseTypographyBaseAlign;
+export interface UseTypographyBaseAttrsOptions {
+  align?: UseTypographyBaseAttrsAlign;
   caps?: boolean;
   /**
    * Maximum lines allowed to display.
@@ -21,14 +21,14 @@ export interface UseTypographyBaseOptions {
   maxLines?: number;
 }
 
-export interface UseTypographyBaseReturn {
+export interface UseTypographyBaseAttrsReturn {
   classes: string;
   style: StyleValue;
 }
 
 export function useTypographyBaseAttrs(
-  options: MaybeRefOrGetter<UseTypographyBaseOptions>,
-): ComputedRef<UseTypographyBaseReturn> {
+  options: MaybeRefOrGetter<UseTypographyBaseAttrsOptions>,
+): ComputedRef<UseTypographyBaseAttrsReturn> {
   const { b } = bem('tgui-typography-base');
 
   return computed(() => {
