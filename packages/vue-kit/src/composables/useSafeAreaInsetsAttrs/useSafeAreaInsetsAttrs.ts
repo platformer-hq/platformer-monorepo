@@ -3,16 +3,18 @@ import {
   computed,
   toValue,
   type CSSProperties,
+  type StyleValue,
+  type ComputedRef,
 } from 'vue';
 
 import { bem } from '@/utils/bem';
 
 import './safe-area-insets.scss';
 
-export type UseSafeAreaInsetsSide = 'top' | 'bottom' | 'left' | 'right';
-export type UseSafeAreaInsetsSpecificInset = 'sa' | 'csa' | 'sum';
-export type UseSafeAreaInsetsInset = boolean | UseSafeAreaInsetsSpecificInset;
-export interface UseSafeAreaInsetsOptions {
+export type UseSafeAreaInsetsAttrsSide = 'top' | 'bottom' | 'left' | 'right';
+export type UseSafeAreaInsetsAttrsSpecificInset = 'sa' | 'csa' | 'sum';
+export type UseSafeAreaInsetsAttrsInset = boolean | UseSafeAreaInsetsAttrsSpecificInset;
+export interface UseSafeAreaInsetsAttrsOptions {
   /**
    * Left inset configuration.
    * - `false` to disable the inset.
@@ -20,7 +22,7 @@ export interface UseSafeAreaInsetsOptions {
    * - `csa` to use the content safe area inset.
    * - `sum` or `true` to use the content safe area inset added up to the safe area inset.
    */
-  left?: UseSafeAreaInsetsInset;
+  left?: UseSafeAreaInsetsAttrsInset;
   /**
    * Right inset configuration.
    * - `false` to disable the inset.
@@ -28,7 +30,7 @@ export interface UseSafeAreaInsetsOptions {
    * - `csa` to use the content safe area inset.
    * - `sum` or `true` to use the content safe area inset added up to the safe area inset.
    */
-  right?: UseSafeAreaInsetsInset;
+  right?: UseSafeAreaInsetsAttrsInset;
   /**
    * Top inset configuration.
    * - `false` to disable the inset.
@@ -36,7 +38,7 @@ export interface UseSafeAreaInsetsOptions {
    * - `csa` to use the content safe area inset.
    * - `sum` or `true` to use the content safe area inset added up to the safe area inset.
    */
-  top?: UseSafeAreaInsetsInset;
+  top?: UseSafeAreaInsetsAttrsInset;
   /**
    * Bottom inset configuration.
    * - `false` to disable the inset.
@@ -44,19 +46,26 @@ export interface UseSafeAreaInsetsOptions {
    * - `csa` to use the content safe area inset.
    * - `sum` or `true` to use the content safe area inset added up to the safe area inset.
    */
-  bottom?: UseSafeAreaInsetsInset;
+  bottom?: UseSafeAreaInsetsAttrsInset;
   /**
    * Generates a CSS variable name that should be referred to in the styles.
    */
   createReferredCssVar?(context: {
-    side: UseSafeAreaInsetsSide;
-    inset: UseSafeAreaInsetsSpecificInset;
+    side: UseSafeAreaInsetsAttrsSide;
+    inset: UseSafeAreaInsetsAttrsSpecificInset;
   }): string;
 }
 
-export function useSafeAreaInsets(options: MaybeRefOrGetter<UseSafeAreaInsetsOptions>) {
+export interface UseSafeAreaInsetsAttrsReturn {
+  classes: string;
+  style: StyleValue;
+}
+
+export function useSafeAreaInsetsAttrs(
+  options: MaybeRefOrGetter<UseSafeAreaInsetsAttrsOptions>,
+): ComputedRef<UseSafeAreaInsetsAttrsReturn> {
   const { b } = bem('tgui-safe-area-insets');
-  const sides: UseSafeAreaInsetsSide[] = ['top', 'bottom', 'left', 'right'];
+  const sides: UseSafeAreaInsetsAttrsSide[] = ['top', 'bottom', 'left', 'right'];
 
   return computed(() => {
     const values = toValue(options);
@@ -68,7 +77,7 @@ export function useSafeAreaInsets(options: MaybeRefOrGetter<UseSafeAreaInsetsOpt
       }[context.inset]}-${context.side}`;
     });
     const insets = sides.reduce<{
-      [Side in UseSafeAreaInsetsSide]?: UseSafeAreaInsetsSpecificInset
+      [Side in UseSafeAreaInsetsAttrsSide]?: UseSafeAreaInsetsAttrsSpecificInset
     }>((acc, side) => {
       const value = values[side];
       if (value) {
