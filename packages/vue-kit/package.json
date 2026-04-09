@@ -1,5 +1,5 @@
 {
-  "name": "@workspace/ui-kit",
+  "name": "@tma.js/vue-kit",
   "version": "0.0.1",
   "private": true,
   "type": "module",

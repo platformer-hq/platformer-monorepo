@@ -83,15 +83,15 @@ importers:
       '@tma.js/sdk-vue':
         specifier: ^1.0.18
         version: 1.0.18(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3))
+      '@tma.js/vue-kit':
+        specifier: workspace:*
+        version: link:../../packages/vue-kit
       '@vueuse/core':
         specifier: ^14.2.1
         version: 14.2.1(vue@3.5.32(typescript@5.9.3))
       '@workspace/api':
         specifier: workspace:*
         version: link:../../packages/api
-      '@workspace/ui-kit':
-        specifier: workspace:*
-        version: link:../../packages/ui-kit
       error-kid:
         specifier: ^2.0.0
         version: 2.0.0
@@ -150,6 +150,9 @@ importers:
       '@tma.js/sdk-vue':
         specifier: ^1.0.18
         version: 1.0.18(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3))
+      '@tma.js/vue-kit':
+        specifier: workspace:*
+        version: link:../../packages/vue-kit
       '@vueuse/core':
         specifier: ^14.2.1
         version: 14.2.1(vue@3.5.32(typescript@5.9.3))
@@ -159,9 +162,6 @@ importers:
       '@workspace/tma':
         specifier: workspace:*
         version: link:../../packages/tma
-      '@workspace/ui-kit':
-        specifier: workspace:*
-        version: link:../../packages/ui-kit
       error-kid:
         specifier: ^2.0.0
         version: 2.0.0
@@ -202,9 +202,9 @@ importers:
 
   nuxt-layers/utils:
     dependencies:
-      '@workspace/ui-kit':
+      '@tma.js/vue-kit':
         specifier: workspace:*
-        version: link:../../packages/ui-kit
+        version: link:../../packages/vue-kit
       '@workspace/utils':
         specifier: workspace:*
         version: link:../../packages/utils
@@ -335,7 +335,48 @@ importers:
         specifier: ^0.7.0
         version: 0.7.0(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3))
 
-  packages/ui-kit:
+  packages/utils:
+    dependencies:
+      '@vueuse/core':
+        specifier: ^14.2.1
+        version: 14.2.1(vue@3.5.32(typescript@5.9.3))
+      fp-ts:
+        specifier: ^2.16.11
+        version: 2.16.11
+      vue:
+        specifier: ^3.5.32
+        version: 3.5.32(typescript@5.9.3)
+    devDependencies:
+      '@workspace/tsconfigs':
+        specifier: workspace:*
+        version: link:../tsconfigs
+
+  packages/vite-plugins:
+    dependencies:
+      '@rollup/plugin-alias':
+        specifier: ^6.0.0
+        version: 6.0.0(rollup@4.60.0)
+      '@rollup/plugin-node-resolve':
+        specifier: ^16.0.3
+        version: 16.0.3(rollup@4.60.0)
+      '@rollup/plugin-typescript':
+        specifier: ^12.3.0
+        version: 12.3.0(rollup@4.60.0)(tslib@2.8.1)(typescript@5.9.3)
+      rollup:
+        specifier: ^4.60.0
+        version: 4.60.0
+      rollup-plugin-esbuild:
+        specifier: ^6.2.1
+        version: 6.2.1(esbuild@0.27.7)(rollup@4.60.0)
+      vite:
+        specifier: ^7.0.0
+        version: 7.3.1(@types/node@25.5.2)(jiti@2.6.1)(lightningcss@1.32.0)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.2)
+    devDependencies:
+      '@workspace/tsconfigs':
+        specifier: workspace:*
+        version: link:../tsconfigs
+
+  packages/vue-kit:
     dependencies:
       '@tma.js/sdk-vue':
         specifier: ^1.0.18
@@ -377,47 +418,6 @@ importers:
       vite-plugin-dts:
         specifier: ^4.5.4
         version: 4.5.4(@types/node@25.5.2)(rollup@4.60.1)(typescript@5.9.3)(vite@8.0.3(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@types/node@25.5.2)(esbuild@0.27.7)(jiti@2.6.1)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.2))
-
-  packages/utils:
-    dependencies:
-      '@vueuse/core':
-        specifier: ^14.2.1
-        version: 14.2.1(vue@3.5.32(typescript@5.9.3))
-      fp-ts:
-        specifier: ^2.16.11
-        version: 2.16.11
-      vue:
-        specifier: ^3.5.32
-        version: 3.5.32(typescript@5.9.3)
-    devDependencies:
-      '@workspace/tsconfigs':
-        specifier: workspace:*
-        version: link:../tsconfigs
-
-  packages/vite-plugins:
-    dependencies:
-      '@rollup/plugin-alias':
-        specifier: ^6.0.0
-        version: 6.0.0(rollup@4.60.0)
-      '@rollup/plugin-node-resolve':
-        specifier: ^16.0.3
-        version: 16.0.3(rollup@4.60.0)
-      '@rollup/plugin-typescript':
-        specifier: ^12.3.0
-        version: 12.3.0(rollup@4.60.0)(tslib@2.8.1)(typescript@5.9.3)
-      rollup:
-        specifier: ^4.60.0
-        version: 4.60.0
-      rollup-plugin-esbuild:
-        specifier: ^6.2.1
-        version: 6.2.1(esbuild@0.27.7)(rollup@4.60.0)
-      vite:
-        specifier: ^7.0.0
-        version: 7.3.1(@types/node@25.5.2)(jiti@2.6.1)(lightningcss@1.32.0)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.2)
-    devDependencies:
-      '@workspace/tsconfigs':
-        specifier: workspace:*
-        version: link:../tsconfigs
 
 packages:
 
@@ -3170,9 +3170,6 @@ packages:
 
   '@types/json5@0.0.29':
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
-
-  '@types/node@25.2.3':
-    resolution: {integrity: sha512-m0jEgYlYz+mDJZ2+F4v8D1AyQb+QzsNqRuI7xg1VQX/KlKS0qT9r1Mo16yo5F/MtifXFgaofIFsdFMox2SxIbQ==}
 
   '@types/node@25.5.2':
     resolution: {integrity: sha512-tO4ZIRKNC+MDWV4qKVZe3Ql/woTnmHDr5JD8UI5hn2pwBrHEwOEMZK7WlNb5RKB6EoJ02gwmQS9OrjuFnZYdpg==}
@@ -7020,9 +7017,6 @@ packages:
   unctx@2.5.0:
     resolution: {integrity: sha512-p+Rz9x0R7X+CYDkT+Xg8/GhpcShTlU8n+cf9OtOEf7zEQsNcCZO1dPKNRDqvUTaq+P32PMMkxWHwfrxkqfqAYg==}
 
-  undici-types@7.16.0:
-    resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
-
   undici-types@7.18.2:
     resolution: {integrity: sha512-AsuCzffGHJybSaRrmr5eHr81mwJU3kjw6M+uprWvCXiNeN9SOGwQ3Jn8jb8m3Z6izVgknn1R0FTCEAP2QrLY/w==}
 
@@ -10374,10 +10368,6 @@ snapshots:
 
   '@types/json5@0.0.29': {}
 
-  '@types/node@25.2.3':
-    dependencies:
-      undici-types: 7.16.0
-
   '@types/node@25.5.2':
     dependencies:
       undici-types: 7.18.2
@@ -10388,7 +10378,7 @@ snapshots:
 
   '@types/ws@8.18.1':
     dependencies:
-      '@types/node': 25.2.3
+      '@types/node': 25.5.2
 
   '@typescript-eslint/eslint-plugin@8.56.0(@typescript-eslint/parser@8.56.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)':
     dependencies:
@@ -15017,8 +15007,6 @@ snapshots:
       estree-walker: 3.0.3
       magic-string: 0.30.21
       unplugin: 2.3.11
-
-  undici-types@7.16.0: {}
 
   undici-types@7.18.2: {}
 

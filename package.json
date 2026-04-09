@@ -7,8 +7,8 @@
   },
   "scripts": {
     "gql-codegen": "graphql-codegen --config graphql.config.ts",
-    "ui-kit:build": "turbo run build --filter=\"@workspace/ui-kit\"",
-    "ui-kit:build-icons": "turbo run build-icons --filter=\"@workspace/ui-kit\"",
+    "vue-kit:build": "turbo run build --filter=\"@tma.js/vue-kit\"",
+    "vue-kit:build-icons": "turbo run build-icons --filter=\"@tma.js/vue-kit\"",
     "admin:dev": "turbo run dev --filter=\"@workspace/admin\"",
     "admin:build": "turbo run build --filter=\"@workspace/admin\"",
     "launcher:dev": "turbo run dev --filter=\"@workspace/launcher\"",

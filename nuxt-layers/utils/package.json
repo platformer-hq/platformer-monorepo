@@ -7,7 +7,7 @@
   "license": "ISC",
   "dependencies": {
     "@workspace/utils": "workspace:*",
-    "@workspace/ui-kit": "workspace:*"
+    "@tma.js/vue-kit": "workspace:*"
   },
   "devDependencies": {
     "@workspace/tsconfigs": "workspace:*"
