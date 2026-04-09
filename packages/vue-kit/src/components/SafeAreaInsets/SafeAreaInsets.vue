@@ -2,12 +2,12 @@
 import { useTemplateRef } from 'vue';
 
 import {
-  useSafeAreaInsets,
-  type UseSafeAreaInsetsOptions,
-} from '@/composables/useSafeAreaInsets/useSafeAreaInsetsAttrs';
+  useSafeAreaInsetsAttrs,
+  type UseSafeAreaInsetsAttrsOptions,
+} from '@/composables/useSafeAreaInsetsAttrs/useSafeAreaInsetsAttrs';
 import type { KnownHtmlTag } from '@/types';
 
-export interface SafeAreaInsetsProps extends UseSafeAreaInsetsOptions {
+export interface SafeAreaInsetsProps extends UseSafeAreaInsetsAttrsOptions {
   /**
    * @default 'div'
    */
@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<SafeAreaInsetsProps>(), { as: 'div' });
 const element = useTemplateRef<HTMLElement>('root');
 defineExpose({ element });
 
-const insetAttrs = useSafeAreaInsets(() => props);
+const insetAttrs = useSafeAreaInsetsAttrs(() => props);
 </script>
 
 <template>
