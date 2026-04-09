@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { KnownHtmlTag } from '@platformer/ui-kit';
+import type { KnownHtmlTag } from '@workspace/ui-kit';
 
 const { as = 'p' } = defineProps<{
   /**

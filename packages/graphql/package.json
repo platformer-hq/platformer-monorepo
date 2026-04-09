@@ -1,5 +1,5 @@
 {
-  "name": "@platformer/graphql",
+  "name": "@workspace/graphql",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -11,6 +11,6 @@
     "graphql-request": "^7.4.0"
   },
   "devDependencies": {
-    "@platformer/tsconfigs": "workspace:*"
+    "@workspace/tsconfigs": "workspace:*"
   }
 }

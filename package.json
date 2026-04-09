@@ -7,12 +7,12 @@
   },
   "scripts": {
     "gql-codegen": "graphql-codegen --config graphql.config.ts",
-    "ui-kit:build": "turbo run build --filter=\"@platformer/ui-kit\"",
-    "ui-kit:build-icons": "turbo run build-icons --filter=\"@platformer/ui-kit\"",
-    "admin:dev": "turbo run dev --filter=\"@platformer/admin\"",
-    "admin:build": "turbo run build --filter=\"@platformer/admin\"",
-    "launcher:dev": "turbo run dev --filter=\"@platformer/launcher\"",
-    "launcher:build": "turbo run build --filter=\"@platformer/launcher\""
+    "ui-kit:build": "turbo run build --filter=\"@workspace/ui-kit\"",
+    "ui-kit:build-icons": "turbo run build-icons --filter=\"@workspace/ui-kit\"",
+    "admin:dev": "turbo run dev --filter=\"@workspace/admin\"",
+    "admin:build": "turbo run build --filter=\"@workspace/admin\"",
+    "launcher:dev": "turbo run dev --filter=\"@workspace/launcher\"",
+    "launcher:build": "turbo run build --filter=\"@workspace/launcher\""
   },
   "dependencies": {
     "@graphql-codegen/add": "^6.0.0",
@@ -23,7 +23,7 @@
     "@graphql-codegen/typescript-operations": "^5.0.7",
     "@nuxt/eslint-config": "^1.15.2",
     "@parcel/watcher": "^2.5.1",
-    "@platformer/eslint-config": "workspace:*",
+    "@workspace/eslint-config": "workspace:*",
     "baseline-browser-mapping": "^2.9.19",
     "browserslist-to-esbuild": "^2.1.1",
     "eslint": "^9.39.2",

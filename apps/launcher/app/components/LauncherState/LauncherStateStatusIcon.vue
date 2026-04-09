@@ -4,7 +4,7 @@ import {
   IconExclamationMarkTriangleFill28,
   LoadingIndicatorAndroid,
   LoadingIndicatorIos,
-} from '@platformer/ui-kit';
+} from '@workspace/ui-kit';
 
 defineProps<{
   status: 'error' | 'warning' | 'loading';

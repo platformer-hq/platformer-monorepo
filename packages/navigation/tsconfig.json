@@ -1,5 +1,5 @@
 {
-  "extends": "@platformer/tsconfigs/vue.json",
+  "extends": "@workspace/tsconfigs/vue.json",
   "include": [
     "src"
   ]

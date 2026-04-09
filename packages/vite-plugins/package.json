@@ -1,5 +1,5 @@
 {
-  "name": "@platformer/vite-plugins",
+  "name": "@workspace/vite-plugins",
   "private": true,
   "version": "0.0.1",
   "description": "",
@@ -12,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@platformer/tsconfigs": "workspace:*"
+    "@workspace/tsconfigs": "workspace:*"
   },
   "peerDependencies": {
     "@rollup/plugin-alias": "^6.0.0",

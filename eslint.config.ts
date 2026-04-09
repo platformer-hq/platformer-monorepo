@@ -1,4 +1,4 @@
-import { createNuxtConfig, tsConfigs } from '@platformer/eslint-config';
+import { createNuxtConfig, tsConfigs } from '@workspace/eslint-config';
 
 export default createNuxtConfig({
   srcDirs: [

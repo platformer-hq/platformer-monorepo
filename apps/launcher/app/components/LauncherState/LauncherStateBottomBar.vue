@@ -7,7 +7,7 @@ import {
   BottomBar,
   BottomBarTransition,
   BottomBarInner,
-} from '@platformer/ui-kit';
+} from '@workspace/ui-kit';
 import { miniApp, useSignal } from '@tma.js/sdk-vue';
 
 const props = defineProps<{

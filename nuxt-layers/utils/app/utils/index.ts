@@ -4,7 +4,7 @@ import {
   formatNumber,
   throwify,
   throwifyAnyEither,
-} from '@platformer/utils';
+} from '@workspace/utils';
 
 export {
   camelToKebab,
@@ -17,4 +17,4 @@ export {
   bem,
   createReversibleTransition,
   reverseTransitionKeyframesIfLeave,
-} from '@platformer/ui-kit';
+} from '@workspace/ui-kit';

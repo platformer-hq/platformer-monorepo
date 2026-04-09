@@ -1,5 +1,5 @@
 {
-  "name": "@platformer/tma",
+  "name": "@workspace/tma",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -7,7 +7,7 @@
   "license": "ISC",
   "dependencies": {
     "@tma.js/sdk-vue": "^1.0.18",
-    "@platformer/tsconfigs": "workspace:*",
-    "@platformer/utils": "workspace:*"
+    "@workspace/tsconfigs": "workspace:*",
+    "@workspace/utils": "workspace:*"
   }
 }

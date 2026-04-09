@@ -1,5 +1,5 @@
 {
-  "extends": "@platformer/tsconfigs/esnext-dom.json",
+  "extends": "@workspace/tsconfigs/esnext-dom.json",
   "include": [
     "src"
   ]

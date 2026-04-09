@@ -1,5 +1,5 @@
 {
-  "name": "@platformer/ui-kit",
+  "name": "@workspace/ui-kit",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -28,7 +28,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@platformer/tsconfigs": "workspace:*",
+    "@workspace/tsconfigs": "workspace:*",
     "@types/node": "^25.5.2",
     "@vitejs/plugin-vue": "^6.0.0",
     "@vue/tsconfig": "^0.7.0",

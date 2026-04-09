@@ -1,11 +1,11 @@
 {
-  "name": "@platformer/eslint-config",
+  "name": "@workspace/eslint-config",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "main": "src/index.ts",
   "devDependencies": {
-    "@platformer/tsconfigs": "workspace:*"
+    "@workspace/tsconfigs": "workspace:*"
   },
   "peerDependencies": {
     "@nuxt/eslint-config": "^1.15.2",

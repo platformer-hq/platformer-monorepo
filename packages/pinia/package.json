@@ -1,5 +1,5 @@
 {
-  "name": "@platformer/pinia",
+  "name": "@workspace/pinia",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -10,6 +10,6 @@
     "pinia": "^3.0.4"
   },
   "devDependencies": {
-    "@platformer/tsconfigs": "workspace:*"
+    "@workspace/tsconfigs": "workspace:*"
   }
 }

@@ -24,8 +24,8 @@ export function extractLauncherOptions(
 > {
   const parseResult = v.safeParse(
     v.looseObject({
-      app_id: positiveIntFromStr(),
-      // app_id: v.optional(positiveIntFromStr(), '1'),
+      // app_id: positiveIntFromStr(),
+      app_id: v.optional(positiveIntFromStr(), '1'),
       api_base_url: v.optional(
         v.string(),
         import.meta.env.DEV ? '/api/' : 'https://mini-apps.store/api/',

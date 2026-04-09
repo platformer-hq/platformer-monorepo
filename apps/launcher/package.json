@@ -1,5 +1,5 @@
 {
-  "name": "@platformer/launcher",
+  "name": "@workspace/launcher",
   "type": "module",
   "private": true,
   "scripts": {
@@ -15,9 +15,9 @@
     "@pinia/colada-nuxt": "0.3.2",
     "@pinia/colada-plugin-retry": "^0.2.3",
     "@pinia/nuxt": "0.11.3",
-    "@platformer/navigation": "workspace:*",
-    "@platformer/tma": "workspace:*",
-    "@platformer/ui-kit": "workspace:*",
+    "@workspace/navigation": "workspace:*",
+    "@workspace/tma": "workspace:*",
+    "@workspace/ui-kit": "workspace:*",
     "@tma.js/sdk-vue": "^1.0.18",
     "@vueuse/core": "^14.2.1",
     "error-kid": "^2.0.0",
@@ -30,7 +30,7 @@
     "vue-tsc": "^3.2.6"
   },
   "devDependencies": {
-    "@platformer/vite-plugins": "workspace:*",
+    "@workspace/vite-plugins": "workspace:*",
     "baseline-browser-mapping": "^2.9.19",
     "browserslist-to-esbuild": "^2.1.1",
     "sass-embedded": "^1.97.1"

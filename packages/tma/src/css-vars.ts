@@ -1,9 +1,9 @@
-import { camelToKebab } from '@platformer/utils';
 import type {
   MiniAppGetCssVarNameFn,
   ThemeParamsGetCssVarNameFn,
   viewport,
 } from '@tma.js/sdk-vue';
+import { camelToKebab } from '@workspace/utils';
 
 type ViewportCssVarName = Parameters<
   Exclude<Parameters<(typeof viewport)['bindCssVars']>[0], undefined>

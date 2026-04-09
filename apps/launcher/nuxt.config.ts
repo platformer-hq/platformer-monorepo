@@ -1,4 +1,4 @@
-import { iifeUrlPlugin } from '@platformer/vite-plugins';
+import { iifeUrlPlugin } from '@workspace/vite-plugins';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 import path from 'node:path';
 
@@ -34,7 +34,7 @@ export default defineNuxtConfig({
   appId: 'launcher',
   css: [
     resolve('app/assets/global.scss'),
-    '@platformer/ui-kit/styles',
+    '@workspace/ui-kit/styles',
   ],
   components: [{
     path: resolve('app/components'),
