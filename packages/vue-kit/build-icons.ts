@@ -1,4 +1,4 @@
-// This script optimizes icons, placed in the "icons" folder.
+// This script creates Vue components from icons' SVG resources.
 
 import { mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { parse, resolve } from 'node:path';
