@@ -1,6 +1,6 @@
 import type { UsePageTransitionOptions } from '@/page-transitions/composables/usePageTransition.js';
-import { createReversibleTransition } from '@/transitions/utils/transitions.js';
 import { bem } from '@/utils/bem.js';
+import { createReversibleTransition } from '@/utils/transitions.js';
 
 import './android-page-transition.scss';
 

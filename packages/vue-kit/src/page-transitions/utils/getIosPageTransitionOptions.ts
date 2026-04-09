@@ -1,6 +1,6 @@
 import type { UsePageTransitionOptions } from '@/page-transitions/composables/usePageTransition';
-import { createReversibleTransition } from '@/transitions/utils/transitions.js';
 import { bem } from '@/utils/bem';
+import { createReversibleTransition } from '@/utils/transitions.js';
 
 import './ios-page-transition.scss';
 

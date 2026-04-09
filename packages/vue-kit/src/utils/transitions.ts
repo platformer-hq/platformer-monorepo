@@ -1,5 +1,3 @@
-import type { TransitionProps } from 'vue';
-
 type TransitionPhase = 'leave' | 'enter';
 
 /**
@@ -35,7 +33,7 @@ export function createReversibleTransition({ animatedProperties, animationOption
   animationOptions?:
     | KeyframeAnimationOptions
     | ((context: { transition: TransitionPhase }) => KeyframeAnimationOptions);
-}): Pick<TransitionProps, 'onEnter' | 'onLeave'> {
+}) {
   const createTransition = (phase: TransitionPhase) => {
     return (el: Element, done: VoidFunction) => {
       el
