@@ -10,6 +10,7 @@ export { default as ButtonBase, type ButtonBaseProps } from './components/Button
 export { default as ButtonIos, type ButtonIosProps } from './components/Button/ButtonIos.vue';
 export { default as ButtonAndroid, type ButtonAndroidProps } from './components/Button/ButtonAndroid.vue';
 
+export { createListItemTransition } from './components/List/createListItemTransition.js';
 export { default as ListAndroid } from './components/List/ListAndroid/ListAndroid.vue';
 export { default as ListAndroidItem, type ListAndroidItemVariant } from './components/List/ListAndroid/ListAndroidItem.vue';
 export { default as ListAndroidItemBody } from './components/List/ListAndroid/ListAndroidItemBody.vue';
@@ -141,15 +142,6 @@ export { getAndroidPageTransitionOptions } from './page-transitions/utils/getAnd
 export { getIosPageTransitionOptions } from './page-transitions/utils/getIosPageTransitionOptions.js';
 //#endregion
 
-//#region Transitions.
-export { createListItemTransition } from './transitions/utils/createListItemTransition.js';
-export {
-  createReversibleTransition,
-  reverseTransitionKeyframes,
-  reverseTransitionKeyframesIfLeave,
-} from './transitions/utils/transitions.js';
-//#endregion
-
 //#region Types.
 export type * from './types/index.js';
 //#endregion
@@ -158,6 +150,7 @@ export type * from './types/index.js';
 export { bem } from './utils/bem.js';
 export { createProvider } from './utils/createProvider.js';
 export { toPx } from './utils/toPx.js';
+export { createReversibleTransition, reverseTransitionKeyframesIfLeave } from './utils/transitions.js';
 //#endregion
 
 export * from './icons/index.js';

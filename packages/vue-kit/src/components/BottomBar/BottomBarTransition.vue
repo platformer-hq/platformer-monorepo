@@ -2,7 +2,7 @@
 import {
   createReversibleTransition,
   reverseTransitionKeyframesIfLeave,
-} from '@/transitions/utils/transitions';
+} from '@/utils/transitions';
 
 const transition = createReversibleTransition({
   animatedProperties({ el, transition }) {

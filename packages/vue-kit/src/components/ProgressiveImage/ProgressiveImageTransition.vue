@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { createReversibleTransition } from '@/transitions/utils/transitions';
+import { createReversibleTransition } from '@/utils/transitions';
 </script>
 
 <template>

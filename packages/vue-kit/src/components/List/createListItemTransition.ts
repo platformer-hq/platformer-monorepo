@@ -1,4 +1,4 @@
-import { createReversibleTransition, reverseTransitionKeyframesIfLeave } from './transitions';
+import { createReversibleTransition, reverseTransitionKeyframesIfLeave } from '@/utils/transitions';
 
 export function createListItemTransition() {
   return createReversibleTransition({
@@ -9,9 +9,6 @@ export function createListItemTransition() {
         opacity: [0, 1],
       }, transition);
     },
-    animationOptions: {
-      duration: 300,
-      easing: 'ease-out',
-    },
+    animationOptions: { duration: 300, easing: 'ease-out' },
   });
 }
