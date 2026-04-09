@@ -11,7 +11,7 @@ export interface SectionHeaderIosProps {
 }
 
 const { variant = 'default' } = defineProps<SectionHeaderIosProps>();
-const { b } = bem('section-ios-header');
+const { b } = bem('tgui-section-ios-header');
 
 defineSlots<{
   default(): unknown;
@@ -29,7 +29,7 @@ defineSlots<{
 </template>
 
 <style lang="scss">
-.section-ios-header {
+.tgui-section-ios-header {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -37,12 +37,12 @@ defineSlots<{
 
   &--default {
     padding: 10px 16px;
-    color: var(--section-ios-header-default-color);
+    color: var(--tgui-section-ios-header-default-color);
   }
 
   &--headline {
     padding: 8px 16px 12px;
-    color: var(--section-ios-header-headline-color);
+    color: var(--tgui-section-ios-header-headline-color);
   }
 }
 </style>

@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { useMousePressed } from '@vueuse/core';
-
 import { useTemplateRef, ref, computed } from 'vue';
 
 import { useRipples } from '@/composables/useRipples';
@@ -43,13 +42,15 @@ const props = withDefaults(defineProps<ButtonAndroidProps>(), {
   active: undefined,
 });
 
-const { b } = bem('button-android');
+const { b } = bem('tgui-button-android');
 
 const basedOnActive = (key: 'ripples' | 'pressable' | 'clickable') => {
   return props[key] ?? props.active ?? true;
 };
 const rootRef = useTemplateRef('root');
 const pressed = ref(false);
+const ripplesRef = computed(() => rootRef.value?.element);
+
 useMousePressed({
   target: () => rootRef.value?.element,
   onPressed() {
@@ -62,7 +63,6 @@ useMousePressed({
   },
 });
 
-const ripplesRef = computed(() => rootRef.value?.element);
 useRipples({
   enabled: () => basedOnActive('ripples'),
   containerRef: ripplesRef,
@@ -86,7 +86,7 @@ useRipples({
 <style lang="scss">
 @use "@/scss/mixins" as mixins;
 
-.button-android {
+.tgui-button-android {
   position: relative;
   overflow: hidden;
   transition: 300ms ease-out;
@@ -118,8 +118,8 @@ useRipples({
 
   @each $palette in ('filled', 'tinted', 'plain', 'gray', 'disabled') {
     &--#{$palette} {
-      background-color: var(--button-android-#{$palette}-bg-color);
-      color: var(--button-android-#{$palette}-text-color);
+      background-color: var(--tgui-button-android-#{$palette}-bg-color);
+      color: var(--tgui-button-android-#{$palette}-text-color);
     }
   }
 }

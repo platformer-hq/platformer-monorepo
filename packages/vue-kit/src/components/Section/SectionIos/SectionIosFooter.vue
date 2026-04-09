@@ -3,14 +3,14 @@ import TypographyIos from '@/components/Typography/TypographyIos/TypographyIos.v
 </script>
 
 <template>
-  <TypographyIos class="section-ios-footer" variant="footnote">
+  <TypographyIos class="tgui-section-ios-footer" variant="footnote">
     <slot/>
   </TypographyIos>
 </template>
 
-<style lang="scss">
-.section-ios-footer {
+<style>
+.tgui-section-ios-footer {
   padding: 8px 16px;
-  color: var(--section-ios-footer-color);
+  color: var(--tgui-section-ios-footer-color);
 }
 </style>

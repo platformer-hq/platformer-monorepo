@@ -7,7 +7,7 @@ export interface BadgeAndroidProps {
 }
 
 defineProps<BadgeAndroidProps>();
-const { b } = bem('badge-android');
+const { b } = bem('tgui-badge-android');
 </script>
 
 <template>
@@ -17,17 +17,17 @@ const { b } = bem('badge-android');
 </template>
 
 <style lang="scss">
-.badge-android {
+.tgui-badge-android {
   padding: 2px 4px;
   border-radius: 5px;
   display: inline-block;
   vertical-align: middle;
   margin-top: -3px;
 
-  @each $palette in ('filled') {
-    &--#{$palette} {
-      background-color: var(--badge-android-#{$palette}-bg-color);
-      color: var(--badge-android-#{$palette}-text-color);
+  @each $variant in ('filled') {
+    &--#{$variant} {
+      background-color: var(--tgui-badge-android-#{$variant}-bg-color);
+      color: var(--tgui-badge-android-#{$variant}-text-color);
     }
   }
 }

@@ -11,7 +11,7 @@ export interface SectionHeaderAndroidProps {
 }
 
 const { variant = 'default' } = defineProps<SectionHeaderAndroidProps>();
-const { b } = bem('section-android-header');
+const { b } = bem('tgui-section-android-header');
 
 defineSlots<{
   default(): unknown;
@@ -32,7 +32,7 @@ defineSlots<{
 </template>
 
 <style lang="scss">
-.section-android-header {
+.tgui-section-android-header {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -40,12 +40,12 @@ defineSlots<{
 
   &--default {
     padding: 16px 20px 6px;
-    color: var(--section-android-header-default-color);
+    color: var(--tgui-section-android-header-default-color);
   }
 
   &--headline {
     padding: 20px 20px 8px;
-    color: var(--section-android-header-headline-color);
+    color: var(--tgui-section-android-header-headline-color);
   }
 }
 </style>

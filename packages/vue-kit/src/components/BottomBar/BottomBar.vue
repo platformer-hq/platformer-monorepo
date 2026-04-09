@@ -1,27 +1,22 @@
 <script setup lang="ts">
-import { useElementSize } from '@vueuse/core';
 import { useTemplateRef, computed } from 'vue';
 
 import SafeAreaInsets from '@/components/SafeAreaInsets/SafeAreaInsets.vue';
 
 const rootRef = useTemplateRef('root');
 const rootEl = computed(() => rootRef.value?.element);
-const { height } = useElementSize(rootEl);
 
-defineExpose({
-  element: rootEl,
-  height,
-});
+defineExpose({ element: rootEl });
 </script>
 
 <template>
-  <SafeAreaInsets ref="root" class="bottom-bar" left right bottom>
+  <SafeAreaInsets ref="root" class="tgui-bottom-bar" left right bottom>
     <slot/>
   </SafeAreaInsets>
 </template>
 
 <style lang="scss">
-.bottom-bar {
+.tgui-bottom-bar {
   position: sticky;
   bottom: 0;
   left: 0;
@@ -31,14 +26,14 @@ defineExpose({
 
 .ios-page-transition--leave {
   &.ios-page-transition--left {
-    .bottom-bar {
+    .tgui-bottom-bar {
       left: -100px;
       transform: translateY(100%) scale(0.8);
       opacity: 0;
     }
   }
   &.ios-page-transition--right {
-    .bottom-bar {
+    .tgui-bottom-bar {
       left: 100%;
       transform: translateY(100%) scale(0.8);
       opacity: 0;
@@ -48,13 +43,13 @@ defineExpose({
 
 .android-page-transition--leave {
   &.android-page-transition--left {
-    .bottom-bar {
+    .tgui-bottom-bar {
       transform: translateY(100%) scale(0.8);
       opacity: 0;
     }
   }
   &.android-page-transition--right {
-    .bottom-bar {
+    .tgui-bottom-bar {
       left: 100%;
       transform: translateY(100%) scale(0.8);
       opacity: 0;

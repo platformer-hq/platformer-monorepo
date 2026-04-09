@@ -7,7 +7,7 @@ export interface BadgeIosProps {
 }
 
 defineProps<BadgeIosProps>();
-const { b } = bem('badge-ios');
+const { b } = bem('tgui-badge-ios');
 </script>
 
 <template>
@@ -17,17 +17,17 @@ const { b } = bem('badge-ios');
 </template>
 
 <style lang="scss">
-.badge-ios {
+.tgui-badge-ios {
   padding: 2px 4px;
   border-radius: 6px;
   display: inline-block;
   vertical-align: middle;
   margin-top: -3px;
 
-  @each $palette in ('filled') {
-    &--#{$palette} {
-      background-color: var(--badge-ios-#{$palette}-bg-color);
-      color: var(--badge-ios-#{$palette}-text-color);
+  @each $variant in ('filled') {
+    &--#{$variant} {
+      background-color: var(--tgui-badge-ios-#{$variant}-bg-color);
+      color: var(--tgui-badge-ios-#{$variant}-text-color);
     }
   }
 }

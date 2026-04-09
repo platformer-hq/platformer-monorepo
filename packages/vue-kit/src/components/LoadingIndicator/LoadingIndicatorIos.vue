@@ -3,11 +3,14 @@ import { bem } from '@/utils/bem';
 import { toPx } from '@/utils/toPx';
 
 defineProps<{
+  /**
+   * Element size in pixels.
+   */
   size: number;
   color?: string;
 }>();
 
-const { b, e } = bem('loading-indicator-ios');
+const { b, e } = bem('tgui-loading-indicator-ios');
 </script>
 
 <template>
@@ -27,7 +30,7 @@ const { b, e } = bem('loading-indicator-ios');
 <style lang="scss">
 @use "sass:math";
 
-.loading-indicator-ios {
+.tgui-loading-indicator-ios {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,7 +43,7 @@ const { b, e } = bem('loading-indicator-ios');
     background-color: currentColor;
     border-radius: 1000px;
     transform-origin: center;
-    animation: loading-indicator-ios-ping 1s steps(8) infinite;
+    animation: tgui-loading-indicator-ios-ping 1s steps(8) infinite;
     opacity: 0.5;
     width: 11%;
     height: 30%;
@@ -53,7 +56,7 @@ const { b, e } = bem('loading-indicator-ios');
   }
 }
 
-@keyframes loading-indicator-ios-ping {
+@keyframes tgui-loading-indicator-ios-ping {
   @include frame(0, 1);
   @include frame(1, 0.82);
   @include frame(2, 0.65);

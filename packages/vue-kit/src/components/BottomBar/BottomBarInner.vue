@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { bem } from '@/utils/bem.js';
 
-const { b } = bem('bottom-bar-inner');
+const { b } = bem('tgui-bottom-bar-inner');
 
 defineProps<{
   variant?: '2-columns';
@@ -15,7 +15,7 @@ defineProps<{
 </template>
 
 <style lang="scss">
-.bottom-bar-inner {
+.tgui-bottom-bar-inner {
   padding: 8px 16px 16px;
 
   &--2-columns {

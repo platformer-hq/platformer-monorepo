@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import RoundedPanelIos from '@/components/RoundedPanel/RoundedPanelIos.vue';
+
 defineSlots<{
   header(): unknown;
   default(): unknown;
@@ -7,22 +9,18 @@ defineSlots<{
 </script>
 
 <template>
-  <section class="section-ios">
+  <section class="tgui-section-ios">
     <slot name="header"/>
-    <div class="section-ios__list">
+    <RoundedPanelIos class="tgui-section-ios__list">
       <slot/>
-    </div>
+    </RoundedPanelIos>
     <slot name="footer"/>
   </section>
 </template>
 
-<style lang="scss">
-.section-ios {
-  &__list {
-    border-radius: 26px;
-    overflow: hidden;
-    background: var(--section-ios-list-bg);
-    transition: 300ms ease-out;
-  }
+<style>
+.tgui-section-ios__list {
+  overflow: hidden;
+  background: var(--tgui-section-ios-list-bg);
 }
 </style>

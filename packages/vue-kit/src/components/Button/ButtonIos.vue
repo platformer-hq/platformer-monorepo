@@ -39,7 +39,7 @@ const props = withDefaults(defineProps<ButtonIosProps>(), {
   active: undefined,
 });
 
-const { b, e } = bem('button-ios');
+const { b, e } = bem('tgui-button-ios');
 
 const basedOnActive = (key: 'highlightOnActive' | 'clickable') => {
   return props[key] ?? props.active ?? true;
@@ -78,7 +78,7 @@ const onHighlightLeave = (el: Element, done: VoidFunction) => {
 </template>
 
 <style lang="scss">
-.button-ios {
+.tgui-button-ios {
   position: relative;
 
   &--elevated {
@@ -123,8 +123,8 @@ const onHighlightLeave = (el: Element, done: VoidFunction) => {
 
   @each $palette in ('filled', 'tinted', 'plain', 'gray', 'disabled') {
     &--#{$palette} {
-      background-color: var(--button-ios-#{$palette}-bg-color);
-      color: var(--button-ios-#{$palette}-text-color);
+      background-color: var(--tgui-button-ios-#{$palette}-bg-color);
+      color: var(--tgui-button-ios-#{$palette}-text-color);
     }
   }
 }

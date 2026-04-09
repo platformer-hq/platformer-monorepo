@@ -8,7 +8,7 @@ defineProps<{
   disabled?: boolean;
 }>();
 
-const { b, e } = bem('switch-ios');
+const { b, e } = bem('tgui-switch-ios');
 const checked = defineModel<boolean>('checked', { default: false });
 const checkedInitially = checked.value;
 
@@ -63,12 +63,12 @@ watch(checked, checked => {
 <style lang="scss">
 @use "@/scss/mixins";
 
-.switch-ios {
+.tgui-switch-ios {
   display: inline-block;
   height: 28px;
   width: 64px;
   border-radius: 1000px;
-  background: var(--switch-ios-bg, #747480);
+  background: var(--tgui-switch-ios-bg, #747480);
   position: relative;
   transition: 350ms ease;
   @include mixins.clickable;
@@ -79,7 +79,7 @@ watch(checked, checked => {
   }
 
   &--checked {
-    background: var(--switch-ios-checked-bg, #2FB250);
+    background: var(--tgui-switch-ios-checked-bg, #2FB250);
   }
 
   &__knob {
@@ -90,8 +90,8 @@ watch(checked, checked => {
     width: 39px;
     border-radius: 1000px;
     transform-origin: center center;
-    background: var(--switch-ios-knob-bg, white);
-    box-shadow: var(--elevated-box-shadow);
+    background: var(--tgui-switch-ios-knob-bg, white);
+    box-shadow: var(--tgui-elevated-box-shadow);
 
     &--checked-initially {
       left: 23px;
@@ -110,7 +110,7 @@ watch(checked, checked => {
       left: 13px;
       width: 1px;
       height: 10px;
-      background: var(--switch-ios-mark-left-color, black);
+      background: var(--tgui-switch-ios-mark-left-color, black);
     }
 
     &--right {
@@ -118,7 +118,7 @@ watch(checked, checked => {
       width: 10px;
       height: 10px;
       border-radius: 50%;
-      border: 1.5px solid var(--switch-ios-mark-right-color, rgba(255,255,255,.3));
+      border: 1.5px solid var(--tgui-switch-ios-mark-right-color, rgba(255,255,255,.3));
     }
 
     &--visible {

@@ -10,13 +10,13 @@ const { as = 'div' } = defineProps<{
 </script>
 
 <template>
-  <component :is="as" class="rounded-panel-ios">
+  <component :is="as" class="tgui-rounded-panel-ios">
     <slot/>
   </component>
 </template>
 
 <style>
-.rounded-panel-ios {
-  border-radius: 26px;
+.tgui-rounded-panel-ios {
+  border-radius: var(--tgui-rounded-panel-ios-border-radius, 26px);
 }
 </style>

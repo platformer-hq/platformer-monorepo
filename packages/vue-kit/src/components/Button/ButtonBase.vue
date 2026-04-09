@@ -23,7 +23,7 @@ export interface ButtonBaseProps {
 
 const { as = 'button', clickable = true } = defineProps<ButtonBaseProps>();
 
-const { b } = bem('button-base');
+const { b } = bem('tgui-button-base');
 const root = useTemplateRef<HTMLElement>('root');
 
 defineExpose({ element: root });
@@ -42,7 +42,7 @@ defineExpose({ element: root });
 <style lang="scss">
 @use "@/scss/mixins" as mixins;
 
-.button-base {
+.tgui-button-base {
   appearance: none;
   outline: none;
   border: none;
@@ -64,8 +64,8 @@ defineExpose({ element: root });
 
   @each $palette in ('filled', 'tinted', 'plain', 'gray', 'disabled') {
     &--#{$palette} {
-      background-color: var(--button-base-#{$palette}-bg-color);
-      color: var(--button-base-#{$palette}-text-color);
+      background-color: var(--tgui-button-base-#{$palette}-bg-color);
+      color: var(--tgui-button-base-#{$palette}-text-color);
     }
   }
 }

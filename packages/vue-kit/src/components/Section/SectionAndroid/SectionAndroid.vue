@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import RoundedPanelAndroid from '@/components/RoundedPanel/RoundedPanelAndroid.vue';
+
 defineSlots<{
   header(): unknown;
   default(): unknown;
@@ -7,22 +9,18 @@ defineSlots<{
 </script>
 
 <template>
-  <section class="section-android">
-    <div class="section-android__list">
+  <section class="tgui-section-android">
+    <RoundedPanelAndroid class="tgui-section-android__list">
       <slot name="header"/>
       <slot/>
-    </div>
+    </RoundedPanelAndroid>
     <slot name="footer"/>
   </section>
 </template>
 
-<style lang="scss">
-.section-android {
-  &__list {
-    border-radius: 16px;
-    overflow: hidden;
-    background: var(--section-android-list-bg);
-    transition: 300ms ease-out;
-  }
+<style>
+.tgui-section-android__list {
+  overflow: hidden;
+  background: var(--tgui-section-android-list-bg);
 }
 </style>

@@ -2,10 +2,13 @@
 import { bem } from '@/utils/bem';
 
 defineProps<{
+  /**
+   * Element size in pixels.
+   */
   size: number;
   color?: string;
 }>();
-const { b, e } = bem('loading-indicator-android');
+const { b, e } = bem('tgui-loading-indicator-android');
 </script>
 
 <template>
@@ -26,7 +29,7 @@ const { b, e } = bem('loading-indicator-android');
 @use "sass:map" as map;
 @use "sass:list" as list;
 
-.loading-indicator-android {
+.tgui-loading-indicator-android {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -35,13 +38,13 @@ const { b, e } = bem('loading-indicator-android');
     fill: transparent;
     overflow: visible;
     display: block;
-    animation: 1.4s ease-in-out infinite loading-indicator-android-stroke,
-    1.4s linear infinite loading-indicator-android-spin;
+    animation: 1.4s ease-in-out infinite tgui-loading-indicator-android-stroke,
+    1.4s linear infinite tgui-loading-indicator-android-spin;
     stroke-width: 9%;
   }
 }
 
-@keyframes loading-indicator-android-spin {
+@keyframes tgui-loading-indicator-android-spin {
   0% {
     transform: rotate(0deg);
   }
@@ -50,7 +53,7 @@ const { b, e } = bem('loading-indicator-android');
   }
 }
 
-@keyframes loading-indicator-android-stroke {
+@keyframes tgui-loading-indicator-android-stroke {
   $settings: (
     "0%": (#{1, 500%}, 0),
     "50%": (#{250%, 500%}, -37.5%),

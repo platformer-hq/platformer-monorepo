@@ -3,14 +3,14 @@ import TypographyAndroid from '@/components/Typography/TypographyAndroid/Typogra
 </script>
 
 <template>
-  <TypographyAndroid class="section-android-footer" variant="subheadline2">
+  <TypographyAndroid class="tgui-section-android-footer" variant="subheadline2">
     <slot/>
   </TypographyAndroid>
 </template>
 
-<style lang="scss">
-.section-android-footer {
+<style>
+.tgui-section-android-footer {
   padding: 12px 20px;
-  color: var(--section-android-footer-color);
+  color: var(--tgui-section-android-footer-color);
 }
 </style>
