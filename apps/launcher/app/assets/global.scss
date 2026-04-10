@@ -7,7 +7,8 @@
   }
 
   // Palette fallbacks.
-  @each $key, $fallback in ("section-bg-color": "bg-color",
+  @each $key, $fallback in (
+    "section-bg-color": "bg-color",
     "accent-text-color": "link-color",
     "subtitle-text-color": "hint-color",
     "section-header-text-color": "hint-color",
