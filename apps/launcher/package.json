@@ -17,6 +17,7 @@
     "@pinia/nuxt": "0.11.3",
     "@workspace/navigation": "workspace:*",
     "@workspace/tma": "workspace:*",
+    "@workspace/utils": "workspace:*",
     "@tma.js/sdk-vue": "^1.0.18",
     "@tma.js/vue-kit": "workspace:*",
     "@vueuse/core": "^14.2.1",

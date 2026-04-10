@@ -6,10 +6,6 @@ function resolve(...filePath: string[]) {
   return path.resolve(__dirname, ...filePath);
 }
 
-function resolveLayer(pkg: string) {
-  return resolve('../../nuxt-layers', pkg);
-}
-
 const componentsIgnore = ['**/_/**', '**/_*'];
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -43,9 +39,6 @@ export default defineNuxtConfig({
     ignore: componentsIgnore,
     priority: 100,
   }],
-  extends: [
-    resolveLayer('utils'),
-  ],
   i18n: {
     strategy: 'no_prefix',
     locales: [
