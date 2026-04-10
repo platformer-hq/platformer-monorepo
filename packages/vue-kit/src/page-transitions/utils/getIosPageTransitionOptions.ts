@@ -8,7 +8,7 @@ export function getIosPageTransitionOptions(): Required<Pick<
   UsePageTransitionOptions,
   'afterEnter' | 'animate' | 'beforeAnimate'
 >> {
-  const { b } = bem('ios-page-transition');
+  const { b } = bem('tgui-ios-page-transition');
   const animationOptions = { duration: 300, easing: 'ease-out' };
   const leftTransition = createReversibleTransition({
     animatedProperties: { transform: ['translateX(-100px)', 'translateX(0)'] },

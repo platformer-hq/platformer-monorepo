@@ -8,7 +8,7 @@ export function getAndroidPageTransitionOptions(): Required<Pick<
   UsePageTransitionOptions,
   'afterEnter' | 'animate' | 'beforeAnimate'
 >> {
-  const { b } = bem('android-page-transition');
+  const { b } = bem('tgui-android-page-transition');
   const duration = 200;
   const tr = createReversibleTransition({
     animatedProperties: {

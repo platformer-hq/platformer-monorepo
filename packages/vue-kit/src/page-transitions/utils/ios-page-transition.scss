@@ -1,9 +1,29 @@
-.ios-page-transition {
+.tgui-ios-page-transition {
   position: fixed;
   top: 0;
   left: 0;
 
   &--right {
     z-index: 100;
+  }
+
+  &--leave {
+    &.tgui-ios-page-transition {
+      &--left {
+        .tgui-bottom-bar {
+          left: -100px;
+          transform: translateY(100%) scale(0.8);
+          opacity: 0;
+        }
+      }
+
+      &--right {
+        .tgui-bottom-bar {
+          left: 100%;
+          transform: translateY(100%) scale(0.8);
+          opacity: 0;
+        }
+      }
+    }
   }
 }
