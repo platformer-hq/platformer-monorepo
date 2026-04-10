@@ -4,7 +4,7 @@ import type { StyleValue } from 'vue';
 import {
   useTypographyAndroidAttrs,
   type UseTypographyAndroidAttrsOptions,
-} from './useTypographyAndroidAttrs';
+} from './composables/useTypographyAndroidAttrs';
 
 export interface UseTypographyAndroidAttrsProps extends UseTypographyAndroidAttrsOptions {
   class?: unknown;

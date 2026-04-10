@@ -6,7 +6,7 @@ import type { KnownHtmlTag } from '@/types';
 import {
   useSafeAreaInsetsAttrs,
   type UseSafeAreaInsetsAttrsOptions,
-} from './useSafeAreaInsetsAttrs';
+} from './composables/useSafeAreaInsetsAttrs';
 
 export interface SafeAreaInsetsProps extends UseSafeAreaInsetsAttrsOptions {
   /**

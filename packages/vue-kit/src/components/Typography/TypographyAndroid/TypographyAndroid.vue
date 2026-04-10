@@ -8,7 +8,7 @@ import {
   type UseTypographyAndroidAttrsAlign,
   type UseTypographyAndroidAttrsVariant,
   useTypographyAndroidAttrs,
-} from './useTypographyAndroidAttrs';
+} from './composables/useTypographyAndroidAttrs';
 
 export type TypographyAndroidAlign = UseTypographyAndroidAttrsAlign;
 export type TypographyAndroidVariant = UseTypographyAndroidAttrsVariant;

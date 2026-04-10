@@ -4,7 +4,7 @@ import type { StyleValue } from 'vue';
 import {
   useSafeAreaInsetsAttrs,
   type UseSafeAreaInsetsAttrsOptions,
-} from './useSafeAreaInsetsAttrs';
+} from './composables/useSafeAreaInsetsAttrs';
 
 export interface UseSafeAreaInsetsAttrsProps extends UseSafeAreaInsetsAttrsOptions {
   class?: unknown;

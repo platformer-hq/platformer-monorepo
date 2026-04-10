@@ -8,7 +8,7 @@ import {
   type UseTypographyIosAttrsVariant,
   type UseTypographyIosAttrsAlign,
   useTypographyIosAttrs,
-} from './useTypographyIosAttrs';
+} from './composables/useTypographyIosAttrs';
 
 export type TypographyIosAlign = UseTypographyIosAttrsAlign;
 export type TypographyIosVariant = UseTypographyIosAttrsVariant;

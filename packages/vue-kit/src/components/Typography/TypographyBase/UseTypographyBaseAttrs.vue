@@ -4,7 +4,7 @@ import type { StyleValue } from 'vue';
 import {
   useTypographyBaseAttrs,
   type UseTypographyBaseAttrsOptions,
-} from './useTypographyBaseAttrs';
+} from './composables/useTypographyBaseAttrs';
 
 export interface UseTypographyBaseAttrsProps extends UseTypographyBaseAttrsOptions {
   class?: unknown;

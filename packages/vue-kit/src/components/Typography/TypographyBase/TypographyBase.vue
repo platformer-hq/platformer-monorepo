@@ -7,7 +7,7 @@ import {
   type UseTypographyBaseAttrsOptions,
   type UseTypographyBaseAttrsAlign,
   useTypographyBaseAttrs,
-} from './useTypographyBaseAttrs';
+} from './composables/useTypographyBaseAttrs';
 
 export type TypographyBaseAlign = UseTypographyBaseAttrsAlign;
 export interface TypographyBaseProps extends UseTypographyBaseAttrsOptions {

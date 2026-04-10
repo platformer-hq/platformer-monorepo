@@ -74,7 +74,7 @@ export {
   type UseSafeAreaInsetsAttrsSide,
   type UseSafeAreaInsetsAttrsSpecificInset,
   useSafeAreaInsetsAttrs,
-} from './components/SafeAreaInsets/useSafeAreaInsetsAttrs.js';
+} from './components/SafeAreaInsets/composables/useSafeAreaInsetsAttrs.js';
 export { default as UseSafeAreaInsets, type UseSafeAreaInsetsAttrsProps } from './components/SafeAreaInsets/UseSafeAreaInsetsAttrs.vue';
 
 export { default as SectionAndroid } from './components/Section/SectionAndroid/SectionAndroid.vue';
@@ -94,7 +94,7 @@ export {
   type UseTypographyBaseAttrsOptions,
   type UseTypographyBaseAttrsReturn,
   useTypographyBaseAttrs,
-} from './components/Typography/TypographyBase/useTypographyBaseAttrs.js';
+} from './components/Typography/TypographyBase/composables/useTypographyBaseAttrs.js';
 export { default as UseTypographyBase, type UseTypographyBaseAttrsProps as UseTypographyBaseProps } from './components/Typography/TypographyBase/UseTypographyBaseAttrs.vue';
 
 export { default as TypographyAndroid, type TypographyAndroidAlign, type TypographyAndroidProps, type TypographyAndroidVariant } from './components/Typography/TypographyAndroid/TypographyAndroid.vue';
@@ -104,7 +104,7 @@ export {
   type UseTypographyAndroidAttrsReturn,
   type UseTypographyAndroidAttrsVariant,
   useTypographyAndroidAttrs,
-} from './components/Typography/TypographyAndroid/useTypographyAndroidAttrs.js';
+} from './components/Typography/TypographyAndroid/composables/useTypographyAndroidAttrs.js';
 export { default as UseTypographyAndroid, type UseTypographyAndroidAttrsProps as UseTypographyAndroidProps } from './components/Typography/TypographyAndroid/UseTypographyAndroidAttrs.vue';
 
 export { default as TypographyIos, type TypographyIosAlign, type TypographyIosProps, type TypographyIosVariant } from './components/Typography/TypographyIos/TypographyIos.vue';
@@ -114,7 +114,7 @@ export {
   type UseTypographyIosAttrsReturn,
   type UseTypographyIosAttrsVariant,
   useTypographyIosAttrs,
-} from './components/Typography/TypographyIos/useTypographyIosAttrs.js';
+} from './components/Typography/TypographyIos/composables/useTypographyIosAttrs.js';
 export { default as UseTypographyIos, type UseTypographyIosAttrsProps as UseTypographyIosProps } from './components/Typography/TypographyIos/UseTypographyIosAttrs.vue';
 
 export { default as PagePaddings, type PagePaddingsProps } from './components/PagePaddings.vue';

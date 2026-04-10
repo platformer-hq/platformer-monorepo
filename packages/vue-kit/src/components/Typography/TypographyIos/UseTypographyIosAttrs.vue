@@ -4,7 +4,7 @@ import type { StyleValue } from 'vue';
 import {
   useTypographyIosAttrs,
   type UseTypographyIosAttrsOptions,
-} from './useTypographyIosAttrs';
+} from './composables/useTypographyIosAttrs';
 
 export interface UseTypographyIosAttrsProps extends UseTypographyIosAttrsOptions {
   class?: unknown;

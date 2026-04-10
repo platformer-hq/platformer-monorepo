@@ -2,7 +2,7 @@
 import { onClickOutside, useTextareaAutosize } from '@vueuse/core';
 import { computed, useTemplateRef } from 'vue';
 
-import { useTypographyIosAttrs } from '@/components/Typography/TypographyIos/useTypographyIosAttrs';
+import { useTypographyIosAttrs } from '@/components/Typography/TypographyIos/composables/useTypographyIosAttrs';
 import { useKeyboardVisibility } from '@/composables/useKeyboardVisibility';
 
 defineProps<{ multiline?: boolean }>();

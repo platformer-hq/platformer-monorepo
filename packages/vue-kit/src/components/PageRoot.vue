@@ -11,7 +11,7 @@ import {
 import { useTemplateRef, watchPostEffect, onWatcherCleanup, computed } from 'vue';
 
 import SafeAreaInsets from '@/components/SafeAreaInsets/SafeAreaInsets.vue';
-import type { UseSafeAreaInsetsAttrsSide } from '@/components/SafeAreaInsets/useSafeAreaInsetsAttrs';
+import type { UseSafeAreaInsetsAttrsSide } from '@/components/SafeAreaInsets/composables/useSafeAreaInsetsAttrs';
 import { bem } from '@/utils/bem';
 
 type RgbOrThemeParamsKey = RGB | KnownThemeParamsKey;

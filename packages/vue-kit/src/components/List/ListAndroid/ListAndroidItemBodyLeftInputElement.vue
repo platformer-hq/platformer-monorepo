@@ -2,7 +2,7 @@
 import { onClickOutside, useTextareaAutosize } from '@vueuse/core';
 import { computed, useTemplateRef } from 'vue';
 
-import { useTypographyAndroidAttrs } from '@/components/Typography/TypographyAndroid/useTypographyAndroidAttrs.js';
+import { useTypographyAndroidAttrs } from '@/components/Typography/TypographyAndroid/composables/useTypographyAndroidAttrs.js';
 
 defineProps<{ multiline?: boolean }>();
 

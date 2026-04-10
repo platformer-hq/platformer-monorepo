@@ -10,7 +10,7 @@ import {
   type UseTypographyBaseAttrsOptions,
   type UseTypographyBaseAttrsAlign,
   useTypographyBaseAttrs,
-} from '@/components/Typography/TypographyBase/useTypographyBaseAttrs';
+} from '@/components/Typography/TypographyBase/composables/useTypographyBaseAttrs';
 import { bem } from '@/utils/bem';
 
 import './typography-android.scss';
