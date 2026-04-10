@@ -12,16 +12,13 @@ type ThemeParamsCssVarName = Parameters<ThemeParamsGetCssVarNameFn>[0];
 type MiniAppCssVarName = Parameters<MiniAppGetCssVarNameFn>[0];
 
 export function formatViewportCssVar(key: ViewportCssVarName) {
-  const kebabed = camelToKebab(key);
-  return key.startsWith('safeArea') || key.startsWith('contentSafeArea')
-    ? `--${kebabed}`
-    : `--viewport-${kebabed}`;
+  return `--tg-viewport-${camelToKebab(key)}`;
 }
 
 export function formatThemeParamsCssVar(key: ThemeParamsCssVarName) {
-  return `--${key.replace(/_[a-z]/g, match => `-${match[1]}`)}`;
+  return `--tg-theme-${key.replace(/_[a-z]/g, match => `-${match[1]}`)}`;
 }
 
 export function formatMiniAppCssVar(key: MiniAppCssVarName) {
-  return `--app-${camelToKebab(key)}`;
+  return `--tg-app-${camelToKebab(key)}`;
 }
