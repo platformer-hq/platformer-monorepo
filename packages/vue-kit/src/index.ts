@@ -155,4 +155,4 @@ export { createReversibleTransition, reverseTransitionKeyframesIfLeave } from '.
 //#endregion
 
 export * from './icons/index.js';
-export * from './scss/global.scss';
+import './scss/global.scss';
