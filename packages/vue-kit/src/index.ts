@@ -66,10 +66,16 @@ export { default as RadioIos } from './components/Radio/RadioIos.vue';
 export { default as RoundedPanelAndroid } from './components/RoundedPanel/RoundedPanelAndroid.vue';
 export { default as RoundedPanelIos } from './components/RoundedPanel/RoundedPanelIos.vue';
 
-export { default as PageRoot, type PageRootProps } from './components/PageRoot.vue';
-
-export { default as SafeAreaInsets, type SafeAreaInset, type SafeAreaInsetsProps } from './components/SafeAreaInsets/SafeAreaInsets.vue';
-export { default as UseSafeAreaInsets, type UseSafeAreaInset, type UseSafeAreaInsetsProps } from './components/SafeAreaInsets/UseSafeAreaInsets.vue';
+export { default as SafeAreaInsets, type SafeAreaInsetsProps } from './components/SafeAreaInsets/SafeAreaInsets.vue';
+export {
+  type UseSafeAreaInsetsAttrsInset,
+  type UseSafeAreaInsetsAttrsOptions,
+  type UseSafeAreaInsetsAttrsReturn,
+  type UseSafeAreaInsetsAttrsSide,
+  type UseSafeAreaInsetsAttrsSpecificInset,
+  useSafeAreaInsetsAttrs,
+} from './components/SafeAreaInsets/useSafeAreaInsetsAttrs.js';
+export { default as UseSafeAreaInsets, type UseSafeAreaInsetsAttrsProps } from './components/SafeAreaInsets/UseSafeAreaInsetsAttrs.vue';
 
 export { default as SectionAndroid } from './components/Section/SectionAndroid/SectionAndroid.vue';
 export { default as SectionFooterAndroid } from './components/Section/SectionAndroid/SectionAndroidFooter.vue';
@@ -83,47 +89,42 @@ export { default as SwitchAndroid } from './components/Switch/SwitchAndroid.vue'
 export { default as SwitchIos } from './components/Switch/SwitchIos.vue';
 
 export { default as TypographyBase, type TypographyBaseAlign, type TypographyBaseProps } from './components/Typography/TypographyBase/TypographyBase.vue';
-export { default as UseTypographyBase, type UseTypographyBaseProps, type UseTypographyBaseSlotProps } from './components/Typography/TypographyBase/UseTypographyBase.vue';
+export {
+  type UseTypographyBaseAttrsAlign,
+  type UseTypographyBaseAttrsOptions,
+  type UseTypographyBaseAttrsReturn,
+  useTypographyBaseAttrs,
+} from './components/Typography/TypographyBase/useTypographyBaseAttrs.js';
+export { default as UseTypographyBase, type UseTypographyBaseAttrsProps as UseTypographyBaseProps } from './components/Typography/TypographyBase/UseTypographyBaseAttrs.vue';
 
 export { default as TypographyAndroid, type TypographyAndroidAlign, type TypographyAndroidProps, type TypographyAndroidVariant } from './components/Typography/TypographyAndroid/TypographyAndroid.vue';
-export { default as UseTypographyAndroid, type UseTypographyAndroidProps, type UseTypographyAndroidSlotProps } from './components/Typography/TypographyAndroid/UseTypographyAndroid.vue';
+export {
+  type UseTypographyAndroidAttrsAlign,
+  type UseTypographyAndroidAttrsOptions,
+  type UseTypographyAndroidAttrsReturn,
+  type UseTypographyAndroidAttrsVariant,
+  useTypographyAndroidAttrs,
+} from './components/Typography/TypographyAndroid/useTypographyAndroidAttrs.js';
+export { default as UseTypographyAndroid, type UseTypographyAndroidAttrsProps as UseTypographyAndroidProps } from './components/Typography/TypographyAndroid/UseTypographyAndroidAttrs.vue';
 
 export { default as TypographyIos, type TypographyIosAlign, type TypographyIosProps, type TypographyIosVariant } from './components/Typography/TypographyIos/TypographyIos.vue';
-export { default as UseTypographyIos, type UseTypographyIosProps, type UseTypographyIosSlotProps } from './components/Typography/TypographyIos/UseTypographyIos.vue';
+export {
+  type UseTypographyIosAttrsAlign,
+  type UseTypographyIosAttrsOptions,
+  type UseTypographyIosAttrsReturn,
+  type UseTypographyIosAttrsVariant,
+  useTypographyIosAttrs,
+} from './components/Typography/TypographyIos/useTypographyIosAttrs.js';
+export { default as UseTypographyIos, type UseTypographyIosAttrsProps as UseTypographyIosProps } from './components/Typography/TypographyIos/UseTypographyIosAttrs.vue';
 
 export { default as PagePaddings, type PagePaddingsProps } from './components/PagePaddings.vue';
+export { default as PageRoot, type PageRootProps } from './components/PageRoot.vue';
+export { default as ShimmerBox, type ShimmerBoxProps } from './components/ShimmerBox.vue';
 export { default as SidePaddings } from './components/SidePaddings.vue';
 export { default as VerticalPaddings } from './components/VerticalPaddings.vue';
-
-export { default as ShimmerBox, type ShimmerBoxProps } from './components/ShimmerBox.vue';
 //#endregion
 
 //#region Composables.
-export {
-  useSafeAreaInsets,
-  type UseSafeAreaInsetsInset,
-  type UseSafeAreaInsetsOptions,
-} from './composables/useSafeAreaInsets/useSafeAreaInsets.js';
-export {
-  useTypographyBase,
-  type UseTypographyBaseAlign,
-  type UseTypographyBaseOptions,
-  type UseTypographyBaseReturn,
-} from './composables/useTypographyBase/useTypographyBase.js';
-export {
-  useTypographyAndroid,
-  type UseTypographyAndroidAlign,
-  type UseTypographyAndroidOptions,
-  type UseTypographyAndroidReturn,
-  type UseTypographyAndroidVariant,
-} from './composables/useTypographyAndroid/useTypographyAndroid.js';
-export {
-  useTypographyIos,
-  type UseTypographyIosAlign,
-  type UseTypographyIosOptions,
-  type UseTypographyIosReturn,
-  type UseTypographyIosVariant,
-} from './composables/useTypographyIos/useTypographyIos.js';
 export { useKeyboardVisibility } from './composables/useKeyboardVisibility.js';
 export { useRipples } from './composables/useRipples.js';
 //#endregion
@@ -154,3 +155,4 @@ export { createReversibleTransition, reverseTransitionKeyframesIfLeave } from '.
 //#endregion
 
 export * from './icons/index.js';
+export * from './scss/global.scss';
