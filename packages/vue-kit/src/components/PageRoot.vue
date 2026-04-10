@@ -9,12 +9,12 @@ import {
   type KnownThemeParamsKey,
 } from '@tma.js/sdk-vue';
 import { useTemplateRef, watchPostEffect, onWatcherCleanup, computed } from 'vue';
-import { useRouter } from 'vue-router';
 
+import SafeAreaInsets from '@/components/SafeAreaInsets/SafeAreaInsets.vue';
+import type { UseSafeAreaInsetsAttrsSide } from '@/components/SafeAreaInsets/useSafeAreaInsetsAttrs';
 import { bem } from '@/utils/bem';
 
 type RgbOrThemeParamsKey = RGB | KnownThemeParamsKey;
-type InsetName = 'left' | 'right' | 'bottom' | 'top';
 
 export interface PageRootProps {
   /**
@@ -42,7 +42,7 @@ export interface PageRootProps {
    * - array to apply specific insets
    * @default true
    */
-  insets?: boolean | InsetName[];
+  insets?: boolean | UseSafeAreaInsetsAttrsSide[];
   /**
    * Should the scrollbar be visible.
    */
@@ -57,12 +57,12 @@ defineSlots<{
   default(): unknown;
   bottomBar(): unknown;
 }>();
+const emit = defineEmits<{ back: [] }>();
 
 const { b, e } = bem('page-root');
 const rootRef = useTemplateRef('root');
 
 //#region Back button adjustments.
-const router = useRouter();
 const isBackButtonMounted = useSignal(backButton.isMounted);
 watchPostEffect(() => {
   if (!isBackButtonMounted.value) {
@@ -73,9 +73,9 @@ watchPostEffect(() => {
   }
   backButton.show();
   onWatcherCleanup(
-    backButton.onClick((() => {
-      router.go(-1);
-    })),
+    backButton.onClick(() => {
+      emit('back');
+    }),
   );
 });
 //#endregion
@@ -119,11 +119,7 @@ const bottomBarColor = useSignal(miniApp.bottomBarColor);
 // We use post effect here as long as colors-related changes must be applied only when
 // the DOM was updated. Otherwise, we will first see colors updated, but the view is not rendered
 // yet.
-const isMiniAppMounted = useSignal(miniApp.isMounted);
 watchPostEffect(() => {
-  if (!isMiniAppMounted.value) {
-    return;
-  }
   const { header, background, bottomBar } = colorsObject.value;
   if (!areColorsSame(headerColor.value, header)) {
     miniApp.setHeaderColor.ifAvailable(header);
@@ -141,32 +137,26 @@ const insetsObject = computed(() => {
   const { insets } = props;
   return (
     insets === true
-      ? ['left', 'right', 'bottom', 'top'] satisfies InsetName[]
+      ? ['left', 'right', 'bottom', 'top'] satisfies UseSafeAreaInsetsAttrsSide[]
       : insets === false
         ? []
         : insets
-  ).reduce<{ [K in 'left' | 'right' | 'bottom' | 'top']?: true }>((acc, key) => {
+  ).reduce<{ [K in UseSafeAreaInsetsAttrsSide]?: true }>((acc, key) => {
     acc[key] = true;
     return acc;
   }, {});
 });
 
-defineExpose({
-  el: rootRef,
-});
+defineExpose({ element: rootRef });
 </script>
 
 <template>
   <div
     ref="root"
     :class="b({'no-scrollbar': !scrollbar})"
-    :style="{
-      background: isRGB(colorsObject.background)
-        ? colorsObject.background
-        : undefined
-    }"
+    :style="{background: isRGB(colorsObject.background) ? colorsObject.background : undefined}"
   >
-    <div :class="e('content', `${elasticScroll ? '' : 'non-'}elastic`)">
+    <div :class="e('content', {elastic: elasticScroll})">
       <SafeAreaInsets v-bind="insetsObject">
         <slot />
       </SafeAreaInsets>
@@ -189,10 +179,7 @@ defineExpose({
     display: grid;
     grid-template-rows: 1fr auto;
     grid-template-columns: 100vw;
-
-    &--non-elastic {
-      height: 100%;
-    }
+    height: 100%;
 
     &--elastic {
       height: calc(100% + 1px);
