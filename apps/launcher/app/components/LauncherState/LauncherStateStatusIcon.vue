@@ -4,7 +4,7 @@ import {
   IconExclamationMarkTriangleFill28,
   LoadingIndicatorAndroid,
   LoadingIndicatorIos,
-} from '@workspace/ui-kit';
+} from '@tma.js/vue-kit';
 
 defineProps<{
   status: 'error' | 'warning' | 'loading';

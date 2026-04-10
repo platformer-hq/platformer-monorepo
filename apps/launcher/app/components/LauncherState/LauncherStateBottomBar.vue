@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { miniApp, useSignal } from '@tma.js/sdk-vue';
 import {
   ButtonAndroid,
   ButtonIos,
@@ -7,8 +8,7 @@ import {
   BottomBar,
   BottomBarTransition,
   BottomBarInner,
-} from '@workspace/ui-kit';
-import { miniApp, useSignal } from '@tma.js/sdk-vue';
+} from '@tma.js/vue-kit';
 
 const props = defineProps<{
   action?: 'retry' | 'redirect' | 'redirecting';

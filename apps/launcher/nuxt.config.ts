@@ -34,7 +34,7 @@ export default defineNuxtConfig({
   appId: 'launcher',
   css: [
     resolve('app/assets/global.scss'),
-    '@workspace/ui-kit/styles',
+    '@tma.js/vue-kit/styles',
   ],
   components: [{
     path: resolve('app/components'),
