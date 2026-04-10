@@ -1,18 +1,12 @@
-import {
+export {
+  type AnyEither,
   camelToKebab,
-  createProviderTuple,
+  createProvider,
   formatNumber,
   throwify,
   throwifyAnyEither,
 } from '@workspace/utils';
 
-export {
-  camelToKebab,
-  createProviderTuple,
-  formatNumber,
-  throwify,
-  throwifyAnyEither,
-};
 export {
   bem,
   createReversibleTransition,
