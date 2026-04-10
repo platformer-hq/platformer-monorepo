@@ -6,30 +6,26 @@
         "^build"
       ]
     },
-    "build-icons": {
-      "cache": true
-    },
-    "check-types": {
+    "@tma.js/vue-kit#build": {
       "dependsOn": [
-        "^check-types"
+        "^build"
+      ],
+      "outputs": [
+        "dist/**"
       ]
     },
-    "dev": {
-      "persistent": true,
-      "cache": false
-    },
-    "admin#dev": {
+    "@workspace/admin#dev": {
       "persistent": true,
       "cache": false,
       "dependsOn": [
-        "vue-kit:build"
+        "@tma.js/vue-kit#build"
       ]
     },
-    "launcher#dev": {
+    "@workspace/launcher#dev": {
       "persistent": true,
       "cache": false,
       "dependsOn": [
-        "vue-kit:build"
+        "@tma.js/vue-kit#build"
       ]
     }
   }
