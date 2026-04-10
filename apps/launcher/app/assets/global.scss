@@ -1,18 +1,17 @@
 :root {
   // For each inset type, declare CSS variables.
   @each $inset-type in ("top", "left", "right", "bottom") {
-    --sum-inset-#{$inset-type}: calc(var(--safe-area-inset-#{$inset-type}, 0px) + var(--content-safe-area-inset-#{$inset-type}, 0px));
+    --tg-viewport-sum-inset-#{$inset-type}: calc(var(--tg-viewport-safe-area-inset-#{$inset-type}, 0px) + var(--tg-viewport-content-safe-area-inset-#{$inset-type}, 0px));
   }
 
   // Palette fallbacks.
-  @each $key, $fallback in (
-    "section-bg-color": "bg-color",
+  @each $key, $fallback in ("section-bg-color": "bg-color",
     "accent-text-color": "link-color",
     "subtitle-text-color": "hint-color",
     "section-header-text-color": "hint-color",
     "destructive-text-color": "text-destructive-color",
   ) {
-    --#{$key}: var(--#{$fallback});
+    --tg-theme-#{$key}: var(--tg-theme-#{$fallback});
   }
 }
 
@@ -21,8 +20,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   padding: 0;
   margin: 0;
-  color: var(--text-color, white);
-  background: var(--app-bg-color);
+  color: var(--tg-theme-text-color, white);
+  background: var(--tg-app-bg-color);
   overflow: hidden;
 }
 

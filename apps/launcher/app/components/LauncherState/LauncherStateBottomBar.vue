@@ -100,8 +100,8 @@ const isDark = useSignal(miniApp.isDark);
 <style lang="scss">
 .launcher-state-bottom-bar {
   &__button {
-    background-color: var(--button-color);
-    color: var(--button-text-color);
+    background-color: var(--tg-theme-button-color);
+    color: var(--tg-theme-button-text-color);
     display: none;
     @each $platform in ("ios", "android") {
       [data-platform="#{$platform}"] & {
@@ -112,7 +112,7 @@ const isDark = useSignal(miniApp.isDark);
     }
 
     &--disabled {
-      color: var(--text-color);
+      color: var(--tg-theme-text-color);
     }
 
     &--disabled-dark {

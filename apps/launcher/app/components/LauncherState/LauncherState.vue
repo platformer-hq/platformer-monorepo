@@ -286,10 +286,10 @@ const handleRedirect = () => {
   text-align: center;
   background: var(--bg-color);
   padding:
-    var(--sum-inset-top)
-    var(--sum-inset-right)
+    var(--tg-viewport-sum-inset-top)
+    var(--tg-viewport-sum-inset-right)
     0
-    var(--sum-inset-left);
+    var(--tg-viewport-sum-inset-left);
 
   &__body {
     display: flex;
@@ -326,8 +326,8 @@ const handleRedirect = () => {
   }
 
   &__disclaimer {
-    color: var(--hint-color);
-    padding-bottom: calc(var(--sum-inset-bottom) + 12px);
+    color: var(--tg-theme-hint-color);
+    padding-bottom: calc(var(--tg-viewport-sum-inset-bottom) + 12px);
     transition: 200ms ease-out;
 
     &--bottom-bar-shown {
@@ -337,7 +337,7 @@ const handleRedirect = () => {
 
   &__disclaimer-link {
     text-decoration: none;
-    color: var(--link-color);
+    color: var(--tg-theme-link-color);
     font-weight: 500;
   }
 }
