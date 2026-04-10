@@ -1,10 +1,3 @@
-import { isPageReload } from '@workspace/navigation';
-import {
-  formatMiniAppCssVar,
-  formatThemeParamsCssVar,
-  formatViewportCssVar,
-  interceptBrokenEvents,
-} from '@workspace/tma';
 import {
   applyPolyfills,
   setDebug,
@@ -17,6 +10,13 @@ import {
   miniApp,
   retrieveLaunchParams,
 } from '@tma.js/sdk-vue';
+import { isPageReload } from '@workspace/navigation';
+import {
+  formatMiniAppCssVar,
+  formatThemeParamsCssVar,
+  formatViewportCssVar,
+  interceptBrokenEvents,
+} from '@workspace/tma';
 
 export default defineNuxtPlugin({
   name: 'init',
