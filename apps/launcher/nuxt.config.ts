@@ -34,7 +34,7 @@ export default defineNuxtConfig({
   appId: 'launcher',
   css: [
     resolve('app/assets/global.scss'),
-    '@tma.js/vue-kit/styles',
+    '@tma.js/vue-kit/index.css',
   ],
   components: [{
     path: resolve('app/components'),
@@ -71,6 +71,16 @@ export default defineNuxtConfig({
   vite: {
     build: {
       target: browserslistToEsbuild(),
+    },
+    optimizeDeps: {
+      include: [
+        '@tma.js/sdk-vue',
+        'eruda',
+        'valibot',
+        'fp-ts',
+        '@vueuse/core',
+        'error-kid',
+      ],
     },
     plugins: [
       iifeUrlPlugin(),

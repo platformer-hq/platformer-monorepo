@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { KnownHtmlTag } from '@tma.js/vue-kit';
+import { bem, type KnownHtmlTag } from '@tma.js/vue-kit';
 
 const { as = 'p' } = defineProps<{
   /**

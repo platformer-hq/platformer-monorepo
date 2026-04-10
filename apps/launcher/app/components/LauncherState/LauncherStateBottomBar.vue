@@ -8,6 +8,9 @@ import {
   BottomBar,
   BottomBarTransition,
   BottomBarInner,
+  bem,
+  createReversibleTransition,
+  reverseTransitionKeyframesIfLeave,
 } from '@tma.js/vue-kit';
 
 const props = defineProps<{

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { openTelegramLink } from '@tma.js/sdk-vue';
+import { bem, createReversibleTransition } from '@tma.js/vue-kit';
 import type * as v from 'valibot';
 
 import platformerLogoSrc from '@/assets/platformer-logo.svg?url';
