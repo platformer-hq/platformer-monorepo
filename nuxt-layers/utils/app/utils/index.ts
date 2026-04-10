@@ -17,4 +17,5 @@ export {
   bem,
   createReversibleTransition,
   reverseTransitionKeyframesIfLeave,
+  toPx,
 } from '@tma.js/vue-kit';
