@@ -59,7 +59,7 @@ defineSlots<{
 }>();
 const emit = defineEmits<{ back: [] }>();
 
-const { b, e } = bem('page-root');
+const { b, e } = bem('tgui-page-root');
 const rootRef = useTemplateRef('root');
 
 //#region Back button adjustments.
@@ -166,7 +166,7 @@ defineExpose({ element: rootRef });
 </template>
 
 <style lang="scss">
-.page-root {
+.tgui-page-root {
   height: 100vh;
   width: 100vw;
   overflow: hidden auto;
