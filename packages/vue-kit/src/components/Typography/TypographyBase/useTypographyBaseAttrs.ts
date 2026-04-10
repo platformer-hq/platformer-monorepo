@@ -8,7 +8,7 @@ import {
 
 import { bem } from '@/utils/bem';
 
-import './TypographyBase.scss';
+import './typograhy-base.scss';
 
 export type UseTypographyBaseAttrsAlign = 'left' | 'right' | 'center';
 
