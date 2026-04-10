@@ -1,8 +1,8 @@
-import { createProviderTuple } from '@workspace/utils';
+import { createProvider } from '@workspace/utils';
 import type { ComputedRef } from 'vue';
 
 export type RoutingDirection = 'initial' | 'forward' | 'backward';
 
-export const [provideRoutingState, injectRoutingState] = createProviderTuple<{
+export const { provide: provideRoutingState, inject: injectRoutingState } = createProvider<{
   direction: ComputedRef<RoutingDirection>;
 }>();
