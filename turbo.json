@@ -18,6 +18,13 @@
       "persistent": true,
       "cache": false
     },
+    "admin#dev": {
+      "persistent": true,
+      "cache": false,
+      "dependsOn": [
+        "vue-kit:build"
+      ]
+    },
     "launcher#dev": {
       "persistent": true,
       "cache": false,
