@@ -30,7 +30,6 @@ export default defineNuxtConfig({
   appId: 'launcher',
   css: [
     resolve('app/assets/global.scss'),
-    '@tma.js/vue-kit/index.css',
   ],
   components: [{
     path: resolve('app/components'),

@@ -1,3 +1,5 @@
+@use "@tma.js/vue-kit/index.css";
+
 :root {
   // For each inset type, declare CSS variables.
   @each $inset-type in ("top", "left", "right", "bottom") {
