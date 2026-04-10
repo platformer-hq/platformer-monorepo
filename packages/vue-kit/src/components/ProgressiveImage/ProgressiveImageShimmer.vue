@@ -7,11 +7,11 @@ defineProps<ProgressiveImageShimmerProps>();
 </script>
 
 <template>
-  <ShimmerBox v-bind="$props" class="progressive-image-shimmer"/>
+  <ShimmerBox v-bind="$props" class="tgui-progressive-image-shimmer"/>
 </template>
 
 <style>
-.progressive-image-shimmer {
+.tgui-progressive-image-shimmer {
   position: absolute;
   inset: 0;
   width: 100%;

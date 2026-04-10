@@ -33,7 +33,7 @@ const state = store.track(formattedSource);
 </script>
 
 <template>
-  <div class="progressive-image" :style="{width: toPx(width), height: toPx(height)}">
+  <div class="tgui-progressive-image" :style="{width: toPx(width), height: toPx(height)}">
     <slot
       v-bind="formattedSource"
       :state="state"
@@ -47,7 +47,7 @@ const state = store.track(formattedSource);
 </template>
 
 <style>
-.progressive-image {
+.tgui-progressive-image {
   position: relative;
 }
 </style>

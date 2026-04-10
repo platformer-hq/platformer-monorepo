@@ -16,7 +16,7 @@ const { fit = 'contain', position = 'center', show = true } = defineProps<{
   show?: boolean;
 }>();
 
-const { b } = bem('progressive-image-element');
+const { b } = bem('tgui-progressive-image-element');
 </script>
 
 <template>
@@ -24,7 +24,7 @@ const { b } = bem('progressive-image-element');
 </template>
 
 <style lang="scss">
-.progressive-image-element {
+.tgui-progressive-image-element {
   position: absolute;
   inset: 0;
   -webkit-touch-callout: none;
