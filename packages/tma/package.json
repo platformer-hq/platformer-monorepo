@@ -6,8 +6,10 @@
   "main": "src/index.ts",
   "license": "ISC",
   "dependencies": {
-    "@tma.js/sdk-vue": "^1.0.18",
     "@workspace/tsconfigs": "workspace:*",
     "@workspace/utils": "workspace:*"
+  },
+  "peerDependencies": {
+    "@tma.js/sdk-vue": "^1.0.0"
   }
 }

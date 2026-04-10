@@ -25,7 +25,7 @@ export default defineConfig({
       fileName: 'index',
     },
     rollupOptions: {
-      external: ['vue', 'pinia', '@vueuse/core', 'vue-router'],
+      external: ['vue', 'pinia', '@vueuse/core', '@tma.js/sdk-vue'],
       output: {
         globals: { vue: 'Vue', pinia: 'Pinia' },
         entryFileNames: '[name].js',
