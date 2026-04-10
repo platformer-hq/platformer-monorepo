@@ -17,6 +17,13 @@
     "dev": {
       "persistent": true,
       "cache": false
+    },
+    "launcher#dev": {
+      "persistent": true,
+      "cache": false,
+      "dependsOn": [
+        "vue-kit:build"
+      ]
     }
   }
 }
