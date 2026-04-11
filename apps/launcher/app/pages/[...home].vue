@@ -75,10 +75,6 @@ onErrorCaptured(error => {
   state.value = { kind: 'unknown-error', error };
   return false;
 });
-
-setTimeout(() => {
-  state.value = { kind: 'ready' };
-}, 3000);
 </script>
 
 <template>

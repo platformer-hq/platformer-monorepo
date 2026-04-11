@@ -1,12 +1,8 @@
 <script setup lang="ts">
-import { openTelegramLink } from '@tma.js/sdk-vue';
 import { bem, createReversibleTransition } from '@tma.js/vue-kit';
-import { useMounted } from '@vueuse/core';
 import type * as v from 'valibot';
 
 import platformerLogoSrc from '@/assets/platformer-logo.svg?url';
-
-import { Translation } from '#i18n';
 
 export type LauncherStateState = (
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -50,8 +46,6 @@ const { t } = useI18n({
       'appHttpUrl.title': 'HTTP URL detected',
       'appHttpUrl.error.message': 'Due to web restrictions, Platformer doesn\'t support HTTP links in web clients. Try using an HTTPS link or a different client',
       'appHttpUrl.warning.message': 'Due to web restrictions, Platformer doesn\'t support HTTP links, but can redirect you to them.\n\nIn this case Platformer\'s functionality will be unavailable',
-      'disclaimer.base': 'Works on {project}',
-      'disclaimer.project': 'Platformer',
     },
     ru: {
       'appNotFound.title': 'Приложение не найдено',
@@ -74,15 +68,11 @@ const { t } = useI18n({
       'appHttpUrl.error.message': 'Из-за веб-ограничений, Платформер не поддерживает HTTP-ссылки в веб-клиентах. Попробуйте указать HTTPS-ссылку, или использовать другой клиент',
       'appHttpUrl.title': 'Обнаружена HTTP-ссылка',
       'appHttpUrl.warning.message': 'Платформер не поддерживает HTTP-ссылки из-за веб-ограничений, но может перенаправить Вас на них.\n\nВ этом случае функционал Платформера не будет доступен',
-      'disclaimer.base': 'Работает на {project}',
-      'disclaimer.project': 'Платформере',
     },
   },
 });
-const isMounted = useMounted();
 
 const { b, e } = bem('launcher-state');
-const channelLink = 'https://t.me/platformer_hq';
 const contentTransition = createReversibleTransition({
   animatedProperties: {
     maxHeight: ['0px', '260px'],
@@ -205,15 +195,6 @@ const handleRedirect = () => {
     window.location.href = props.state.url;
   }
 };
-const onDisclaimerEnter = (el: Element, done: VoidFunction) => {
-  el
-    .animate({
-      height: ['0px', el.clientHeight + 'px'],
-      opacity: [0, 0, 1],
-    }, { duration: 300, easing: 'ease-out' })
-    .finished
-    .then(done);
-};
 </script>
 
 <template>
@@ -243,25 +224,6 @@ const onDisclaimerEnter = (el: Element, done: VoidFunction) => {
       </Transition>
     </div>
     <ClientOnly>
-      <Transition :css="false" appear @enter="onDisclaimerEnter">
-        <VTypography
-          v-if="isMounted"
-          :class="e('disclaimer', (canRetry || canRedirect || redirecting) && 'bottom-bar-shown')"
-          variant="footnote"
-        >
-          <Translation keypath="disclaimer.base">
-            <template #project>
-              <a
-                :class="e('disclaimer-link')"
-                :href="channelLink"
-                @click.prevent="openTelegramLink(channelLink)"
-              >
-                {{ t('disclaimer.project') }}
-              </a>
-            </template>
-          </Translation>
-        </VTypography>
-      </Transition>
       <LauncherStateBottomBar
         :action="redirecting
           ? 'redirecting'
@@ -315,22 +277,6 @@ const onDisclaimerEnter = (el: Element, done: VoidFunction) => {
   &__content {
     text-align: center;
     text-wrap: balance;
-  }
-
-  &__disclaimer {
-    color: var(--tg-theme-hint-color);
-    padding-bottom: calc(var(--tg-viewport-sum-inset-bottom) + 12px);
-    transition: 200ms ease-out;
-
-    &--bottom-bar-shown {
-      padding-bottom: 0;
-    }
-  }
-
-  &__disclaimer-link {
-    text-decoration: none;
-    color: var(--tg-theme-link-color);
-    font-weight: 500;
   }
 }
 </style>
