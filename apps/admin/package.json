@@ -27,6 +27,7 @@
     "fp-ts": "^2.16.11",
     "graphql-request": "^7.4.0",
     "nuxt": "^4.4.2",
+    "pinia": "^3.0.4",
     "valibot": "^1.2.0",
     "vue": "^3.5.28",
     "vue-component-type-helpers": "^3.2.5",
