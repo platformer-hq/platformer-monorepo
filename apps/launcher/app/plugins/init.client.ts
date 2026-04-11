@@ -21,6 +21,8 @@ import {
 export default defineNuxtPlugin({
   name: 'init',
   async setup(app) {
+    const route = useRoute();
+
     // Apply polyfills for @tma.js/sdk-vue.
     applyPolyfills();
 
@@ -94,7 +96,7 @@ export default defineNuxtPlugin({
 
     // Remove the hash part.
     if (!isPageReload()) {
-      await navigateTo({ replace: true });
+      await navigateTo({ query: route.query, replace: true });
     }
     return {
       provide: {
