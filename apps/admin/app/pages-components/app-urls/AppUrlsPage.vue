@@ -107,8 +107,20 @@ const { mutate: updateUrls, isLoading: isUpdatingUrls } = useMutation({
 
 const isSingleUrl = ref(false);
 const singleUrl = ref('');
-const urls = ref<{ [platformId: number]: string }>({});
+const platformUrls = ref<{ [platformId: number]: string }>({});
 
+const urls = computed<{ [platformId: number]: string }>(() => {
+  if (isSingleUrl.value) {
+    if (!pageData.value) {
+      return {};
+    }
+    return pageData.value.platforms.reduce<Record<number, string>>((acc, platform) => {
+      acc[platform.id] = singleUrl.value;
+      return acc;
+    }, {});
+  }
+  return platformUrls.value;
+});
 const vendors = computed(() => {
   return pageData.value
     ? pageData.value.platforms.reduce<{
@@ -136,17 +148,12 @@ const controlsEnabled = computed(() => (
   && pageData.value.app?.role !== 'member'
 ));
 const showWarning = computed(() => (
-  isSingleUrl.value
-    ? singleUrl.value.trim().startsWith('http:')
-    : Object.values(urls.value).some(v => v.trim().startsWith('http:'))
+  Object.values(urls.value).some(v => v.trim().startsWith('http:'))
 ));
 const isDirty = computed(() => {
   const dataUrls = pageData.value?.app?.urls;
   if (!dataUrls) {
     return false;
-  }
-  if (isSingleUrl.value) {
-    return dataUrls.some(u => u.url !== singleUrl.value);
   }
   return Object.entries(urls.value).some(([platformId, url]) => {
     const platformIdNum = parseInt(platformId);
@@ -155,14 +162,13 @@ const isDirty = computed(() => {
   });
 });
 const invalidUrl = computed(() => {
-  if (isSingleUrl.value) {
-    return isValidUrl(singleUrl.value) ? undefined : { kind: 'single' as const };
-  }
   for (const platformId in urls.value) {
     if (!isValidUrl(urls.value[platformId]!)) {
       const platform = pageData.value?.platforms.find(p => p.id === Number(platformId));
       if (platform) {
-        return { kind: 'platform', platform: platform.title };
+        return isSingleUrl.value
+          ? { kind: 'single' as const }
+          : { kind: 'platform' as const, platform: platform.title };
       }
     }
   }
@@ -194,7 +200,7 @@ watch(pageData, data => {
   const single = urlsOnly.every(u => (u || '') === (urlsOnly[0] || ''));
   isSingleUrl.value = single;
   singleUrl.value = (single ? urlsOnly[0] : undefined) || '';
-  urls.value = dataUrls.reduce<Record<number, string>>((acc, item) => {
+  platformUrls.value = dataUrls.reduce<Record<number, string>>((acc, item) => {
     acc[item.platformId] = item.url;
     return acc;
   }, {});
@@ -286,10 +292,9 @@ onMounted(() => {
                   <template #bodyLeftInput>
                     <AutoListItemBodyLeftInput>
                       <AutoListItemBodyLeftInputElement
-                        :model-value="urls[item.id]"
+                        v-model.trim="platformUrls[item.id]"
                         :placeholder="t('singleUrl.placeholder')"
                         :disabled="!controlsEnabled"
-                        @update:model-value="urls[item.id] = $event?.trim() || ''"
                       />
                     </AutoListItemBodyLeftInput>
                   </template>
