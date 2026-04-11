@@ -27,6 +27,22 @@
       "dependsOn": [
         "@tma.js/vue-kit#build"
       ]
+    },
+    "@workspace/admin#build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        ".output/**"
+      ]
+    },
+    "@workspace/launcher#build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        ".output/**"
+      ]
     }
   }
 }
