@@ -100,10 +100,7 @@ onErrorCaptured(error => {
       :fallback-url="launcherOptions.fallbackUrl
         ? appendLaunchParams(launcherOptions.fallbackUrl, launchParamsRaw)
         : undefined"
-      @ready="
-        state = {kind: 'ready'};
-        hapticFeedback.notificationOccurred.ifAvailable('success');
-      "
+      @ready="state = {kind: 'ready'}"
       @api-timeout="
         state = {kind: 'api-timeout', timeout: $event.timeout};
         hapticError();
