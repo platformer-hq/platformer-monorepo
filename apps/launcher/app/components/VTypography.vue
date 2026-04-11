@@ -11,10 +11,11 @@ const { as = 'p' } = defineProps<{
 }>();
 
 const { b } = bem('v-typography');
+const { $init: { platform } } = useNuxtApp();
 </script>
 
 <template>
-  <component :is="as" :class="b(variant, weight)">
+  <component :is="as" :class="b(variant, weight, platform)">
     <slot/>
   </component>
 </template>
@@ -49,11 +50,11 @@ const { b } = bem('v-typography');
     font-weight: 600;
   }
 
-  [data-platform="ios"] & {
+  &--ios {
     font-family: -apple-system, 'SF Pro', BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
   }
 
-  [data-platform="android"] & {
+  &--android {
     font-family: Roboto, "Segoe UI", "Helvetica Neue", sans-serif;
   }
 }

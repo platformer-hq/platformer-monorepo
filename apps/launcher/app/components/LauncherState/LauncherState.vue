@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { openTelegramLink } from '@tma.js/sdk-vue';
 import { bem, createReversibleTransition } from '@tma.js/vue-kit';
+import { useMounted } from '@vueuse/core';
 import type * as v from 'valibot';
 
 import platformerLogoSrc from '@/assets/platformer-logo.svg?url';
@@ -20,6 +21,7 @@ export type LauncherStateState = (
   | { kind: 'app-http-url'; type: 'error' | 'warning'; url: string }
   | { kind: 'api-error'; error: Error }
   | { kind: 'api-timeout'; timeout: number }
+  | { kind: 'initial' }
 );
 
 const props = defineProps<{ state: LauncherStateState }>();
@@ -77,15 +79,15 @@ const { t } = useI18n({
     },
   },
 });
+const isMounted = useMounted();
 
 const { b, e } = bem('launcher-state');
-const locales = ['ru', 'en'] as const;
 const channelLink = 'https://t.me/platformer_hq';
 const contentTransition = createReversibleTransition({
   animatedProperties: {
-    maxHeight: ['130px', '260px'],
+    maxHeight: ['0px', '260px'],
     opacity: [0, 1],
-    transform: ['scale(0.95)', 'scale(1)'],
+    transform: ['scale(0.95)', 'scale(1.05)', 'scale(1)'],
   },
   animationOptions: { duration: 300, easing: 'ease-out' },
 });
@@ -101,6 +103,7 @@ const icon = computed<'loading' | 'warning' | 'error' | undefined>(() => {
       return state.type;
     case 'app-not-found':
     case 'app-device-inaccessible':
+    case 'initial':
       return;
     default:
       return 'error';
@@ -123,71 +126,67 @@ const canRedirect = computed(() => {
   return props.state.kind === 'app-http-url' && props.state.type === 'warning';
 });
 const texts = computed<
-  | ({ kind: 'locale-dependent'; titleKey: string } & ({ messageKey: string } | { message: string }))
   | { kind: 'static'; title: string; message: string }
   | { kind: 'server-error'; title: string; message: string; code?: string }
+  | { kind: 'none' }
 >(() => {
   const { state } = props;
-
-  if (state.kind === 'loading') {
-    return {
-      kind: 'locale-dependent',
-      titleKey: 'loading.title',
-      messageKey: state.step === 'waiting-load'
-        ? 'loading.waitingLoad.message'
-        : 'loading.gettingData.message',
-    };
-  }
-  if (state.kind === 'config-invalid') {
-    return {
-      kind: 'locale-dependent',
-      titleKey: 'configInvalid.title',
-      message: state.error.message,
-    };
-  }
-  if (state.kind === 'api-error') {
-    return {
-      kind: 'server-error',
-      title: t('defaultErrorTitle'),
-      message: ApiError.is(state.error)
-        ? t('apiError.known.message', { message: state.error.data.message })
-        : t('apiError.unknown.message', { error: state.error.message }),
-      code: ApiError.is(state.error) ? state.error.data.code : undefined,
-    };
-  }
   let title: string;
   let message: string;
-  if (state.kind === 'app-http-url') {
-    title = t('appHttpUrl.title');
-    message = state.type === 'error'
-      ? t('appHttpUrl.error.message')
-      : t('appHttpUrl.warning.message');
-  } else if (
-    state.kind === 'app-device-inaccessible'
-    || state.kind === 'app-not-found'
-    || state.kind === 'init-data-missing'
-    || state.kind === 'api-timeout'
-    || state.kind === 'app-timeout'
-    || state.kind === 'app-error'
-  ) {
-    [title, message] = ({
-      'app-device-inaccessible': [
-        t('appDeviceInaccessible.title'),
-        t('appDeviceInaccessible.message'),
-      ],
-      'app-not-found': [t('appNotFound.title'), t('appNotFound.message')],
-      'app-timeout': [t('defaultErrorTitle'), t('appTimeout.message')],
-      'app-error': [t('defaultErrorTitle'), t('appError.message')],
-      'init-data-missing': [t('initDataMissing.title'), t('initDataMissing.message')],
-      'api-timeout': [t('defaultErrorTitle'), t('apiTimeout.message')],
-    } as const)[state.kind];
-  } else {
-    title = t('defaultErrorTitle');
-    message = t('defaultErrorMessage', {
-      error: state.error.cause instanceof Error
-        ? `: ${state.error.cause.message}`
-        : '',
-    });
+
+  switch (state.kind) {
+    case 'initial':
+      return { kind: 'none' };
+    case 'api-error':
+      return {
+        kind: 'server-error',
+        title: t('defaultErrorTitle'),
+        message: ApiError.is(state.error)
+          ? t('apiError.known.message', { message: state.error.data.message })
+          : t('apiError.unknown.message', { error: state.error.message }),
+        code: ApiError.is(state.error) ? state.error.data.code : undefined,
+      };
+    case 'loading':
+      title = t('loading.title');
+      message = t(state.step === 'waiting-load'
+        ? 'loading.waitingLoad.message'
+        : 'loading.gettingData.message');
+      break;
+    case 'config-invalid':
+      title = t('configInvalid.title');
+      message = state.error.message;
+      break;
+    case 'app-http-url':
+      title = t('appHttpUrl.title');
+      message = state.type === 'error'
+        ? t('appHttpUrl.error.message')
+        : t('appHttpUrl.warning.message');
+      break;
+    case 'app-device-inaccessible':
+    case 'app-not-found':
+    case 'init-data-missing':
+    case 'api-timeout':
+    case 'app-timeout':
+    case 'app-error':
+      [title, message] = ({
+        'app-device-inaccessible': [
+          t('appDeviceInaccessible.title'),
+          t('appDeviceInaccessible.message'),
+        ],
+        'app-not-found': [t('appNotFound.title'), t('appNotFound.message')],
+        'app-timeout': [t('defaultErrorTitle'), t('appTimeout.message')],
+        'app-error': [t('defaultErrorTitle'), t('appError.message')],
+        'init-data-missing': [t('initDataMissing.title'), t('initDataMissing.message')],
+        'api-timeout': [t('defaultErrorTitle'), t('apiTimeout.message')],
+      } as const)[state.kind];
+      break;
+    default:
+      title = t('defaultErrorTitle');
+      message = t('defaultErrorMessage', {
+        error: state.error.cause instanceof Error
+          ? `: ${state.error.cause.message}`
+          : '',
+      });
   }
   return { kind: 'static', title, message };
 });
@@ -206,6 +205,15 @@ const handleRedirect = () => {
     window.location.href = props.state.url;
   }
 };
+const onDisclaimerEnter = (el: Element, done: VoidFunction) => {
+  el
+    .animate({
+      height: ['0px', el.clientHeight + 'px'],
+      opacity: [0, 0, 1],
+    }, { duration: 300, easing: 'ease-out' })
+    .finished
+    .then(done);
+};
 </script>
 
 <template>
@@ -213,23 +221,13 @@ const handleRedirect = () => {
     <div :class="e('body')">
       <div :class="e('logo')">
         <img :src="platformerLogoSrc" :class="e('image')" :width="80" :height="80">
-        <LauncherStateStatusIcon v-if="icon" :status="icon"/>
+        <ClientOnly>
+          <LauncherStateStatusIcon :status="icon"/>
+        </ClientOnly>
       </div>
       <Transition v-bind="contentTransition" :css="false" mode="out-in" appear>
         <div :key="contentKey" :class="e('content')">
-          <template v-if="texts.kind === 'locale-dependent'">
-            <template v-for="locale in locales" :key="locale">
-              <div :class="e('locale-dependent', locale)" :locale="locale">
-                <LauncherStateTitle>
-                  {{ t(texts.titleKey || 'defaultErrorTitle', {}, { locale }) }}
-                </LauncherStateTitle>
-                <LauncherStateMessage>
-                  {{ 'messageKey' in texts ? t(texts.messageKey, {}, { locale }) : texts.message }}
-                </LauncherStateMessage>
-              </div>
-            </template>
-          </template>
-          <template v-else-if="texts.kind === 'static' || texts.kind === 'server-error'">
+          <template v-if="texts.kind !== 'none'">
             <LauncherStateTitle>
               {{ texts.title }}
             </LauncherStateTitle>
@@ -244,38 +242,38 @@ const handleRedirect = () => {
         </div>
       </Transition>
     </div>
-    <VTypography
-      v-for="locale in locales"
-      :key="locale"
-      :class="[
-        e('disclaimer', (canRetry || canRedirect || redirecting) && 'bottom-bar-shown'),
-        e('locale-dependent', locale)
-      ]"
-      variant="footnote"
-    >
-      <Translation keypath="disclaimer.base" :locale="locale">
-        <template #project>
-          <a
-            :class="e('disclaimer-link')"
-            :href="channelLink"
-            @click.prevent="openTelegramLink(channelLink)"
-          >
-            {{ t('disclaimer.project', {}, { locale }) }}
-          </a>
-        </template>
-      </Translation>
-    </VTypography>
-    <LauncherStateBottomBar
-      :action="redirecting
-        ? 'redirecting'
-        : canRetry
-          ? 'retry'
-          : canRedirect
-            ? 'redirect'
-            : undefined"
-      @redirect="handleRedirect"
-      @retry="$emit('retry')"
-    />
+    <ClientOnly>
+      <Transition :css="false" appear @enter="onDisclaimerEnter">
+        <VTypography
+          v-if="isMounted"
+          :class="e('disclaimer', (canRetry || canRedirect || redirecting) && 'bottom-bar-shown')"
+          variant="footnote"
+        >
+          <Translation keypath="disclaimer.base">
+            <template #project>
+              <a
+                :class="e('disclaimer-link')"
+                :href="channelLink"
+                @click.prevent="openTelegramLink(channelLink)"
+              >
+                {{ t('disclaimer.project') }}
+              </a>
+            </template>
+          </Translation>
+        </VTypography>
+      </Transition>
+      <LauncherStateBottomBar
+        :action="redirecting
+          ? 'redirecting'
+          : canRetry
+            ? 'retry'
+            : canRedirect
+              ? 'redirect'
+              : undefined"
+        @redirect="handleRedirect"
+        @retry="$emit('retry')"
+      />
+    </ClientOnly>
   </div>
 </template>
 
@@ -302,17 +300,6 @@ const handleRedirect = () => {
     align-items: center;
     justify-content: center;
     padding-inline: 16px;
-  }
-
-  &__locale-dependent {
-    display: none;
-    @each $locale in ("ru", "en") {
-      [data-locale="#{$locale}"] & {
-        &--#{$locale} {
-          display: block;
-        }
-      }
-    }
   }
 
   &__logo {

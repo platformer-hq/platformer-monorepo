@@ -22,14 +22,7 @@ const launcherOptions = ref<{
   initTimeout: number;
   loadTimeout: number;
 }>();
-const state = ref<LauncherStateState | { kind: 'ready' }>({
-  kind: 'loading',
-  step: 'getting-data',
-});
-// const state = ref<LauncherStateState | { kind: 'ready' }>({
-//   kind: 'warning',
-//   params: { kind: 'http-url' },
-// });
+const state = ref<LauncherStateState | { kind: 'ready' }>({ kind: 'initial' });
 
 const onLauncherPageLeave = (el: Element, done: () => void) => {
   return el
@@ -49,7 +42,7 @@ const hapticError = () => hapticFeedback.notificationOccurred.ifAvailable('error
 
 if (import.meta.client) {
   const route = useRoute();
-  
+
   onMounted(() => {
     fp.function.pipe(
       fp.either.Do,
@@ -99,7 +92,7 @@ onErrorCaptured(error => {
         launcherOptions
         && initDataRaw
         && launchParamsRaw
-        && (state.kind === 'ready' || state.kind === 'loading')
+        && (state.kind === 'ready' || state.kind === 'loading' || state.kind === 'initial')
       "
       v-bind="launcherOptions"
       :init-data-raw
@@ -107,7 +100,10 @@ onErrorCaptured(error => {
       :fallback-url="launcherOptions.fallbackUrl
         ? appendLaunchParams(launcherOptions.fallbackUrl, launchParamsRaw)
         : undefined"
-      @ready="state = {kind: 'ready'}"
+      @ready="
+        state = {kind: 'ready'};
+        hapticFeedback.notificationOccurred.ifAvailable('success');
+      "
       @api-timeout="
         state = {kind: 'api-timeout', timeout: $event.timeout};
         hapticError();
@@ -122,10 +118,8 @@ onErrorCaptured(error => {
           hapticError();
         }
       "
-      @app-data-retrieved="
-        state = {kind: 'loading', step: 'waiting-load'};
-        hapticError();
-      "
+      @app-data-retrieved="state = {kind: 'loading', step: 'waiting-load'}"
+      @start="state = {kind: 'loading', step: 'getting-data'}"
       @app-device-inaccessible="state = {kind: 'app-device-inaccessible'}"
       @app-not-found="state = {kind: 'app-not-found'}"
       @app-error="

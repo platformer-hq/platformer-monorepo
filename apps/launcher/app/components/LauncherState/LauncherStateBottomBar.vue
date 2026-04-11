@@ -37,10 +37,6 @@ const { t } = useI18n({
 });
 
 const { e } = bem('launcher-state-bottom-bar');
-const buttons = [
-  { os: 'ios', component: ButtonIos, indicator: LoadingIndicatorIos },
-  { os: 'android', component: ButtonAndroid, indicator: LoadingIndicatorAndroid },
-] as const;
 
 const loadingIndicatorTransition = createReversibleTransition({
   animatedProperties({ transition, el }) {
@@ -56,6 +52,7 @@ const loadingIndicatorTransition = createReversibleTransition({
 
 const isButtonEnabled = computed(() => props.action !== 'redirecting');
 const isDark = useSignal(miniApp.isDark);
+const { $init: { platform } } = useNuxtApp();
 </script>
 
 <template>
@@ -63,12 +60,9 @@ const isDark = useSignal(miniApp.isDark);
     <BottomBar v-if="action">
       <BottomBarInner>
         <component
-          :is="button.component"
-          v-for="button in buttons"
-          :key="button.os"
+          :is="platform === 'android' ? ButtonAndroid : ButtonIos"
           :class="e(
             'button',
-            button.os,
             {disabled: !isButtonEnabled},
             !isButtonEnabled && `disabled-${isDark ? 'dark' : 'light'}`
           )"
@@ -86,7 +80,7 @@ const isDark = useSignal(miniApp.isDark);
           </VTypography>
           <Transition v-bind="loadingIndicatorTransition" :css="false">
             <component
-              :is="button.indicator"
+              :is="platform === 'android' ? LoadingIndicatorAndroid : LoadingIndicatorIos"
               v-if="action === 'redirecting'"
               :size="20"
             />
@@ -102,14 +96,6 @@ const isDark = useSignal(miniApp.isDark);
   &__button {
     background-color: var(--tg-theme-button-color);
     color: var(--tg-theme-button-text-color);
-    display: none;
-    @each $platform in ("ios", "android") {
-      [data-platform="#{$platform}"] & {
-        &--#{$platform} {
-          display: flex;
-        }
-      }
-    }
 
     &--disabled {
       color: var(--tg-theme-text-color);

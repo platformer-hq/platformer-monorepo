@@ -18,6 +18,7 @@ const emit = defineEmits<{
   apiError: [{ error: Error }];
   apiTimeout: [{ timeout: number }];
   appHttpUrl: [{ url: string; type: 'error' | 'warning' }];
+  start: [];
   appDataRetrieved: [];
   appDeviceInaccessible: [];
   appNotFound: [];
@@ -107,6 +108,12 @@ watch(isPending, isPending => {
     cleanupTimeout();
   }
 });
+
+watch(isPending, (isPending, prevIsPending) => {
+  if (!prevIsPending && isPending) {
+    emit('start');
+  }
+}, { immediate: true });
 
 watch(data, data => {
   if (!data) {

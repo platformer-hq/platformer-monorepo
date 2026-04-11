@@ -1,14 +1,6 @@
 import { postEvent, retrieveLaunchParams } from '@tma.js/sdk-vue';
 
-const { tgWebAppData, tgWebAppPlatform, tgWebAppThemeParams } = retrieveLaunchParams();
-const languageCode = tgWebAppData?.user?.language_code || '';
-
-document.documentElement.dataset['locale'] = ['en', 'ru'].includes(languageCode)
-  ? languageCode
-  : 'en';
-document.documentElement.dataset['platform'] = ['macos', 'ios'].includes(tgWebAppPlatform)
-  ? 'ios'
-  : 'android';
+const { tgWebAppThemeParams } = retrieveLaunchParams();
 
 Object.entries(tgWebAppThemeParams).forEach(([key, value]) => {
   if (value) {

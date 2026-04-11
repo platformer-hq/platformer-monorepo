@@ -102,6 +102,9 @@ export default defineNuxtPlugin({
       provide: {
         init: {
           initialColors,
+          platform: ['macos', 'ios'].includes(tgWebAppPlatform)
+            ? 'ios' as const
+            : 'android' as const,
         },
       },
     };

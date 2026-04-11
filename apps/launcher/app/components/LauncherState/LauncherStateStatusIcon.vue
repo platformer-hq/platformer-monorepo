@@ -9,21 +9,23 @@ import {
 } from '@tma.js/vue-kit';
 
 defineProps<{
-  status: 'error' | 'warning' | 'loading';
+  status?: 'error' | 'warning' | 'loading';
 }>();
-const { b, e } = bem('launcher-state-status-icon');
+const { b } = bem('launcher-state-status-icon');
+
+const { $init: { platform } } = useNuxtApp();
 
 const transition = createReversibleTransition({
   animatedProperties: {
     transform: [0.65, 1.1, 1].map(scale => `translate3d(-75%, -75%, 0) scale(${scale})`),
     opacity: [0, 1],
   },
-  animationOptions: { duration: 200, easing: 'ease-in-out', fill: 'forwards' },
+  animationOptions: { duration: 300, easing: 'ease-in-out', fill: 'forwards' },
 });
 </script>
 
 <template>
-  <Transition v-bind="transition" :css="false" mode="out-in">
+  <Transition v-bind="transition" :css="false" mode="out-in" appear>
     <div v-if="status === 'error'" :class="b('error')">
       <IconXmark28 :size="16"/>
     </div>
@@ -31,8 +33,8 @@ const transition = createReversibleTransition({
       <IconExclamationMarkTriangleFill28 :size="16"/>
     </div>
     <div v-else-if="status === 'loading'" :class="b('loading')">
-      <LoadingIndicatorIos :class="e('loading-indicator', 'ios')" :size="16"/>
-      <LoadingIndicatorAndroid :class="e('loading-indicator', 'android')" :size="16"/>
+      <LoadingIndicatorIos v-if="platform === 'ios'" :size="16"/>
+      <LoadingIndicatorAndroid v-else :size="16"/>
     </div>
   </Transition>
 </template>
@@ -70,17 +72,6 @@ const transition = createReversibleTransition({
   &--loading {
     background: var(--tg-theme-secondary-bg-color);
     color: var(--tg-theme-text-color);
-  }
-
-  &__loading-indicator {
-    display: none;
-    @each $platform in ("ios", "android") {
-      [data-platform="#{$platform}"] & {
-        &--#{$platform} {
-          display: flex;
-        }
-      }
-    }
   }
 }
 </style>
