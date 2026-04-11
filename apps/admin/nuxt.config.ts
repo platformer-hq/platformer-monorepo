@@ -54,18 +54,12 @@ export default defineNuxtConfig({
   appId: 'admin-panel',
   css: [resolve('app/assets/global.scss')],
   components: [
-    higherPriorityComponents(resolve('app/pages-components')),
     higherPriorityComponents(resolve('app/components')),
   ],
   extends: [
     resolveLayer('utils'),
     resolveLayer('navigation'),
   ],
-  imports: {
-    dirs: [
-      resolve('app/pages-components/*/composables/**'),
-    ],
-  },
   i18n: {
     strategy: 'no_prefix',
     locales: [
