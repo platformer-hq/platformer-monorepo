@@ -24,7 +24,7 @@ const { borderRadius = 5, as = 'div' } = defineProps<{
   width?: string | number;
   borderRadius?: string | number;
   margin?: string | number;
-  variant: AutoTypographyVariant;
+  variant?: AutoTypographyVariant;
   display?: string;
 }>();
 
