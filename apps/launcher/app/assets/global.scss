@@ -1,30 +1,15 @@
 @use "@tma.js/vue-kit/index.css";
-
-:root {
-  // For each inset type, declare CSS variables.
-  @each $inset-type in ("top", "left", "right", "bottom") {
-    --tg-viewport-sum-inset-#{$inset-type}: calc(var(--tg-viewport-safe-area-inset-#{$inset-type}, 0px) + var(--tg-viewport-content-safe-area-inset-#{$inset-type}, 0px));
-  }
-
-  // Palette fallbacks.
-  @each $key, $fallback in (
-    "section-bg-color": "bg-color",
-    "accent-text-color": "link-color",
-    "subtitle-text-color": "hint-color",
-    "section-header-text-color": "hint-color",
-    "destructive-text-color": "text-destructive-color",
-  ) {
-    --tg-theme-#{$key}: var(--tg-theme-#{$fallback});
-  }
-}
+@use "./vue-kit-vars.scss";
+@use "./tg-to-local-vars.scss";
+@use "./project-specific-vars.scss";
 
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding: 0;
   margin: 0;
-  color: var(--tg-theme-text-color, white);
-  background: var(--tg-app-bg-color);
+  color: var(--text-color, white);
+  background: var(--app-bg-color);
   overflow: hidden;
 }
 

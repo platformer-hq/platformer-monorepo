@@ -1,0 +1,28 @@
+:root {
+  // For each inset type, declare CSS variables.
+  @each $side in ("top", "left", "right", "bottom") {
+    --sum-inset-#{$side}: calc(var(--safe-area-inset-#{$side}) + var(--content-safe-area-inset-#{$side}));
+  }
+
+  --secondary-accent-color: rgba(var(--accent-text-color-parts), 10%);
+
+  &[data-theme="light"] {
+    --quaternary-fill-bg-color: rgba(116, 116, 128, .08);
+    --tertiary-fill-bg-color: rgba(116, 116, 128, .12);
+    --secondary-fill-bg-color: rgba(118, 118, 128, .16);
+    --button-confirm-color: #2FB250;
+    --text-main-disabled-color: #B9B9BA;
+    --button-main-disabled-color: #E8E8E9;
+    --destructive-opaque-bg-color: rgba(221, 4, 4, 0.1);
+  }
+
+  &[data-theme="dark"] {
+    --quaternary-fill-bg-color: rgba(118, 118, 128, .18);
+    --tertiary-fill-bg-color: rgba(118, 118, 128, .24);
+    --secondary-fill-bg-color: rgba(118, 118, 128, .32);
+    --button-confirm-color: #30D158;
+    --text-main-disabled-color: #606060;
+    --button-main-disabled-color: #2F2F2F;
+    --destructive-opaque-bg-color: rgba(221, 4, 4, 0.19);
+  }
+}

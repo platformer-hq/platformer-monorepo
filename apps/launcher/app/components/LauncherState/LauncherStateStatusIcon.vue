@@ -54,11 +54,11 @@ const transition = createReversibleTransition({
   border-radius: 50%;
   color: white;
   transform: translate3d(-75%, -75%, 0);
-  outline: 3px solid var(--tg-theme-bg-color);
+  outline: 3px solid var(--bg-color);
   outline-offset: -0.5px;
 
   &--error {
-    background: var(--tg-theme-destructive-text-color);
+    background: var(--destructive-text-color);
 
     path {
       stroke-width: 4;
@@ -70,8 +70,8 @@ const transition = createReversibleTransition({
   }
 
   &--loading {
-    background: var(--tg-theme-secondary-bg-color);
-    color: var(--tg-theme-text-color);
+    background: var(--secondary-bg-color);
+    color: var(--text-color);
   }
 }
 </style>

@@ -251,10 +251,10 @@ const handleRedirect = () => {
   text-align: center;
   background: var(--bg-color);
   padding:
-    var(--tg-viewport-sum-inset-top)
-    var(--tg-viewport-sum-inset-right)
+    var(--sum-inset-top)
+    var(--sum-inset-right)
     0
-    var(--tg-viewport-sum-inset-left);
+    var(--sum-inset-left);
 
   &__body {
     display: flex;

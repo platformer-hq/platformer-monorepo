@@ -9,6 +9,6 @@
 
 <style>
 .launcher-state-message {
-  color: var(--tg-theme-subtitle-text-color);
+  color: var(--subtitle-text-color);
 }
 </style>

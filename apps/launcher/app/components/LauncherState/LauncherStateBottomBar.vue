@@ -94,11 +94,11 @@ const { $init: { platform } } = useNuxtApp();
 <style lang="scss">
 .launcher-state-bottom-bar {
   &__button {
-    background-color: var(--tg-theme-button-color);
-    color: var(--tg-theme-button-text-color);
+    background-color: var(--button-color);
+    color: var(--button-text-color);
 
     &--disabled {
-      color: var(--tg-theme-text-color);
+      color: var(--text-color);
     }
 
     &--disabled-dark {

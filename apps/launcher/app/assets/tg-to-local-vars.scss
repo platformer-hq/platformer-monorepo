@@ -1,0 +1,44 @@
+:root {
+  // Colors.
+  @each $name in (
+    "accent-text-color",
+    "bg-color",
+    "bottom-bar-bg-color",
+    "button-color",
+    "button-text-color",
+    "destructive-text-color",
+    "header-bg-color",
+    "hint-color",
+    "link-color",
+    "secondary-bg-color",
+    "section-bg-color",
+    "section-header-text-color",
+    "section-separator-color",
+    "subtitle-text-color",
+    "text-color",
+  ) {
+    --#{$name}: var(--tg-theme-#{$name});
+  }
+  @each $name in (
+    "app-bg-color",
+    "app-bottom-bar-color",
+    "app-header-color",
+  ) {
+    --#{$name}: var(--tg-app-#{$name});
+  }
+  @each $key, $fallback in (
+    "section-bg-color": "bg-color",
+    "accent-text-color": "link-color",
+    "subtitle-text-color": "hint-color",
+    "section-header-text-color": "hint-color",
+    "destructive-text-color": "text-destructive-color",
+  ) {
+    --tg-theme-#{$key}: var(--tg-theme-#{$fallback});
+  }
+
+  // Insets.
+  @each $side in ("top", "left", "right", "bottom") {
+    --safe-area-inset-#{$side}: var(--tg-viewport-safe-area-inset-#{$side}, 0px);
+    --content-safe-area-inset-#{$side}: var(--tg-viewport-content-safe-area-inset-#{$side}, 0px);
+  }
+}
