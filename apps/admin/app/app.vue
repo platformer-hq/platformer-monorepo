@@ -35,7 +35,7 @@ if (import.meta.client) {
   </Head>
   <ClientOnly>
     <NavigationStateProvider>
-      <AppInitializer v-slot="{transition}" @ready="miniApp.ready">
+      <AppInitializer v-slot="{transition}">
         <NuxtPage v-if="apiStore.token" :page-key="route => route.path" :transition="transition"/>
       </AppInitializer>
     </NavigationStateProvider>

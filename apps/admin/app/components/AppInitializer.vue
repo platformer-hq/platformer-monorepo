@@ -20,9 +20,6 @@ import type { TransitionProps } from 'vue';
 defineSlots<{
   default(props: { transition: TransitionProps }): unknown;
 }>();
-const emit = defineEmits<{
-  ready: [];
-}>();
 
 // Apply polyfills for @tma.js/sdk-vue.
 callOnce(applyPolyfills);
@@ -128,10 +125,6 @@ await callOnce(async () => {
     }
   }
   await setLocale(locale || 'en');
-});
-
-onMounted(() => {
-  emit('ready');
 });
 </script>
 
