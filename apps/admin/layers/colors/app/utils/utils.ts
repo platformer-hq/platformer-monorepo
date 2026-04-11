@@ -26,6 +26,8 @@ const knownThemeKeyToSdkKnownThemeKeyMap = {
 } satisfies Record<KnownThemeParamsKey, SdkKnownThemeParamsKey>;
 
 const knownCustomColorKeyMap = {
+  'quaternary-fill-bg': 1,
+  'tertiary-fill-bg': 1,
   'secondary-fill-bg': 1,
   'button-confirm': 1,
   'text-main-disabled': 1,

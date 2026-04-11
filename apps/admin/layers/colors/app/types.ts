@@ -23,6 +23,8 @@ export type KnownMiniAppColorKey = 'app-header' | 'app-bottom-bar' | 'app-bg';
  * List of colors imagined by designer.
  */
 export type KnownCustomColorKey =
+  | 'quaternary-fill-bg'
+  | 'tertiary-fill-bg'
   | 'secondary-fill-bg'
   | 'button-confirm'
   | 'text-main-disabled'

@@ -22,6 +22,8 @@
   --secondary-accent-color: rgba(var(--accent-text-color-parts), 10%);
 
   &[data-theme="light"] {
+    --quaternary-fill-bg-color: rgba(116, 116, 128, .08);
+    --tertiary-fill-bg-color: rgba(116, 116, 128, .12);
     --secondary-fill-bg-color: rgba(118, 118, 128, .16);
     --button-confirm-color: #2FB250;
     --text-main-disabled-color: #B9B9BA;
@@ -30,6 +32,8 @@
   }
 
   &[data-theme="dark"] {
+    --quaternary-fill-bg-color: rgba(118, 118, 128, .18);
+    --tertiary-fill-bg-color: rgba(118, 118, 128, .24);
     --secondary-fill-bg-color: rgba(118, 118, 128, .32);
     --button-confirm-color: #30D158;
     --text-main-disabled-color: #606060;
