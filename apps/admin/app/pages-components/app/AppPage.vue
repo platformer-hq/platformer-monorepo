@@ -168,7 +168,7 @@ onMounted(() => {
         <AppIcon :class="e('icon')"/>
         <AutoTypography
           as="h1"
-          variant="title1"
+          variant="title2"
           :class="e('title')"
           weight="semibold"
         >
