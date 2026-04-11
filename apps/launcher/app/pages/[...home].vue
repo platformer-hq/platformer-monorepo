@@ -15,7 +15,6 @@ useHead({
   }],
 });
 
-const route = useRoute();
 const launcherOptions = ref<{
   appId: number;
   apiBaseUrl: string;
@@ -49,6 +48,8 @@ const launchParamsRaw = ref<string>();
 const hapticError = () => hapticFeedback.notificationOccurred.ifAvailable('error');
 
 if (import.meta.client) {
+  const route = useRoute();
+  
   onMounted(() => {
     fp.function.pipe(
       fp.either.Do,
