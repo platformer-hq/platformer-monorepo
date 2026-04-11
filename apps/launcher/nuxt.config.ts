@@ -75,6 +75,8 @@ export default defineNuxtConfig({
       ],
     },
     plugins: [
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error ABC
       iifeUrlPlugin(),
     ],
     server: {
