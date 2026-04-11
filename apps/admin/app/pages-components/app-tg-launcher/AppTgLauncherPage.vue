@@ -49,7 +49,6 @@ const { mutate: copy } = useMutation({
 });
 
 const appId = useQueryAppId();
-const bottomBar = useTemplateRef('bottom-bar');
 const isPageEntered = useIsCurrentPageEntered();
 const fallbackUrl = ref('');
 const initTimeout = ref('');
@@ -93,7 +92,7 @@ const handleCopy = () => {
 
 <template>
   <PageRoot colors="secondary-bg">
-    <PageContent :style="{paddingBottom: toPx(bottomBar?.height)}">
+    <PageContent>
       <PagePaddings>
         <AutoSection list-bg-color="section-bg">
           <template #header>
@@ -152,7 +151,7 @@ const handleCopy = () => {
     </PageContent>
     <template #bottomBar>
       <BottomBarTransition>
-        <BottomBar v-if="isPageEntered" ref="bottom-bar">
+        <BottomBar v-if="isPageEntered">
           <BottomBarInner>
             <AutoButton
               palette="filled"

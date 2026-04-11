@@ -258,7 +258,7 @@ watch(role, hapticSelectionChanged);
 </template>
 
 <style lang="scss">
-@use "@/domains/styles/mixins";
+@use "@/scss/mixins";
 
 .app-manager-page {
   &__role {

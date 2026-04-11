@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import { PageRoot as UiKitPageRoot, type PageRootProps as UiKitPageRootProps } from '@workspace/ui-kit';
 import type { RGB, KnownThemeParamsKey as RawThemeParamsKey } from '@tma.js/sdk-vue';
+import { PageRoot, type PageRootProps } from '@tma.js/vue-kit';
 import { useScroll } from '@vueuse/core';
 
-import type { KnownThemeParamsKey as SimpleThemeParamsKey } from '~/domains/colors/types';
+import type { KnownThemeParamsKey as SimpleThemeParamsKey } from '#colors/types';
 
 import { useScrollStatesStore } from './useScrollStates';
 
 type RgbOrSimpleThemeParamsKey = RGB | SimpleThemeParamsKey;
 
-interface Props extends Omit<UiKitPageRootProps, 'elasticScroll' | 'colors'> {
+interface Props extends Omit<PageRootProps, 'elasticScroll' | 'colors'> {
   /**
    * List of colors to apply to the mini app UI elements. Passing an object with some keys missing
    * will lead to setting them to a default value.
@@ -43,6 +43,7 @@ defineSlots<{
 
 const rootRef = useTemplateRef('root');
 const platform = useTmaPlatform();
+const router = useRouter();
 
 //#region UI colors adjustments.
 const toRawThemeParamsKey = (value: RgbOrSimpleThemeParamsKey): RGB | RawThemeParamsKey => {
@@ -76,7 +77,7 @@ const route = useRoute();
 const routingDirection = useNavigationDirection();
 const scrollStatesStore = useScrollStatesStore();
 
-const { y: scrollTop } = useScroll(() => rootRef.value?.el);
+const { y: scrollTop } = useScroll(() => rootRef.value?.element);
 watch(() => [scrollTop.value, route.name] as const, ([y, routeName]) => {
   if (routeName) {
     scrollStatesStore.set(routeName, y);
@@ -97,7 +98,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <UiKitPageRoot
+  <PageRoot
     ref="root"
     :insets
     :elastic-scroll="platform.isMappedIos"
@@ -109,10 +110,11 @@ onMounted(() => {
       bottomBar: toRawThemeParamsKey(colorsObject.bottomBar),
     }"
     :style="{background: colorReference(colorsObject.background)}"
+    @back="router.back()"
   >
     <slot/>
     <template #bottomBar>
       <slot name="bottomBar"/>
     </template>
-  </UiKitPageRoot>
+  </PageRoot>
 </template>

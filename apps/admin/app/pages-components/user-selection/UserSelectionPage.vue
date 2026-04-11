@@ -2,7 +2,7 @@
 import { refDebounced } from '@vueuse/core';
 import * as fp from 'fp-ts';
 
-import type { UserSelectionStoreSelectedUser } from '~/stores/useUserSelectionStore';
+import type { UserSelectionStoreSelectedUser } from '#stores/composables/useUserSelectionStore';
 
 import { UserSelectionPageDataDocument } from './operations';
 

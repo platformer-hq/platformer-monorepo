@@ -3,7 +3,7 @@
  * This component is responsible for providing a container with a restricted width, equal to
  * the max possible view content width.
  */
-import type { KnownHtmlTag } from '@workspace/ui-kit';
+import type { KnownHtmlTag } from '@tma.js/vue-kit';
 
 const { as = 'div' } = defineProps<{
   /**
@@ -19,7 +19,7 @@ const { as = 'div' } = defineProps<{
   </component>
 </template>
 
-<style lang="scss">
+<style>
 .page-content {
   max-width: 450px;
   margin: auto;

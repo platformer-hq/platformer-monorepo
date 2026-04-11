@@ -1,7 +1,11 @@
+@use "@tma.js/vue-kit/index.css";
+@use "./vue-kit-vars.scss";
+@use "./tg-theme-to-local-vars.scss";
+
 :root {
   // For each inset type, declare CSS variables.
   @each $inset-type in ("top", "left", "right", "bottom") {
-    --sum-inset-#{$inset-type}: calc(var(--safe-area-inset-#{$inset-type}, 0px) + var(--content-safe-area-inset-#{$inset-type}, 0px));
+    --tg-viewport-sum-inset-#{$inset-type}: calc(var(--tg-viewport-safe-area-inset-#{$inset-type}, 0px) + var(--tg-viewport-content-safe-area-inset-#{$inset-type}, 0px));
   }
 
   // Palette fallbacks.
@@ -12,66 +16,12 @@
     "section-header-text-color": "hint-color",
     "destructive-text-color": "text-destructive-color",
   ) {
-    --#{$key}: var(--#{$fallback});
+    --tg-theme-#{$key}: var(--tg-theme-#{$fallback});
   }
 
   --secondary-accent-color: rgba(var(--accent-text-color-parts), 10%);
 
-  --list-android-item-placeholder-color: var(--subtitle-text-color);
-  --list-android-item-accent-color: var(--link-color);
-  --list-android-item-destructive-color: var(--destructive-text-color);
-  --list-android-item-body-left-subtitle-color: var(--subtitle-text-color);
-  --list-android-item-body-left-input-text-color: var(--text-color);
-  --list-android-item-body-left-input-placeholder-color: var(--hint-color);
-  --list-android-item-body-right-label-color: var(--subtitle-text-color);
-  --list-android-item-body-right-badge-bg: var(--destructive-text-color);
-  --list-android-item-body-right-badge-color: white;
-  --list-android-item-body-right-chevron-color: var(--subtitle-text-color);
-  --list-android-item-body-right-checkmark-color: var(--accent-text-color);
-  --list-android-item-body-right-clear-color: var(--subtitle-text-color);
-  --section-android-header-default-color: var(--section-header-text-color);
-  --section-android-footer-color: var(--subtitle-text-color);
-  --switch-android-bg: var(--hint-color);
-  --switch-android-checked-bg: var(--button-color);
-  --switch-android-knob-color: var(--hint-color);
-  --switch-android-knob-checked-color: var(--button-color);
-  --radio-android-checked-color: var(--button-color);
-  --radio-android-color: var(--hint-color);
-
-  --list-ios-item-placeholder-color: var(--subtitle-text-color);
-  --list-ios-item-accent-color: var(--link-color);
-  --list-ios-item-destructive-color: var(--destructive-text-color);
-  --list-ios-item-body-left-subtitle-color: var(--subtitle-text-color);
-  --list-ios-item-body-left-input-text-color: var(--text-color);
-  --list-ios-item-body-left-input-placeholder-color: var(--hint-color);
-  --list-ios-item-body-right-label-color: var(--subtitle-text-color);
-  --list-ios-item-body-right-badge-bg: var(--destructive-text-color);
-  --list-ios-item-body-right-badge-color: white;
-  --list-ios-item-body-right-chevron-color: var(--subtitle-text-color);
-  --list-ios-item-body-right-checkmark-color: var(--accent-text-color);
-  --list-ios-item-body-right-clear-color: var(--subtitle-text-color);
-  --list-ios-item-body-separator-color: var(--section-separator-color);
-  --section-ios-header-default-color: var(--section-header-text-color);
-  --section-ios-footer-color: var(--subtitle-text-color);
-  --switch-ios-bg: var(--secondary-fill-bg-color);
-  --switch-ios-checked-bg: var(--button-confirm-color);
-  --switch-ios-knob-bg: var(--button-text-color);
-  --switch-ios-mark-left-color: black;
-  --switch-ios-mark-right-color: var(--subtitle-text-color);
-  --radio-ios-checked-color: var(--button-color);
-  --radio-ios-icon-color: var(--button-text-color);
-  --radio-ios-border-color: var(--hint-color);
-
-  --button-base-filled-bg-color: var(--button-color);
-  --button-base-filled-text-color: var(--button-text-color);
-  --button-base-tinted-bg-color: var(--secondary-accent-color);
-  --button-base-tinted-text-color: var(--accent-text-color);
-  --button-base-disabled-bg-color: var(--button-main-disabled-color);
-  --button-base-disabled-text-color: var(--text-main-disabled-color);
-
   &[data-theme="light"] {
-    --quaternary-fill-bg-color: rgba(116, 116, 128, .08);
-    --tertiary-fill-bg-color: rgba(116, 116, 128, .12);
     --secondary-fill-bg-color: rgba(118, 118, 128, .16);
     --button-confirm-color: #2FB250;
     --text-main-disabled-color: #B9B9BA;
@@ -80,19 +30,12 @@
   }
 
   &[data-theme="dark"] {
-    --quaternary-fill-bg-color: rgba(118, 118, 128, .18);
-    --tertiary-fill-bg-color: rgba(118, 118, 128, .24);
     --secondary-fill-bg-color: rgba(118, 118, 128, .32);
     --button-confirm-color: #30D158;
     --text-main-disabled-color: #606060;
     --button-main-disabled-color: #2F2F2F;
     --destructive-opaque-bg-color: rgba(221, 4, 4, 0.19);
   }
-
-  --elevated-box-shadow: -0.6px -0.5px 0 0 rgba(255, 255, 255, 0.30) inset,
-    0.5px 0.6px 0 0 rgba(255, 255, 255, 0.30) inset,
-    0 1px 1px 0 rgba(116, 116, 128, 0.02),
-    0 2px 16px 1px rgba(0, 0, 0, 0.06);
 }
 
 body {

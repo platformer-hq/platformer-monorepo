@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IconExclamationMarkTriangleFill28 } from '@workspace/ui-kit';
+import { IconExclamationMarkTriangleFill28 } from '@tma.js/vue-kit';
 
 const { b, e } = bem('url-http-warning');
 

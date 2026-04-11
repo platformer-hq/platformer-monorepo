@@ -1,6 +1,8 @@
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 import path from 'node:path';
 
+const componentsIgnore = ['**/_/**', '**/_*'];
+
 function resolve(...filePath: string[]) {
   return path.resolve(__dirname, ...filePath);
 }
@@ -9,11 +11,22 @@ function resolveLayer(pkg: string) {
   return path.resolve(__dirname, '../../nuxt-layers', pkg);
 }
 
-function higherPriorityImport(name: string, from: string) {
-  return { name, from, priority: 10 };
+function higherPriorityComponents(componentsPath: string, options: {
+  pathPrefix?: boolean;
+  pattern?: string;
+  extensions?: string[];
+} = {}) {
+  return {
+    path: componentsPath,
+    pattern: options.pattern,
+    pathPrefix: options.pathPrefix || false,
+    extensions: options.pattern
+      ? undefined
+      : options.extensions || ['.vue'],
+    ignore: componentsIgnore,
+    priority: 100,
+  };
 }
-
-const componentsIgnore = ['**/_/**', '**/_*'];
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -42,58 +55,21 @@ export default defineNuxtConfig({
   appId: 'admin-panel',
   css: [
     resolve('app/assets/global.scss'),
-    '@tma.js/vue-kit/styles',
   ],
-  components: [{
-    path: resolve('app/pages-components'),
-    pathPrefix: false,
-    extensions: ['.vue'],
-    ignore: componentsIgnore,
-    priority: 100,
-  }, {
-    path: resolve('app/components'),
-    pathPrefix: false,
-    extensions: ['.vue'],
-    ignore: componentsIgnore,
-    priority: 100,
-  }, {
-    path: resolve('app/auto-components'),
-    pathPrefix: false,
-    extensions: ['.ts', '.vue'],
-    ignore: componentsIgnore,
-    priority: 100,
-  }, {
-    path: resolve('app/domains'),
-    pathPrefix: false,
-    pattern: '**/components/*.vue',
-    ignore: componentsIgnore,
-    priority: 100,
-  }, {
-    path: resolve('app/navigation'),
-    pathPrefix: false,
-    pattern: '**/components/*.vue',
-    ignore: componentsIgnore,
-    priority: 100,
-  }],
+  components: [
+    higherPriorityComponents(resolve('app/pages-components')),
+    higherPriorityComponents(resolve('app/components')),
+  ],
   extends: [
-    resolveLayer('api'),
-    resolveLayer('base'),
+    resolveLayer('utils'),
     resolveLayer('navigation'),
-    resolveLayer('pinia'),
-    resolveLayer('tma'),
   ],
   imports: {
-    imports: [
-      higherPriorityImport('useParametrizedQueryMeta', '~/domains/api/composables/useParametrizedQueryMeta'),
-      higherPriorityImport('useNonParametrizedQueryMeta', '~/domains/api/composables/useNonParametrizedQueryMeta'),
-    ],
+    // imports: [
+    //   higherPriorityImport('useParametrizedQueryMeta', '~/domains/api/composables/useParametrizedQueryMeta'),
+    //   higherPriorityImport('useNonParametrizedQueryMeta', '~/domains/api/composables/useNonParametrizedQueryMeta'),
+    // ],
     dirs: [
-      resolve('app/stores/*.ts'),
-      resolve('app/navigation/{composables,utils}/*.ts'),
-      resolve('app/domains/*/{composables,utils}.ts'),
-      resolve('app/domains/*/{composables,utils}/**'),
-      resolve('app/components/**/{composables,utils}/**'),
-      resolve('app/components/**/{composables,utils}.ts'),
       resolve('app/pages-components/*/composables/**'),
     ],
   },

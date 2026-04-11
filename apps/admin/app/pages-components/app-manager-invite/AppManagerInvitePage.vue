@@ -180,7 +180,7 @@ const role = ref(LocalAppManagementInviteRole.Admin);
 </template>
 
 <style lang="scss">
-@use "@/domains/styles/mixins";
+@use "@/scss/mixins";
 
 .app-manager-invite-page {
   &__role {

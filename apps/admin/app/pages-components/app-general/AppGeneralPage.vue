@@ -40,7 +40,6 @@ const { t } = useI18n({
 
 const appId = useQueryAppId();
 const isPageEntered = useIsCurrentPageEntered();
-const bottomBar = useTemplateRef('bottom-bar');
 
 //#region Requests.
 const queryCache = useQueryCache();
@@ -125,7 +124,7 @@ onMounted(() => {
 
 <template>
   <PageRoot colors="secondary-bg">
-    <PageContent :style="{paddingBottom: toPx(bottomBar?.height)}">
+    <PageContent>
       <PagePaddings>
         <AutoSection list-bg-color="section-bg">
           <template #header>
@@ -220,7 +219,7 @@ onMounted(() => {
     </PageContent>
     <template #bottomBar>
       <BottomBarTransition>
-        <BottomBar v-if="isPageEntered && isDirty" ref="bottom-bar">
+        <BottomBar v-if="isPageEntered && isDirty">
           <BottomBarInner>
             <AutoButton
               :palette="isButtonDisabled ? 'disabled' : 'filled'"

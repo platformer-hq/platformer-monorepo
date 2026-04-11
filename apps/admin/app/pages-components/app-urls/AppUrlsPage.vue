@@ -311,7 +311,7 @@ onMounted(() => {
     </PageContent>
     <template #bottomBar>
       <BottomBarTransition>
-        <BottomBar v-if="isPageEntered && isDirty" ref="bottom-bar">
+        <BottomBar v-if="isPageEntered && isDirty">
           <BottomBarInner>
             <AutoButton
               :palette="isButtonEnabled ? 'filled' : 'disabled'"
@@ -337,7 +337,7 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
-@use "@/domains/styles/mixins";
+@use "@/scss/mixins";
 
 .app-urls-page {
   &__section {

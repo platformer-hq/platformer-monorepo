@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { popup } from '@tma.js/sdk-vue';
 import {
   IconAdvancedSettings30,
   IconUsers30,
@@ -8,8 +9,8 @@ import {
   IconLink30,
   IconEyeFillIOS28,
   IconDataAndStorage30,
-} from '@workspace/ui-kit';
-import { popup } from '@tma.js/sdk-vue';
+  IconBinOutline28,
+} from '@tma.js/vue-kit';
 import * as fp from 'fp-ts';
 import * as v from 'valibot';
 

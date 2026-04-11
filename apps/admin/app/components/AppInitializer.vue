@@ -13,6 +13,7 @@ import {
   miniApp,
   toRGBFull,
 } from '@tma.js/sdk-vue';
+import { formatMiniAppCssVar, formatThemeParamsCssVar, formatViewportCssVar } from '@workspace/tma';
 import * as fp from 'fp-ts';
 import type { TransitionProps } from 'vue';
 

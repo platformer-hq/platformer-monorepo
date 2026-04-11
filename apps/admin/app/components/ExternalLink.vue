@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { openLink, openTelegramLink } from '@tma.js/sdk-vue';
+import { openAnyLink } from '@workspace/tma';
 
-defineProps<{
-  href: string;
-}>();
+defineProps<{ href: string }>();
 </script>
 
 <template>
@@ -12,13 +10,13 @@ defineProps<{
     class="external-link"
     target="_blank"
     rel="noopener noreferrer"
-    @click.prevent="href.startsWith('https://t.me') ? openTelegramLink(href) : openLink(href)"
+    @click.prevent="openAnyLink(href)"
   >
     <slot/>
   </a>
 </template>
 
-<style lang="scss">
+<style>
 .external-link {
   text-decoration: none;
   color: var(--link-color);

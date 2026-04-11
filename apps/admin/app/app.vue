@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { miniApp } from '@tma.js/sdk-vue';
+import { ApiGraphQLResponseError } from '@workspace/api';
 
 const apiStore = useApiStore();
 
