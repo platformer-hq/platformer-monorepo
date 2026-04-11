@@ -166,7 +166,7 @@ onMounted(() => {
               </template>
               <template v-else #bodyLeftLabel>
                 <AutoListItemBodyLeftLabel>
-                  <TextShimmerBox variant="body" :width="100"/>
+                  <TextShimmerBox :width="100"/>
                 </AutoListItemBodyLeftLabel>
               </template>
             </AutoListItem>

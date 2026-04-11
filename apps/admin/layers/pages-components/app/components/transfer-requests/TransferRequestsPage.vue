@@ -80,11 +80,7 @@ watch(requests, requests => {
                       #{{ item.request.app.id }}
                     </ColorBox>
                   </template>
-                  <TextShimmerBox
-                    v-else-if="item.kind === 'width'"
-                    variant="body"
-                    :width="item.width"
-                  />
+                  <TextShimmerBox v-else-if="item.kind === 'width'" :width="item.width"/>
                   <template v-else>
                     {{ t('empty') }}
                   </template>
@@ -97,11 +93,7 @@ watch(requests, requests => {
                       name: `${item.request.from.name} #${item.request.from.id}`,
                     }) }}
                   </template>
-                  <TextShimmerBox
-                    v-else-if="item.kind === 'width'"
-                    variant="subheadline1"
-                    :width="item.width / 2"
-                  />
+                  <TextShimmerBox v-else-if="item.kind === 'width'" :width="item.width / 2"/>
                 </AutoListItemBodyLeftSubtitle>
               </template>
               <template v-if="item.kind === 'request'" #bodyRight>

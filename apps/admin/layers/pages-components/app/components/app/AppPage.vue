@@ -175,13 +175,13 @@ onMounted(() => {
           <template v-if="appData">
             {{ appData.title }}
           </template>
-          <TextShimmerBox v-else variant="title2" :width="130" display="inline-block"/>
+          <TextShimmerBox v-else :width="130" display="inline-block"/>
           <ColorBox text="hint" as="span">
             ·
             <template v-if="appData">
               #{{ appData.id }}
             </template>
-            <TextShimmerBox v-else variant="title2" :width="50" display="inline-block"/>
+            <TextShimmerBox v-else :width="50" display="inline-block"/>
           </ColorBox>
         </AutoTypography>
         <AutoSection

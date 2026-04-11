@@ -121,10 +121,12 @@ const saveLocale = async (locale: 'ru' | 'en') => {
                     </AutoListItemBodyLeftSubtitle>
                   </template>
                   <template #label>
-                    <AutoListItemBodyLeftLabel v-if="!isPending">
-                      {{ field.value || '' }}
+                    <AutoListItemBodyLeftLabel>
+                      <template v-if="!isPending">
+                        {{ field.value || '' }}
+                      </template>
+                      <TextShimmerBox v-else width="100px" border-radius="6px"/>
                     </AutoListItemBodyLeftLabel>
-                    <TextShimmerBox v-else variant="body" width="100px" border-radius="6px"/>
                   </template>
                 </AutoListItemBodyLeft>
               </template>

@@ -128,7 +128,7 @@ onMounted(() => {
                           weekday: 'short'
                         }) || t('date.value.never') }}
                       </template>
-                      <TextShimmerBox v-else variant="body" :width="90"/>
+                      <TextShimmerBox v-else :width="90"/>
                     </AutoListItemBodyLeftLabel>
                   </template>
                 </AutoListItemBodyLeft>

@@ -121,7 +121,6 @@ onMounted(() => {
                 v-else
                 as="span"
                 display="inline-block"
-                variant="body"
                 :width="40"
                 margin="0 0 0 5px"
               />
@@ -151,13 +150,12 @@ onMounted(() => {
                 @click="typeof appOrWidth === 'object' && navigateToApp(appOrWidth.id)"
               >
                 <template #bodyLeftLabel>
-                  <AutoListItemBodyLeftLabel
-                    v-if="typeof appOrWidth === 'object'"
-                    :max-lines="1"
-                  >
-                    {{ appOrWidth.title }}
+                  <AutoListItemBodyLeftLabel :max-lines="1">
+                    <template v-if="typeof appOrWidth === 'object'">
+                      {{ appOrWidth.title }}
+                    </template>
+                    <TextShimmerBox v-else :width="appOrWidth"/>
                   </AutoListItemBodyLeftLabel>
-                  <TextShimmerBox v-else variant="body" :width="appOrWidth"/>
                 </template>
                 <template v-if="typeof appOrWidth === 'object'" #bodyRight>
                   <AutoListItemBodyRight>

@@ -78,7 +78,6 @@ onMounted(() => {
                 v-else
                 as="span"
                 display="inline-block"
-                variant="subheadline1"
                 :width="40"
                 margin="0 0 0 5px"
               />
@@ -117,7 +116,7 @@ onMounted(() => {
                     <template v-if="typeof itemOrWidth === 'object'">
                       {{ itemOrWidth.title || t('testGroup.noTitle') }}
                     </template>
-                    <TextShimmerBox v-else variant="body" :width="itemOrWidth"/>
+                    <TextShimmerBox v-else :width="itemOrWidth"/>
                   </AutoListItemBodyLeftLabel>
                 </template>
                 <template #bodyLeftSubtitle>
@@ -126,7 +125,7 @@ onMounted(() => {
                       {{ t('testGroup.platforms', { count: itemOrWidth.platformsCount }) }} ·
                       {{ t('testGroup.users', { count: itemOrWidth.usersCount }) }}
                     </template>
-                    <TextShimmerBox v-else variant="subheadline1" :width="itemOrWidth / 2"/>
+                    <TextShimmerBox v-else :width="itemOrWidth / 2"/>
                   </AutoListItemBodyLeftSubtitle>
                 </template>
                 <template #bodyRight>
@@ -135,7 +134,7 @@ onMounted(() => {
                       <template v-if="typeof itemOrWidth === 'object'">
                         {{ itemOrWidth.enabled ? t('testGroup.enabled') : t('testGroup.disabled') }}
                       </template>
-                      <TextShimmerBox v-else variant="body" :width="80"/>
+                      <TextShimmerBox v-else :width="80"/>
                     </AutoListItemBodyRightLabel>
                     <WhenIos v-if="typeof itemOrWidth === 'object'">
                       <AutoListItemBodyRightChevron/>

@@ -33,7 +33,7 @@ const { t } = useI18n({
       <AutoListItem>
         <template v-if="loading" #bodyLeftLabel>
           <AutoListItemBodyLeftLabel>
-            <TextShimmerBox variant="body" :width="100"/>
+            <TextShimmerBox :width="100"/>
           </AutoListItemBodyLeftLabel>
         </template>
         <template v-else #bodyLeftInput>

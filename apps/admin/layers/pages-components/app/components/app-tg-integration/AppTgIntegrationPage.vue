@@ -119,7 +119,7 @@ watch(data, data => {
               </template>
               <template v-else #bodyLeftLabel>
                 <AutoListItemBodyLeftLabel>
-                  <TextShimmerBox variant="body" :width="160"/>
+                  <TextShimmerBox :width="160"/>
                 </AutoListItemBodyLeftLabel>
               </template>
             </AutoListItem>

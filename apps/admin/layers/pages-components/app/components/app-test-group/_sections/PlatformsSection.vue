@@ -56,7 +56,7 @@ const handlePlatformClick = (platformId: number) => {
               <template v-if="typeof itemOrWidth === 'object'">
                 {{ itemOrWidth.title }}
               </template>
-              <TextShimmerBox v-else variant="body" :width="itemOrWidth"/>
+              <TextShimmerBox v-else :width="itemOrWidth"/>
             </AutoListItemBodyLeftLabel>
           </template>
           <template

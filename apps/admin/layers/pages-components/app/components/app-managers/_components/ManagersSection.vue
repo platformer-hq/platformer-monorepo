@@ -84,7 +84,7 @@ const isItemClickable = (item: Manager | number) => {
                   #{{ managerOrWidth.id }}
                 </ColorBox>
               </template>
-              <TextShimmerBox v-else variant="body" :width="managerOrWidth"/>
+              <TextShimmerBox v-else :width="managerOrWidth"/>
             </AutoListItemBodyLeftLabel>
           </template>
           <template #bodyLeftSubtitle>
@@ -92,7 +92,7 @@ const isItemClickable = (item: Manager | number) => {
               <template v-if="typeof managerOrWidth === 'object'">
                 {{ managerOrWidth.role }}
               </template>
-              <TextShimmerBox v-else :width="managerOrWidth / 3" variant="subheadline2"/>
+              <TextShimmerBox v-else :width="managerOrWidth / 3"/>
             </AutoListItemBodyLeftSubtitle>
           </template>
           <template v-if="platform.isMappedIos && isItemClickable(managerOrWidth)" #bodyRight>
