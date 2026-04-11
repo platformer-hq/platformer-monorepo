@@ -92,7 +92,8 @@ export function iifeUrlPlugin(): Plugin {
       if (config.ssr) {
         return `
         const url = import.meta.ROLLUP_FILE_URL_${referenceId};
-        export default url.slice(url.indexOf('_nuxt') - 1)`;
+        const marker = '.nuxt/prerender';
+        export default '/_nuxt' + url.slice(url.indexOf(marker) + marker.length)`;
       }
       return `export default import.meta.ROLLUP_FILE_URL_${referenceId}`;
     },
