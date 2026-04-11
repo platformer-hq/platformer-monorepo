@@ -46,7 +46,7 @@ defineExpose({ input: inputRef });
   <component
     :is="multiline ? 'textarea' : 'input'"
     ref="input"
-    :class="['tgui-list-ios-item-body-input-element', typographyAttrs.classes]"
+    :class="['tgui-list-ios-item-body-left-input-element', typographyAttrs.classes]"
     :style="typographyAttrs.style"
     :value="model"
     @input="model = $event.target.value"
@@ -57,7 +57,7 @@ defineExpose({ input: inputRef });
 <style lang="scss">
 @use "@/scss/mixins" as mixins;
 
-.tgui-list-ios-item-body-input-element {
+.tgui-list-ios-item-body-left-input-element {
   border: none;
   background: transparent;
   appearance: none;

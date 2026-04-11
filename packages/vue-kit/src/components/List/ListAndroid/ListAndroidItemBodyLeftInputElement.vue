@@ -29,7 +29,7 @@ defineExpose({ input: inputRef });
   <component
     :is="multiline ? 'textarea' : 'input'"
     ref="input"
-    :class="['tgui-list-android-item-body-input-element', typographyAttrs.classes]"
+    :class="['tgui-list-android-item-body-left-input-element', typographyAttrs.classes]"
     :style="typographyAttrs.style"
     :value="model"
     @input="model = $event.target.value"
