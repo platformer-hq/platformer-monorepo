@@ -1,0 +1,9 @@
+{
+  "extends": "@workspace/tsconfigs/esnext-dom.json",
+  "compilerOptions": {
+    "rootDir": "./src"
+  },
+  "include": [
+    "src"
+  ]
+}

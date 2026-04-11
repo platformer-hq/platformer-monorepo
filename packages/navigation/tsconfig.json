@@ -1,0 +1,9 @@
+{
+  "extends": "@workspace/tsconfigs/vue.json",
+  "compilerOptions": {
+    "rootDir": "./src"
+  },
+  "include": [
+    "src"
+  ]
+}

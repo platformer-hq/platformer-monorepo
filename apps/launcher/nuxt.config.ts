@@ -1,15 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/triple-slash-reference
-/// <reference path="../../.nuxt/nuxt.node.d.ts" />
+import { iifeUrlPlugin } from '@workspace/vite-plugins';
+import browserslistToEsbuild from 'browserslist-to-esbuild';
 import path from 'node:path';
 
-import { iifeUrlPlugin } from './vite/iifeUrlPlugin';
-
-function resolve(filePath: string) {
-  return path.resolve(__dirname, filePath);
-}
-
-function resolvePackage(pkg: string) {
-  return path.resolve(__dirname, '../../packages', pkg);
+function resolve(...filePath: string[]) {
+  return path.resolve(__dirname, ...filePath);
 }
 
 const componentsIgnore = ['**/_/**', '**/_*'];
@@ -18,17 +12,10 @@ const componentsIgnore = ['**/_/**', '**/_*'];
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: [
-    '@nuxt/eslint',
-    '@nuxtjs/i18n',
-    '@pinia/nuxt',
-    '@pinia/colada-nuxt',
-    // '@sentry/nuxt/module'
-  ],
+  modules: ['@nuxtjs/i18n', '@pinia/nuxt', '@pinia/colada-nuxt'],
   alias: {
     '@': resolve('app'),
     '~': resolve('app'),
-    '#packages': resolve('../../packages'),
   },
   app: {
     rootTag: 'main',
@@ -51,21 +38,6 @@ export default defineNuxtConfig({
     ignore: componentsIgnore,
     priority: 100,
   }],
-  extends: [
-    // '../api',
-    // '../base',
-    resolvePackage('navigation'),
-    resolvePackage('ui-kit'),
-    resolvePackage('tma'),
-  ],
-  imports: {
-    dirs: [
-      resolve('app/stores/*.ts'),
-      // resolve('app/components/**/{composables,utils}/**'),
-      // resolve('app/components/**/{composables,utils}.ts'),
-      // resolve('app/pages-components/*/composables/**'),
-    ],
-  },
   i18n: {
     strategy: 'no_prefix',
     locales: [
@@ -80,21 +52,28 @@ export default defineNuxtConfig({
       cssnano: {},
     },
   },
-  nitro: {
-    output: {
-      dir: '.launcher',
-      publicDir: '.launcher/public',
-    },
-  },
   routeRules: {
     '/**': {
       prerender: true,
     },
   },
-  // typescript: {
-  //   typeCheck: 'build',
-  // },
+  typescript: {
+    typeCheck: 'build',
+  },
   vite: {
+    build: {
+      target: browserslistToEsbuild(),
+    },
+    optimizeDeps: {
+      include: [
+        '@tma.js/sdk-vue',
+        'eruda',
+        'valibot',
+        'fp-ts',
+        '@vueuse/core',
+        'error-kid',
+      ],
+    },
     plugins: [
       iifeUrlPlugin(),
     ],

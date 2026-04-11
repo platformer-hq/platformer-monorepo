@@ -1,0 +1,15 @@
+{
+  "name": "@workspace/tma",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "license": "ISC",
+  "dependencies": {
+    "@workspace/tsconfigs": "workspace:*",
+    "@workspace/utils": "workspace:*"
+  },
+  "peerDependencies": {
+    "@tma.js/sdk-vue": "^1.0.0"
+  }
+}

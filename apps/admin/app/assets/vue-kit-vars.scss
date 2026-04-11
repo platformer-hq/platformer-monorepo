@@ -1,0 +1,62 @@
+:root {
+  // Common.
+  --tgui-button-base-filled-bg-color: var(--tg-theme-button-color);
+  --tgui-button-base-filled-text-color: var(--tg-theme-button-text-color);
+  --tgui-button-base-tinted-bg-color: var(--secondary-accent-color);
+  --tgui-button-base-tinted-text-color: var(--tg-theme-accent-text-color);
+  --tgui-button-base-disabled-bg-color: var(--button-main-disabled-color);
+  --tgui-button-base-disabled-text-color: var(--text-main-disabled-color);
+
+  // Android.
+  --tgui-list-android-item-placeholder-color: var(--tg-theme-subtitle-text-color);
+  --tgui-list-android-item-accent-color: var(--tg-theme-link-color);
+  --tgui-list-android-item-destructive-color: var(--tg-theme-destructive-text-color);
+  --tgui-list-android-item-body-left-subtitle-color: var(--tg-theme-subtitle-text-color);
+  --tgui-list-android-item-body-left-input-text-color: var(--tg-theme-text-color);
+  --tgui-list-android-item-body-left-input-placeholder-color: var(--tg-theme-hint-color);
+  --tgui-list-android-item-body-right-label-color: var(--tg-theme-subtitle-text-color);
+  --tgui-list-android-item-body-right-badge-bg: var(--tg-theme-destructive-text-color);
+  --tgui-list-android-item-body-right-badge-color: white;
+  --tgui-list-android-item-body-right-chevron-color: var(--tg-theme-subtitle-text-color);
+  --tgui-list-android-item-body-right-checkmark-color: var(--tg-theme-accent-text-color);
+  --tgui-list-android-item-body-right-clear-color: var(--tg-theme-subtitle-text-color);
+
+  --tgui-section-android-header-default-color: var(--tg-theme-section-header-text-color);
+  --tgui-section-android-footer-color: var(--tg-theme-subtitle-text-color);
+
+  --tgui-switch-android-bg: var(--tg-theme-hint-color);
+  --tgui-switch-android-checked-bg: var(--tg-theme-button-color);
+  --tgui-switch-android-knob-color: var(--tg-theme-hint-color);
+  --tgui-switch-android-knob-checked-color: var(--tg-theme-button-color);
+
+  --tgui-radio-android-checked-color: var(--tg-theme-button-color);
+  --tgui-radio-android-color: var(--tg-theme-hint-color);
+
+  // Ios.
+  --tgui-list-ios-item-placeholder-color: var(--tg-theme-subtitle-text-color);
+  --tgui-list-ios-item-accent-color: var(--tg-theme-link-color);
+  --tgui-list-ios-item-destructive-color: var(--tg-theme-destructive-text-color);
+  --tgui-list-ios-item-body-left-subtitle-color: var(--tg-theme-subtitle-text-color);
+  --tgui-list-ios-item-body-left-input-text-color: var(--tg-theme-text-color);
+  --tgui-list-ios-item-body-left-input-placeholder-color: var(--tg-theme-hint-color);
+  --tgui-list-ios-item-body-right-label-color: var(--tg-theme-subtitle-text-color);
+  --tgui-list-ios-item-body-right-badge-bg: var(--tg-theme-destructive-text-color);
+  --tgui-list-ios-item-body-right-badge-color: white;
+  --tgui-list-ios-item-body-right-chevron-color: var(--tg-theme-subtitle-text-color);
+  --tgui-list-ios-item-body-right-checkmark-color: var(--tg-theme-accent-text-color);
+  --tgui-list-ios-item-body-right-clear-color: var(--tg-theme-subtitle-text-color);
+  --tgui-list-ios-item-body-separator-color: var(--tg-theme-section-separator-color);
+
+  --tgui-section-ios-header-default-color: var(--tg-theme-section-header-text-color);
+  --tgui-section-ios-footer-color: var(--tg-theme-subtitle-text-color);
+
+  --tgui-switch-ios-bg: var(--secondary-fill-bg-color);
+  --tgui-switch-ios-checked-bg: var(--button-confirm-color);
+  --tgui-switch-ios-knob-bg: var(--tg-theme-button-text-color);
+  --tgui-switch-ios-mark-left-color: black;
+  --tgui-switch-ios-mark-right-color: var(--tg-theme-subtitle-text-color);
+
+  --tgui-radio-ios-checked-color: var(--tg-theme-button-color);
+  --tgui-radio-ios-icon-color: var(--tg-theme-button-text-color);
+  --tgui-radio-ios-border-color: var(--tg-theme-hint-color);
+}

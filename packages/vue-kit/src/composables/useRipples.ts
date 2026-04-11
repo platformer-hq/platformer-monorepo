@@ -1,0 +1,75 @@
+import { useMousePressed, type MaybeComputedElementRef } from '@vueuse/core';
+import { type MaybeRefOrGetter, toValue, watch } from 'vue';
+
+export function useRipples(options: {
+  /**
+   * @default true
+   */
+  enabled?: MaybeRefOrGetter<boolean>;
+  containerRef: MaybeComputedElementRef<HTMLElement | null | undefined>;
+  clickRef: MaybeComputedElementRef<HTMLElement | null | undefined>;
+}) {
+  let lastAddedRippleKey: number | undefined;
+  const { pressed } = useMousePressed({
+    target: options.clickRef,
+    async onPressed(event) {
+      const container = toValue(options.containerRef);
+      const clickContainer = toValue(options.clickRef);
+      const enabled = toValue(options.enabled) ?? true;
+      if (!enabled || !container || !clickContainer) {
+        return;
+      }
+      const [x, y] = 'clientX' in event
+        ? [event.clientX, event.clientY]
+        : [event.touches[0]!.clientX, event.touches[0]!.clientY];
+      const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+      const rippleKey = Math.random();
+      lastAddedRippleKey = rippleKey;
+
+      // Create ripple element and add to container.
+      const rippleEl = document.createElement('span');
+      rippleEl.style.aspectRatio = '1';
+      rippleEl.style.display = 'block';
+      rippleEl.style.background = 'currentcolor';
+      rippleEl.style.borderRadius = '50%';
+      rippleEl.style.transform = 'translate(-50%, -50%)';
+      rippleEl.style.position = 'absolute';
+      rippleEl.style.left = `${x - rect.left}px`;
+      rippleEl.style.top = `${y - rect.top}px`;
+      rippleEl.style.pointerEvents = 'none';
+      container.appendChild(rippleEl);
+
+      // Animate the ripple appearance.
+      await rippleEl
+        .animate(
+          { width: ['0', '220%'], opacity: [0, 0.1, 0.1] },
+          { duration: 300, easing: 'ease', fill: 'both' },
+        )
+        .finished;
+
+      const removeRipple = () => {
+        return rippleEl.animate({ opacity: [0.1, 0] }, { duration: 200 }).finished.then(() => {
+          container.removeChild(rippleEl);
+        });
+      };
+
+      // If the user is holding the pointer and the last one added ripple is the current
+      // one, we should wait for the user to move the pointer away and then remove the ripple.
+      if (pressed.value && lastAddedRippleKey === rippleKey) {
+        const stop = watch(pressed, v => {
+          if (!v) {
+            stop();
+            removeRipple();
+          }
+        });
+        return;
+      }
+      // In all other cases the ripple can be safely removed.
+      await removeRipple();
+    },
+    drag: false,
+    // We disable touch as long as it causes double onPressed function calls.
+    // In turn, this creates 2 ripples instead of 1.
+    touch: false,
+  });
+}

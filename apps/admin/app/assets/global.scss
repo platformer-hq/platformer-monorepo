@@ -1,0 +1,55 @@
+@use "@tma.js/vue-kit/index.css";
+@use "./vue-kit-vars.scss";
+@use "./tg-theme-to-local-vars.scss";
+
+:root {
+  // For each inset type, declare CSS variables.
+  @each $inset-type in ("top", "left", "right", "bottom") {
+    --tg-viewport-sum-inset-#{$inset-type}: calc(var(--tg-viewport-safe-area-inset-#{$inset-type}, 0px) + var(--tg-viewport-content-safe-area-inset-#{$inset-type}, 0px));
+  }
+
+  // Palette fallbacks.
+  @each $key, $fallback in (
+    "section-bg-color": "bg-color",
+    "accent-text-color": "link-color",
+    "subtitle-text-color": "hint-color",
+    "section-header-text-color": "hint-color",
+    "destructive-text-color": "text-destructive-color",
+  ) {
+    --tg-theme-#{$key}: var(--tg-theme-#{$fallback});
+  }
+
+  --secondary-accent-color: rgba(var(--accent-text-color-parts), 10%);
+
+  &[data-theme="light"] {
+    --secondary-fill-bg-color: rgba(118, 118, 128, .16);
+    --button-confirm-color: #2FB250;
+    --text-main-disabled-color: #B9B9BA;
+    --button-main-disabled-color: #E8E8E9;
+    --destructive-opaque-bg-color: rgba(221, 4, 4, 0.1);
+  }
+
+  &[data-theme="dark"] {
+    --secondary-fill-bg-color: rgba(118, 118, 128, .32);
+    --button-confirm-color: #30D158;
+    --text-main-disabled-color: #606060;
+    --button-main-disabled-color: #2F2F2F;
+    --destructive-opaque-bg-color: rgba(221, 4, 4, 0.19);
+  }
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  margin: 0;
+  color: var(--text-color, white);
+  background: var(--app-bg-color);
+  overflow: hidden;
+}
+
+* {
+  box-sizing: border-box;
+  // There is no user selection in mobile applications. We are enabling this feature per-case.
+  user-select: none;
+}

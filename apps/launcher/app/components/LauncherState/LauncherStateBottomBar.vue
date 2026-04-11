@@ -1,7 +1,17 @@
 <script setup lang="ts">
 import { miniApp, useSignal } from '@tma.js/sdk-vue';
-
-import { ButtonAndroid, ButtonIos, LoadingIndicatorAndroid, LoadingIndicatorIos } from '#packages/ui-kit';
+import {
+  ButtonAndroid,
+  ButtonIos,
+  LoadingIndicatorAndroid,
+  LoadingIndicatorIos,
+  BottomBar,
+  BottomBarTransition,
+  BottomBarInner,
+  bem,
+  createReversibleTransition,
+  reverseTransitionKeyframesIfLeave,
+} from '@tma.js/vue-kit';
 
 const props = defineProps<{
   action?: 'retry' | 'redirect' | 'redirecting';
@@ -90,8 +100,8 @@ const isDark = useSignal(miniApp.isDark);
 <style lang="scss">
 .launcher-state-bottom-bar {
   &__button {
-    background-color: var(--button-color);
-    color: var(--button-text-color);
+    background-color: var(--tg-theme-button-color);
+    color: var(--tg-theme-button-text-color);
     display: none;
     @each $platform in ("ios", "android") {
       [data-platform="#{$platform}"] & {
@@ -102,7 +112,7 @@ const isDark = useSignal(miniApp.isDark);
     }
 
     &--disabled {
-      color: var(--text-color);
+      color: var(--tg-theme-text-color);
     }
 
     &--disabled-dark {

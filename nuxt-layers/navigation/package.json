@@ -1,0 +1,17 @@
+{
+  "name": "@workspace-layers/navigation",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "index.ts",
+  "license": "ISC",
+  "dependencies": {
+    "@workspace/navigation": "workspace:*"
+  },
+  "devDependencies": {
+    "@workspace/tsconfigs": "workspace:*"
+  },
+  "peerDependencies": {
+    "nuxt": "^4.4.2"
+  }
+}

@@ -1,0 +1,29 @@
+// Removes highlights when clicking an element.
+@mixin noHighlight {
+  -webkit-tap-highlight-color: transparent;
+}
+
+// Removes highlights and sets the cursor to pointer.
+@mixin clickable {
+  @include noHighlight;
+  cursor: pointer;
+}
+
+// Removes scrollbars.
+@mixin hideScrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// Applies line clamping.
+@mixin lineClamp($lines) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  line-clamp: $lines;
+  -webkit-line-clamp: $lines;
+  overflow: hidden;
+}

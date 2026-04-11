@@ -13,7 +13,7 @@ document.documentElement.dataset['platform'] = ['macos', 'ios'].includes(tgWebAp
 Object.entries(tgWebAppThemeParams).forEach(([key, value]) => {
   if (value) {
     document.documentElement.style.setProperty(
-      `--${key.replace(/_[a-z]/g, match => `-${match[1]}`)}`,
+      `--tg-theme-${key.replace(/_[a-z]/g, match => `-${match[1]}`)}`,
       value,
     );
   }

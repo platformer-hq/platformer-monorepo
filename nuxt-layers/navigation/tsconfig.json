@@ -1,0 +1,7 @@
+{
+  "extends": "@workspace/tsconfigs/esnext.json",
+  "include": [
+    "app/**/*",
+    "index.ts"
+  ]
+}

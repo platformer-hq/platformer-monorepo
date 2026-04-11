@@ -1,0 +1,48 @@
+{
+  "name": "@tma.js/vue-kit",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/dts/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/dts/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./index.css": "./dist/index.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "build-icons": "tsx build-icons.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^25.5.2",
+    "@vitejs/plugin-vue": "^6.0.0",
+    "@vue/tsconfig": "^0.7.0",
+    "@workspace/tsconfigs": "workspace:*",
+    "svgo": "^4.0.1",
+    "tsx": "^4.21.0",
+    "vite": "^8.0.3",
+    "vite-plugin-dts": "^4.5.4"
+  },
+  "dependencies": {
+    "@vueuse/core": "^14.2.1",
+    "pinia": "^3.0.4"
+  },
+  "peerDependencies": {
+    "@tma.js/sdk-vue": "^1.0.0",
+    "vue": "^3.5.32"
+  }
+}

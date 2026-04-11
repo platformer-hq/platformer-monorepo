@@ -1,0 +1,16 @@
+{
+  "name": "@workspace/graphql",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "license": "ISC",
+  "dependencies": {
+    "@graphql-typed-document-node/core": "^3.2.0",
+    "fp-ts": "^2.16.11",
+    "graphql-request": "^7.4.0"
+  },
+  "devDependencies": {
+    "@workspace/tsconfigs": "workspace:*"
+  }
+}

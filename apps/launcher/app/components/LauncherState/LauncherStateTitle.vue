@@ -7,7 +7,7 @@
   </VTypography>
 </template>
 
-<style lang="scss">
+<style>
 .launcher-state-title {
   margin: 16px 0 4px;
 }
