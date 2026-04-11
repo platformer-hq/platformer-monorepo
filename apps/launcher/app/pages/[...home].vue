@@ -27,11 +27,10 @@ const state = ref<LauncherStateState | { kind: 'ready' }>({ kind: 'initial' });
 const onLauncherPageLeave = (el: Element, done: () => void) => {
   return el
     .animate({
-      clipPath: ['circle(100% at 50% 50%)', 'circle(20% at 50% 50%)'],
+      clipPath: ['circle(100% at 50% 50%)', 'circle(10% at 50% 50%)', 'circle(0% at 50% 50%)'],
       opacity: [1, 0],
       transform: ['scale(1)', 'scale(1.05)'],
-      backgroundSize: ['100% 111%', '100% 100%', '100% 100%'],
-    }, { duration: 200, easing: 'ease-out' })
+    }, { duration: 300, easing: 'ease-out' })
     .finished
     .then(done);
 };
@@ -76,6 +75,10 @@ onErrorCaptured(error => {
   state.value = { kind: 'unknown-error', error };
   return false;
 });
+
+setTimeout(() => {
+  state.value = { kind: 'ready' };
+}, 3000);
 </script>
 
 <template>
