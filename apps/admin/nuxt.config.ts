@@ -40,7 +40,6 @@ export default defineNuxtConfig({
   ],
   alias: {
     '@': resolve('app'),
-    '~': resolve('app'),
   },
   app: {
     rootTag: 'main',
@@ -53,9 +52,7 @@ export default defineNuxtConfig({
     },
   },
   appId: 'admin-panel',
-  css: [
-    resolve('app/assets/global.scss'),
-  ],
+  css: [resolve('app/assets/global.scss')],
   components: [
     higherPriorityComponents(resolve('app/pages-components')),
     higherPriorityComponents(resolve('app/components')),
@@ -65,10 +62,6 @@ export default defineNuxtConfig({
     resolveLayer('navigation'),
   ],
   imports: {
-    // imports: [
-    //   higherPriorityImport('useParametrizedQueryMeta', '~/domains/api/composables/useParametrizedQueryMeta'),
-    //   higherPriorityImport('useNonParametrizedQueryMeta', '~/domains/api/composables/useNonParametrizedQueryMeta'),
-    // ],
     dirs: [
       resolve('app/pages-components/*/composables/**'),
     ],
