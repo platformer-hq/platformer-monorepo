@@ -245,17 +245,22 @@ const handleRedirect = () => {
       </Transition>
     </div>
     <VTypography
-      :class="e('disclaimer', (canRetry || canRedirect || redirecting) && 'bottom-bar-shown')"
+      v-for="locale in locales"
+      :key="locale"
+      :class="[
+        e('disclaimer', (canRetry || canRedirect || redirecting) && 'bottom-bar-shown'),
+        e('locale-dependent', locale)
+      ]"
       variant="footnote"
     >
-      <Translation keypath="disclaimer.base">
+      <Translation keypath="disclaimer.base" :locale="locale">
         <template #project>
           <a
             :class="e('disclaimer-link')"
             :href="channelLink"
             @click.prevent="openTelegramLink(channelLink)"
           >
-            {{ t('disclaimer.project') }}
+            {{ t('disclaimer.project', {}, { locale }) }}
           </a>
         </template>
       </Translation>

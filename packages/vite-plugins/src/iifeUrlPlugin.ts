@@ -89,13 +89,15 @@ export function iifeUrlPlugin(): Plugin {
         name: path.parse(url).name + '.js',
         source: code,
       });
-      if (config.ssr) {
-        return `
-        const url = import.meta.ROLLUP_FILE_URL_${referenceId};
+      return `
+      let url = import.meta.ROLLUP_FILE_URL_${referenceId};
+      if (typeof window === 'undefined') {
         const marker = '.nuxt/prerender';
-        export default '/_nuxt' + url.slice(url.indexOf(marker) + marker.length)`;
+        url = '/_nuxt' + url.slice(url.indexOf(marker) + marker.length);
+      } else {
+        url = new URL(url).pathname;
       }
-      return `export default import.meta.ROLLUP_FILE_URL_${referenceId}`;
+      export default url;`;
     },
   };
 }
