@@ -53,25 +53,23 @@ const { b, e } = bem('tgui-shimmer-box');
   &__shine {
     @keyframes tgui-shimmer-box-shine {
       0% {
-        left: -200px;
+        transform: translateX(-100%);
       }
-      40%, 100% {
-        left: 100%;
+      50%, 100% {
+        transform: translateX(100%);
       }
     }
+    inset: 0;
     position: absolute;
-    width: 200px;
-    left: 0;
-    top: 0;
-    bottom: 0;
+    min-width: 150px;
     z-index: 0;
     background-image: linear-gradient(
-      90deg,
+      95deg,
       transparent,
       var(--tgui-shimmer-box-shine-color),
       transparent
     );
-    animation: tgui-shimmer-box-shine 2.5s linear infinite;
+    animation: tgui-shimmer-box-shine 2s linear infinite;
   }
 }
 </style>
