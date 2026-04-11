@@ -59,6 +59,7 @@ watch(() => data.value?.testGroups, testGroups => {
 
 onMounted(() => {
   preloadRouteComponents({ name: PageNames.App });
+  preloadRouteComponents({ name: PageNames.AppTestGroup });
 });
 </script>
 
