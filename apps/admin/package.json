@@ -20,7 +20,7 @@
     "@tma.js/vue-kit": "workspace:*",
     "@vueuse/core": "^14.2.1",
     "@workspace/api": "workspace:*",
-    "@workspace/pinia": "workspace:*",
+    "@workspace/pinia-colada": "workspace:*",
     "@workspace/tma": "workspace:*",
     "error-kid": "^2.0.0",
     "eruda": "^3.4.3",

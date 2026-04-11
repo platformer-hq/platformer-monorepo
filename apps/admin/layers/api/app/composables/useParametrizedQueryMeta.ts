@@ -2,7 +2,7 @@ import type { DefineQueryOptionsTagged } from '@pinia/colada';
 import {
   useParametrizedQueryMeta as _useParametrizedQueryMeta,
   type UseParametrizedQueryMetaSetDataUpdater,
-} from '@workspace/pinia';
+} from '@workspace/pinia-colada';
 
 export type UseParametrizedQueryMetaCreateOptionsFn<R> = (context: {
   apiGqlRequest: ApiGqlRequestFn;

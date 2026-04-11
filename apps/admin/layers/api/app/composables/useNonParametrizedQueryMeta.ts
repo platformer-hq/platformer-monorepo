@@ -1,5 +1,5 @@
 import type { DefineQueryOptionsTagged } from '@pinia/colada';
-import type { UseParametrizedQueryMetaSetDataUpdater } from '@workspace/pinia';
+import type { UseParametrizedQueryMetaSetDataUpdater } from '@workspace/pinia-colada';
 
 import {
   type UseParametrizedQueryMetaCreateOptionsFn,

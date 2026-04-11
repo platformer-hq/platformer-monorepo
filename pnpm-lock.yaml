@@ -92,9 +92,9 @@ importers:
       '@workspace/api':
         specifier: workspace:*
         version: link:../../packages/api
-      '@workspace/pinia':
+      '@workspace/pinia-colada':
         specifier: workspace:*
-        version: link:../../packages/pinia
+        version: link:../../packages/pinia-colada
       '@workspace/tma':
         specifier: workspace:*
         version: link:../../packages/tma
@@ -332,7 +332,7 @@ importers:
         specifier: workspace:*
         version: link:../tsconfigs
 
-  packages/pinia:
+  packages/pinia-colada:
     dependencies:
       '@pinia/colada':
         specifier: ^1.1.0
