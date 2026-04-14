@@ -5,9 +5,6 @@ query AppTestGroupPageData(
 ) {
   app(appID: $appId) {
     currentUserRole
-    subscription {
-      endsAt
-    }
     limits {
       maxTestGroupUsersCount
     }

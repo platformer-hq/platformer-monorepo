@@ -13,6 +13,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  ISODate: { input: any; output: any; }
   Time: { input: string; output: string; }
 };
 
@@ -40,8 +41,6 @@ export type App = {
    * to request this kind of data.
    */
   secretKey?: Maybe<Scalars['String']['output']>;
-  /** The currently active application subscription. */
-  subscription?: Maybe<AppSubscription>;
   /** Bound Telegram Bot identifier. */
   telegramBotID?: Maybe<Scalars['Int']['output']>;
   /** True if the Telegram launch parameters must be proxied. */
@@ -122,14 +121,6 @@ export enum AppRole {
   /** Application owner role. */
   Owner = 'OWNER'
 }
-
-export type AppSubscription = {
-  __typename?: 'AppSubscription';
-  /** True if the auto renewal is enabled. */
-  autoRenewal: Scalars['Boolean']['output'];
-  /** A date when the subscription ends. */
-  endsAt: Scalars['Time']['output'];
-};
 
 export type AppTestGroup = {
   __typename?: 'AppTestGroup';
@@ -264,8 +255,6 @@ export type Mutation = {
   createApp: App;
   /** Invites a user to manage the application. */
   createAppManagementInvite: AppManagementInvite;
-  /** Creates a new Telegram invoice to upgrade the application */
-  createAppSubTgInvoice: Scalars['String']['output'];
   /** Creates a new application test group. */
   createAppTestGroup: AppTestGroup;
   /** Creates an app transfer request. */
@@ -290,8 +279,6 @@ export type Mutation = {
   updateAppManagementInvite: AppManagementInvite;
   /** Updates an application manager role. */
   updateAppManagerRole: AppManager;
-  /** Sets the application subscription auto renewal state. */
-  updateAppSubAutoRenewal?: Maybe<Scalars['Boolean']['output']>;
   /** Updates the application test group. */
   updateAppTestGroup: AppTestGroup;
   /** Updates the current user data. */
@@ -313,11 +300,6 @@ export type MutationCreateAppManagementInviteArgs = {
   appID: Scalars['ID']['input'];
   role: AppManagementInviteRole;
   userID: Scalars['ID']['input'];
-};
-
-
-export type MutationCreateAppSubTgInvoiceArgs = {
-  appID: Scalars['ID']['input'];
 };
 
 
@@ -401,12 +383,6 @@ export type MutationUpdateAppManagerRoleArgs = {
 };
 
 
-export type MutationUpdateAppSubAutoRenewalArgs = {
-  appID: Scalars['ID']['input'];
-  autoRenew: Scalars['Boolean']['input'];
-};
-
-
 export type MutationUpdateAppTestGroupArgs = {
   enabled?: InputMaybe<Scalars['Boolean']['input']>;
   platformIDs?: InputMaybe<Array<Scalars['ID']['input']>>;
@@ -451,8 +427,6 @@ export type Query = {
   __typename?: 'Query';
   /** Application information. */
   app?: Maybe<App>;
-  /** Application subscription purchase price in Telegram Stars. */
-  appSubPurchaseTgPrice: Scalars['Int']['output'];
   /**
    * URL to be opened in the Telegram application. This value may be omitted if
    * there is no URL for the platform, specified in the launch parameters.

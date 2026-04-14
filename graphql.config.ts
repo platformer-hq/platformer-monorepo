@@ -10,11 +10,11 @@ export default {
   schema: 'https://mini-apps.store/api/gql',
   generates: {
     '.': {
-      documents: ['./apps/admin-panel/app/**/*.gql'],
+      documents: ['./apps/admin/**/*.gql'],
       preset: 'near-operation-file-preset',
       presetConfig: {
         extension: '.ts',
-        baseTypesPath: '~@platformer/api/schema',
+        baseTypesPath: '~@workspace/api/schema',
       },
       plugins: [
         'typescript-operations',
@@ -27,7 +27,7 @@ export default {
         declarationKind: 'interface',
       },
     },
-    './nuxt-layers/api/schema.ts': {
+    './packages/api/src/schema.ts': {
       plugins: [
         'typescript',
         { add: { content: '/* eslint-disable */' } },
