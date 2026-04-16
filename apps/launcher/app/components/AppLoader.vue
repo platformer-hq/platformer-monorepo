@@ -40,21 +40,26 @@ const { stop: cleanupTimeout } = useTimeoutFn(
   () => props.loadTimeout,
 );
 
-const launchParamsQuery = computed(() => new URLSearchParams(props.launchParamsRaw));
-const initDataSecured = computed(() => {
-  const initData = new URLSearchParams(launchParamsQuery.value.get('tgWebAppData') || '');
+const lpDerived = computed(() => {
+  const lpQuery = new URLSearchParams(props.launchParamsRaw);
+  const initData = new URLSearchParams(lpQuery.get('tgWebAppData') || '');
   initData.delete('hash');
-  return initData.toString();
+
+  return {
+    platform: lpQuery.get('tgWebAppPlatform') || '',
+    initData: initData.toString(),
+  };
 });
 
 const { data, isPending, error } = useQuery({
-  key: () => [props.appId, props.apiBaseUrl, launcherParamsRawSecured.value],
+  key: () => [props.appId, props.apiBaseUrl, lpDerived.value],
   query({ signal }) {
     return throwifyAnyEither(
       fp.function.pipe(
         fp.taskEither.tryCatch(() => {
-          const url = new URL(`apps/${props.appId}/telegram-url`, props.apiBaseUrl);
-          url.searchParams.set('lp', launcherParamsRawSecured.value);
+          const url = new URL(`apps/${props.appId}`, props.apiBaseUrl);
+          url.searchParams.set('platform', lpDerived.value.platform);
+          url.searchParams.set('initData', lpDerived.value.initData);
           signal.onabort = controller.abort.bind(controller);
 
           return fetch(url.toString(), { signal: controller.signal });
@@ -146,10 +151,7 @@ watch(data, data => {
 
 watch([
   error,
-  () => ({
-    fallbackUrl: props.fallbackUrl,
-    loadTimeout: props.loadTimeout,
-  }),
+  () => ({ fallbackUrl: props.fallbackUrl, loadTimeout: props.loadTimeout }),
 ], ([error, { fallbackUrl, loadTimeout }]) => {
   if (!error) {
     return;
