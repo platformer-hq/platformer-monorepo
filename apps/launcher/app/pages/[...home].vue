@@ -21,6 +21,7 @@ const launcherOptions = ref<{
   fallbackUrl?: string | null;
   initTimeout: number;
   loadTimeout: number;
+  queryLp: boolean;
 }>();
 const state = ref<LauncherStateState | { kind: 'ready' }>({ kind: 'initial' });
 

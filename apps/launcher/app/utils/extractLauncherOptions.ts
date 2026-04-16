@@ -20,6 +20,7 @@ export function extractLauncherOptions(
     fallbackUrl?: string;
     initTimeout: number;
     loadTimeout: number;
+    queryLp: boolean;
   }
 > {
   const parseResult = v.safeParse(
@@ -33,6 +34,7 @@ export function extractLauncherOptions(
       fallback_url: v.optional(v.string()),
       init_timeout: v.optional(positiveIntFromStr(), '5000'),
       load_timeout: v.optional(positiveIntFromStr(), '10000'),
+      query_lp: v.optional(v.boolean(), false),
     }),
     query,
   );
@@ -46,5 +48,6 @@ export function extractLauncherOptions(
     fallbackUrl: output.fallback_url,
     initTimeout: output.init_timeout,
     loadTimeout: output.load_timeout,
+    queryLp: output.query_lp,
   });
 }
