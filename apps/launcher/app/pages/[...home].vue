@@ -86,7 +86,7 @@ onErrorCaptured(error => {
       v-bind="launcherOptions"
       :launch-params-raw
       :fallback-url="launcherOptions.fallbackUrl
-        ? appendLaunchParams(launcherOptions.fallbackUrl, launchParamsRaw)
+        ? appendLaunchParams(launcherOptions.fallbackUrl, launchParamsRaw, launcherOptions.queryLp)
         : undefined"
       @ready="state = {kind: 'ready'}"
       @api-timeout="

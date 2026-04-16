@@ -11,6 +11,7 @@ const props = defineProps<{
   initTimeout: number;
   loadTimeout: number;
   launchParamsRaw: string;
+  queryLp: boolean;
 }>();
 const emit = defineEmits<{
   ready: [];
@@ -132,12 +133,15 @@ watch(data, data => {
       /* none */
     }
     return emit('appHttpUrl', {
-      url: appendLaunchParams(data.url, props.launchParamsRaw),
+      url: appendLaunchParams(data.url, props.launchParamsRaw, props.queryLp),
       type: isWeb ? 'error' : 'warning',
     });
   }
   emit('appDataRetrieved');
-  frameUrl.value = { kind: 'original', src: appendLaunchParams(data.url, props.launchParamsRaw) };
+  frameUrl.value = {
+    kind: 'original',
+    src: appendLaunchParams(data.url, props.launchParamsRaw, props.queryLp),
+  };
 });
 
 watch([
