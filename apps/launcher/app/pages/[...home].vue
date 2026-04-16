@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/no-multiple-template-root vue/multi-word-component-names -->
 <script setup lang="ts">
-import { hapticFeedback, retrieveRawInitDataFp, retrieveRawLaunchParamsFp } from '@tma.js/sdk-vue';
+import { hapticFeedback, retrieveRawLaunchParamsFp } from '@tma.js/sdk-vue';
 import * as fp from 'fp-ts';
 import * as v from 'valibot';
 
@@ -36,7 +36,6 @@ const onLauncherPageLeave = (el: Element, done: () => void) => {
     .then(done);
 };
 
-const initDataRaw = ref<string>();
 const launchParamsRaw = ref<string>();
 const hapticError = () => hapticFeedback.notificationOccurred.ifAvailable('error');
 
@@ -47,15 +46,7 @@ if (import.meta.client) {
     fp.function.pipe(
       fp.either.Do,
       fp.either.bindW('launcherOptions', () => extractLauncherOptions(route.query)),
-      fp.either.bindW('initDataRaw', retrieveRawInitDataFp),
       fp.either.bindW('launchParamsRaw', retrieveRawLaunchParamsFp),
-      fp.either.map(result => ({
-        ...result,
-        initDataRaw: fp.function.pipe(
-          result.initDataRaw,
-          fp.option.match(() => undefined, v => v),
-        ),
-      })),
       fp.either.match(
         e => {
           state.value = v.isValiError(e)
@@ -63,7 +54,6 @@ if (import.meta.client) {
             : { kind: 'init-data-missing', error: e };
         },
         result => {
-          initDataRaw.value = result.initDataRaw;
           launchParamsRaw.value = result.launchParamsRaw;
           launcherOptions.value = result.launcherOptions;
         },
@@ -90,12 +80,10 @@ onErrorCaptured(error => {
     <AppLoader
       v-if="
         launcherOptions
-        && initDataRaw
         && launchParamsRaw
         && (state.kind === 'ready' || state.kind === 'loading' || state.kind === 'initial')
       "
       v-bind="launcherOptions"
-      :init-data-raw
       :launch-params-raw
       :fallback-url="launcherOptions.fallbackUrl
         ? appendLaunchParams(launcherOptions.fallbackUrl, launchParamsRaw)

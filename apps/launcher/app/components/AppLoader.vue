@@ -10,7 +10,6 @@ const props = defineProps<{
   fallbackUrl?: string;
   initTimeout: number;
   loadTimeout: number;
-  initDataRaw: string;
   launchParamsRaw: string;
 }>();
 const emit = defineEmits<{
@@ -40,8 +39,11 @@ const { stop: cleanupTimeout } = useTimeoutFn(
   () => props.loadTimeout,
 );
 
-const launcherParamsRawSecured = computed(() => {
-  return secureRawLaunchParams(props.launchParamsRaw, props.initDataRaw);
+const launchParamsQuery = computed(() => new URLSearchParams(props.launchParamsRaw));
+const initDataSecured = computed(() => {
+  const initData = new URLSearchParams(launchParamsQuery.value.get('tgWebAppData') || '');
+  initData.delete('hash');
+  return initData.toString();
 });
 
 const { data, isPending, error } = useQuery({
@@ -83,7 +85,7 @@ const { data, isPending, error } = useQuery({
           if (!json.ok) {
             return fp.taskEither.left(new ApiError(json.error.code, json.error.message));
           }
-          if (v.is(v.looseObject({ url: v.nullish(v.string()) }), json.data)) {
+          if (v.is(v.looseObject({ url: v.optional(v.string()) }), json.data)) {
             return fp.taskEither.right(json.data);
           }
           return fp.taskEither.left(new InvalidResponseDataError(json.data));
