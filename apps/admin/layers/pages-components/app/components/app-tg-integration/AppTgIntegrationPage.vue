@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import * as fp from 'fp-ts';
 
+import { Translation } from '#i18n';
+
 import { AppTgIntegrationPageDataDocument, UpdateAppTelegramDataDocument } from './operations';
 
 const { t } = useI18n({
@@ -9,22 +11,17 @@ const { t } = useI18n({
       apply: 'Apply changes',
       'botId.title': 'Telegram Bot ID',
       'botId.placeholder': 'Telegram Bot ID identifier',
-      'botId.footer': 'Having a mini application based on Telegram Mini Apps, you should set this value equal to the bound Telegram Bot identifier. Otherwise, Platformer will not be able to display your application due to inability to verify init data, sent to your mini app using init data Third Party Validation.',
-      'proxy.title': 'Proxy launch parameters',
-      'proxy.footer': 'Enabling this option, the Platformer\'s launcher will append all Telegram Mini Apps launch parameters to the URL. In turn, it allows you to use Server-Side Rendering (SSR).',
+      'botId.footer': 'Having a mini application based on Telegram Mini Apps, you should set this value equal to the bound Telegram Bot identifier. Otherwise, Platformer will not be able to display your application due to inability to verify init data, sent to your mini app using init data {link}.',
     },
     ru: {
       apply: 'Применить изменения',
       'botId.title': 'Telegram Bot ID',
       'botId.placeholder': 'Идентификатор Telegram Bot ID',
-      'botId.footer': 'Имея мини-приложения в Telegram Mini Apps, здесь необходимо установить идентификатор связанного бота Telegram. В противном случае, Платформер не сможет отобразить Ваше приложение ввиду невозможности проверить данные инициализации используя Third Party Validation.',
-      'proxy.title': 'Проксировать параметры запуска',
-      'proxy.footer': 'Включение этой опции приведет к добавлению лаунчером Платформера параметров запуска Telegram Mini Apps к ссылке на приложение. В свою очередь, на Вашей стороне это позволяет использовать Server-Side Rendering (SSR).',
+      'botId.footer': 'Имея мини-приложения в Telegram Mini Apps, здесь необходимо установить идентификатор связанного бота Telegram. В противном случае, Платформер не сможет отобразить Ваше приложение ввиду невозможности проверить данные инициализации используя, {link}.',
     },
   },
 });
 const isPageEntered = useIsCurrentPageEntered();
-const platform = useTmaPlatform();
 const appId = useQueryAppId();
 const queryCache = useQueryCache();
 const request = useMakeApiGqlRequest();
@@ -35,11 +32,7 @@ const { data } = useQuery({
       request(AppTgIntegrationPageDataDocument, { appId: appId.value }),
       fp.taskEither.map(({ app }) => (
         app
-          ? {
-            role: apiAppRoleToLocal(app.currentUserRole),
-            botId: app.telegramBotID || undefined,
-            proxy: app.telegramProxyLaunchParams,
-          }
+          ? { role: apiAppRoleToLocal(app.currentUserRole), botId: app.telegramBotID || undefined }
           : null
       )),
     );
@@ -47,25 +40,20 @@ const { data } = useQuery({
 });
 const { mutate: updateApp, isLoading: isUpdatingApp } = useMutation({
   key: [UpdateAppTelegramDataDocument],
-  mutation(options: { appId: number; botId?: number; proxy: boolean }) {
+  mutation(options: { appId: number; botId?: number }) {
     return throwifyAnyEither(
       request(UpdateAppTelegramDataDocument, {
         appId: options.appId,
-        telegramProxyLaunchParams: options.proxy,
         telegramBotID: options.botId,
       }),
     );
   },
-  onSuccess({ updateApp: { telegramProxyLaunchParams, telegramBotID } }) {
+  onSuccess({ updateApp: { telegramBotID } }) {
     hapticNotificationOccurred('success');
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    queryCache.setQueryData([AppTgIntegrationPageDataDocument, appId], (data: any) => (
+    queryCache.setQueryData([AppTgIntegrationPageDataDocument, appId.value], (data: any) => (
       data
-        ? {
-          ...data,
-          botId: telegramBotID || undefined,
-          proxy: telegramProxyLaunchParams ?? undefined,
-        }
+        ? { ...data, botId: telegramBotID || undefined }
         : data
     ));
   },
@@ -77,19 +65,14 @@ const { mutate: updateApp, isLoading: isUpdatingApp } = useMutation({
 
 const readonly = computed(() => data.value?.role === 'member');
 const initialBotId = computed(() => (data.value?.botId?.toString() || ''));
-const initialProxy = computed(() => data.value?.proxy || false);
 
 const botId = ref(initialBotId.value);
-const proxy = ref(initialProxy.value);
 
-const isDirty = computed(() => {
-  return botId.value !== initialBotId.value || proxy.value !== initialProxy.value;
-});
+const isDirty = computed(() => botId.value !== initialBotId.value);
 
 watch(data, data => {
   if (data) {
     botId.value = data.botId?.toString() || '';
-    proxy.value = data.proxy;
   }
 });
 </script>
@@ -126,36 +109,13 @@ watch(data, data => {
           </AutoList>
           <template #footer>
             <AutoSectionFooter>
-              {{ t('botId.footer') }}
-            </AutoSectionFooter>
-          </template>
-        </AutoSection>
-
-        <AutoSection list-bg-color="section-bg" :style="{marginTop: '16px'}">
-          <AutoList>
-            <AutoListItem
-              :clickable="platform.isMappedAndroid && !readonly"
-              @click="platform.isMappedAndroid && !readonly && (proxy = !proxy)"
-            >
-              <template #bodyLeftLabel>
-                <AutoListItemBodyLeftLabel :max-lines="1">
-                  {{ t('proxy.title') }}
-                </AutoListItemBodyLeftLabel>
-              </template>
-              <template #bodyRight>
-                <AutoListItemBodyRight>
-                  <AutoSwitch
-                    v-model:checked="proxy"
-                    :disabled="!data || isUpdatingApp || readonly"
-                    @click.stop
-                  />
-                </AutoListItemBodyRight>
-              </template>
-            </AutoListItem>
-          </AutoList>
-          <template #footer>
-            <AutoSectionFooter>
-              {{ t('proxy.footer') }}
+              <Translation keypath="botId.footer">
+                <template #link>
+                  <ExternalLink href="https://docs.telegram-mini-apps.com/platform/init-data#using-telegram-public-key">
+                    Third Party Validation
+                  </ExternalLink>
+                </template>
+              </Translation>
             </AutoSectionFooter>
           </template>
         </AutoSection>
@@ -170,7 +130,7 @@ watch(data, data => {
               full-width
               :disabled="isUpdatingApp"
               :active="!isUpdatingApp"
-              @click="updateApp({appId, botId: parseInt(botId) || undefined, proxy})"
+              @click="updateApp({appId, botId: parseInt(botId) || undefined})"
             >
               <AutoTypography variant="body" weight="semibold">
                 {{ t('apply') }}

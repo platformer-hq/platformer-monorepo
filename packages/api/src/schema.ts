@@ -427,11 +427,6 @@ export type Query = {
   __typename?: 'Query';
   /** Application information. */
   app?: Maybe<App>;
-  /**
-   * URL to be opened in the Telegram application. This value may be omitted if
-   * there is no URL for the platform, specified in the launch parameters.
-   */
-  appTelegramURL?: Maybe<Scalars['String']['output']>;
   /** Retrieves application test group by its identifier. */
   appTestGroup: AppTestGroup;
   /** Current user information. */
@@ -450,12 +445,6 @@ export type Query = {
 
 export type QueryAppArgs = {
   appID: Scalars['ID']['input'];
-};
-
-
-export type QueryAppTelegramUrlArgs = {
-  appID: Scalars['ID']['input'];
-  launchParams: Scalars['String']['input'];
 };
 
 
