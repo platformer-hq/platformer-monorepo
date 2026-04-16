@@ -34,7 +34,7 @@ export function extractLauncherOptions(
       fallback_url: v.optional(v.string()),
       init_timeout: v.optional(positiveIntFromStr(), '5000'),
       load_timeout: v.optional(positiveIntFromStr(), '10000'),
-      query_lp: v.optional(v.boolean(), false),
+      query_lp: v.optional(v.pipe(v.string(), v.transform(val => val === '1')), ''),
     }),
     query,
   );
