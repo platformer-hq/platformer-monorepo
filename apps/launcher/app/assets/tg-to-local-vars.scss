@@ -24,7 +24,7 @@
     "app-bottom-bar-color",
     "app-header-color",
   ) {
-    --#{$name}: var(--tg-app-#{$name});
+    --#{$name}: var(--tg-#{$name});
   }
   @each $key, $fallback in (
     "section-bg-color": "bg-color",
