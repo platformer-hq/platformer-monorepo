@@ -7,8 +7,8 @@ function resolve(...filePath: string[]) {
   return path.resolve(__dirname, ...filePath);
 }
 
-function resolveLayer(pkg: string) {
-  return path.resolve(__dirname, '../../nuxt-layers', pkg);
+function resolveLayer(layer: string) {
+  return path.resolve(__dirname, '../../nuxt-layers', layer);
 }
 
 function higherPriorityComponents(componentsPath: string, options: {
@@ -53,13 +53,8 @@ export default defineNuxtConfig({
   },
   appId: 'admin-panel',
   css: [resolve('app/assets/global.scss')],
-  components: [
-    higherPriorityComponents(resolve('app/components')),
-  ],
-  extends: [
-    resolveLayer('utils'),
-    resolveLayer('navigation'),
-  ],
+  components: [higherPriorityComponents(resolve('app/components'))],
+  extends: [resolveLayer('utils'), resolveLayer('navigation')],
   i18n: {
     strategy: 'no_prefix',
     locales: [
