@@ -5,9 +5,9 @@
   "type": "module",
   "main": "src/index.ts",
   "license": "ISC",
-  "dependencies": {
-    "@pinia/colada": "^1.1.0",
-    "pinia": "^3.0.4"
+  "peerDependencies": {
+    "@pinia/colada": "^1.0.0",
+    "pinia": "^3.0.0"
   },
   "devDependencies": {
     "@workspace/tsconfigs": "workspace:*"

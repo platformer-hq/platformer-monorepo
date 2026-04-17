@@ -5,10 +5,10 @@
   "type": "module",
   "main": "src/index.ts",
   "license": "ISC",
-  "dependencies": {
-    "@graphql-typed-document-node/core": "^3.2.0",
-    "fp-ts": "^2.16.11",
-    "graphql-request": "^7.4.0"
+  "peerDependencies": {
+    "@graphql-typed-document-node/core": "^3.0.0",
+    "fp-ts": "^2.0.0",
+    "graphql-request": "^7.0.0"
   },
   "devDependencies": {
     "@workspace/tsconfigs": "workspace:*"
