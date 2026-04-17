@@ -8,11 +8,11 @@ export default createNuxtConfig({
 })
   .append(
     {
-      name: 'platformer/packages-and-layers',
+      name: 'workspace/packages-and-layers',
       files: ['{packages,nuxt-layers}/**/*.{ts,mts,tsx,vue}'],
     },
     {
-      name: 'platformer/vue-overrides',
+      name: 'workspace/vue-overrides',
       files: ['**/*.vue'],
       rules: {
         // Not needed with SFC + TypeScript
@@ -21,7 +21,7 @@ export default createNuxtConfig({
       },
     },
     {
-      name: 'platformer/disable-multi-word-for-ui-kit-icons',
+      name: 'workspace/disable-multi-word-for-ui-kit-icons',
       files: ['./nuxt-layers/ui-kit/app/icons/**/*.vue'],
       rules: {
         'vue/multi-word-component-names': 'off',
