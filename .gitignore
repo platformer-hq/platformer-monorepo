@@ -8,6 +8,7 @@ dist
 .admin-panel
 .launcher
 .turbo
+.netlify
 
 # Node dependencies
 node_modules
