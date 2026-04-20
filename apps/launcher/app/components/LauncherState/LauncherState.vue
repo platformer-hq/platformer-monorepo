@@ -20,7 +20,12 @@ export type LauncherStateState = (
   | { kind: 'initial' }
 );
 
-const props = defineProps<{ state: LauncherStateState }>();
+const props = withDefaults(defineProps<{
+  iconUrl?: string;
+  state: LauncherStateState;
+}>(), {
+  iconUrl: platformerLogoSrc,
+});
 defineEmits<{ retry: [] }>();
 
 const { t } = useI18n({
@@ -83,6 +88,7 @@ const contentTransition = createReversibleTransition({
 });
 
 const redirecting = ref(false);
+const splashIcon = ref(props.iconUrl);
 
 const icon = computed<'loading' | 'warning' | 'error' | undefined>(() => {
   const { state } = props;
@@ -201,7 +207,13 @@ const handleRedirect = () => {
   <div :class="b()">
     <div :class="e('body')">
       <div :class="e('logo')">
-        <img :src="platformerLogoSrc" :class="e('image')" :width="80" :height="80">
+        <img
+          :src="splashIcon"
+          :class="e('image')"
+          :width="80"
+          :height="80"
+          @error="splashIcon = platformerLogoSrc"
+        >
         <ClientOnly>
           <LauncherStateStatusIcon :status="icon"/>
         </ClientOnly>
@@ -272,6 +284,8 @@ const handleRedirect = () => {
     display: block;
     border-radius: 16px;
     overflow: hidden;
+    object-fit: contain;
+    object-position: center;
   }
 
   &__content {

@@ -52,7 +52,7 @@ const loadingIndicatorTransition = createReversibleTransition({
 
 const isButtonEnabled = computed(() => props.action !== 'redirecting');
 const isDark = useSignal(miniApp.isDark);
-const { $init: { platform } } = useNuxtApp();
+const platform = usePlatform();
 </script>
 
 <template>
