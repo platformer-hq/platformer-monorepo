@@ -10,30 +10,25 @@ function positiveIntFromStr() {
 /**
  * Extracts the launcher options from the window location.
  */
-export function extractLauncherOptions(
-  query: LocationQuery,
-): fp.either.Either<
+export function extractLauncherOptions(query: LocationQuery): fp.either.Either<
   v.ValiError<v.BaseSchema<unknown, unknown, v.BaseIssue<unknown>>>,
   {
     appId: number;
-    apiBaseUrl: string;
+    apiBaseUrl?: string;
     fallbackUrl?: string;
-    initTimeout: number;
-    loadTimeout: number;
-    queryLp: boolean;
+    initTimeout?: number;
+    loadTimeout?: number;
+    queryLp?: boolean;
   }
 > {
   const parseResult = v.safeParse(
     v.looseObject({
       app_id: positiveIntFromStr(),
       // app_id: v.optional(positiveIntFromStr(), '1'),
-      api_base_url: v.optional(
-        v.string(),
-        import.meta.env.DEV ? '/api/' : 'https://mini-apps.store/api/',
-      ),
+      api_base_url: v.optional(v.string()),
       fallback_url: v.optional(v.string()),
-      init_timeout: v.optional(positiveIntFromStr(), '5000'),
-      load_timeout: v.optional(positiveIntFromStr(), '10000'),
+      init_timeout: v.optional(positiveIntFromStr()),
+      load_timeout: v.optional(positiveIntFromStr()),
       query_lp: v.optional(v.pipe(v.string(), v.transform(val => val === '1')), ''),
     }),
     query,
@@ -44,7 +39,7 @@ export function extractLauncherOptions(
   const { output } = parseResult;
   return fp.either.right({
     appId: output.app_id,
-    apiBaseUrl: new URL(output.api_base_url, window.location.origin).toString(),
+    apiBaseUrl: output.api_base_url,
     fallbackUrl: output.fallback_url,
     initTimeout: output.init_timeout,
     loadTimeout: output.load_timeout,
