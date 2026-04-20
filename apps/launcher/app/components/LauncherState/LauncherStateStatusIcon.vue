@@ -13,7 +13,7 @@ defineProps<{
 }>();
 const { b } = bem('launcher-state-status-icon');
 
-const { $init: { platform } } = useNuxtApp();
+const platform = usePlatform();
 
 const transition = createReversibleTransition({
   animatedProperties: {

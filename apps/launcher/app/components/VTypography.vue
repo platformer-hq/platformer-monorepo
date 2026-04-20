@@ -11,7 +11,7 @@ const { as = 'p' } = defineProps<{
 }>();
 
 const { b } = bem('v-typography');
-const { $init: { platform } } = useNuxtApp();
+const platform = usePlatform();
 </script>
 
 <template>
