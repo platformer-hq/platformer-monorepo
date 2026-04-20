@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "nuxt dev --port 5174 --host",
-    "build": "nuxt generate",
+    "build": "nuxt build",
     "generate": "nuxt generate",
     "preview": "nuxt preview --port 5174 --host",
     "postinstall": "nuxt prepare"
