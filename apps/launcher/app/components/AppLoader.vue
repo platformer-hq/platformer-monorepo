@@ -57,7 +57,7 @@ const { data, isPending, error } = useQuery({
     return throwifyAnyEither(
       fp.function.pipe(
         fp.taskEither.tryCatch(() => {
-          const url = new URL(`v2/apps/${props.appId}`, props.apiBaseUrl);
+          const url = new URL(`apps/${props.appId}`, props.apiBaseUrl);
           url.searchParams.set('platform', lpDerived.value.platform);
           url.searchParams.set('initData', lpDerived.value.initData);
           signal.onabort = controller.abort.bind(controller);
