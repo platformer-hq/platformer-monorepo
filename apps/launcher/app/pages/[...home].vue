@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/no-multiple-template-root vue/multi-word-component-names -->
 <script setup lang="ts">
 import { hapticFeedback, retrieveRawLaunchParamsFp } from '@tma.js/sdk-vue';
 import * as fp from 'fp-ts';
