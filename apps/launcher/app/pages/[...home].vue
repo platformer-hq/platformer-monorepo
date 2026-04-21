@@ -7,8 +7,6 @@ import * as v from 'valibot';
 import type { LauncherStateState } from '@/components/LauncherState/LauncherState.vue';
 import prerenderScriptUrl from '@/scripts/prerender?iife-url';
 
-definePageMeta({ scrollToTop: false });
-
 useHead({
   script: [{ src: prerenderScriptUrl, tagPosition: 'bodyOpen' }],
   meta: [{
