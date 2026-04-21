@@ -81,6 +81,7 @@ export default defineNuxtConfig({
         'worker-src': ['\'self\'', 'blob:'],
       },
       crossOriginOpenerPolicy: isDev ? false : 'same-origin',
+      crossOriginResourcePolicy: 'cross-origin',
       originAgentCluster: isDev ? false : '?1',
     },
   },
