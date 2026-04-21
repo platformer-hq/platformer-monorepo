@@ -63,7 +63,7 @@ export default defineNuxtConfig({
       contentSecurityPolicy: {
         'connect-src': ['\'self\'', 'https://mini-apps.store'],
         'font-src': ['\'self\'', 'https://fonts.gstatic.com'],
-        // 'frame-ancestors': ['https://web.telegram.org'],
+        'frame-ancestors': ['https://web.telegram.org'],
         'img-src': ['\'self\'', 'data:', 'https://platformer-s3.s3.cloud.ru'],
         'script-src-elem': [
           "'self'",
