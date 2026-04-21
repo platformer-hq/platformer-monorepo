@@ -3,8 +3,6 @@ import { PiniaColadaRetry } from '@pinia/colada-plugin-retry';
 
 export default {
   plugins: [
-    PiniaColadaRetry({
-      retry: 3,
-    }),
+    PiniaColadaRetry({ retry: 3 }),
   ],
 } satisfies PiniaColadaOptions;
