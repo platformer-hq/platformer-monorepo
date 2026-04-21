@@ -41,9 +41,9 @@ const launcherOptions = fp.function.pipe(
 );
 
 const state = ref<LauncherStateState | { kind: 'ready' }>(
-  !launcherOptions.valid
-    ? { kind: 'config-invalid', error: launcherOptions.error }
-    : { kind: 'initial' },
+  launcherOptions.valid
+    ? { kind: 'initial' }
+    : { kind: 'config-invalid', error: launcherOptions.error },
 );
 const launchParamsRaw = ref<string>();
 
