@@ -1,6 +1,5 @@
-import { useSessionStorage } from '@vueuse/core';
 import { defineStore } from 'pinia';
-import { toValue, computed, type MaybeRefOrGetter } from 'vue';
+import { toValue, computed, type MaybeRefOrGetter, ref } from 'vue';
 
 type ItemState =
   | { state: 'error' }
@@ -10,8 +9,7 @@ type ItemState =
 type AnySource = string | { src: string; srcset?: string | undefined | null };
 
 export const useImageCacheStore = defineStore('image-cache', () => {
-  const states = useSessionStorage<Record<string, ItemState>>('image-cache', {});
-  // const states = ref<Record<string, ItemState>>({});
+  const states = ref<Map<string, ItemState>>(new Map());
   const normalizeSource = (source: AnySource) => (
     typeof source === 'string'
       ? { src: source }
@@ -34,7 +32,7 @@ export const useImageCacheStore = defineStore('image-cache', () => {
       return computed(() => {
         const options = toValue(optionsRef);
         const stateKey = getKey(options);
-        const currentState = states.value[stateKey];
+        const currentState = states.value.get(stateKey);
         if (currentState && currentState.state !== 'error') {
           return currentState;
         }
@@ -58,14 +56,14 @@ export const useImageCacheStore = defineStore('image-cache', () => {
      * Marks the image with the specified status.
      */
     mark(source: MaybeRefOrGetter<AnySource>, state: 'loading' | 'loaded' | 'error') {
-      states.value[getKey(source)] = { state };
+      states.value.set(getKey(source), { state });
     },
     /**
      * Tracks the image loading state.
      */
     track(source: MaybeRefOrGetter<AnySource>) {
       return computed<ItemState | { state: 'unknown' }>(() => {
-        return states.value[getKey(source)] || { state: 'unknown' };
+        return states.value.get(getKey(source)) || { state: 'unknown' };
       });
     },
     normalizeSource,
