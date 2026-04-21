@@ -57,44 +57,30 @@ const { data, isPending, error } = useQuery({
     return throwifyAnyEither(
       fp.function.pipe(
         fp.taskEither.tryCatch(() => {
-          const url = new URL(`apps/${props.appId}`, props.apiBaseUrl);
+          const url = new URL(`v2/apps/${props.appId}`, props.apiBaseUrl);
           url.searchParams.set('platform', lpDerived.value.platform);
           url.searchParams.set('initData', lpDerived.value.initData);
           signal.onabort = controller.abort.bind(controller);
 
           return fetch(url.toString(), { signal: controller.signal });
         }, e => new FetchError(e)),
-        fp.taskEither.chainW(resposne => {
+        fp.taskEither.chainW(response => {
           return fp.taskEither.tryCatch(
-            () => resposne.json(),
+            () => response.json().then(data => ({ data, ok: response.ok })),
             e => new InvalidDataTypeError(e),
           );
         }),
-        fp.taskEither.chainW(json => {
-          if (
-            !v.is(v.variant('ok', [
-              v.looseObject({
-                ok: v.literal(false),
-                error: v.looseObject({
-                  code: v.string(),
-                  message: v.nullish(v.string()),
-                }),
-              }),
-              v.looseObject({
-                ok: v.literal(true),
-                data: v.unknown(),
-              }),
-            ]), json)
-          ) {
-            return fp.taskEither.left(new InvalidResponseDataError(json));
+        fp.taskEither.chainW(({ data, ok }) => {
+          if (!ok && v.is(
+            v.looseObject({ code: v.string(), message: v.nullish(v.string()) }),
+            data,
+          )) {
+            return fp.taskEither.left(new InvalidResponseDataError(data));
           }
-          if (!json.ok) {
-            return fp.taskEither.left(new ApiError(json.error.code, json.error.message));
+          if (ok && v.is(v.looseObject({ url: v.optional(v.string()) }), data)) {
+            return fp.taskEither.right(data);
           }
-          if (v.is(v.looseObject({ url: v.optional(v.string()) }), json.data)) {
-            return fp.taskEither.right(json.data);
-          }
-          return fp.taskEither.left(new InvalidResponseDataError(json.data));
+          return fp.taskEither.left(new InvalidResponseDataError(data));
         }),
       ),
     );
