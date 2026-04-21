@@ -7,12 +7,13 @@ function resolve(...filePath: string[]) {
 }
 
 const componentsIgnore = ['**/_/**', '**/_*'];
+const isDev = process.env.NODE_ENV === 'development';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: ['@nuxtjs/i18n', '@pinia/nuxt', '@pinia/colada-nuxt'],
+  modules: ['@nuxtjs/i18n', '@pinia/nuxt', '@pinia/colada-nuxt', 'nuxt-security'],
   alias: {
     '@': resolve('app'),
     '~': resolve('app'),
@@ -55,22 +56,40 @@ export default defineNuxtConfig({
       cssnano: {},
     },
   },
+  security: {
+    headers: {
+      // Default values here:
+      // https://nuxt-security.vercel.app/headers/csp#strict-csp
+      contentSecurityPolicy: {
+        'connect-src': ['\'self\'', 'https://mini-apps.store'],
+        'font-src': ['\'self\'', 'https://fonts.gstatic.com'],
+        'frame-ancestors': ['https://web.telegram.org'],
+        'img-src': ['\'self\'', 'data:', 'https://platformer-s3.s3.cloud.ru'],
+        'script-src-elem': [
+          "'self'",
+          "'unsafe-inline'",
+          "'strict-dynamic'",
+          "'nonce-{{nonce}}'",
+        ],
+        'script-src-attr': ["'none'"],
+        'style-src': [
+          "'self'",
+          "'unsafe-inline'",
+          'https://fonts.googleapis.com',
+        ],
+        'upgrade-insecure-requests': !isDev,
+        'worker-src': ['\'self\'', 'blob:'],
+      },
+      crossOriginOpenerPolicy: isDev ? false : 'same-origin',
+      originAgentCluster: isDev ? false : '?1',
+    },
+  },
   typescript: {
     typeCheck: 'build',
   },
   vite: {
     build: {
       target: browserslistToEsbuild(),
-    },
-    optimizeDeps: {
-      include: [
-        '@tma.js/sdk-vue',
-        'eruda',
-        'valibot',
-        'fp-ts',
-        '@vueuse/core',
-        'error-kid',
-      ],
     },
     plugins: [
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment

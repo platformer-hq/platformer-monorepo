@@ -82,8 +82,7 @@ const onHighlightLeave = (el: Element, done: VoidFunction) => {
   position: relative;
 
   &--elevated {
-    // TODO: Unknown variable for the layer.
-    box-shadow: var(--elevated-box-shadow);
+    box-shadow: var(--tgui-elevated-box-shadow);
     backdrop-filter: blur(15px);
   }
 

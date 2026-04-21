@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/no-multiple-template-root vue/multi-word-component-names -->
 <script setup lang="ts">
 import { hapticFeedback, retrieveRawLaunchParamsFp } from '@tma.js/sdk-vue';
 import * as fp from 'fp-ts';
@@ -42,9 +41,9 @@ const launcherOptions = fp.function.pipe(
 );
 
 const state = ref<LauncherStateState | { kind: 'ready' }>(
-  !launcherOptions.valid
-    ? { kind: 'config-invalid', error: launcherOptions.error }
-    : { kind: 'initial' },
+  launcherOptions.valid
+    ? { kind: 'initial' }
+    : { kind: 'config-invalid', error: launcherOptions.error },
 );
 const launchParamsRaw = ref<string>();
 

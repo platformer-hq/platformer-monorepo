@@ -41,7 +41,8 @@
         "^build"
       ],
       "outputs": [
-        ".output/**"
+        ".netlify/**",
+        "dist/**"
       ]
     }
   }

@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { onMounted, useTemplateRef } from 'vue';
+
 import { bem } from '@/utils/bem';
 
 const { fit = 'contain', position = 'center', show = true } = defineProps<{
@@ -15,12 +17,28 @@ const { fit = 'contain', position = 'center', show = true } = defineProps<{
    */
   show?: boolean;
 }>();
+const emit = defineEmits<{ ready: [] }>();
+
+const img = useTemplateRef('img');
+
+// There could be some cases when the image is already loaded. For example, this
+// is true for "data:" sources. In this case @load event will not be fired.
+onMounted(() => {
+  if (img.value?.complete) {
+    emit('ready');
+  }
+});
 
 const { b } = bem('tgui-progressive-image-element');
 </script>
 
 <template>
-  <img :class="b(fit, {show})" :style="{objectPosition: position}">
+  <img
+    ref="img"
+    :class="b(fit, {show})"
+    :style="{objectPosition: position}"
+    @load="$emit('ready')"
+  >
 </template>
 
 <style lang="scss">

@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { bem, createReversibleTransition } from '@tma.js/vue-kit';
+import {
+  bem,
+  createReversibleTransition,
+  ProgressiveImage,
+  ProgressiveImageElement,
+} from '@tma.js/vue-kit';
 import type * as v from 'valibot';
 
 import platformerLogoSrc from '@/assets/platformer-logo.svg?url';
@@ -207,16 +212,22 @@ const handleRedirect = () => {
   <div :class="b()">
     <div :class="e('body')">
       <div :class="e('logo')">
-        <img
+        <ProgressiveImage
+          v-slot="{src, srcset, onError, onLoad, isLoaded}"
           :src="splashIcon"
           :class="e('image')"
           :width="80"
           :height="80"
-          @error="splashIcon = platformerLogoSrc"
         >
-        <ClientOnly>
-          <LauncherStateStatusIcon :status="icon"/>
-        </ClientOnly>
+          <ProgressiveImageElement
+            v-bind="{src, srcset, show: isLoaded}"
+            fit="contain"
+            position="center"
+            @ready="onLoad()"
+            @error="onError(); splashIcon = platformerLogoSrc"
+          />
+        </ProgressiveImage>
+        <LauncherStateStatusIcon :status="icon"/>
       </div>
       <Transition v-bind="contentTransition" :css="false" mode="out-in" appear>
         <div :key="contentKey" :class="e('content')">
@@ -281,11 +292,8 @@ const handleRedirect = () => {
   }
 
   &__image {
-    display: block;
     border-radius: 16px;
     overflow: hidden;
-    object-fit: contain;
-    object-position: center;
   }
 
   &__content {

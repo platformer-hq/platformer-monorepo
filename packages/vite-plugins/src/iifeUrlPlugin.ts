@@ -1,6 +1,7 @@
 import alias from '@rollup/plugin-alias';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
+import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { rollup } from 'rollup';
 import esbuild from 'rollup-plugin-esbuild';
@@ -24,14 +25,12 @@ export function iifeUrlPlugin(): Plugin {
         return;
       }
 
-      const isDev = process.env.NODE_ENV === 'development';
-      if (isDev) {
-        if (!query.has('process')) {
-          query.append('process', '');
-          return 'export default ' + JSON.stringify(
-            `${path.join(config.base, path.relative(config.root, url))}?${query.toString()}`,
-          );
-        }
+      const isDev = config.mode === 'development';
+      if (isDev && !query.has('process')) {
+        query.append('process', '');
+        return 'export default ' + JSON.stringify(
+          `${path.join(config.base, path.relative(config.root, url))}?${query.toString()}`,
+        );
       }
 
       const { output: [{ code }] } = await (
@@ -76,28 +75,17 @@ export function iifeUrlPlugin(): Plugin {
           ],
         })
       )
-        .generate({
-          format: 'iife',
-          sourcemap: false,
-          compact: !isDev,
-        });
+        .generate({ format: 'iife', sourcemap: false, compact: !isDev });
       if (isDev) {
         return code;
       }
-      const referenceId = this.emitFile({
-        type: 'asset',
-        name: path.parse(url).name + '.js',
-        source: code,
-      });
-      return `
-      let url = import.meta.ROLLUP_FILE_URL_${referenceId};
-      if (typeof window === 'undefined') {
-        const marker = '.nuxt/prerender';
-        url = '/_nuxt' + url.slice(url.indexOf(marker) + marker.length);
-      } else {
-        url = new URL(url).pathname;
-      }
-      export default url;`;
+      const hash = createHash('md5')
+        .update(code)
+        .digest('hex')
+        .slice(0, 8);
+      const fileName = `_nuxt/${path.parse(url).name}.${hash}.js`;
+      this.emitFile({ type: 'prebuilt-chunk', fileName, code });
+      return `export default ${JSON.stringify(`/${fileName}`)}`;
     },
   };
 }
