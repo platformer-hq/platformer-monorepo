@@ -65,12 +65,13 @@ export default defineNuxtConfig({
         'font-src': ['\'self\'', 'https://fonts.gstatic.com'],
         'frame-ancestors': ['https://web.telegram.org'],
         'img-src': ['\'self\'', 'data:', 'https://platformer-s3.s3.cloud.ru'],
-        'script-src': [
+        'script-src-elem': [
           "'self'",
           "'unsafe-inline'",
           "'strict-dynamic'",
           "'nonce-{{nonce}}'",
         ],
+        'script-src-attr': ["'none'"],
         'style-src': [
           "'self'",
           "'unsafe-inline'",
