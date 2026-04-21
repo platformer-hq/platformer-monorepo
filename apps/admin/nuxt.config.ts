@@ -63,9 +63,6 @@ export default defineNuxtConfig({
     ],
     defaultLocale: 'en',
   },
-  nitro: {
-    preset: 'netlify',
-  },
   postcss: {
     plugins: {
       autoprefixer: {},
