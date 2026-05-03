@@ -7,7 +7,6 @@ import ButtonLoadingIndicator from '~/components/ButtonLoadingIndicator.vue';
 import SubsectionTitle from './_components/SubsectionTitle.vue';
 import UploadRules from './_components/UploadRules.vue';
 import { useAppSplashScreenUploadPageQueryMeta } from './composables/useAppSplashScreenUploadPageQueryMeta';
-import defaultIconUrl from './default-icon.svg';
 import { UpdateAppSplashScreenIconDocument } from './operations';
 
 const appId = useQueryAppId();
@@ -78,14 +77,6 @@ const selectedFile = ref<{
   file: File;
 }>();
 
-const iconUrl = computed(() => (
-  selectedFile.value?.url || (
-    data.value
-      ? data.value.iconUrl || defaultIconUrl
-      : undefined
-  )
-));
-
 const handleInputChange = async (event: Event) => {
   const input = event.target as HTMLInputElement;
   const file = input.files?.[0];
@@ -118,6 +109,16 @@ const handleSave = () => {
   reader.readAsText(file);
 };
 const { e } = bem('app-splash-screen-upload-page');
+const previewTransition = createReversibleTransition({
+  animatedProperties({ el, transition }) {
+    return reverseTransitionKeyframesIfLeave({
+      overflow: ['hidden', 'hidden'],
+      height: ['0px', el.clientHeight + 'px'],
+      opacity: [0, 1],
+    }, transition);
+  },
+  animationOptions: { duration: 300, easing: 'ease-out' },
+});
 </script>
 
 <template>
@@ -200,27 +201,30 @@ const { e } = bem('app-splash-screen-upload-page');
 
         <UploadRules :data="data?.rules"/>
 
-        <SubsectionTitle>
-          {{ t('preview') }}
-        </SubsectionTitle>
-        <AutoRoundedPanel :class="e('preview')">
-          <ProgressiveImage
-            v-if="iconUrl"
-            v-slot="{isError, isLoaded, onError, onLoad, src, srcset}"
-            :src="iconUrl"
-            :width="80"
-            :height="80"
-          >
-            <ProgressiveImageTransition>
-              <ProgressiveImagePlaceholder v-if="isError"/>
-            </ProgressiveImageTransition>
-            <ProgressiveImageElement
-              v-bind="{ src, srcset, onError, show: isLoaded }"
-              fit="contain"
-              @ready="onLoad"
-            />
-          </ProgressiveImage>
-        </AutoRoundedPanel>
+        <Transition v-bind="previewTransition" :css="false">
+          <section v-if="selectedFile">
+            <SubsectionTitle>
+              {{ t('preview') }}
+            </SubsectionTitle>
+            <AutoRoundedPanel :class="e('preview')">
+              <ProgressiveImage
+                v-slot="{isError, isLoaded, onError, onLoad, src, srcset}"
+                :src="selectedFile.url"
+                :width="80"
+                :height="80"
+              >
+                <ProgressiveImageTransition>
+                  <ProgressiveImagePlaceholder v-if="isError"/>
+                </ProgressiveImageTransition>
+                <ProgressiveImageElement
+                  v-bind="{ src, srcset, onError, show: isLoaded }"
+                  fit="contain"
+                  @ready="onLoad"
+                />
+              </ProgressiveImage>
+            </AutoRoundedPanel>
+          </section>
+        </Transition>
       </PagePaddings>
     </PageContent>
     <template #bottomBar>
