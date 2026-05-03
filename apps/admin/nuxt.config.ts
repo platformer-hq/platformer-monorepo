@@ -1,5 +1,6 @@
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 import path from 'node:path';
+import svgLoader from 'vite-svg-loader';
 
 const componentsIgnore = ['**/_/**', '**/_*'];
 
@@ -78,6 +79,13 @@ export default defineNuxtConfig({
     typeCheck: 'build',
   },
   vite: {
+    plugins: [
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error Its ok.
+      svgLoader({
+        defaultImport: 'url',
+      }),
+    ],
     build: {
       target: browserslistToEsbuild(),
     },
