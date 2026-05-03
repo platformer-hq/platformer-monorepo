@@ -24,7 +24,7 @@ const insetAttrs = useSafeAreaInsetsAttrs(() => props);
 </script>
 
 <template>
-  <component :is="as" ref="root" :class="insetAttrs.classes" :style="insetAttrs.style">
+  <component :is="as" ref="root" :class="insetAttrs.classes">
     <slot/>
   </component>
 </template>

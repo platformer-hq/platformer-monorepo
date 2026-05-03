@@ -2,8 +2,6 @@ import {
   type MaybeRefOrGetter,
   computed,
   toValue,
-  type CSSProperties,
-  type StyleValue,
   type ComputedRef,
 } from 'vue';
 
@@ -14,51 +12,25 @@ import './safe-area-insets.scss';
 export type UseSafeAreaInsetsAttrsSide = 'top' | 'bottom' | 'left' | 'right';
 export type UseSafeAreaInsetsAttrsSpecificInset = 'sa' | 'csa' | 'sum';
 export type UseSafeAreaInsetsAttrsInset = boolean | UseSafeAreaInsetsAttrsSpecificInset;
-export interface UseSafeAreaInsetsAttrsOptions {
+export type UseSafeAreaInsetsAttrsOptions = {
   /**
-   * Left inset configuration.
+   * Inset configuration.
    * - `false` to disable the inset.
    * - `sa` to use the safe area inset.
    * - `csa` to use the content safe area inset.
    * - `sum` or `true` to use the content safe area inset added up to the safe area inset.
    */
-  left?: UseSafeAreaInsetsAttrsInset;
-  /**
-   * Right inset configuration.
-   * - `false` to disable the inset.
-   * - `sa` to use the safe area inset.
-   * - `csa` to use the content safe area inset.
-   * - `sum` or `true` to use the content safe area inset added up to the safe area inset.
-   */
-  right?: UseSafeAreaInsetsAttrsInset;
-  /**
-   * Top inset configuration.
-   * - `false` to disable the inset.
-   * - `sa` to use the safe area inset.
-   * - `csa` to use the content safe area inset.
-   * - `sum` or `true` to use the content safe area inset added up to the safe area inset.
-   */
-  top?: UseSafeAreaInsetsAttrsInset;
-  /**
-   * Bottom inset configuration.
-   * - `false` to disable the inset.
-   * - `sa` to use the safe area inset.
-   * - `csa` to use the content safe area inset.
-   * - `sum` or `true` to use the content safe area inset added up to the safe area inset.
-   */
-  bottom?: UseSafeAreaInsetsAttrsInset;
-  /**
-   * Generates a CSS variable name that should be referred to in the styles.
-   */
-  createReferredCssVar?(context: {
-    side: UseSafeAreaInsetsAttrsSide;
-    inset: UseSafeAreaInsetsAttrsSpecificInset;
-  }): string;
-}
+  [K in UseSafeAreaInsetsAttrsSide | 'all']?: UseSafeAreaInsetsAttrsInset;
+};
 
 export interface UseSafeAreaInsetsAttrsReturn {
-  classes: string;
-  style: StyleValue;
+  classes: string[];
+}
+
+function formatInset(
+  value: true | UseSafeAreaInsetsAttrsSpecificInset,
+): UseSafeAreaInsetsAttrsSpecificInset {
+  return value === true ? 'sum' : value;
 }
 
 export function useSafeAreaInsetsAttrs(
@@ -69,32 +41,25 @@ export function useSafeAreaInsetsAttrs(
 
   return computed(() => {
     const values = toValue(options);
-    const createReferredCssVar = values.createReferredCssVar || (context => {
-      return `--tg-viewport-${{
-        sa: 'safe-area-inset',
-        csa: 'content-safe-area-inset',
-        sum: 'sum-inset',
-      }[context.inset]}-${context.side}`;
-    });
-    const insets = sides.reduce<{
-      [Side in UseSafeAreaInsetsAttrsSide]?: UseSafeAreaInsetsAttrsSpecificInset
-    }>((acc, side) => {
-      const value = values[side];
-      if (value) {
-        acc[side] = value === true ? 'sum' : value;
-      }
-      return acc;
-    }, {});
+    const insets: string[] = [];
+
+    if (values.all) {
+      const formatted = formatInset(values.all);
+      insets.push(...sides.map(side => `${side}-${formatted}`));
+    } else {
+      insets.push(
+        ...sides.reduce<string[]>((acc, side) => {
+          const value = values[side];
+          if (value) {
+            acc.push(`${side}-${formatInset(value)}`);
+          }
+          return acc;
+        }, []),
+      );
+    }
 
     return {
-      style: sides.reduce<CSSProperties>((acc, side) => {
-        const inset = insets[side];
-        if (inset) {
-          acc[`--padding-${side}`] = `var(${createReferredCssVar({ side, inset })})`;
-        }
-        return acc;
-      }, {}),
-      classes: b(Object.keys(insets)),
+      classes: b(insets).split(' '),
     };
   });
 }
