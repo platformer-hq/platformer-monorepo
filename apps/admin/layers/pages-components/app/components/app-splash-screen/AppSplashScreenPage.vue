@@ -78,6 +78,8 @@ const handleReset = async () => {
   }
 };
 const { e } = bem('app-splash-screen-page');
+
+preloadRouteComponents({ name: PageNames.AppSplashScreenUpload });
 </script>
 
 <template>
