@@ -1,0 +1,19 @@
+query AppSplashScreenUploadPageData($appId: ID!) {
+  app(appID: $appId) {
+    splashScreenIconUrl
+  }
+  appSplashScreenIconUploadRules {
+    svg {
+      allowedTags
+      allowedAttrs
+      maxSize
+      xmlns
+    }
+  }
+}
+
+mutation UpdateAppSplashScreenIcon($appId: ID!, $svg: String!) {
+  updateApp(appID: $appId, splashScreenIconSvg: $svg) {
+    splashScreenIconUrl
+  }
+}

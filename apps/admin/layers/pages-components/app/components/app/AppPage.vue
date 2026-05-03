@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { popup } from '@tma.js/sdk-vue';
 import {
+  IconSquareArrowDownFill28,
   IconAdvancedSettings30,
   IconUsers30,
   IconTelegram24,
@@ -35,6 +36,7 @@ const URLsIcon = createIconComponent(IconLink30);
 const CacheIcon = createIconComponent(IconDataAndStorage30, 24);
 const TransferIcon = createCustomIconComponent(IconPersonLineDottedFill28, 20, '#34C759');
 const TelegramIcon = createCustomIconComponent(IconTelegram24, 20, '#007AFF');
+const SplashScreenIcon = createCustomIconComponent(IconSquareArrowDownFill28, 22, '#FF2D55');
 const UrlViewerIcon = createCustomIconComponent(IconEyeFillIOS28, 22, '#FF2D55');
 
 const query = v.parse(
@@ -52,6 +54,7 @@ const { t } = useI18n({
       'common.urls': 'URLs',
       'common.testGroups': 'Test Groups',
       'common.transfer': 'Transfer',
+      'common.splashScreen': 'Splash Screen',
       'integrations.title': 'Integrations',
       'integrations.tg': 'Telegram',
       'utils.title': 'Utilities',
@@ -69,6 +72,7 @@ const { t } = useI18n({
       'common.urls': 'Ссылки',
       'common.testGroups': 'Тестовые группы',
       'common.transfer': 'Передача приложения',
+      'common.splashScreen': 'Сплеш-скрин',
       'integrations.title': 'Интеграции',
       'integrations.tg': 'Telegram',
       'utils.title': 'Утилиты',
@@ -122,6 +126,7 @@ const sections = computed(() => [
       { icon: URLsIcon, title: t('common.urls'), name: PageNames.AppUrls },
       { icon: TestGroupsIcon, title: t('common.testGroups'), name: PageNames.AppTestGroups },
       { icon: TransferIcon, title: t('common.transfer'), name: PageNames.AppTransfer },
+      { icon: SplashScreenIcon, title: t('common.splashScreen'), name: PageNames.AppSplashScreen },
     ],
   },
   {

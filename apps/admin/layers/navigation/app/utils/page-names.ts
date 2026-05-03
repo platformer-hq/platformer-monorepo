@@ -18,6 +18,8 @@ export enum PageNames {
   AppUrls = 'app-urls',
   AppUrlViewer = 'app-url-viewer',
   AppCache = 'app-cache',
+  AppSplashScreen = 'app-splash-screen',
+  AppSplashScreenUpload = 'app-splash-screen-upload',
   CreateApp = 'create-app',
   Account = 'profile',
   Privacy = 'privacy',
