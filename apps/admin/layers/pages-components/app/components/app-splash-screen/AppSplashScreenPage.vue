@@ -165,7 +165,7 @@ preloadRouteComponents({ name: PageNames.AppSplashScreenUpload });
   }
 
   &__preview {
-    background-color: var(--bg-color);
+    background-color: var(--section-bg-color);
     height: 200px;
     display: flex;
     align-items: center;
