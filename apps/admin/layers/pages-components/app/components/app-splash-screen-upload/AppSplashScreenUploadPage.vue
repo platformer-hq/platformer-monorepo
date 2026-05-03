@@ -92,8 +92,9 @@ const handleInputChange = async (event: Event) => {
   if (!file) {
     return;
   }
-  if (file.size > maxIconSize * 1024) {
-    await popup.show({ message: t('maxSizePopup.message', { maxSize: maxIconSize }) });
+  const maxSize = data.value?.rules.maxSize || 0;
+  if (file.size > maxSize * 1024) {
+    await popup.show({ message: t('maxSizePopup.message', { maxSize }) });
   } else {
     selectedFile.value = {
       url: URL.createObjectURL(file),
@@ -116,7 +117,6 @@ const handleSave = () => {
   };
   reader.readAsText(file);
 };
-const maxIconSize = 32;
 const { e } = bem('app-splash-screen-upload-page');
 </script>
 
