@@ -1,0 +1,11 @@
+query AppSplashScreenPageData($appId: ID!) {
+  app(appID: $appId) {
+    splashScreenIconUrl
+  }
+}
+
+mutation ResetAppSplashScreenIcon($appId: ID!) {
+  updateApp(appID: $appId, splashScreenIconSvg: "") {
+    splashScreenIconUrl
+  }
+}

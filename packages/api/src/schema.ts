@@ -41,10 +41,10 @@ export type App = {
    * to request this kind of data.
    */
   secretKey?: Maybe<Scalars['String']['output']>;
+  /** A URL to retrieve the application splash screen icon. */
+  splashScreenIconUrl?: Maybe<Scalars['String']['output']>;
   /** Bound Telegram Bot identifier. */
   telegramBotID?: Maybe<Scalars['Int']['output']>;
-  /** True if the Telegram launch parameters must be proxied. */
-  telegramProxyLaunchParams: Scalars['Boolean']['output'];
   /** List of test groups. */
   testGroups: Array<AppTestGroup>;
   /** Localized title. */
@@ -121,6 +121,23 @@ export enum AppRole {
   /** Application owner role. */
   Owner = 'OWNER'
 }
+
+export type AppSplashScreenIconUploadRules = {
+  __typename?: 'AppSplashScreenIconUploadRules';
+  svg: AppSplashScreenIconUploadRulesSvg;
+};
+
+export type AppSplashScreenIconUploadRulesSvg = {
+  __typename?: 'AppSplashScreenIconUploadRulesSvg';
+  /** List of allowed attributes to be used. */
+  allowedAttrs: Array<Scalars['String']['output']>;
+  /** List of allowed tags to be used. */
+  allowedTags: Array<Scalars['String']['output']>;
+  /** Max SVG size in bytes. */
+  maxSize: Scalars['Int']['output'];
+  /** List of allowed values to be referenced in xmlns attribute. */
+  xmlns: Array<Scalars['String']['output']>;
+};
 
 export type AppTestGroup = {
   __typename?: 'AppTestGroup';
@@ -362,8 +379,8 @@ export type MutationUpdateAppArgs = {
   description?: InputMaybe<Scalars['String']['input']>;
   privacy?: InputMaybe<AppPrivacy>;
   secretKey?: InputMaybe<Scalars['Boolean']['input']>;
+  splashScreenIconSvg?: InputMaybe<Scalars['String']['input']>;
   telegramBotID?: InputMaybe<Scalars['Int']['input']>;
-  telegramProxyLaunchParams?: InputMaybe<Scalars['Boolean']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   urls?: InputMaybe<Array<InputAppUrl>>;
   urlsCacheReset?: InputMaybe<Scalars['Boolean']['input']>;
@@ -427,6 +444,8 @@ export type Query = {
   __typename?: 'Query';
   /** Application information. */
   app?: Maybe<App>;
+  /** Rules related to uploading app splash screen icons. */
+  appSplashScreenIconUploadRules: AppSplashScreenIconUploadRules;
   /** Retrieves application test group by its identifier. */
   appTestGroup: AppTestGroup;
   /** Current user information. */

@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "@graphql-typed-document-node/core": "^3.2.0",
-    "@nuxtjs/i18n": "10.2.3",
     "@nuxt/kit": "4.3.1",
+    "@nuxtjs/i18n": "10.2.3",
     "@pinia/colada": "^1.0.0",
     "@pinia/colada-nuxt": "0.3.2",
     "@pinia/colada-plugin-retry": "^0.2.3",
@@ -37,6 +37,7 @@
   "devDependencies": {
     "baseline-browser-mapping": "^2.9.19",
     "browserslist-to-esbuild": "^2.1.1",
-    "sass-embedded": "^1.97.1"
+    "sass-embedded": "^1.97.1",
+    "vite-svg-loader": "^5.1.1"
   }
 }
