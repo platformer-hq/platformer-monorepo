@@ -49,6 +49,9 @@ export interface PageRootProps {
   scrollbar?: boolean;
 }
 
+// TODO: The component contains unconfigurable SafeAreaInsets (we can't configure referred
+// CSS variables).
+
 const props = withDefaults(defineProps<PageRootProps>(), {
   insets: true,
   back: true,
