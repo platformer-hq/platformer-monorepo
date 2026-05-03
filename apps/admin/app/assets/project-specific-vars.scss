@@ -1,7 +1,7 @@
 :root {
   // For each inset type, declare CSS variables.
   @each $side in ("top", "left", "right", "bottom") {
-    --sum-inset-#{$side}: calc(var(--safe-area-inset-#{$side}) + var(--content-safe-area-inset-#{$side}));
+    --tg-viewport-sum-inset-#{$side}: var(--sum-inset-#{$side});
   }
 
   --secondary-accent-color: rgba(var(--accent-text-color-parts), 10%);
