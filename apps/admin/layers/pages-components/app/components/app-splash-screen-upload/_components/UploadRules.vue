@@ -18,42 +18,54 @@ const { t } = useI18n({
       title: 'Требования',
       'expand.expand': 'Развернуть',
       'expand.collapse': 'Свернуть',
-      'attibutes.subtitle': 'Атрибуты',
-      'tags.subtitle': 'Теги',
+      'attibutes.subtitle': 'Доступные атрибуты',
+      'tags.subtitle': 'Доступные теги',
       'maxSize.subtitle': 'Максимальный размер',
-      'xmlns.subtitle': 'Значения xmlns',
+      'xmlns.subtitle': 'Доступные значения xmlns',
     },
     en: {
       title: 'Rules',
       'expand.expand': 'Expand',
       'expand.collapse': 'Collapse',
-      'attibutes.subtitle': 'Attributes',
-      'tags.subtitle': 'Tags',
+      'attibutes.subtitle': 'Allowed attributes',
+      'tags.subtitle': 'Allowed tags',
       'maxSize.subtitle': 'Max size',
-      'xmlns.subtitle': 'Xmlns values',
+      'xmlns.subtitle': 'Allowed xmlns values',
     },
   },
 });
+const platform = useTmaPlatform();
 
 const expanded = ref(false);
 
-const toSorted = (arr: string[]) => {
-  return [...arr].sort();
+const toSorted = (arr: string[]) => [...arr].sort();
+const toCapitalized = (str: string) => {
+  return str.charAt(0)[platform.value.isMappedIos ? 'toLowerCase' : 'toUpperCase']() + str.slice(1);
 };
 const lines = computed(() => {
   if (!props.data) {
     return;
   }
-  const { allowedAttrs: attributes, allowedTags: tags, maxSize, xmlns } = props.data;
+  const { allowedAttrs, allowedTags, maxSize, xmlns } = props.data;
   return [
-    { title: t('attibutes.subtitle'), value: toSorted(attributes).join(', ') },
-    { title: t('tags.subtitle'), value: toSorted(tags).join(', ') },
-    { title: t('maxSize.subtitle'), value: maxSize + ' B' },
-    { title: t('xmlns.subtitle'), value: `"${toSorted(xmlns).join('", "')}"` },
+    { title: toCapitalized(t('maxSize.subtitle')), value: maxSize + ' B' },
+    { title: toCapitalized(t('attibutes.subtitle')), value: toSorted(allowedAttrs).join(', ') },
+    { title: toCapitalized(t('tags.subtitle')), value: toSorted(allowedTags).join(', ') },
+    { title: toCapitalized(t('xmlns.subtitle')), value: `"${toSorted(xmlns).join('", "')}"` },
   ];
 });
 
 const { e } = bem('app-splash-screen-upload-rules');
+const itemsTransition = createReversibleTransition({
+  animatedProperties({ el, transition }) {
+    return reverseTransitionKeyframesIfLeave({
+      overflow: ['hidden', 'hidden'],
+      height: ['0px', el.clientHeight + 'px'],
+      opacity: [0, 1],
+    }, transition);
+  },
+  animationOptions: { duration: 300, easing: 'ease-out' },
+});
 </script>
 
 <template>
@@ -76,26 +88,28 @@ const { e } = bem('app-splash-screen-upload-rules');
           </template>
         </AutoListItem>
 
-        <TransitionGroup v-bind="createListItemTransition()" :css="false">
-          <template v-for="(line, idx) in lines" :key="idx">
-            <AutoListItem v-if="expanded" large>
-              <template #bodyLeft>
-                <AutoListItemBodyLeft reversed>
-                  <template #label>
-                    <AutoListItemBodyLeftLabel>
-                      {{ line.value }}
-                    </AutoListItemBodyLeftLabel>
-                  </template>
-                  <template #subtitle>
-                    <AutoListItemBodyLeftSubtitle>
-                      {{ line.title }}
-                    </AutoListItemBodyLeftSubtitle>
-                  </template>
-                </AutoListItemBodyLeft>
-              </template>
-            </AutoListItem>
-          </template>
-        </TransitionGroup>
+        <Transition v-bind="itemsTransition" :css="false">
+          <div v-if="expanded">
+            <template v-for="(line, idx) in lines" :key="idx">
+              <AutoListItem large>
+                <template #bodyLeft>
+                  <AutoListItemBodyLeft reversed>
+                    <template #label>
+                      <AutoListItemBodyLeftLabel>
+                        {{ line.value }}
+                      </AutoListItemBodyLeftLabel>
+                    </template>
+                    <template #subtitle>
+                      <AutoListItemBodyLeftSubtitle>
+                        {{ line.title }}
+                      </AutoListItemBodyLeftSubtitle>
+                    </template>
+                  </AutoListItemBodyLeft>
+                </template>
+              </AutoListItem>
+            </template>
+          </div>
+        </Transition>
       </AutoList>
     </AutoSection>
   </section>
