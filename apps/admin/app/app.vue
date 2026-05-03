@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { miniApp } from '@tma.js/sdk-vue';
 import { ApiGraphQLResponseError } from '@workspace/api';
 
 const apiStore = useApiStore();
@@ -16,7 +15,6 @@ if (import.meta.client) {
   watch(response, data => {
     if (data) {
       apiStore.setToken({ token: data.token, expiresAt: data.expiresAt });
-      miniApp.ready();
     }
   }, { immediate: true });
 
