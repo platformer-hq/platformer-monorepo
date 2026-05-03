@@ -40,5 +40,6 @@
   @each $side in ("top", "left", "right", "bottom") {
     --safe-area-inset-#{$side}: var(--tg-viewport-safe-area-inset-#{$side}, 0px);
     --content-safe-area-inset-#{$side}: var(--tg-viewport-content-safe-area-inset-#{$side}, 0px);
+    --sum-inset-#{$side}: calc(var(--safe-area-inset-#{$side}) + var(--content-safe-area-inset-#{$side}));
   }
 }

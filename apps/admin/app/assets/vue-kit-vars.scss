@@ -59,4 +59,11 @@
   --tgui-radio-ios-checked-color: var(--tg-theme-button-color);
   --tgui-radio-ios-icon-color: var(--tg-theme-button-text-color);
   --tgui-radio-ios-border-color: var(--tg-theme-hint-color);
+
+  // Insets.
+  @each $side in ('bottom', 'top', 'left', 'right') {
+    @each $shortType, $longType in ("csa": "content-safe-area",  "sa": "safe-area", "sum": "sum") {
+      --tgui-safe-area-insets-#{$side}-#{$shortType}-inset: var(--#{$longType}-inset-#{$side});
+    }
+  }
 }
