@@ -45,6 +45,14 @@ export const useApiStore = defineStore('api', () => {
         headers: token.value
           ? { Authorization: `jwt ${token.value.token}` }
           : {},
+        requestMiddleware(request) {
+          if (request.operationName) {
+            const url = new URL(request.url);
+            url.searchParams.set('operation', request.operationName);
+            request.url = url.toString();
+          }
+          return request;
+        },
       });
     }),
   };
