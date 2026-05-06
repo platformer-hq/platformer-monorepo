@@ -64,16 +64,14 @@ const isLoading = computed(() => isLoadingPageData.value || isUpdating.value);
 const canAcceptAppTransfers = ref(pageData.value?.canAcceptAppTransfers || false);
 const canBeInvitedToManage = ref(pageData.value?.canBeInvitedToManage || false);
 
-onMounted(() => {
-  preloadRouteComponents({ name: PageNames.Main });
-});
-
 watch(pageData, data => {
   if (data) {
     canAcceptAppTransfers.value = data.canAcceptAppTransfers;
     canBeInvitedToManage.value = data.canBeInvitedToManage;
   }
 });
+
+preloadRouteComponents({ name: PageNames.Main });
 </script>
 
 <template>

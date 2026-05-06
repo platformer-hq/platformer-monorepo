@@ -76,9 +76,7 @@ const respond = (value: boolean) => {
   respondRequest({ requestId: query.value.requestId, accept: value });
 };
 
-onMounted(() => {
-  preloadRouteComponents({ name: PageNames.TransferRequests });
-});
+preloadRouteComponents({ name: PageNames.TransferRequests });
 </script>
 
 <template>

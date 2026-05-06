@@ -81,9 +81,7 @@ const respond = (value: boolean) => {
   respondInvite({ inviteId: query.value.inviteId, accept: value });
 };
 
-onMounted(() => {
-  preloadRouteComponents({ name: PageNames.ManagementInvites });
-});
+preloadRouteComponents({ name: PageNames.ManagementInvites });
 </script>
 
 <template>

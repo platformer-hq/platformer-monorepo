@@ -158,12 +158,12 @@ const handleDelete = async () => {
   }
 };
 
-onMounted(() => {
-  preloadRouteComponents({ name: PageNames.Apps });
-  sections.value.flatMap(s => s.items).forEach(item => {
+preloadRouteComponents({ name: PageNames.Apps });
+watch(sections, sections => {
+  sections.flatMap(s => s.items).forEach(item => {
     preloadRouteComponents({ name: item.name });
   });
-});
+}, { deep: true, immediate: true });
 </script>
 
 <template>

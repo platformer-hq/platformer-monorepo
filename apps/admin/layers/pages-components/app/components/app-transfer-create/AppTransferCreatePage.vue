@@ -48,9 +48,7 @@ const { mutate: createTransferRequest, isLoading: isCreatingTransferRequest } = 
   },
 });
 
-onMounted(() => {
-  preloadRouteComponents({ name: PageNames.AppTransfer });
-});
+preloadRouteComponents({ name: PageNames.AppTransfer });
 </script>
 
 <template>

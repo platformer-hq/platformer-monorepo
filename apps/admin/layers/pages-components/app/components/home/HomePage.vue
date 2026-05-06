@@ -88,13 +88,11 @@ const sections = computed(() => {
   ];
 });
 
-onMounted(() => {
-  preloadRouteComponents({ name: PageNames.Apps });
-  preloadRouteComponents({ name: PageNames.ManagementInvites });
-  preloadRouteComponents({ name: PageNames.TransferRequests });
-  preloadRouteComponents({ name: PageNames.Account });
-  preloadRouteComponents({ name: PageNames.Privacy });
-});
+preloadRouteComponents({ name: PageNames.Apps });
+preloadRouteComponents({ name: PageNames.ManagementInvites });
+preloadRouteComponents({ name: PageNames.TransferRequests });
+preloadRouteComponents({ name: PageNames.Account });
+preloadRouteComponents({ name: PageNames.Privacy });
 </script>
 
 <template>
