@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import {
-  IconXmark28,
-  IconExclamationMarkTriangleFill28,
   LoadingIndicatorAndroid,
   LoadingIndicatorIos,
   bem,
   createReversibleTransition,
 } from '@tma.js/vue-kit';
+import {
+  IconXmark28,
+  IconExclamationMarkTriangleFill28,
+} from '@workspace/icons';
 
 defineProps<{
   status?: 'error' | 'warning' | 'loading';
