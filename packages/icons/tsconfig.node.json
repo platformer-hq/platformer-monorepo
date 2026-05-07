@@ -1,0 +1,10 @@
+{
+  "extends": "@workspace/tsconfigs/esnext.json",
+  "compilerOptions": {
+    "composite": true,
+    "declaration": true
+  },
+  "include": [
+    "build-icons.ts"
+  ]
+}

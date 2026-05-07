@@ -1,0 +1,7 @@
+{
+  "extends": "@workspace/tsconfigs/vue.json",
+  "include": ["src"],
+  "references": [{
+    "path": "./tsconfig.node.json"
+  }]
+}
