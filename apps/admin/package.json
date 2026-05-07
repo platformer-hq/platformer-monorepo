@@ -23,6 +23,7 @@
     "@workspace/api": "workspace:*",
     "@workspace/pinia-colada": "workspace:*",
     "@workspace/tma": "workspace:*",
+    "@workspace/icons": "workspace:*",
     "error-kid": "^2.0.0",
     "eruda": "^3.4.3",
     "fp-ts": "^2.16.11",

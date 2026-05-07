@@ -5,7 +5,7 @@ import {
   IconPersonHanshakeFill28,
   IconTrades30,
   IconUserCircleFill28,
-} from '@tma.js/vue-kit';
+} from '@workspace/icons';
 import * as fp from 'fp-ts';
 
 import { HomePageDataDocument } from './operations';

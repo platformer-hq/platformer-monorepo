@@ -95,6 +95,9 @@ importers:
       '@workspace/api':
         specifier: workspace:*
         version: link:../../packages/api
+      '@workspace/icons':
+        specifier: workspace:*
+        version: link:../../packages/icons
       '@workspace/pinia-colada':
         specifier: workspace:*
         version: link:../../packages/pinia-colada

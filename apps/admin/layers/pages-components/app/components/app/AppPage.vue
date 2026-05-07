@@ -11,7 +11,7 @@ import {
   IconEyeFillIOS28,
   IconDataAndStorage30,
   IconBinOutline28,
-} from '@tma.js/vue-kit';
+} from '@workspace/icons';
 import * as fp from 'fp-ts';
 import * as v from 'valibot';
 
