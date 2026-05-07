@@ -1,8 +1,8 @@
 import vue from '@vitejs/plugin-vue';
 import { resolve } from 'node:path';
-
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
+import svgLoader from 'vite-svg-loader';
 
 const tsconfigPath = resolve(import.meta.dirname, 'tsconfig.build.json');
 
@@ -15,6 +15,7 @@ export default defineConfig({
       cleanVueFileName: true,
       insertTypesEntry: true,
     }),
+    svgLoader({ defaultImport: 'url' }),
   ],
   build: {
     outDir: 'dist',
