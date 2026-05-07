@@ -3,7 +3,7 @@ import { hapticFeedback } from '@tma.js/sdk-vue';
 import { useMousePressed } from '@vueuse/core';
 import { computed, useTemplateRef } from 'vue';
 
-import IconCheckmarkIOS28 from '@/icons/icons/28/IconCheckmarkIOS28.vue';
+import CheckmarkIcon from '@/icons/ios-checkmark-28.svg?component';
 import { bem } from '@/utils/bem';
 
 const props = defineProps<{
@@ -27,7 +27,7 @@ const { b, e } = bem('tgui-radio-ios');
       type="radio"
       @change="hapticFeedback.selectionChanged.ifAvailable()"
     >
-    <IconCheckmarkIOS28 :size="19" :class="e('icon', { checked })"/>
+    <CheckmarkIcon :width="19" :height="19" :class="e('icon', { checked })"/>
   </label>
 </template>
 

@@ -1,13 +1,9 @@
 <script setup lang="ts">
-import IconChevronRight28, {
-  type IconChevronRight28Props,
-} from '@/icons/icons/28/IconChevronRight28.vue';
-
-defineProps<IconChevronRight28Props>();
+import ChevronRightIcon from '@/icons/chevron-right-28.svg?component';
 </script>
 
 <template>
-  <IconChevronRight28 class="tgui-list-android-item-body-right-chevron" v-bind="$props"/>
+  <ChevronRightIcon class="tgui-list-android-item-body-right-chevron"/>
 </template>
 
 <style>

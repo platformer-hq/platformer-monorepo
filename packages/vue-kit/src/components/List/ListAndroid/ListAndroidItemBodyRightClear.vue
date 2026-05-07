@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import ButtonAndroid from '@/components/Button/ButtonAndroid.vue';
-import { IconXmark24 } from '@/icons';
+
+import XMarkIcon from './xmark-24.svg?component';
 </script>
 
 <template>
   <ButtonAndroid class="tgui-list-android-item-body-right-clear">
-    <IconXmark24 :size="20"/>
+    <XMarkIcon :width="20" :height="20"/>
   </ButtonAndroid>
 </template>
 

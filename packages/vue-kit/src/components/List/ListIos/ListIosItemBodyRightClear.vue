@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { IconXmarkFill28 } from '@/icons';
+import XMarkFillIcon from './xmark-fill-28.svg?component';
 </script>
 
 <template>
   <i class="tgui-list-ios-item-body-right-clear">
-    <IconXmarkFill28 :size="20"/>
+    <XMarkFillIcon :width="20" :height="20"/>
   </i>
 </template>
 

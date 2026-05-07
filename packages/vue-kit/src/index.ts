@@ -154,5 +154,4 @@ export { toPx } from './utils/toPx.js';
 export { createReversibleTransition, reverseTransitionKeyframesIfLeave } from './utils/transitions.js';
 //#endregion
 
-export * from './icons/index.js';
 import './scss/global.scss';
