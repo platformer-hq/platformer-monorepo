@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useMousePressed } from '@vueuse/core';
-import { computed, useTemplateRef } from 'vue';
+import { useMousePressed, watchThrottled } from '@vueuse/core';
+import { computed, ref, useTemplateRef } from 'vue';
 
 import { bem } from '@/utils/bem.js';
 
@@ -27,6 +27,7 @@ const props = withDefaults(defineProps<{
   variant?: ListIosItemVariant;
 }>(), {
   variant: 'regular',
+  large: false,
 });
 defineSlots<{
   left(): unknown;
@@ -38,20 +39,13 @@ defineSlots<{
   bodyRight(): unknown;
 }>();
 
-const { b, e } = bem('tgui-list-ios-item');
-
 provideListItemOptions({
-  large: computed(() => props.large || false),
+  large: computed(() => props.large),
 });
 
-const bodyLeftSlots = [
-  { id: 'bodyLeftInput', name: 'input' },
-  { id: 'bodyLeftLabel', name: 'label' },
-  { id: 'bodyLeftSubtitle', name: 'subtitle' },
-] as const;
-
+const pressedDebounced = ref(false);
 const rootRef = useTemplateRef('root');
-const { pressed } = useMousePressed({ target: rootRef, touch: false });
+const { pressed } = useMousePressed({ target: rootRef });
 const onHighlightLeave = (el: Element, done: VoidFunction) => {
   el
     .animate({ opacity: [0.1, 0] }, { duration: 300 })
@@ -60,12 +54,26 @@ const onHighlightLeave = (el: Element, done: VoidFunction) => {
       done();
     });
 };
+
+// We update press state with throttle as long as we track both touches
+// and traditional clicks. Clicking the item on a touch device will trigger
+// pressed state updates twice, but it is not intended.
+watchThrottled(pressed, v => {
+  pressedDebounced.value = v;
+}, { throttle: 50 });
+
+const { b, e } = bem('tgui-list-ios-item');
+const bodyLeftSlots = [
+  { id: 'bodyLeftInput', name: 'input' },
+  { id: 'bodyLeftLabel', name: 'label' },
+  { id: 'bodyLeftSubtitle', name: 'subtitle' },
+] as const;
 </script>
 
 <template>
-  <li ref="root" :class="b(variant, { clickable, 'no-left': !$slots.left })">
+  <li ref="root" :class="b(variant, { 'no-left': !$slots.left })">
     <Transition v-if="clickable" :css="false" @leave="onHighlightLeave">
-      <span v-if="pressed" key="active" :class="e('highlight')"/>
+      <span v-if="pressedDebounced" key="active" :class="e('highlight')"/>
     </Transition>
     <slot name="left"/>
     <slot name="body">
@@ -92,8 +100,6 @@ const onHighlightLeave = (el: Element, done: VoidFunction) => {
 </template>
 
 <style lang="scss">
-@use "@/scss/mixins" as mixins;
-
 .tgui-list-ios-item {
   position: relative;
   appearance: none;
@@ -107,10 +113,6 @@ const onHighlightLeave = (el: Element, done: VoidFunction) => {
 
   &--no-left {
     grid-template-columns: 1fr;
-  }
-
-  &--clickable {
-    @include mixins.clickable;
   }
 
   &__highlight {
