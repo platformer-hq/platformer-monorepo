@@ -1,20 +1,27 @@
 <script setup lang="ts">
+import type { KnownHtmlTag } from '@/types/html-tags.js';
 import { bem } from '@/utils/bem';
 
-defineProps<{
+withDefaults(defineProps<{
+  /**
+   * @default 'div'
+   */
+  as?: KnownHtmlTag;
   /**
    * True if the left small padding should be added.
    */
   padLeft?: boolean;
-}>();
+}>(), {
+  as: 'div',
+});
 
 const { b } = bem('tgui-list-ios-item-left-icon');
 </script>
 
 <template>
-  <div :class="b({'pad-left': padLeft})">
+  <component :is="as" :class="b({'pad-left': padLeft})">
     <slot/>
-  </div>
+  </component>
 </template>
 
 <style lang="scss">

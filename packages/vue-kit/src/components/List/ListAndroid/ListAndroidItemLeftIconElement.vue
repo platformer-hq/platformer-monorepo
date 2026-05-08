@@ -1,7 +1,12 @@
 <script setup lang="ts">
+import type { KnownHtmlTag } from '@/types/html-tags.js';
 import { bem } from '@/utils/bem';
 
 withDefaults(defineProps<{
+  /**
+   * @default 'i'
+   */
+  as?: KnownHtmlTag;
   /**
    * The icon size.
    * - `small` - 28px
@@ -11,6 +16,7 @@ withDefaults(defineProps<{
   size?: 'small' | 'large';
   rounded?: boolean;
 }>(), {
+  as: 'i',
   size: 'small',
 });
 
@@ -18,9 +24,9 @@ const { b } = bem('tgui-list-android-item-left-icon-element');
 </script>
 
 <template>
-  <i :class="b({ rounded }, size)">
+  <component :is="as" :class="b({ rounded }, size)">
     <slot/>
-  </i>
+  </component>
 </template>
 
 <style lang="scss">

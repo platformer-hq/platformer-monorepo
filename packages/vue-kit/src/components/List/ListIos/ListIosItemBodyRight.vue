@@ -1,10 +1,20 @@
 <script setup lang="ts">
+import type { KnownHtmlTag } from '@/types';
+
+withDefaults(defineProps<{
+  /**
+   * @default 'div'
+   */
+  as?: KnownHtmlTag;
+}>(), {
+  as: 'div',
+});
 </script>
 
 <template>
-  <div class="tgui-list-ios-item-body-right">
+  <component :is="as" class="tgui-list-ios-item-body-right">
     <slot />
-  </div>
+  </component>
 </template>
 
 <style>

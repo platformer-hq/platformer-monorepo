@@ -2,6 +2,7 @@
 import { useMousePressed, watchThrottled } from '@vueuse/core';
 import { computed, ref, useTemplateRef } from 'vue';
 
+import type { KnownHtmlTag } from '@/types/html-tags.js';
 import { bem } from '@/utils/bem.js';
 
 import ListIosItemBody from './ListIosItemBody.vue';
@@ -11,6 +12,10 @@ import { provideListItemOptions } from './provider.js';
 export type ListIosItemVariant = 'regular' | 'accent' | 'destructive' | 'placeholder';
 
 const props = withDefaults(defineProps<{
+  /**
+   * @default 'li'
+   */
+  as?: KnownHtmlTag;
   /**
    * True if the element is clickable. This will add some additional visual changes
    * to the element.
@@ -26,6 +31,7 @@ const props = withDefaults(defineProps<{
    */
   variant?: ListIosItemVariant;
 }>(), {
+  as: 'li',
   variant: 'regular',
   large: false,
 });
@@ -44,7 +50,7 @@ provideListItemOptions({
 });
 
 const pressedDebounced = ref(false);
-const rootRef = useTemplateRef('root');
+const rootRef = useTemplateRef<HTMLElement>('root');
 const { pressed } = useMousePressed({ target: rootRef });
 const onHighlightLeave = (el: Element, done: VoidFunction) => {
   el
@@ -71,7 +77,7 @@ const bodyLeftSlots = [
 </script>
 
 <template>
-  <li ref="root" :class="b(variant, { 'no-left': !$slots.left })">
+  <component :is="as" ref="root" :class="b(variant, { 'no-left': !$slots.left })">
     <Transition v-if="clickable" :css="false" @leave="onHighlightLeave">
       <span v-if="pressedDebounced" key="active" :class="e('highlight')"/>
     </Transition>
@@ -96,7 +102,7 @@ const bodyLeftSlots = [
         </template>
       </ListIosItemBody>
     </slot>
-  </li>
+  </component>
 </template>
 
 <style lang="scss">

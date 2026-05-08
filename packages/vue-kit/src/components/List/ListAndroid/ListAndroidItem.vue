@@ -2,6 +2,7 @@
 import { computed, useTemplateRef } from 'vue';
 
 import { useRipples } from '@/composables/useRipples.js';
+import type { KnownHtmlTag } from '@/types/html-tags.js';
 import { bem } from '@/utils/bem.js';
 
 import ListAndroidItemBody from './ListAndroidItemBody.vue';
@@ -11,6 +12,10 @@ import { provideListItemOptions } from './provider.js';
 export type ListAndroidItemVariant = 'regular' | 'accent' | 'destructive' | 'placeholder';
 
 const props = withDefaults(defineProps<{
+  /**
+   * @default 'li'
+   */
+  as?: KnownHtmlTag;
   /**
    * True if the element is clickable. This will add some additional visual changes to the element.
    */
@@ -25,7 +30,9 @@ const props = withDefaults(defineProps<{
    */
   variant?: ListAndroidItemVariant;
 }>(), {
+  as: 'li',
   variant: 'regular',
+  large: false,
 });
 defineSlots<{
   left(): unknown;
@@ -40,7 +47,7 @@ defineSlots<{
 const { b } = bem('tgui-list-android-item');
 
 provideListItemOptions({
-  large: computed(() => props.large ?? false),
+  large: computed(() => props.large),
 });
 
 const bodyLeftSlots = [
@@ -49,7 +56,7 @@ const bodyLeftSlots = [
   { id: 'bodyLeftSubtitle', name: 'subtitle' },
 ] as const;
 
-const rootRef = useTemplateRef('root');
+const rootRef = useTemplateRef<HTMLElement>('root');
 useRipples({
   enabled: () => props.clickable,
   containerRef: rootRef,
@@ -58,7 +65,7 @@ useRipples({
 </script>
 
 <template>
-  <li ref="root" :class="b(variant, {clickable, 'no-left': !$slots.left})">
+  <component :is="as" ref="root" :class="b(variant, {clickable, 'no-left': !$slots.left})">
     <slot name="left"/>
     <slot name="body">
       <ListAndroidItemBody>
@@ -80,7 +87,7 @@ useRipples({
         </template>
       </ListAndroidItemBody>
     </slot>
-  </li>
+  </component>
 </template>
 
 <style lang="scss">

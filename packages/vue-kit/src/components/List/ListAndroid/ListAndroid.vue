@@ -1,10 +1,20 @@
 <script lang="ts" setup>
+import type { KnownHtmlTag } from '@/types/html-tags.js';
+
+withDefaults(defineProps<{
+  /**
+   * @default 'ul'
+   */
+  as?: KnownHtmlTag;
+}>(), {
+  as: 'ul',
+});
 </script>
 
 <template>
-  <ul class="tgui-list-android">
+  <component :is="as" class="tgui-list-android">
     <slot />
-  </ul>
+  </component>
 </template>
 
 <style>

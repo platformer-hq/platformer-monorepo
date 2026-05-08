@@ -1,11 +1,22 @@
 <script setup lang="ts">
+import type { KnownHtmlTag } from '@/types/html-tags.js';
+
 import XMarkFillIcon from './xmark-fill-28.svg?component';
+
+withDefaults(defineProps<{
+  /**
+   * @default 'i'
+   */
+  as?: KnownHtmlTag;
+}>(), {
+  as: 'i',
+});
 </script>
 
 <template>
-  <i class="tgui-list-ios-item-body-right-clear">
+  <component :is="as" class="tgui-list-ios-item-body-right-clear">
     <XMarkFillIcon :width="20" :height="20"/>
-  </i>
+  </component>
 </template>
 
 <style lang="scss">

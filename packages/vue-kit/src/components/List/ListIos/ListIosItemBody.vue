@@ -1,7 +1,17 @@
 <script setup lang="ts">
+import type { KnownHtmlTag } from '@/types/html-tags.js';
 import { bem } from '@/utils/bem';
 
 import { injectListItemOptions } from './provider';
+
+withDefaults(defineProps<{
+  /**
+   * @default 'div'
+   */
+  as?: KnownHtmlTag;
+}>(), {
+  as: 'div',
+});
 
 defineSlots<{
   left(): unknown;
@@ -13,10 +23,10 @@ const { large } = injectListItemOptions();
 </script>
 
 <template>
-  <div :class="b(large ? 'large' : 'small', {'no-right': !$slots.right})">
+  <component :is="as" :class="b(large ? 'large' : 'small', {'no-right': !$slots.right})">
     <slot name="left" />
     <slot name="right" />
-  </div>
+  </component>
 </template>
 
 <style lang="scss">
