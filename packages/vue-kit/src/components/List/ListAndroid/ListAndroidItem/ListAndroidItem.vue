@@ -7,7 +7,7 @@ import { bem } from '@/utils/bem.js';
 
 import ListAndroidItemBody from './ListAndroidItemBody.vue';
 import ListAndroidItemBodyLeft from './ListAndroidItemBodyLeft.vue';
-import { provideListItemOptions } from './provider.js';
+import { provideListItemOptions } from '../provider.js';
 
 export type ListAndroidItemVariant = 'regular' | 'accent' | 'destructive' | 'placeholder';
 

@@ -11,7 +11,7 @@ withDefaults(defineProps<{
   as: 'div',
 });
 
-import { injectListItemOptions } from './provider.js';
+import { injectListItemOptions } from '../provider.js';
 
 defineSlots<{
   left(): unknown;

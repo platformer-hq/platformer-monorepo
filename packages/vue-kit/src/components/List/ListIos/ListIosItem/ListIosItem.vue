@@ -7,7 +7,7 @@ import { bem } from '@/utils/bem.js';
 
 import ListIosItemBody from './ListIosItemBody.vue';
 import ListIosItemBodyLeft from './ListIosItemBodyLeft.vue';
-import { provideListItemOptions } from './provider.js';
+import { provideListItemOptions } from '../provider.js';
 
 export type ListIosItemVariant = 'regular' | 'accent' | 'destructive' | 'placeholder';
 

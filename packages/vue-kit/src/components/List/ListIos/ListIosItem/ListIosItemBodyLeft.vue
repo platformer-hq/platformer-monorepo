@@ -2,7 +2,7 @@
 import type { KnownHtmlTag } from '@/types/html-tags.js';
 import { bem } from '@/utils/bem.js';
 
-import { injectListItemOptions } from './provider.js';
+import { injectListItemOptions } from '../provider.js';
 
 withDefaults(defineProps<{
   /**
