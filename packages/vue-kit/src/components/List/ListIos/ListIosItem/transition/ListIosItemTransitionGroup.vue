@@ -7,7 +7,7 @@ defineProps<TransitionGroupProps>();
 </script>
 
 <template>
-  <TransitionGroup v-bind="{...createListIosItemTransition(), $props}" :css="false">
+  <TransitionGroup v-bind="{...createListIosItemTransition(), ...$props}" :css="false">
     <slot/>
   </TransitionGroup>
 </template>

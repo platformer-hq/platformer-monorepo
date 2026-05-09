@@ -7,7 +7,7 @@ defineProps<TransitionProps>();
 </script>
 
 <template>
-  <Transition v-bind="{...createListAndroidItemTransition(), $props}" :css="false">
+  <Transition v-bind="{...createListAndroidItemTransition(), ...$props}" :css="false">
     <slot/>
   </Transition>
 </template>
