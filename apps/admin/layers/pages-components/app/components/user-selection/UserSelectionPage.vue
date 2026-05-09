@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { refDebounced } from '@vueuse/core';
+import { IconMagnify24 } from '@workspace/icons';
 import * as fp from 'fp-ts';
 
 import type { UserSelectionStoreSelectedUser } from '#stores/composables/useUserSelectionStore';
