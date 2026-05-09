@@ -32,7 +32,7 @@ const { t } = useI18n({
   },
 });
 const isPageEntered = useIsCurrentPageEntered();
-const userSelectionStore = useUserSelectionStore();
+const userSelectionStore = useUserSelectionPageStore();
 
 //#region Requests.
 const { options: appTestGroupPageQueryOptions } = useAppTestGroupPageQueryMeta();

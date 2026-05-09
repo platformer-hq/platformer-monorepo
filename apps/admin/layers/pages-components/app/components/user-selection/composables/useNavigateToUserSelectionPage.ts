@@ -1,7 +1,7 @@
-import type { UserSelectionPageStoreState } from './useUserSelectionPageStore';
+import { useUserSelectionPageStore, type UserSelectionPageStoreState } from './useUserSelectionPageStore';
 
 export function useNavigateToUserSelectionPage() {
-  const store = useUserSelectionStore();
+  const store = useUserSelectionPageStore();
 
   return (options: Partial<UserSelectionPageStoreState> = {}) => {
     store.reset();

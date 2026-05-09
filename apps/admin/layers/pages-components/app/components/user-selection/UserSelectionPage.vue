@@ -3,7 +3,7 @@ import { refDebounced } from '@vueuse/core';
 import { IconMagnify24 } from '@workspace/icons';
 import * as fp from 'fp-ts';
 
-import type { UserSelectionPageStoreSelectedUser } from './composables/useUserSelectionPageStore';
+import { useUserSelectionPageStore, type UserSelectionPageStoreSelectedUser } from './composables/useUserSelectionPageStore';
 
 import { UserSelectionPageDataDocument } from './operations';
 
@@ -27,7 +27,7 @@ const { t } = useI18n({
 });
 const { e } = bem('user-selection-page');
 
-const store = useUserSelectionStore();
+const store = useUserSelectionPageStore();
 const router = useRouter();
 const isPageEntered = useIsCurrentPageEntered();
 
