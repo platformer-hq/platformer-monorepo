@@ -19,14 +19,11 @@ withDefaults(defineProps<{
   </component>
 </template>
 
-<style lang="scss">
-@use "@/scss/mixins" as mixins;
-
+<style>
 .tgui-list-ios-item-body-right-clear {
   display: flex;
   padding: 4px;
   margin-right: -4px;
   color: var(--tgui-list-ios-item-body-right-clear-color);
-  @include mixins.clickable;
 }
 </style>
