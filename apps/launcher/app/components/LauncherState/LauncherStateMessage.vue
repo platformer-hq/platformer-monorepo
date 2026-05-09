@@ -10,5 +10,6 @@
 <style>
 .launcher-state-message {
   color: var(--subtitle-text-color);
+  word-break: break-word;
 }
 </style>
