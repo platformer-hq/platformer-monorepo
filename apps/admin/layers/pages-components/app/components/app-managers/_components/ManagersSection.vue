@@ -62,7 +62,7 @@ const isItemClickable = (item: Manager | number) => {
           </AutoListItemBodyLeftLabel>
         </template>
       </AutoListItem>
-      <TransitionGroup v-bind="createListItemTransition()" :css="false">
+      <AutoListItemTransitionGroup>
         <AutoListItem
           v-for="(managerOrWidth, idx) in managers || [180, 230]"
           :key="initiallyHadData && typeof managerOrWidth === 'object'
@@ -101,7 +101,7 @@ const isItemClickable = (item: Manager | number) => {
             </AutoListItemBodyRight>
           </template>
         </AutoListItem>
-      </TransitionGroup>
+      </AutoListItemTransitionGroup>
     </AutoList>
     <template #footer>
       <AutoSectionFooter>

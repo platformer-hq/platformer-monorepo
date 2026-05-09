@@ -148,7 +148,7 @@ const previewTransition = createReversibleTransition({
                 </AutoListItemBodyLeftLabel>
               </template>
             </AutoListItem>
-            <Transition v-bind="createListItemTransition()" :css="false">
+            <AutoListItemTransition>
               <AutoListItem v-if="selectedFile" large>
                 <template #left>
                   <AutoListItemLeft>
@@ -189,7 +189,7 @@ const previewTransition = createReversibleTransition({
                   </AutoListItemBodyRight>
                 </template>
               </AutoListItem>
-            </Transition>
+            </AutoListItemTransition>
           </AutoList>
 
           <template #footer>

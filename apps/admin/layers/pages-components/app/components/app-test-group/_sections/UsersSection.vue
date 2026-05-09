@@ -35,7 +35,7 @@ const navigateToUserSelection = useNavigateToUserSelection();
       </AutoSectionHeader>
     </template>
     <AutoList>
-      <TransitionGroup v-bind="createListItemTransition()" :css="false">
+      <AutoListItemTransitionGroup>
         <AutoListItem v-if="!users.length && readonly" key="empty">
           <template #bodyLeftLabel>
             <AutoListItemBodyLeftLabel>
@@ -78,7 +78,7 @@ const navigateToUserSelection = useNavigateToUserSelection();
             </AutoListItemBodyRight>
           </template>
         </AutoListItem>
-      </TransitionGroup>
+      </AutoListItemTransitionGroup>
     </AutoList>
     <template #footer>
       <AutoSectionFooter>
