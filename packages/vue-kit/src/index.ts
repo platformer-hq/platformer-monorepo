@@ -30,7 +30,6 @@ export { default as ListAndroidItemLeftIcon } from './components/List/ListAndroi
 export { default as ListAndroidItemLeftIconElement } from './components/List/ListAndroid/ListAndroidItem/ListAndroidItemLeftIconElement.vue';
 export { default as ListAndroidItemLeftLabel } from './components/List/ListAndroid/ListAndroidItem/ListAndroidItemLeftLabel.vue';
 export { default as ListAndroidItemTransition } from './components/List/ListAndroid/ListAndroidItem/transition/ListAndroidItemTransition.vue';
-export { default as ListAndroidItemTransitionGroup } from './components/List/ListAndroid/ListAndroidItem/transition/ListAndroidItemTransitionGroup.vue';
 export { createListAndroidItemTransition } from './components/List/ListAndroid/ListAndroidItem/transition/createListAndroidItemTransition.js';
 
 export { default as ListIos } from './components/List/ListIos/ListIos.vue';
@@ -53,7 +52,6 @@ export { default as ListIosItemLeftIcon } from './components/List/ListIos/ListIo
 export { default as ListIosItemLeftIconElement } from './components/List/ListIos/ListIosItem/ListIosItemLeftIconElement.vue';
 export { default as ListIosItemLeftLabel } from './components/List/ListIos/ListIosItem/ListIosItemLeftLabel.vue';
 export { default as ListIosItemTransition } from './components/List/ListIos/ListIosItem/transition/ListIosItemTransition.vue';
-export { default as ListIosItemTransitionGroup } from './components/List/ListIos/ListIosItem/transition/ListIosItemTransitionGroup.vue';
 export { createListIosItemTransition } from './components/List/ListIos/ListIosItem/transition/createListIosItemTransition.js';
 
 export { default as LoadingIndicatorAndroid } from './components/LoadingIndicator/LoadingIndicatorAndroid.vue';
