@@ -15,7 +15,19 @@ export default defineConfig({
       cleanVueFileName: true,
       insertTypesEntry: true,
     }),
-    svgLoader({ defaultImport: 'url' }),
+    svgLoader({
+      defaultImport: 'url',
+      svgoConfig: {
+        plugins: [{
+          name: 'preset-default',
+          params: {
+            overrides: {
+              removeViewBox: false,
+            },
+          },
+        }],
+      },
+    }),
   ],
   build: {
     outDir: 'dist',
