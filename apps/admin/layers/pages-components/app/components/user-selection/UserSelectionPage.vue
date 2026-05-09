@@ -3,7 +3,7 @@ import { refDebounced } from '@vueuse/core';
 import { IconMagnify24 } from '@workspace/icons';
 import * as fp from 'fp-ts';
 
-import type { UserSelectionStoreSelectedUser } from '#stores/composables/useUserSelectionStore';
+import type { UserSelectionStoreSelectedUser } from './composables/useUserSelectionStore';
 
 import { UserSelectionPageDataDocument } from './operations';
 

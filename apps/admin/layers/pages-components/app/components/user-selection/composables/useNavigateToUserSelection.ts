@@ -1,4 +1,4 @@
-import type { UserSelectionStoreState } from '#stores/composables/useUserSelectionStore';
+import type { UserSelectionStoreState } from './useUserSelectionStore';
 
 export function useNavigateToUserSelection() {
   const store = useUserSelectionStore();
