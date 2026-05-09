@@ -273,7 +273,7 @@ const handleRedirect = () => {
   display: grid;
   grid-template-rows: 1fr auto auto;
   text-align: center;
-  background: var(--bg-color);
+  background: var(--tg-app-bg-color);
 
   &__body {
     display: flex;

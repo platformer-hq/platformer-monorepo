@@ -94,11 +94,11 @@ const platform = usePlatform();
 <style lang="scss">
 .launcher-state-bottom-bar {
   &__button {
-    background-color: var(--button-color);
-    color: var(--button-text-color);
+    background-color: var(--tg-theme-button-color);
+    color: var(--tg-theme-button-text-color);
 
     &--disabled {
-      color: var(--text-color);
+      color: var(--tg-theme-text-color);
     }
 
     &--disabled-dark {
