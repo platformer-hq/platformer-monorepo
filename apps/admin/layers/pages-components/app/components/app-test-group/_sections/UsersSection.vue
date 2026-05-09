@@ -24,7 +24,7 @@ const { t } = useI18n({
     },
   },
 });
-const navigateToUserSelection = useNavigateToUserSelection();
+const navigateToUserSelection = useNavigateToUserSelectionPage();
 </script>
 
 <template>

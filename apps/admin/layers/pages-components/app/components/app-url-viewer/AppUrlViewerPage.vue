@@ -35,7 +35,7 @@ const { t } = useI18n({
 });
 const appId = useQueryAppId();
 const userSelectionStore = useUserSelectionStore();
-const navigateToUserSelection = useNavigateToUserSelection();
+const navigateToUserSelection = useNavigateToUserSelectionPage();
 const request = useMakeApiGqlRequest();
 
 const lastSelectedUser = ref<UserSelectionStoreSelectedUser | undefined>(
