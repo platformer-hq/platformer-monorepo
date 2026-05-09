@@ -163,20 +163,22 @@ const confirm = () => {
             </AutoSectionHeader>
           </template>
           <AutoList>
-            <AutoListItemTransitionGroup appear>
-              <AutoListItem v-for="(user, idx) in selectedUsers" :key="user.id">
-                <template #bodyLeftLabel>
-                  <AutoListItemBodyLeftLabel>
-                    {{ user.name }} <span :class="e('user-id')">#{{ user.id }}</span>
-                  </AutoListItemBodyLeftLabel>
-                </template>
-                <template #bodyRight>
-                  <AutoListItemBodyRight>
-                    <AutoListItemBodyRightClear @click="removeUser(idx)"/>
-                  </AutoListItemBodyRight>
-                </template>
-              </AutoListItem>
-            </AutoListItemTransitionGroup>
+            <UseListItemTransition v-slot="transition">
+              <TransitionGroup v-bind="transition" :css="false" appear>
+                <AutoListItem v-for="(user, idx) in selectedUsers" :key="user.id">
+                  <template #bodyLeftLabel>
+                    <AutoListItemBodyLeftLabel>
+                      {{ user.name }} <span :class="e('user-id')">#{{ user.id }}</span>
+                    </AutoListItemBodyLeftLabel>
+                  </template>
+                  <template #bodyRight>
+                    <AutoListItemBodyRight>
+                      <AutoListItemBodyRightClear @click="removeUser(idx)"/>
+                    </AutoListItemBodyRight>
+                  </template>
+                </AutoListItem>
+              </TransitionGroup>
+            </UseListItemTransition>
           </AutoList>
         </AutoSection>
 
@@ -191,35 +193,37 @@ const confirm = () => {
             </AutoSectionHeader>
           </template>
           <AutoList>
-            <AutoListItemTransitionGroup appear>
-              <AutoListItem v-if="!displayedFoundUsers?.length" key="not-found">
-                <template #bodyLeftLabel>
-                  <AutoListItemBodyLeftLabel>
-                    {{ t('foundUsers.empty') }}
-                  </AutoListItemBodyLeftLabel>
-                </template>
-              </AutoListItem>
-              <AutoListItem
-                v-for="user in displayedFoundUsers"
-                v-else
-                :key="user.id"
-                clickable
-                @click="selectUser(user)"
-              >
-                <template #bodyLeftLabel>
-                  <AutoListItemBodyLeftLabel>
-                    {{ user.name }}
-                  </AutoListItemBodyLeftLabel>
-                </template>
-                <template #bodyRight>
-                  <AutoListItemBodyRight>
-                    <AutoListItemBodyRightLabel :class="e('user-id')">
-                      #{{ user.id }}
-                    </AutoListItemBodyRightLabel>
-                  </AutoListItemBodyRight>
-                </template>
-              </AutoListItem>
-            </AutoListItemTransitionGroup>
+            <UseListItemTransition v-slot="transition">
+              <TransitionGroup v-bind="transition" :css="false" appear>
+                <AutoListItem v-if="!displayedFoundUsers?.length" key="not-found">
+                  <template #bodyLeftLabel>
+                    <AutoListItemBodyLeftLabel>
+                      {{ t('foundUsers.empty') }}
+                    </AutoListItemBodyLeftLabel>
+                  </template>
+                </AutoListItem>
+                <AutoListItem
+                  v-for="user in displayedFoundUsers"
+                  v-else
+                  :key="user.id"
+                  clickable
+                  @click="selectUser(user)"
+                >
+                  <template #bodyLeftLabel>
+                    <AutoListItemBodyLeftLabel>
+                      {{ user.name }}
+                    </AutoListItemBodyLeftLabel>
+                  </template>
+                  <template #bodyRight>
+                    <AutoListItemBodyRight>
+                      <AutoListItemBodyRightLabel :class="e('user-id')">
+                        #{{ user.id }}
+                      </AutoListItemBodyRightLabel>
+                    </AutoListItemBodyRight>
+                  </template>
+                </AutoListItem>
+              </TransitionGroup>
+            </UseListItemTransition>
           </AutoList>
         </AutoSection>
       </PagePaddings>

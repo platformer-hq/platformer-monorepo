@@ -53,63 +53,65 @@ watch(invites, invites => {
               {{ t('title') }}
             </AutoSectionHeader>
           </template>
-          <AutoListItemTransitionGroup>
-            <AutoListItem
-              v-for="item in invites"
-              :key="item.key"
-              :large="item.kind !== 'empty'"
-              :clickable="item.kind === 'invite'"
-              @click="item.kind === 'invite' && navigateTo({
-                name: PageNames.ManagementInvite,
-                query: {
-                  inviteId: item.invite.id,
-                  app: JSON.stringify({
-                    id: item.invite.app.id,
-                    title: item.invite.app.title,
-                  }),
-                  sender: JSON.stringify({
-                    id: item.invite.from.id,
-                    name: item.invite.from.name,
-                  }),
-                  role: item.invite.role,
-                },
-              })"
-            >
-              <template #bodyLeftLabel>
-                <AutoListItemBodyLeftLabel>
-                  <template v-if="item.kind === 'invite'">
-                    {{ item.invite.app.title }}
-                    <ColorBox as="span" text="subtitle-text">
-                      #{{ item.invite.app.id }}
-                    </ColorBox>
-                  </template>
-                  <TextShimmerBox v-else-if="item.kind === 'width'" :width="item.width"/>
-                  <template v-else>
-                    {{ t('empty') }}
-                  </template>
-                </AutoListItemBodyLeftLabel>
-              </template>
-              <template #bodyLeftSubtitle>
-                <AutoListItemBodyLeftSubtitle :max-lines="1">
-                  <template v-if="item.kind === 'invite'">
-                    {{ t('invite.subtitle', {
-                      name: `${item.invite.from.name} #${item.invite.from.id}`,
-                      role: {
-                        [LocalAppManagementInviteRole.Admin]: t('role.admin'),
-                        [LocalAppManagementInviteRole.Member]: t('role.member'),
-                      }[item.invite.role]
-                    }) }}
-                  </template>
-                  <TextShimmerBox v-else-if="item.kind === 'width'" :width="item.width / 2"/>
-                </AutoListItemBodyLeftSubtitle>
-              </template>
-              <template v-if="item.kind === 'invite'" #bodyRight>
-                <AutoListItemBodyRight>
-                  <AutoListItemBodyRightChevron/>
-                </AutoListItemBodyRight>
-              </template>
-            </AutoListItem>
-          </AutoListItemTransitionGroup>
+          <UseListItemTransition v-slot="transition">
+            <TransitionGroup v-bind="transition" :css="false">
+              <AutoListItem
+                v-for="item in invites"
+                :key="item.key"
+                :large="item.kind !== 'empty'"
+                :clickable="item.kind === 'invite'"
+                @click="item.kind === 'invite' && navigateTo({
+                  name: PageNames.ManagementInvite,
+                  query: {
+                    inviteId: item.invite.id,
+                    app: JSON.stringify({
+                      id: item.invite.app.id,
+                      title: item.invite.app.title,
+                    }),
+                    sender: JSON.stringify({
+                      id: item.invite.from.id,
+                      name: item.invite.from.name,
+                    }),
+                    role: item.invite.role,
+                  },
+                })"
+              >
+                <template #bodyLeftLabel>
+                  <AutoListItemBodyLeftLabel>
+                    <template v-if="item.kind === 'invite'">
+                      {{ item.invite.app.title }}
+                      <ColorBox as="span" text="subtitle-text">
+                        #{{ item.invite.app.id }}
+                      </ColorBox>
+                    </template>
+                    <TextShimmerBox v-else-if="item.kind === 'width'" :width="item.width"/>
+                    <template v-else>
+                      {{ t('empty') }}
+                    </template>
+                  </AutoListItemBodyLeftLabel>
+                </template>
+                <template #bodyLeftSubtitle>
+                  <AutoListItemBodyLeftSubtitle :max-lines="1">
+                    <template v-if="item.kind === 'invite'">
+                      {{ t('invite.subtitle', {
+                        name: `${item.invite.from.name} #${item.invite.from.id}`,
+                        role: {
+                          [LocalAppManagementInviteRole.Admin]: t('role.admin'),
+                          [LocalAppManagementInviteRole.Member]: t('role.member'),
+                        }[item.invite.role]
+                      }) }}
+                    </template>
+                    <TextShimmerBox v-else-if="item.kind === 'width'" :width="item.width / 2"/>
+                  </AutoListItemBodyLeftSubtitle>
+                </template>
+                <template v-if="item.kind === 'invite'" #bodyRight>
+                  <AutoListItemBodyRight>
+                    <AutoListItemBodyRightChevron/>
+                  </AutoListItemBodyRight>
+                </template>
+              </AutoListItem>
+            </TransitionGroup>
+          </UseListItemTransition>
         </AutoSection>
       </PagePaddings>
     </PageContent>
