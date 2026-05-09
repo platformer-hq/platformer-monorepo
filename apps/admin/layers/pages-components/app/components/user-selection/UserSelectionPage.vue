@@ -3,7 +3,7 @@ import { refDebounced } from '@vueuse/core';
 import { IconMagnify24 } from '@workspace/icons';
 import * as fp from 'fp-ts';
 
-import type { UserSelectionStoreSelectedUser } from './composables/useUserSelectionPageStore';
+import type { UserSelectionPageStoreSelectedUser } from './composables/useUserSelectionPageStore';
 
 import { UserSelectionPageDataDocument } from './operations';
 
@@ -31,7 +31,7 @@ const store = useUserSelectionStore();
 const router = useRouter();
 const isPageEntered = useIsCurrentPageEntered();
 
-const selectedUsers = ref<UserSelectionStoreSelectedUser[]>(store.selectedUsers || []);
+const selectedUsers = ref<UserSelectionPageStoreSelectedUser[]>(store.selectedUsers || []);
 const input = ref('');
 const inputDebounced = refDebounced(input, 1000);
 

@@ -1,7 +1,7 @@
 import { useSessionStorage } from '@vueuse/core';
 import * as v from 'valibot';
 
-export interface UserSelectionStoreSelectedUser {
+export interface UserSelectionPageStoreSelectedUser {
   id: number;
   name: string;
 }
@@ -16,14 +16,14 @@ type TypedNavPages =
     query: { appId: number };
   };
 
-export type UserSelectionStoreOnConfirmAction = (
+export type UserSelectionPageStoreOnConfirmAction = (
   {
     kind: 'navigate-to';
     replace?: boolean;
   } & (TypedNavPages | { page: Exclude<PageNames, TypedNavPages['page']> })
 );
 
-export interface UserSelectionStoreState {
+export interface UserSelectionPageStoreState {
   /**
    * Auto confirms whenever the selection limit is reached.
    */
@@ -56,16 +56,16 @@ export interface UserSelectionStoreState {
   /**
    * Action to perform whenever the confirm button is pressed.
    */
-  onConfirmAction?: UserSelectionStoreOnConfirmAction;
+  onConfirmAction?: UserSelectionPageStoreOnConfirmAction;
   /**
    * A list of selected users.
    */
-  selectedUsers?: UserSelectionStoreSelectedUser[];
+  selectedUsers?: UserSelectionPageStoreSelectedUser[];
 }
 
 export const useUserSelectionPageStore = defineStore('user-selection', () => {
   const defaultState = {};
-  const state = useSessionStorage<UserSelectionStoreState>('selected-users', defaultState, {
+  const state = useSessionStorage<UserSelectionPageStoreState>('selected-users', defaultState, {
     serializer: {
       read(value) {
         const sharedNavigateToActionSchema = {
@@ -142,11 +142,11 @@ export const useUserSelectionPageStore = defineStore('user-selection', () => {
       state.value.navId = value;
     },
     onConfirmAction: computed(() => state.value.onConfirmAction),
-    setOnConfirmAction(value: UserSelectionStoreOnConfirmAction | undefined) {
+    setOnConfirmAction(value: UserSelectionPageStoreOnConfirmAction | undefined) {
       state.value.onConfirmAction = value;
     },
     selectedUsers: computed(() => state.value.selectedUsers),
-    setSelectedUsers(value: UserSelectionStoreSelectedUser[] | undefined) {
+    setSelectedUsers(value: UserSelectionPageStoreSelectedUser[] | undefined) {
       state.value.selectedUsers = value ? [...value] : undefined;
     },
     reset() {
