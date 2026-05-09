@@ -4,6 +4,7 @@ import {
   createReversibleTransition,
   ProgressiveImage,
   ProgressiveImageElement,
+  SafeAreaInsets,
 } from '@tma.js/vue-kit';
 import type * as v from 'valibot';
 
@@ -209,7 +210,7 @@ const handleRedirect = () => {
 </script>
 
 <template>
-  <div :class="b()">
+  <SafeAreaInsets :class="b()" top right left>
     <div :class="e('body')">
       <div :class="e('logo')">
         <ProgressiveImage
@@ -259,7 +260,7 @@ const handleRedirect = () => {
         @retry="$emit('retry')"
       />
     </ClientOnly>
-  </div>
+  </SafeAreaInsets>
 </template>
 
 <style lang="scss">
@@ -273,11 +274,6 @@ const handleRedirect = () => {
   grid-template-rows: 1fr auto auto;
   text-align: center;
   background: var(--bg-color);
-  padding:
-    var(--sum-inset-top)
-    var(--sum-inset-right)
-    0
-    var(--sum-inset-left);
 
   &__body {
     display: flex;
