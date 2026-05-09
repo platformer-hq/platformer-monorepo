@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IconGearFillIOS28, IconLevels30 } from '@tma.js/vue-kit';
+import { IconGearFillIOS28, IconLevels30 } from '@workspace/icons';
 import type { Component } from 'vue';
 
 const { t } = useI18n({
