@@ -101,9 +101,7 @@ watch(apps, apps => {
   }
 });
 
-onMounted(() => {
-  preloadRouteComponents({ name: PageNames.Main });
-});
+preloadRouteComponents({ name: PageNames.Main });
 </script>
 
 <template>

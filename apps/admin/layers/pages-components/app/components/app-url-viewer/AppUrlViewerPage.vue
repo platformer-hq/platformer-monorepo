@@ -138,10 +138,8 @@ watch(() => userSelectionStore.selectedUsers, users => {
   }
 });
 
-onMounted(() => {
-  preloadRouteComponents({ name: PageNames.Main });
-  preloadRouteComponents({ name: PageNames.UserSelection });
-});
+preloadRouteComponents({ name: PageNames.Main });
+preloadRouteComponents({ name: PageNames.UserSelection });
 </script>
 
 <template>

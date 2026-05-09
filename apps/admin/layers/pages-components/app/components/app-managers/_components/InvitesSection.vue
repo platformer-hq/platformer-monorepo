@@ -50,7 +50,7 @@ const inviteRemoveTransition = createReversibleTransition({
         </AutoSectionHeader>
       </template>
       <AutoList>
-        <TransitionGroup v-bind="createListItemTransition()" :css="false">
+        <AutoListItemTransitionGroup>
           <AutoListItem v-for="invite in invites" :key="invite.id" large>
             <template #bodyLeftLabel>
               <AutoListItemBodyLeftLabel>
@@ -81,7 +81,7 @@ const inviteRemoveTransition = createReversibleTransition({
               </AutoListItemBodyRight>
             </template>
           </AutoListItem>
-        </TransitionGroup>
+        </AutoListItemTransitionGroup>
       </AutoList>
       <template #footer>
         <AutoSectionFooter>

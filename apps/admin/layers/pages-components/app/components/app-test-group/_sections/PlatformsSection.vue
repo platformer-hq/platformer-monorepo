@@ -38,7 +38,7 @@ const handlePlatformClick = (platformId: number) => {
       </AutoSectionHeader>
     </template>
     <AutoList>
-      <TransitionGroup v-bind="createListItemTransition()" :css=false>
+      <AutoListItemTransitionGroup>
         <AutoListItem
           v-for="(itemOrWidth, idx) in platforms || [210, 180, 190, 150, 160, 200]"
           :key="hadInitialData && typeof itemOrWidth === 'object'
@@ -68,7 +68,7 @@ const handlePlatformClick = (platformId: number) => {
             </AutoListItemBodyRight>
           </template>
         </AutoListItem>
-      </TransitionGroup>
+      </AutoListItemTransitionGroup>
     </AutoList>
     <template #footer>
       <AutoSectionFooter>

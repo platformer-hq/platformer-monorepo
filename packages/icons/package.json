@@ -1,0 +1,18 @@
+{
+  "name": "@workspace/icons",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "license": "ISC",
+  "scripts": {
+    "build": "tsx build-icons.ts"
+  },
+  "dependencies": {
+    "@workspace/tsconfigs": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.2",
+    "svgo": "^4.0.1"
+  }
+}

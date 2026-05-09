@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { refDebounced } from '@vueuse/core';
+import { IconMagnify24 } from '@workspace/icons';
 import * as fp from 'fp-ts';
 
 import type { UserSelectionStoreSelectedUser } from '#stores/composables/useUserSelectionStore';
@@ -162,7 +163,7 @@ const confirm = () => {
             </AutoSectionHeader>
           </template>
           <AutoList>
-            <TransitionGroup :css="false" v-bind="createListItemTransition()" appear>
+            <AutoListItemTransitionGroup appear>
               <AutoListItem v-for="(user, idx) in selectedUsers" :key="user.id">
                 <template #bodyLeftLabel>
                   <AutoListItemBodyLeftLabel>
@@ -175,7 +176,7 @@ const confirm = () => {
                   </AutoListItemBodyRight>
                 </template>
               </AutoListItem>
-            </TransitionGroup>
+            </AutoListItemTransitionGroup>
           </AutoList>
         </AutoSection>
 
@@ -190,7 +191,7 @@ const confirm = () => {
             </AutoSectionHeader>
           </template>
           <AutoList>
-            <TransitionGroup :css="false" v-bind="createListItemTransition()" appear>
+            <AutoListItemTransitionGroup appear>
               <AutoListItem v-if="!displayedFoundUsers?.length" key="not-found">
                 <template #bodyLeftLabel>
                   <AutoListItemBodyLeftLabel>
@@ -218,7 +219,7 @@ const confirm = () => {
                   </AutoListItemBodyRight>
                 </template>
               </AutoListItem>
-            </TransitionGroup>
+            </AutoListItemTransitionGroup>
           </AutoList>
         </AutoSection>
       </PagePaddings>

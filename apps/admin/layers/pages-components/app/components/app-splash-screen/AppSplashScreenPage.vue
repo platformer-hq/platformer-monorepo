@@ -129,7 +129,7 @@ preloadRouteComponents({ name: PageNames.AppSplashScreenUpload });
                 </AutoListItemBodyLeftLabel>
               </template>
             </AutoListItem>
-            <Transition v-bind="createListItemTransition()" :css="false">
+            <AutoListItemTransition>
               <AutoListItem
                 v-if="data?.iconUrl"
                 :variant="isResettingIcon ? 'placeholder' : 'destructive'"
@@ -142,7 +142,7 @@ preloadRouteComponents({ name: PageNames.AppSplashScreenUpload });
                   </AutoListItemBodyLeftLabel>
                 </template>
               </AutoListItem>
-            </Transition>
+            </AutoListItemTransition>
           </AutoList>
         </AutoSection>
       </PagePaddings>

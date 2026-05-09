@@ -5,7 +5,7 @@ import {
   IconPersonHanshakeFill28,
   IconTrades30,
   IconUserCircleFill28,
-} from '@tma.js/vue-kit';
+} from '@workspace/icons';
 import * as fp from 'fp-ts';
 
 import { HomePageDataDocument } from './operations';
@@ -88,13 +88,11 @@ const sections = computed(() => {
   ];
 });
 
-onMounted(() => {
-  preloadRouteComponents({ name: PageNames.Apps });
-  preloadRouteComponents({ name: PageNames.ManagementInvites });
-  preloadRouteComponents({ name: PageNames.TransferRequests });
-  preloadRouteComponents({ name: PageNames.Account });
-  preloadRouteComponents({ name: PageNames.Privacy });
-});
+preloadRouteComponents({ name: PageNames.Apps });
+preloadRouteComponents({ name: PageNames.ManagementInvites });
+preloadRouteComponents({ name: PageNames.TransferRequests });
+preloadRouteComponents({ name: PageNames.Account });
+preloadRouteComponents({ name: PageNames.Privacy });
 </script>
 
 <template>

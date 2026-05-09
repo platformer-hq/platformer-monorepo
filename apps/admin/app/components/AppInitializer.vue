@@ -13,7 +13,12 @@ import {
   miniApp,
   toRGBFull,
 } from '@tma.js/sdk-vue';
-import { formatMiniAppCssVar, formatThemeParamsCssVar, formatViewportCssVar } from '@workspace/tma';
+import {
+  formatMiniAppCssVar,
+  formatThemeParamsCssVar,
+  formatViewportCssVar,
+  interceptBrokenEvents,
+} from '@workspace/tma';
 import * as fp from 'fp-ts';
 import type { TransitionProps } from 'vue';
 
@@ -60,6 +65,15 @@ await callOnce(async () => {
     version: launchParams.tgWebAppVersion,
     isInlineMode: !!launchParams.tgWebAppBotInline,
   });
+
+  // In dev mode we don't use Platformer's launcher, so we need to intercept broken
+  // mini apps events.
+  if (import.meta.dev) {
+    interceptBrokenEvents({
+      macOS: platform.raw === 'macos',
+      webK: platform.raw === 'web',
+    });
+  }
 
   // Initialize required components.
   initData.restore();

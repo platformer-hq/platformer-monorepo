@@ -117,9 +117,7 @@ watch(() => data.value?.currentUser.role, role => {
   }
 }, { immediate: true });
 
-onMounted(() => {
-  preloadRouteComponents({ name: PageNames.App });
-});
+preloadRouteComponents({ name: PageNames.App });
 </script>
 
 <template>

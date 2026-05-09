@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IconChevronDown24 } from '@tma.js/vue-kit';
+import { IconChevronDown24 } from '@workspace/icons';
 
 import SubsectionTitle from './SubsectionTitle.vue';
 

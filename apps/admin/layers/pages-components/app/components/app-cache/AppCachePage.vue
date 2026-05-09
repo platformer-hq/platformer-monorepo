@@ -85,9 +85,7 @@ const handleReset = async () => {
   }
 };
 
-onMounted(() => {
-  preloadRouteComponents({ name: PageNames.App });
-});
+preloadRouteComponents({ name: PageNames.App });
 </script>
 
 <template>

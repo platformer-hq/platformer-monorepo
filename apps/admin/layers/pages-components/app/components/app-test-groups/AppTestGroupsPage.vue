@@ -57,10 +57,8 @@ watch(() => data.value?.testGroups, testGroups => {
   }
 });
 
-onMounted(() => {
-  preloadRouteComponents({ name: PageNames.App });
-  preloadRouteComponents({ name: PageNames.AppTestGroup });
-});
+preloadRouteComponents({ name: PageNames.App });
+preloadRouteComponents({ name: PageNames.AppTestGroup });
 </script>
 
 <template>
@@ -95,7 +93,7 @@ onMounted(() => {
                 </AutoListItemBodyLeftLabel>
               </template>
             </AutoListItem>
-            <TransitionGroup v-bind="createListItemTransition()" :css="false">
+            <AutoListItemTransitionGroup>
               <AutoListItem
                 v-for="(itemOrWidth, idx) in data?.testGroups || [210, 180, 160]"
                 :key="hadInitialData && typeof itemOrWidth === 'object'
@@ -142,7 +140,7 @@ onMounted(() => {
                   </AutoListItemBodyRight>
                 </template>
               </AutoListItem>
-            </TransitionGroup>
+            </AutoListItemTransitionGroup>
           </AutoList>
           <template #footer>
             <AutoSectionFooter>

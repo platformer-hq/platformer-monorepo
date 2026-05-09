@@ -53,7 +53,7 @@ watch(invites, invites => {
               {{ t('title') }}
             </AutoSectionHeader>
           </template>
-          <TransitionGroup :css="false" v-bind="createListItemTransition()">
+          <AutoListItemTransitionGroup>
             <AutoListItem
               v-for="item in invites"
               :key="item.key"
@@ -109,7 +109,7 @@ watch(invites, invites => {
                 </AutoListItemBodyRight>
               </template>
             </AutoListItem>
-          </TransitionGroup>
+          </AutoListItemTransitionGroup>
         </AutoSection>
       </PagePaddings>
     </PageContent>

@@ -51,7 +51,7 @@ watch(requests, requests => {
               {{ t('title') }}
             </AutoSectionHeader>
           </template>
-          <TransitionGroup :css="false" v-bind="createListItemTransition()">
+          <AutoListItemTransitionGroup>
             <AutoListItem
               v-for="item in requests"
               :key="item.key"
@@ -102,7 +102,7 @@ watch(requests, requests => {
                 </AutoListItemBodyRight>
               </template>
             </AutoListItem>
-          </TransitionGroup>
+          </AutoListItemTransitionGroup>
           <template #footer>
             <AutoSectionFooter>
               {{ t('footer') }}

@@ -100,8 +100,9 @@ watch(data, data => {
 
 onMounted(() => {
   updateQuery({ userSelectionNavId }, { replace: true });
-  preloadRouteComponents({ name: PageNames.App });
 });
+
+preloadRouteComponents({ name: PageNames.App });
 </script>
 
 <template>

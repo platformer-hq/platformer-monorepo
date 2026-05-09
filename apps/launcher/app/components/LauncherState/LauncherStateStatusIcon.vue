@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import {
-  IconXmark28,
-  IconExclamationMarkTriangleFill28,
   LoadingIndicatorAndroid,
   LoadingIndicatorIos,
   bem,
   createReversibleTransition,
 } from '@tma.js/vue-kit';
+import {
+  IconXmark28,
+  IconExclamationMarkTriangleFill28,
+} from '@workspace/icons';
 
 defineProps<{
   status?: 'error' | 'warning' | 'loading';
@@ -54,11 +56,11 @@ const transition = createReversibleTransition({
   border-radius: 50%;
   color: white;
   transform: translate3d(-75%, -75%, 0);
-  outline: 3px solid var(--bg-color);
+  outline: 3px solid var(--tg-app-bg-color);
   outline-offset: -0.5px;
 
   &--error {
-    background: var(--destructive-text-color);
+    background: var(--tg-theme-destructive-text-color);
 
     path {
       stroke-width: 4;
@@ -70,8 +72,8 @@ const transition = createReversibleTransition({
   }
 
   &--loading {
-    background: var(--secondary-bg-color);
-    color: var(--text-color);
+    background: var(--tg-theme-secondary-bg-color);
+    color: var(--tg-theme-text-color);
   }
 }
 </style>
