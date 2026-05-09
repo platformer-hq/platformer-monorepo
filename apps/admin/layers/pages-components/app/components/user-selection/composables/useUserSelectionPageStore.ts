@@ -63,7 +63,7 @@ export interface UserSelectionStoreState {
   selectedUsers?: UserSelectionStoreSelectedUser[];
 }
 
-export const useUserSelectionStore = defineStore('user-selection', () => {
+export const useUserSelectionPageStore = defineStore('user-selection', () => {
   const defaultState = {};
   const state = useSessionStorage<UserSelectionStoreState>('selected-users', defaultState, {
     serializer: {

@@ -1,4 +1,4 @@
-import type { UserSelectionStoreState } from './useUserSelectionStore';
+import type { UserSelectionStoreState } from './useUserSelectionPageStore';
 
 export function useNavigateToUserSelectionPage() {
   const store = useUserSelectionStore();
