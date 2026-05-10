@@ -102,7 +102,9 @@ preloadRouteComponents({ name: PageNames.AppTestGroup });
                   :clickable="typeof itemOrWidth === 'object'"
                   @click="typeof itemOrWidth === 'object' && navigateToAppTestGroupPage({
                     appId,
-                    testGroupId: itemOrWidth.id
+                    testGroupId: itemOrWidth.id,
+                    enabled: itemOrWidth.enabled,
+                    title: itemOrWidth.title,
                   })"
                 >
                   <template #bodyLeftLabel>
