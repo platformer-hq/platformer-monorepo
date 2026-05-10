@@ -144,6 +144,7 @@ const confirm = () => {
                   <AutoListItemBodyLeftInputElement
                     v-model.trim="input"
                     :placeholder="t('input.placeholder')"
+                    autocorrect="off"
                   />
                 </AutoListItemBodyLeftInput>
               </template>
