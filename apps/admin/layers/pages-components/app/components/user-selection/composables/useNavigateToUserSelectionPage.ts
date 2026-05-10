@@ -1,9 +1,9 @@
-import type { UserSelectionStoreState } from '#stores/composables/useUserSelectionStore';
+import { useUserSelectionPageStore, type UserSelectionPageStoreState } from './useUserSelectionPageStore';
 
-export function useNavigateToUserSelection() {
-  const store = useUserSelectionStore();
+export function useNavigateToUserSelectionPage() {
+  const store = useUserSelectionPageStore();
 
-  return (options: Partial<UserSelectionStoreState> = {}) => {
+  return (options: Partial<UserSelectionPageStoreState> = {}) => {
     store.reset();
     store.setAutoConfirmOnLimit(options.autoConfirmOnLimit);
     store.setAlwaysShowConfirm(options.alwaysShowConfirm);

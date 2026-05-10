@@ -3,7 +3,7 @@ import * as fp from 'fp-ts';
 
 import { InviteToManageDocument } from './operations';
 
-const userSelectionStore = useUserSelectionStore();
+const userSelectionStore = useUserSelectionPageStore();
 const { t } = useI18n({
   messages: {
     en: {

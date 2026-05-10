@@ -38,37 +38,39 @@ const handlePlatformClick = (platformId: number) => {
       </AutoSectionHeader>
     </template>
     <AutoList>
-      <AutoListItemTransitionGroup>
-        <AutoListItem
-          v-for="(itemOrWidth, idx) in platforms || [210, 180, 190, 150, 160, 200]"
-          :key="hadInitialData && typeof itemOrWidth === 'object'
-            ? itemOrWidth.id
-            : idx"
-          :clickable="typeof itemOrWidth === 'object' && !disabled"
-          @click="
-            typeof itemOrWidth === 'object'
-            && !disabled
-            && handlePlatformClick(itemOrWidth.id)
-          "
-        >
-          <template #bodyLeftLabel>
-            <AutoListItemBodyLeftLabel>
-              <template v-if="typeof itemOrWidth === 'object'">
-                {{ itemOrWidth.title }}
-              </template>
-              <TextShimmerBox v-else :width="itemOrWidth"/>
-            </AutoListItemBodyLeftLabel>
-          </template>
-          <template
-            v-if="typeof itemOrWidth === 'object' && platformIds.includes(itemOrWidth.id)"
-            #bodyRight
+      <UseListItemTransition v-slot="transition">
+        <TransitionGroup v-bind="transition" :css="false">
+          <AutoListItem
+            v-for="(itemOrWidth, idx) in platforms || [210, 180, 190, 150, 160, 200]"
+            :key="hadInitialData && typeof itemOrWidth === 'object'
+              ? itemOrWidth.id
+              : idx"
+            :clickable="typeof itemOrWidth === 'object' && !disabled"
+            @click="
+              typeof itemOrWidth === 'object'
+              && !disabled
+              && handlePlatformClick(itemOrWidth.id)
+            "
           >
-            <AutoListItemBodyRight>
-              <AutoListItemBodyRightCheckmark/>
-            </AutoListItemBodyRight>
-          </template>
-        </AutoListItem>
-      </AutoListItemTransitionGroup>
+            <template #bodyLeftLabel>
+              <AutoListItemBodyLeftLabel>
+                <template v-if="typeof itemOrWidth === 'object'">
+                  {{ itemOrWidth.title }}
+                </template>
+                <TextShimmerBox v-else :width="itemOrWidth"/>
+              </AutoListItemBodyLeftLabel>
+            </template>
+            <template
+              v-if="typeof itemOrWidth === 'object' && platformIds.includes(itemOrWidth.id)"
+              #bodyRight
+            >
+              <AutoListItemBodyRight>
+                <AutoListItemBodyRightCheckmark/>
+              </AutoListItemBodyRight>
+            </template>
+          </AutoListItem>
+        </TransitionGroup>
+      </UseListItemTransition>
     </AutoList>
     <template #footer>
       <AutoSectionFooter>

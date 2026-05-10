@@ -11,6 +11,7 @@ import PlatformsSection from './_sections/PlatformsSection.vue';
 import TitleSection from './_sections/TitleSection.vue';
 import UrlSection from './_sections/UrlSection.vue';
 import UsersSection from './_sections/UsersSection.vue';
+import { useAppTestGroupPageStore } from './_stores/useAppTestGroupPageStore';
 
 const { query, update: updateQuery } = useParsedQuery({
   appId: v.pipe(v.string(), v.transform(Number)),
@@ -32,11 +33,12 @@ const { t } = useI18n({
   },
 });
 const isPageEntered = useIsCurrentPageEntered();
-const userSelectionStore = useUserSelectionStore();
+const userSelectionStore = useUserSelectionPageStore();
+const pageStore = useAppTestGroupPageStore();
 
 //#region Requests.
 const { options: appTestGroupPageQueryOptions } = useAppTestGroupPageQueryMeta();
-const { data, isPending: isRefreshingPageData } = useQuery(() => appTestGroupPageQueryOptions({
+const { data, isLoading: isLoadingPageData } = useQuery(() => appTestGroupPageQueryOptions({
   appId: query.value.appId,
   testGroupId: query.value.testGroupId || undefined,
 }));
@@ -50,7 +52,7 @@ const {
 } = useUpdateTestGroup(query.value.appId);
 const { mutate: createTestGroup, isLoading: isCreatingTestGroup } = useCreateTestGroup();
 const isSendingRequest = computed(() => (
-  isRefreshingPageData.value
+  isLoadingPageData.value
   || isUpdatingTestGroup.value
   || isCreatingTestGroup.value
   || isDeletingTestGroup.value
@@ -59,19 +61,14 @@ const isSendingRequest = computed(() => (
 //#endregion
 
 const userSelectionNavId = query.value.userSelectionNavId || Math.random();
-const enabled = ref(false);
-const title = ref('');
-const url = ref('');
-const platformIds = ref<number[]>([]);
-const users = ref<{ id: number; name: string }[]>([]);
 
-const readonly = computed(() => (
+const isReadonlyMode = computed(() => (
   !!data.value?.currentUserRole && !isEditorRole(data.value.currentUserRole)
 ));
-// const readonly = computed(() => true);
-const isUrlValid = computed(() => isValidUrl(url.value));
+// const isReadonlyMode = computed(() => true);
+const isUrlValid = computed(() => isValidUrl(pageStore.url));
 const isUpdateMode = computed(() => typeof query.value.testGroupId === 'number');
-const isLoadingForUpdate = computed(() => isUpdateMode.value && isRefreshingPageData.value);
+const isLoadingForUpdate = computed(() => isUpdateMode.value && isLoadingPageData.value);
 const showBottomBar = computed(() => {
   if (!isPageEntered.value || !data.value) {
     return false;
@@ -80,22 +77,22 @@ const showBottomBar = computed(() => {
     return true;
   }
   const prev = data.value.testGroup;
-  return prev.enabled !== enabled.value
-    || prev.title !== title.value
-    || prev.url !== url.value
-    || prev.users.length !== users.value.length
-    || prev.users.some(u1 => users.value.every(u2 => u1.id !== u2.id))
-    || prev.platformIds.length !== platformIds.value.length
-    || prev.platformIds.some(platformId => !platformIds.value.includes(platformId));
+  return prev.enabled !== pageStore.enabled
+    || prev.title !== pageStore.title
+    || prev.url !== pageStore.url
+    || prev.users.length !== pageStore.users.length
+    || prev.users.some(u1 => pageStore.users.every(u2 => u1.id !== u2.id))
+    || prev.platformIds.length !== pageStore.platformIds.length
+    || prev.platformIds.some(platformId => !pageStore.platformIds.includes(platformId));
 });
 
 const handleButtonClick = () => {
   const shared = {
-    enabled: enabled.value,
-    title: title.value,
-    platformIds: platformIds.value,
-    url: url.value,
-    userIds: users.value.map(user => user.id),
+    enabled: pageStore.enabled,
+    title: pageStore.title,
+    platformIds: pageStore.platformIds,
+    url: pageStore.url,
+    userIds: pageStore.users.map(user => user.id),
   };
   if (query.value.testGroupId) {
     updateTestGroup({ ...shared, testGroupId: query.value.testGroupId });
@@ -112,15 +109,17 @@ const handleDelete = () => {
 watch(() => ({
   testGroup: data.value?.testGroup,
   userSelection: userSelectionStore.navId === query.value.userSelectionNavId
-    ? [...userSelectionStore.selectedUsers || []]
+    ? userSelectionStore.selectedUsers || []
     : null,
 }), ({ testGroup, userSelection }) => {
   if (testGroup) {
-    enabled.value = testGroup.enabled;
-    title.value = testGroup.title;
-    platformIds.value = [...testGroup.platformIds];
-    url.value = testGroup.url;
-    users.value = userSelection || [...testGroup.users];
+    pageStore.setEnabled(testGroup.enabled);
+    pageStore.setTitle(testGroup.title);
+    pageStore.setUrl(testGroup.url);
+    pageStore.setPlatformIds(testGroup.platformIds);
+    pageStore.setUsers(userSelection || testGroup.users);
+  } else if (userSelection) {
+    pageStore.setUsers(userSelection);
   }
 }, { immediate: true, deep: true });
 
@@ -133,33 +132,41 @@ onMounted(() => {
   <PageRoot colors="secondary-bg">
     <PageContent>
       <PagePaddings>
-        <EnabledSection v-model="enabled" :disabled="isSendingRequest || readonly" :readonly/>
+        <EnabledSection
+          :model-value="pageStore.enabled"
+          :disabled="isSendingRequest || isReadonlyMode"
+          @update:model-value="pageStore.setEnabled"
+        />
         <TitleSection
-          v-model.trim="title"
-          :disabled="isSendingRequest || readonly"
+          :model-value="pageStore.title"
+          :disabled="isSendingRequest || isReadonlyMode"
           :loading="isLoadingForUpdate"
+          @update:model-value="pageStore.setTitle($event.trim())"
         />
         <UrlSection
-          v-model.trim="url"
-          :disabled="isSendingRequest || readonly"
+          :model-value="pageStore.url"
+          :disabled="isSendingRequest || isReadonlyMode"
           :loading="isLoadingForUpdate"
+          @update:model-value="pageStore.setUrl($event.trim())"
         />
-        <HttpWarning :show="url.startsWith('http:')"/>
+        <HttpWarning :show="pageStore.url.startsWith('http:')"/>
         <PlatformsSection
-          v-model="platformIds"
+          :model-value="pageStore.platformIds"
           :platforms="data?.platforms"
-          :disabled="isSendingRequest || readonly"
+          :disabled="isSendingRequest || isReadonlyMode"
+          @update:model-value="pageStore.setPlatformIds(pageStore.platformIds)"
         />
         <UsersSection
-          v-model="users"
+          :model-value="pageStore.users"
           :max="data?.maxTestGroupsCount || undefined"
           :disabled="isSendingRequest"
           :loading="isLoadingForUpdate"
           :nav-id="userSelectionNavId"
-          :readonly
+          :readonly="isReadonlyMode"
+          @update:model-value="pageStore.setUsers($event)"
         />
         <ActionsSection
-          v-if="isUpdateMode && !readonly"
+          v-if="isUpdateMode && !isReadonlyMode"
           :disabled="isSendingRequest"
           @delete="handleDelete"
         />

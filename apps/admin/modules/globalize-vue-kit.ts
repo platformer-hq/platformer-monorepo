@@ -4,7 +4,6 @@ export default defineNuxtModule({
   setup() {
     addImports([
       'bem',
-      'createListItemTransition',
       'createReversibleTransition',
       'reverseTransitionKeyframesIfLeave',
       'toPx',

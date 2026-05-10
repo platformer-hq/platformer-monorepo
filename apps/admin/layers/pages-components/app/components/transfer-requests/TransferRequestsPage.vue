@@ -51,58 +51,60 @@ watch(requests, requests => {
               {{ t('title') }}
             </AutoSectionHeader>
           </template>
-          <AutoListItemTransitionGroup>
-            <AutoListItem
-              v-for="item in requests"
-              :key="item.key"
-              :large="item.kind !== 'empty'"
-              :clickable="item.kind === 'request'"
-              @click="item.kind === 'request' && navigateTo({
-                name: PageNames.TransferRequest,
-                query: {
-                  requestId: item.request.id,
-                  app: JSON.stringify({
-                    id: item.request.app.id,
-                    title: item.request.app.title,
-                  }),
-                  sender: JSON.stringify({
-                    id: item.request.from.id,
-                    name: item.request.from.name,
-                  }),
-                },
-              })"
-            >
-              <template #bodyLeftLabel>
-                <AutoListItemBodyLeftLabel>
-                  <template v-if="item.kind === 'request'">
-                    {{ item.request.app.title }}
-                    <ColorBox as="span" text="subtitle-text">
-                      #{{ item.request.app.id }}
-                    </ColorBox>
-                  </template>
-                  <TextShimmerBox v-else-if="item.kind === 'width'" :width="item.width"/>
-                  <template v-else>
-                    {{ t('empty') }}
-                  </template>
-                </AutoListItemBodyLeftLabel>
-              </template>
-              <template #bodyLeftSubtitle>
-                <AutoListItemBodyLeftSubtitle :max-lines="1">
-                  <template v-if="item.kind === 'request'">
-                    {{ t('request.subtitle', {
-                      name: `${item.request.from.name} #${item.request.from.id}`,
-                    }) }}
-                  </template>
-                  <TextShimmerBox v-else-if="item.kind === 'width'" :width="item.width / 2"/>
-                </AutoListItemBodyLeftSubtitle>
-              </template>
-              <template v-if="item.kind === 'request'" #bodyRight>
-                <AutoListItemBodyRight>
-                  <AutoListItemBodyRightChevron/>
-                </AutoListItemBodyRight>
-              </template>
-            </AutoListItem>
-          </AutoListItemTransitionGroup>
+          <UseListItemTransition v-slot="transition">
+            <TransitionGroup v-bind="transition" :css="false">
+              <AutoListItem
+                v-for="item in requests"
+                :key="item.key"
+                :large="item.kind !== 'empty'"
+                :clickable="item.kind === 'request'"
+                @click="item.kind === 'request' && navigateTo({
+                  name: PageNames.TransferRequest,
+                  query: {
+                    requestId: item.request.id,
+                    app: JSON.stringify({
+                      id: item.request.app.id,
+                      title: item.request.app.title,
+                    }),
+                    sender: JSON.stringify({
+                      id: item.request.from.id,
+                      name: item.request.from.name,
+                    }),
+                  },
+                })"
+              >
+                <template #bodyLeftLabel>
+                  <AutoListItemBodyLeftLabel>
+                    <template v-if="item.kind === 'request'">
+                      {{ item.request.app.title }}
+                      <ColorBox as="span" text="subtitle-text">
+                        #{{ item.request.app.id }}
+                      </ColorBox>
+                    </template>
+                    <TextShimmerBox v-else-if="item.kind === 'width'" :width="item.width"/>
+                    <template v-else>
+                      {{ t('empty') }}
+                    </template>
+                  </AutoListItemBodyLeftLabel>
+                </template>
+                <template #bodyLeftSubtitle>
+                  <AutoListItemBodyLeftSubtitle :max-lines="1">
+                    <template v-if="item.kind === 'request'">
+                      {{ t('request.subtitle', {
+                        name: `${item.request.from.name} #${item.request.from.id}`,
+                      }) }}
+                    </template>
+                    <TextShimmerBox v-else-if="item.kind === 'width'" :width="item.width / 2"/>
+                  </AutoListItemBodyLeftSubtitle>
+                </template>
+                <template v-if="item.kind === 'request'" #bodyRight>
+                  <AutoListItemBodyRight>
+                    <AutoListItemBodyRightChevron/>
+                  </AutoListItemBodyRight>
+                </template>
+              </AutoListItem>
+            </TransitionGroup>
+          </UseListItemTransition>
           <template #footer>
             <AutoSectionFooter>
               {{ t('footer') }}

@@ -24,7 +24,7 @@ const { t } = useI18n({
     },
   },
 });
-const navigateToUserSelection = useNavigateToUserSelection();
+const navigateToUserSelection = useNavigateToUserSelectionPage();
 </script>
 
 <template>
@@ -35,50 +35,52 @@ const navigateToUserSelection = useNavigateToUserSelection();
       </AutoSectionHeader>
     </template>
     <AutoList>
-      <AutoListItemTransitionGroup>
-        <AutoListItem v-if="!users.length && readonly" key="empty">
-          <template #bodyLeftLabel>
-            <AutoListItemBodyLeftLabel>
-              {{ t('empty') }}
-            </AutoListItemBodyLeftLabel>
-          </template>
-        </AutoListItem>
-        <AutoListItem
-          v-else-if="!readonly"
-          key="add"
-          :variant="disabled ? 'placeholder' : 'accent'"
-          :clickable="!disabled"
-          @click="!disabled && navigateToUserSelection({
-            navId,
-            alwaysShowConfirm: true,
-            limit: max,
-            selectedUsers: users,
-          })"
-        >
-          <template #bodyLeftLabel>
-            <AutoListItemBodyLeftLabel>
-              {{ t('add') }}
-            </AutoListItemBodyLeftLabel>
-          </template>
-        </AutoListItem>
-        <AutoListItem v-for="user in users" :key="user.id">
-          <template #bodyLeftLabel>
-            <AutoListItemBodyLeftLabel>
-              {{ user.name }}
-              <ColorBox as="span" text="subtitle-text">
-                #{{ user.id }}
-              </ColorBox>
-            </AutoListItemBodyLeftLabel>
-          </template>
-          <template v-if="!disabled && !readonly" #bodyRight>
-            <AutoListItemBodyRight>
-              <AutoListItemBodyRightClear
-                @click="users = users.filter(u => u.id !== user.id)"
-              />
-            </AutoListItemBodyRight>
-          </template>
-        </AutoListItem>
-      </AutoListItemTransitionGroup>
+      <UseListItemTransition v-slot="transition">
+        <TransitionGroup v-bind="transition" :css="false">
+          <AutoListItem v-if="!users.length && readonly" key="empty">
+            <template #bodyLeftLabel>
+              <AutoListItemBodyLeftLabel>
+                {{ t('empty') }}
+              </AutoListItemBodyLeftLabel>
+            </template>
+          </AutoListItem>
+          <AutoListItem
+            v-else-if="!readonly"
+            key="add"
+            :variant="disabled ? 'placeholder' : 'accent'"
+            :clickable="!disabled"
+            @click="!disabled && navigateToUserSelection({
+              navId,
+              alwaysShowConfirm: true,
+              limit: max,
+              selectedUsers: users,
+            })"
+          >
+            <template #bodyLeftLabel>
+              <AutoListItemBodyLeftLabel>
+                {{ t('add') }}
+              </AutoListItemBodyLeftLabel>
+            </template>
+          </AutoListItem>
+          <AutoListItem v-for="user in users" :key="user.id">
+            <template #bodyLeftLabel>
+              <AutoListItemBodyLeftLabel>
+                {{ user.name }}
+                <ColorBox as="span" text="subtitle-text">
+                  #{{ user.id }}
+                </ColorBox>
+              </AutoListItemBodyLeftLabel>
+            </template>
+            <template v-if="!disabled && !readonly" #bodyRight>
+              <AutoListItemBodyRight>
+                <AutoListItemBodyRightClear
+                  @click="users = users.filter(u => u.id !== user.id)"
+                />
+              </AutoListItemBodyRight>
+            </template>
+          </AutoListItem>
+        </TransitionGroup>
+      </UseListItemTransition>
     </AutoList>
     <template #footer>
       <AutoSectionFooter>

@@ -32,6 +32,7 @@ const { t } = useI18n({
 
 const query = useAppTestGroupsPageQueryMeta();
 const appId = useQueryAppId();
+const navigateToAppTestGroupPage = useNavigateToAppTestGroupPage();
 const { data } = useQuery(() => query.options(appId.value));
 const hadInitialData = !!data.value;
 
@@ -45,10 +46,7 @@ const handleCreate = async () => {
     await popup.show({ message: t('popup.message') });
     return;
   }
-  navigateTo({
-    name: PageNames.AppTestGroup,
-    query: { appId: appId.value },
-  });
+  navigateToAppTestGroupPage({ appId: appId.value });
 };
 
 watch(() => data.value?.testGroups, testGroups => {
@@ -93,54 +91,55 @@ preloadRouteComponents({ name: PageNames.AppTestGroup });
                 </AutoListItemBodyLeftLabel>
               </template>
             </AutoListItem>
-            <AutoListItemTransitionGroup>
-              <AutoListItem
-                v-for="(itemOrWidth, idx) in data?.testGroups || [210, 180, 160]"
-                :key="hadInitialData && typeof itemOrWidth === 'object'
-                  ? itemOrWidth.id
-                  : idx"
-                large
-                :clickable="typeof itemOrWidth === 'object'"
-                @click="typeof itemOrWidth === 'object' && navigateTo({
-                  name: PageNames.AppTestGroup,
-                  query: {
+            <UseListItemTransition v-slot="transition">
+              <TransitionGroup v-bind="transition" :css="false">
+                <AutoListItem
+                  v-for="(itemOrWidth, idx) in data?.testGroups || [210, 180, 160]"
+                  :key="hadInitialData && typeof itemOrWidth === 'object'
+                    ? itemOrWidth.id
+                    : idx"
+                  large
+                  :clickable="typeof itemOrWidth === 'object'"
+                  @click="typeof itemOrWidth === 'object' && navigateToAppTestGroupPage({
                     appId,
-                    testGroupId: itemOrWidth.id
-                  }
-                })"
-              >
-                <template #bodyLeftLabel>
-                  <AutoListItemBodyLeftLabel>
-                    <template v-if="typeof itemOrWidth === 'object'">
-                      {{ itemOrWidth.title || t('testGroup.noTitle') }}
-                    </template>
-                    <TextShimmerBox v-else :width="itemOrWidth"/>
-                  </AutoListItemBodyLeftLabel>
-                </template>
-                <template #bodyLeftSubtitle>
-                  <AutoListItemBodyLeftSubtitle>
-                    <template v-if="typeof itemOrWidth === 'object'">
-                      {{ t('testGroup.platforms', { count: itemOrWidth.platformsCount }) }} ·
-                      {{ t('testGroup.users', { count: itemOrWidth.usersCount }) }}
-                    </template>
-                    <TextShimmerBox v-else :width="itemOrWidth / 2"/>
-                  </AutoListItemBodyLeftSubtitle>
-                </template>
-                <template #bodyRight>
-                  <AutoListItemBodyRight>
-                    <AutoListItemBodyRightLabel>
+                    testGroupId: itemOrWidth.id,
+                    enabled: itemOrWidth.enabled,
+                    title: itemOrWidth.title,
+                  })"
+                >
+                  <template #bodyLeftLabel>
+                    <AutoListItemBodyLeftLabel>
                       <template v-if="typeof itemOrWidth === 'object'">
-                        {{ itemOrWidth.enabled ? t('testGroup.enabled') : t('testGroup.disabled') }}
+                        {{ itemOrWidth.title || t('testGroup.noTitle') }}
                       </template>
-                      <TextShimmerBox v-else :width="80"/>
-                    </AutoListItemBodyRightLabel>
-                    <WhenIos v-if="typeof itemOrWidth === 'object'">
-                      <AutoListItemBodyRightChevron/>
-                    </WhenIos>
-                  </AutoListItemBodyRight>
-                </template>
-              </AutoListItem>
-            </AutoListItemTransitionGroup>
+                      <TextShimmerBox v-else :width="itemOrWidth"/>
+                    </AutoListItemBodyLeftLabel>
+                  </template>
+                  <template #bodyLeftSubtitle>
+                    <AutoListItemBodyLeftSubtitle>
+                      <template v-if="typeof itemOrWidth === 'object'">
+                        {{ t('testGroup.platforms', { count: itemOrWidth.platformsCount }) }} ·
+                        {{ t('testGroup.users', { count: itemOrWidth.usersCount }) }}
+                      </template>
+                      <TextShimmerBox v-else :width="itemOrWidth / 2"/>
+                    </AutoListItemBodyLeftSubtitle>
+                  </template>
+                  <template #bodyRight>
+                    <AutoListItemBodyRight>
+                      <AutoListItemBodyRightLabel>
+                        <template v-if="typeof itemOrWidth === 'object'">
+                          {{ itemOrWidth.enabled ? t('testGroup.enabled') : t('testGroup.disabled') }}
+                        </template>
+                        <TextShimmerBox v-else :width="80"/>
+                      </AutoListItemBodyRightLabel>
+                      <WhenIos v-if="typeof itemOrWidth === 'object'">
+                        <AutoListItemBodyRightChevron/>
+                      </WhenIos>
+                    </AutoListItemBodyRight>
+                  </template>
+                </AutoListItem>
+              </TransitionGroup>
+            </UseListItemTransition>
           </AutoList>
           <template #footer>
             <AutoSectionFooter>

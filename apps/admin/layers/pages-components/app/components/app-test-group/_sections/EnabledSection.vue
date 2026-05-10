@@ -17,12 +17,7 @@ const { t } = useI18n({
     <AutoList>
       <AutoListItem
         :clickable="platform.isMappedAndroid && !disabled"
-        @click="
-          if (platform.isMappedAndroid && !disabled) {
-            enabled = !enabled;
-            hapticSelectionChanged();
-          }
-        "
+        @click="platform.isMappedAndroid && !disabled && (enabled = !enabled)"
       >
         <template #bodyLeftLabel>
           <AutoListItemBodyLeftLabel>

@@ -27,7 +27,7 @@ const { t } = useI18n({
     },
   },
 });
-const navigateToUserSelection = useNavigateToUserSelection();
+const navigateToUserSelection = useNavigateToUserSelectionPage();
 const appId = useQueryAppId();
 const request = useMakeApiGqlRequest();
 const queryMeta = useAppManagersPageQueryMeta();

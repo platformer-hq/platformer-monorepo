@@ -62,46 +62,48 @@ const isItemClickable = (item: Manager | number) => {
           </AutoListItemBodyLeftLabel>
         </template>
       </AutoListItem>
-      <AutoListItemTransitionGroup>
-        <AutoListItem
-          v-for="(managerOrWidth, idx) in managers || [180, 230]"
-          :key="initiallyHadData && typeof managerOrWidth === 'object'
-            ? managerOrWidth.id
-            : idx"
-          :clickable="isItemClickable(managerOrWidth)"
-          large
-          @click="
-            isItemClickable(managerOrWidth)
-            && typeof managerOrWidth === 'object'
-            && $emit('managerClick', { managerId: managerOrWidth.id })
-          "
-        >
-          <template #bodyLeftLabel>
-            <AutoListItemBodyLeftLabel>
-              <template v-if="typeof managerOrWidth === 'object'">
-                {{ managerOrWidth.name }}
-                <ColorBox as="span" text="subtitle-text">
-                  #{{ managerOrWidth.id }}
-                </ColorBox>
-              </template>
-              <TextShimmerBox v-else :width="managerOrWidth"/>
-            </AutoListItemBodyLeftLabel>
-          </template>
-          <template #bodyLeftSubtitle>
-            <AutoListItemBodyLeftSubtitle>
-              <template v-if="typeof managerOrWidth === 'object'">
-                {{ managerOrWidth.role }}
-              </template>
-              <TextShimmerBox v-else :width="managerOrWidth / 3"/>
-            </AutoListItemBodyLeftSubtitle>
-          </template>
-          <template v-if="platform.isMappedIos && isItemClickable(managerOrWidth)" #bodyRight>
-            <AutoListItemBodyRight>
-              <AutoListItemBodyRightChevron/>
-            </AutoListItemBodyRight>
-          </template>
-        </AutoListItem>
-      </AutoListItemTransitionGroup>
+      <UseListItemTransition v-slot="transition">
+        <TransitionGroup v-bind="transition" :css="false">
+          <AutoListItem
+            v-for="(managerOrWidth, idx) in managers || [180, 230]"
+            :key="initiallyHadData && typeof managerOrWidth === 'object'
+              ? managerOrWidth.id
+              : idx"
+            :clickable="isItemClickable(managerOrWidth)"
+            large
+            @click="
+              isItemClickable(managerOrWidth)
+              && typeof managerOrWidth === 'object'
+              && $emit('managerClick', { managerId: managerOrWidth.id })
+            "
+          >
+            <template #bodyLeftLabel>
+              <AutoListItemBodyLeftLabel>
+                <template v-if="typeof managerOrWidth === 'object'">
+                  {{ managerOrWidth.name }}
+                  <ColorBox as="span" text="subtitle-text">
+                    #{{ managerOrWidth.id }}
+                  </ColorBox>
+                </template>
+                <TextShimmerBox v-else :width="managerOrWidth"/>
+              </AutoListItemBodyLeftLabel>
+            </template>
+            <template #bodyLeftSubtitle>
+              <AutoListItemBodyLeftSubtitle>
+                <template v-if="typeof managerOrWidth === 'object'">
+                  {{ managerOrWidth.role }}
+                </template>
+                <TextShimmerBox v-else :width="managerOrWidth / 3"/>
+              </AutoListItemBodyLeftSubtitle>
+            </template>
+            <template v-if="platform.isMappedIos && isItemClickable(managerOrWidth)" #bodyRight>
+              <AutoListItemBodyRight>
+                <AutoListItemBodyRightChevron/>
+              </AutoListItemBodyRight>
+            </template>
+          </AutoListItem>
+        </TransitionGroup>
+      </UseListItemTransition>
     </AutoList>
     <template #footer>
       <AutoSectionFooter>

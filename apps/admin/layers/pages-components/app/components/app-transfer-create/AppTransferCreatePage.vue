@@ -19,7 +19,7 @@ const { t } = useI18n({
 });
 const appId = useQueryAppId();
 const router = useRouter();
-const user = useUserSelectionStore().selectedUsers![0]!;
+const user = useUserSelectionPageStore().selectedUsers![0]!;
 const { setData: setAppTransferPageQueryData } = useAppTransferPageQueryMeta();
 const request = useMakeApiGqlRequest();
 const { mutate: createTransferRequest, isLoading: isCreatingTransferRequest } = useMutation({

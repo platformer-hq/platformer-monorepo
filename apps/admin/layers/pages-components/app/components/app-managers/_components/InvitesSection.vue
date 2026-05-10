@@ -50,38 +50,40 @@ const inviteRemoveTransition = createReversibleTransition({
         </AutoSectionHeader>
       </template>
       <AutoList>
-        <AutoListItemTransitionGroup>
-          <AutoListItem v-for="invite in invites" :key="invite.id" large>
-            <template #bodyLeftLabel>
-              <AutoListItemBodyLeftLabel>
-                {{ invite.to.name }}
-                <ColorBox as="span" text="subtitle-text">
-                  #{{ invite.to.id }}
-                </ColorBox>
-              </AutoListItemBodyLeftLabel>
-            </template>
-            <template #bodyLeftSubtitle>
-              <AutoListItemBodyLeftSubtitle :max-lines="2">
-                {{ t('invite.subtitle', { name: invite.from, role: invite.role }) }}
-              </AutoListItemBodyLeftSubtitle>
-            </template>
-            <template v-if="!readonly" #bodyRight>
-              <AutoListItemBodyRight>
-                <Transition v-bind="inviteRemoveTransition" :css="false" mode="out-in">
-                  <AutoLoadingIndicator
-                    v-if="revokingInviteId === invite.id"
-                    color="hint"
-                    :size="18"
-                  />
-                  <AutoListItemBodyRightClear
-                    v-else-if="revokingInviteId === undefined"
-                    @click="$emit('remove', {inviteId: invite.id})"
-                  />
-                </Transition>
-              </AutoListItemBodyRight>
-            </template>
-          </AutoListItem>
-        </AutoListItemTransitionGroup>
+        <UseListItemTransition v-slot="transition">
+          <TransitionGroup v-bind="transition" :css="false">
+            <AutoListItem v-for="invite in invites" :key="invite.id" large>
+              <template #bodyLeftLabel>
+                <AutoListItemBodyLeftLabel>
+                  {{ invite.to.name }}
+                  <ColorBox as="span" text="subtitle-text">
+                    #{{ invite.to.id }}
+                  </ColorBox>
+                </AutoListItemBodyLeftLabel>
+              </template>
+              <template #bodyLeftSubtitle>
+                <AutoListItemBodyLeftSubtitle :max-lines="2">
+                  {{ t('invite.subtitle', { name: invite.from, role: invite.role }) }}
+                </AutoListItemBodyLeftSubtitle>
+              </template>
+              <template v-if="!readonly" #bodyRight>
+                <AutoListItemBodyRight>
+                  <Transition v-bind="inviteRemoveTransition" :css="false" mode="out-in">
+                    <AutoLoadingIndicator
+                      v-if="revokingInviteId === invite.id"
+                      color="hint"
+                      :size="18"
+                    />
+                    <AutoListItemBodyRightClear
+                      v-else-if="revokingInviteId === undefined"
+                      @click="$emit('remove', {inviteId: invite.id})"
+                    />
+                  </Transition>
+                </AutoListItemBodyRight>
+              </template>
+            </AutoListItem>
+          </TransitionGroup>
+        </UseListItemTransition>
       </AutoList>
       <template #footer>
         <AutoSectionFooter>
