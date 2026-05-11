@@ -1,7 +1,9 @@
 <script setup lang="ts">
 defineProps<{
+  readonly: boolean;
+  refreshing: boolean;
   disabled: boolean;
-  loading: boolean;
+  shimmerEnabled: boolean;
 }>();
 
 const value = defineModel<string>({ required: true });
@@ -31,9 +33,14 @@ const { t } = useI18n({
     </template>
     <AutoList>
       <AutoListItem>
-        <template v-if="loading" #bodyLeftLabel>
+        <template v-if="refreshing && !value && shimmerEnabled" #bodyLeftLabel>
           <AutoListItemBodyLeftLabel>
             <TextShimmerBox :width="100"/>
+          </AutoListItemBodyLeftLabel>
+        </template>
+        <template v-else-if="readonly" #bodyLeftLabel>
+          <AutoListItemBodyLeftLabel>
+            {{ value }}
           </AutoListItemBodyLeftLabel>
         </template>
         <template v-else #bodyLeftInput>
@@ -42,6 +49,8 @@ const { t } = useI18n({
               v-model="value"
               :placeholder="t('placeholder')"
               :disabled
+              :variant="disabled ? 'disabled' : 'regular'"
+              autocorrect="off"
             />
           </AutoListItemBodyLeftInput>
         </template>

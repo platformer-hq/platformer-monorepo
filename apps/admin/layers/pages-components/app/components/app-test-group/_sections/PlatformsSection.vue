@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const props = defineProps<{
   platforms?: { id: number; title: string }[];
+  readonly: boolean;
   disabled: boolean;
 }>();
 
@@ -18,6 +19,9 @@ const { t } = useI18n({
     },
   },
 });
+
+const clickable = computed(() => !props.disabled && !props.readonly);
+
 const hadInitialData = !!props.platforms;
 
 const handlePlatformClick = (platformId: number) => {
@@ -45,10 +49,11 @@ const handlePlatformClick = (platformId: number) => {
             :key="hadInitialData && typeof itemOrWidth === 'object'
               ? itemOrWidth.id
               : idx"
-            :clickable="typeof itemOrWidth === 'object' && !disabled"
+            :variant="disabled ? 'placeholder' : 'regular'"
+            :clickable="typeof itemOrWidth === 'object' && clickable"
             @click="
               typeof itemOrWidth === 'object'
-              && !disabled
+              && clickable
               && handlePlatformClick(itemOrWidth.id)
             "
           >
