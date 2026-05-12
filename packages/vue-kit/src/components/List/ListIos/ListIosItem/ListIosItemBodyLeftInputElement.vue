@@ -5,7 +5,9 @@ import { computed, useTemplateRef } from 'vue';
 import { useTypographyIosAttrs } from '@/components/Typography/TypographyIos/composables/useTypographyIosAttrs';
 import { useKeyboardVisibility } from '@/composables/useKeyboardVisibility';
 
-defineProps<{ multiline?: boolean }>();
+defineProps<{
+  multiline?: boolean;
+}>();
 
 const model = defineModel<string | undefined>({ default: '' });
 const inputRef = useTemplateRef<HTMLInputElement | HTMLTextAreaElement>('input');
@@ -68,7 +70,7 @@ defineExpose({ input: inputRef });
   resize: none;
   padding: 15px 0;
   width: 100%;
-  color: var(--tgui-list-ios-item-body-left-input-text-color);
+  color: var(--input-text-color);
   @include mixins.hideScrollbar;
   @include mixins.noHighlight;
 
@@ -79,7 +81,7 @@ defineExpose({ input: inputRef });
   }
 
   &::placeholder {
-    color: var(--tgui-list-ios-item-body-left-input-placeholder-color);
+    color: var(--input-placeholder-color);
   }
 }
 </style>

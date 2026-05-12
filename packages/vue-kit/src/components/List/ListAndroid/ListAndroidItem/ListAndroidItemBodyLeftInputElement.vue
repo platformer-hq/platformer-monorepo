@@ -4,7 +4,9 @@ import { computed, useTemplateRef } from 'vue';
 
 import { useTypographyAndroidAttrs } from '@/components/Typography/TypographyAndroid/composables/useTypographyAndroidAttrs.js';
 
-defineProps<{ multiline?: boolean }>();
+defineProps<{
+  multiline?: boolean;
+}>();
 
 const model = defineModel<string | undefined>({ default: '' });
 const inputRef = useTemplateRef<HTMLInputElement | HTMLTextAreaElement>('input');
@@ -49,7 +51,7 @@ defineExpose({ input: inputRef });
   resize: none;
   padding-block: 15px;
   width: 100%;
-  color: var(--tgui-list-android-item-body-left-input-text-color);
+  color: var(--input-text-color);
   @include mixins.hideScrollbar;
   @include mixins.noHighlight;
 
@@ -60,7 +62,7 @@ defineExpose({ input: inputRef });
   }
 
   &::placeholder {
-    color: var(--tgui-list-android-item-body-left-input-placeholder-color);
+    color: var(--input-placeholder-color);
   }
 }
 </style>

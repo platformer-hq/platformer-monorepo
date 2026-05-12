@@ -45,7 +45,7 @@ const navigateToUserSelection = useNavigateToUserSelectionPage();
             </template>
           </AutoListItem>
           <AutoListItem
-            v-else-if="!readonly"
+            v-if="!readonly"
             key="add"
             :variant="disabled ? 'placeholder' : 'accent'"
             :clickable="!disabled"
@@ -62,7 +62,11 @@ const navigateToUserSelection = useNavigateToUserSelectionPage();
               </AutoListItemBodyLeftLabel>
             </template>
           </AutoListItem>
-          <AutoListItem v-for="user in users" :key="user.id">
+          <AutoListItem
+            v-for="user in users"
+            :key="user.id"
+            :variant="disabled ? 'placeholder' : 'regular'"
+          >
             <template #bodyLeftLabel>
               <AutoListItemBodyLeftLabel>
                 {{ user.name }}

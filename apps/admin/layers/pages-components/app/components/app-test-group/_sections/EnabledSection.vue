@@ -26,7 +26,12 @@ const { t } = useI18n({
         </template>
         <template #bodyRight>
           <AutoListItemBodyRight>
-            <AutoSwitch v-model:checked="enabled" :disabled @click.stop @mousedown.stop/>
+            <AutoSwitch
+              v-model:checked="enabled"
+              :disabled
+              @click.stop
+              @mousedown.stop
+            />
           </AutoListItemBodyRight>
         </template>
       </AutoListItem>

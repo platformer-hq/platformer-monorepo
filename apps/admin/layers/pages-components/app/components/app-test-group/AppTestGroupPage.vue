@@ -51,26 +51,27 @@ const {
   isLoading: isUpdatingTestGroup,
 } = useUpdateTestGroup(query.value.appId);
 const { mutate: createTestGroup, isLoading: isCreatingTestGroup } = useCreateTestGroup();
-const isSendingRequest = computed(() => (
-  isLoadingPageData.value
-  || isUpdatingTestGroup.value
+const isSendingMutationRequest = computed(() => (
+  isUpdatingTestGroup.value
   || isCreatingTestGroup.value
   || isDeletingTestGroup.value
 ));
-// const isSendingRequest = computed(() => true);
+const isSendingAnyRequest = computed(() => (
+  isLoadingPageData.value || isSendingMutationRequest.value
+));
+// const isSendingAnyRequest = computed(() => true);
 //#endregion
 
 const userSelectionNavId = query.value.userSelectionNavId || Math.random();
 
 const isReadonlyMode = computed(() => (
-  !!data.value?.currentUserRole && !isEditorRole(data.value.currentUserRole)
+  !data.value?.currentUserRole || !isEditorRole(data.value.currentUserRole)
 ));
 // const isReadonlyMode = computed(() => true);
 const isUrlValid = computed(() => isValidUrl(pageStore.url));
 const isUpdateMode = computed(() => typeof query.value.testGroupId === 'number');
-const isLoadingForUpdate = computed(() => isUpdateMode.value && isLoadingPageData.value);
 const showBottomBar = computed(() => {
-  if (!isPageEntered.value || !data.value) {
+  if (!isPageEntered.value || !data.value || isReadonlyMode.value) {
     return false;
   }
   if (!data.value.testGroup) {
@@ -106,20 +107,29 @@ const handleDelete = () => {
   }
 };
 
+// We should update local data only if we hadn't it before, or we had, but
+// the user didn't come from the user selection page. Otherwise, we will
+// overwrite his changes.
+// TODO: This one should be improved. Not sure about this logic.
+// I guess, changes will be lost if the user just refreshes the page. The store
+// values will be just overwritten.
+const isFromUserSelection = userSelectionStore.navId === query.value.userSelectionNavId;
 watch(() => ({
   testGroup: data.value?.testGroup,
-  userSelection: userSelectionStore.navId === query.value.userSelectionNavId
-    ? userSelectionStore.selectedUsers || []
-    : null,
+  isFromUserSelection,
+  userSelection: userSelectionStore.selectedUsers || [],
 }), ({ testGroup, userSelection }) => {
-  if (testGroup) {
+  if (!testGroup) {
+    return;
+  }
+  if (isFromUserSelection) {
+    pageStore.setUsers(userSelection);
+  } else {
     pageStore.setEnabled(testGroup.enabled);
     pageStore.setTitle(testGroup.title);
     pageStore.setUrl(testGroup.url);
     pageStore.setPlatformIds(testGroup.platformIds);
-    pageStore.setUsers(userSelection || testGroup.users);
-  } else if (userSelection) {
-    pageStore.setUsers(userSelection);
+    pageStore.setUsers(testGroup.users);
   }
 }, { immediate: true, deep: true });
 
@@ -134,40 +144,44 @@ onMounted(() => {
       <PagePaddings>
         <EnabledSection
           :model-value="pageStore.enabled"
-          :disabled="isSendingRequest || isReadonlyMode"
+          :disabled="isSendingAnyRequest || isReadonlyMode"
           @update:model-value="pageStore.setEnabled"
         />
         <TitleSection
           :model-value="pageStore.title"
-          :disabled="isSendingRequest || isReadonlyMode"
-          :loading="isLoadingForUpdate"
+          :shimmer-enabled="isUpdateMode"
+          :readonly="isReadonlyMode"
+          :refreshing="isLoadingPageData"
+          :disabled="isSendingAnyRequest"
           @update:model-value="pageStore.setTitle($event.trim())"
         />
         <UrlSection
           :model-value="pageStore.url"
-          :disabled="isSendingRequest || isReadonlyMode"
-          :loading="isLoadingForUpdate"
+          :shimmer-enabled="isUpdateMode"
+          :readonly="isReadonlyMode"
+          :refreshing="isLoadingPageData"
+          :disabled="isSendingAnyRequest"
           @update:model-value="pageStore.setUrl($event.trim())"
         />
         <HttpWarning :show="pageStore.url.startsWith('http:')"/>
         <PlatformsSection
           :model-value="pageStore.platformIds"
           :platforms="data?.platforms"
-          :disabled="isSendingRequest || isReadonlyMode"
-          @update:model-value="pageStore.setPlatformIds(pageStore.platformIds)"
+          :readonly="isReadonlyMode"
+          :disabled="isSendingAnyRequest"
+          @update:model-value="pageStore.setPlatformIds($event)"
         />
         <UsersSection
           :model-value="pageStore.users"
           :max="data?.maxTestGroupsCount || undefined"
-          :disabled="isSendingRequest"
-          :loading="isLoadingForUpdate"
+          :disabled="isSendingAnyRequest"
           :nav-id="userSelectionNavId"
           :readonly="isReadonlyMode"
           @update:model-value="pageStore.setUsers($event)"
         />
         <ActionsSection
           v-if="isUpdateMode && !isReadonlyMode"
-          :disabled="isSendingRequest"
+          :disabled="isSendingAnyRequest"
           @delete="handleDelete"
         />
       </PagePaddings>
@@ -178,11 +192,11 @@ onMounted(() => {
           <PageContent>
             <BottomBarInner>
               <AutoButton
-                :palette="isUrlValid && !isSendingRequest ? 'filled' : 'disabled'"
-                :active="isUrlValid && !isSendingRequest"
-                :disabled="!isUrlValid || isSendingRequest"
+                :palette="isUrlValid && !isSendingAnyRequest ? 'filled' : 'disabled'"
+                :active="isUrlValid && !isSendingAnyRequest"
+                :disabled="!isUrlValid || isSendingAnyRequest"
                 full-width
-                @click="isUrlValid && !isSendingRequest && handleButtonClick()"
+                @click="isUrlValid && !isSendingAnyRequest && handleButtonClick()"
               >
                 <AutoTypography variant="body" weight="medium">
                   {{ t(isUrlValid
@@ -191,7 +205,7 @@ onMounted(() => {
                         : 'button.create'
                       : 'button.invalidUrl') }}
                 </AutoTypography>
-                <ButtonLoadingIndicator :show="isSendingRequest"/>
+                <ButtonLoadingIndicator :show="isSendingMutationRequest"/>
               </AutoButton>
             </BottomBarInner>
           </PageContent>

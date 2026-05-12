@@ -2,8 +2,10 @@
 import { Translation } from '#i18n';
 
 defineProps<{
+  readonly: boolean;
+  refreshing: boolean;
   disabled: boolean;
-  loading: boolean;
+  shimmerEnabled: boolean;
 }>();
 
 const value = defineModel<string>({ required: true });
@@ -33,17 +35,24 @@ const { t } = useI18n({
     </template>
     <AutoList>
       <AutoListItem>
-         <template v-if="loading" #bodyLeftLabel>
+         <template v-if="refreshing && !value && shimmerEnabled" #bodyLeftLabel>
           <AutoListItemBodyLeftLabel>
             <TextShimmerBox :width="100"/>
           </AutoListItemBodyLeftLabel>
         </template>
+        <template v-else-if="readonly" #bodyLeftLabel>
+          <AutoListItemBodyLeftLabel>
+            {{ value }}
+          </AutoListItemBodyLeftLabel>
+        </template>
         <template v-else #bodyLeftInput>
-          <AutoListItemBodyLeftInput>
+          <AutoListItemBodyLeftInput :variant="disabled ? 'disabled' : 'regular'">
             <AutoListItemBodyLeftInputElement
               v-model="value"
               :placeholder="t('placeholder')"
               :disabled
+              type="url"
+              autocorrect="off"
             />
           </AutoListItemBodyLeftInput>
         </template>
