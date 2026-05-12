@@ -4,17 +4,10 @@ import { computed, useTemplateRef } from 'vue';
 
 import { useTypographyIosAttrs } from '@/components/Typography/TypographyIos/composables/useTypographyIosAttrs';
 import { useKeyboardVisibility } from '@/composables/useKeyboardVisibility';
-import { bem } from '@/utils/bem';
 
-withDefaults(defineProps<{
+defineProps<{
   multiline?: boolean;
-  /**
-   * @default 'regular'
-   */
-  variant?: 'regular' | 'disabled';
-}>(), {
-  variant: 'regular',
-});
+}>();
 
 const model = defineModel<string | undefined>({ default: '' });
 const inputRef = useTemplateRef<HTMLInputElement | HTMLTextAreaElement>('input');
@@ -49,15 +42,13 @@ const onFocus = (e: FocusEvent) => {
 };
 
 defineExpose({ input: inputRef });
-
-const { b } = bem('tgui-list-ios-item-body-left-input-element');
 </script>
 
 <template>
   <component
     :is="multiline ? 'textarea' : 'input'"
     ref="input"
-    :class="[b(variant), typographyAttrs.classes]"
+    :class="['tgui-list-ios-item-body-left-input-element', typographyAttrs.classes]"
     :style="typographyAttrs.style"
     :value="model"
     @input="model = $event.target.value"
@@ -79,6 +70,7 @@ const { b } = bem('tgui-list-ios-item-body-left-input-element');
   resize: none;
   padding: 15px 0;
   width: 100%;
+  color: var(--input-text-color);
   @include mixins.hideScrollbar;
   @include mixins.noHighlight;
 
@@ -88,14 +80,8 @@ const { b } = bem('tgui-list-ios-item-body-left-input-element');
     margin: 0;
   }
 
-  @each $variant in ("regular", "disabled") {
-    &--#{$variant} {
-      color: var(--tgui-list-ios-item-body-left-input-element-#{$variant}-text-color);
-
-      &::placeholder {
-        color: var(--tgui-list-ios-item-body-left-input-element-#{$variant}-placeholder-color);
-      }
-    }
+  &::placeholder {
+    color: var(--input-placeholder-color);
   }
 }
 </style>

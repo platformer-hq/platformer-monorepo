@@ -3,17 +3,10 @@ import { onClickOutside, useTextareaAutosize } from '@vueuse/core';
 import { computed, useTemplateRef } from 'vue';
 
 import { useTypographyAndroidAttrs } from '@/components/Typography/TypographyAndroid/composables/useTypographyAndroidAttrs.js';
-import { bem } from '@/utils/bem';
 
-withDefaults(defineProps<{
+defineProps<{
   multiline?: boolean;
-  /**
-   * @default 'regular'
-   */
-  variant?: 'regular' | 'disabled';
-}>(), {
-  variant: 'regular',
-});
+}>();
 
 const model = defineModel<string | undefined>({ default: '' });
 const inputRef = useTemplateRef<HTMLInputElement | HTMLTextAreaElement>('input');
@@ -32,15 +25,13 @@ onClickOutside(inputRef, () => {
 });
 
 defineExpose({ input: inputRef });
-
-const { b } = bem('tgui-list-android-item-body-left-input-element');
 </script>
 
 <template>
   <component
     :is="multiline ? 'textarea' : 'input'"
     ref="input"
-    :class="[b(variant), typographyAttrs.classes]"
+    :class="['tgui-list-android-item-body-left-input-element', typographyAttrs.classes]"
     :style="typographyAttrs.style"
     :value="model"
     @input="model = $event.target.value"
@@ -60,6 +51,7 @@ const { b } = bem('tgui-list-android-item-body-left-input-element');
   resize: none;
   padding-block: 15px;
   width: 100%;
+  color: var(--input-text-color);
   @include mixins.hideScrollbar;
   @include mixins.noHighlight;
 
@@ -69,14 +61,8 @@ const { b } = bem('tgui-list-android-item-body-left-input-element');
     margin: 0;
   }
 
-  @each $variant in ("regular", "disabled") {
-    &--#{$variant} {
-      color: var(--tgui-list-android-item-body-left-input-element-#{$variant}-text-color);
-
-      &::placeholder {
-        color: var(--tgui-list-android-item-body-left-input-element-#{$variant}-placeholder-color);
-      }
-    }
+  &::placeholder {
+    color: var(--input-placeholder-color);
   }
 }
 </style>
