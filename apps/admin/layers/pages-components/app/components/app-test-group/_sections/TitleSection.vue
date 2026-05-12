@@ -44,12 +44,11 @@ const { t } = useI18n({
           </AutoListItemBodyLeftLabel>
         </template>
         <template v-else #bodyLeftInput>
-          <AutoListItemBodyLeftInput>
+          <AutoListItemBodyLeftInput :variant="disabled ? 'disabled' : 'regular'">
             <AutoListItemBodyLeftInputElement
               v-model="value"
               :placeholder="t('placeholder')"
               :disabled
-              :variant="disabled ? 'disabled' : 'regular'"
               autocorrect="off"
             />
           </AutoListItemBodyLeftInput>
