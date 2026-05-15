@@ -9,26 +9,29 @@ import ButtonBase, { type ButtonBaseProps } from './ButtonBase.vue';
 
 export interface ButtonAndroidProps extends ButtonBaseProps {
   /**
-   * True if the button is active. This value is used as a default for `pressable`, `ripples`
-   * and `clickable` properties.
+   * True if the button is active. This value is used as a default value for the following props:
+   * - `clickable`
+   * - `pressable`
+   * - `ripples`
    */
   active?: boolean;
   /**
    * True if the button is clickable. This makes the button display cursor pointer.
-   * @default True if `active` property is omitted or equal to `true`.
+   * @default Value of `active` prop if set. True otherwise.
    */
   clickable?: boolean;
   /**
    * Scales down the button on activation.
-   * @default True if `active` property is omitted or equal to `true`.
+   * @default Value of `active` prop if set. True otherwise.
    */
   pressable?: boolean;
   /**
    * Adds ripples on touch.
-   * @default True if `active` property is omitted or equal to `true`.
+   * @default Value of `active` prop if set. True otherwise.
    */
   ripples?: boolean;
   /**
+   * Size variant.
    * @default 'regular'
    */
   variant?: 'regular' | 'small' | 'multiline';
