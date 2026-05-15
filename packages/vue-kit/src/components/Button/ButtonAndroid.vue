@@ -84,12 +84,14 @@ useRipples({
 </template>
 
 <style lang="scss">
-@use "@/scss/mixins" as mixins;
-
 .tgui-button-android {
   position: relative;
   overflow: hidden;
   transition: 300ms ease-out;
+
+  &--clickable {
+    cursor: pointer;
+  }
 
   &--pressed {
     transform: scale(0.95);
