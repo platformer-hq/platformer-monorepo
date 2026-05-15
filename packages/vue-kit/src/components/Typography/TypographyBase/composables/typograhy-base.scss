@@ -2,7 +2,6 @@
 
 .tgui-typography-base {
   margin: 0;
-  cursor: default;
 
   @each $align in (left, center, right) {
     &--#{$align} {
