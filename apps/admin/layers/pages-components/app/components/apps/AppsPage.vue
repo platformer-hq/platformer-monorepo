@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { popup } from '@tma.js/sdk-vue';
 
+import { createListIosItemTransition } from '@tma.js/vue-kit';
+
 import { useAppsPageQueryMeta } from './composables/useAppsPageQueryMeta';
 
 const { data, isPending } = useQuery(useAppsPageQueryMeta().options);
@@ -60,18 +62,6 @@ const canCreate = computed(() => {
 });
 
 const hasInitialData = !!apps.value;
-const appTransition = createReversibleTransition({
-  animatedProperties({ transition, el }) {
-    return reverseTransitionKeyframesIfLeave({
-      height: ['0px', el.clientHeight + 'px'],
-      opacity: [0, 1],
-    }, transition);
-  },
-  animationOptions: {
-    duration: 300,
-    easing: 'ease-out',
-  },
-});
 const managedAppsTransition = createReversibleTransition({
   animatedProperties: {
     opacity: [0, 1],
@@ -136,35 +126,37 @@ preloadRouteComponents({ name: PageNames.Main });
                 </AutoListItemBodyLeftLabel>
               </template>
             </AutoListItem>
-            <TransitionGroup v-bind="appTransition" :css="false">
-              <AutoListItem
-                v-for="(appOrWidth, idx) in apps?.owned || ['40%', '70%', '60%']"
-                :key="hasInitialData
-                  ? typeof appOrWidth === 'object'
-                    ? appOrWidth.id
-                    : idx
-                  : idx"
-                :clickable="typeof appOrWidth === 'object'"
-                @click="typeof appOrWidth === 'object' && navigateToApp(appOrWidth.id)"
-              >
-                <template #bodyLeftLabel>
-                  <AutoListItemBodyLeftLabel :max-lines="1">
-                    <template v-if="typeof appOrWidth === 'object'">
-                      {{ appOrWidth.title }}
-                    </template>
-                    <TextShimmerBox v-else :width="appOrWidth"/>
-                  </AutoListItemBodyLeftLabel>
-                </template>
-                <template v-if="typeof appOrWidth === 'object'" #bodyRight>
-                  <AutoListItemBodyRight>
-                    <AutoListItemBodyRightLabel v-if="appOrWidth?.isPublic">
-                      {{ t('app.privacy.public') }}
-                    </AutoListItemBodyRightLabel>
-                    <AutoListItemBodyRightChevron v-if="platform.isMappedIos"/>
-                  </AutoListItemBodyRight>
-                </template>
-              </AutoListItem>
-            </TransitionGroup>
+            <UseListItemTransition v-slot="transition">
+              <TransitionGroup v-bind="transition" :css="false">
+                <AutoListItem
+                  v-for="(appOrWidth, idx) in apps?.owned || ['40%', '70%', '60%']"
+                  :key="hasInitialData
+                    ? typeof appOrWidth === 'object'
+                      ? appOrWidth.id
+                      : idx
+                    : idx"
+                  :clickable="typeof appOrWidth === 'object'"
+                  @click="typeof appOrWidth === 'object' && navigateToApp(appOrWidth.id)"
+                >
+                  <template #bodyLeftLabel>
+                    <AutoListItemBodyLeftLabel :max-lines="1">
+                      <template v-if="typeof appOrWidth === 'object'">
+                        {{ appOrWidth.title }}
+                      </template>
+                      <TextShimmerBox v-else :width="appOrWidth"/>
+                    </AutoListItemBodyLeftLabel>
+                  </template>
+                  <template v-if="typeof appOrWidth === 'object'" #bodyRight>
+                    <AutoListItemBodyRight>
+                      <AutoListItemBodyRightLabel v-if="appOrWidth?.isPublic">
+                        {{ t('app.privacy.public') }}
+                      </AutoListItemBodyRightLabel>
+                      <AutoListItemBodyRightChevron v-if="platform.isMappedIos"/>
+                    </AutoListItemBodyRight>
+                  </template>
+                </AutoListItem>
+              </TransitionGroup>
+            </UseListItemTransition>
           </AutoList>
           <template #footer>
             <AutoSectionFooter>
@@ -185,7 +177,7 @@ preloadRouteComponents({ name: PageNames.Main });
               </AutoSectionHeader>
             </template>
             <AutoList>
-              <TransitionGroup v-bind="appTransition" :css="false">
+              <TransitionGroup v-bind="createListIosItemTransition()" :css="false">
                 <AutoListItem
                   v-for="app in apps.managed"
                   :key="app.id"

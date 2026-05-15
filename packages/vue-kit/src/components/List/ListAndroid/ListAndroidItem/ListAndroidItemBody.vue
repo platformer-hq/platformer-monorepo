@@ -11,19 +11,16 @@ withDefaults(defineProps<{
   as: 'div',
 });
 
-import { injectListItemOptions } from '../provider.js';
-
 defineSlots<{
   left(): unknown;
   right(): unknown;
 }>();
 
 const { b } = bem('tgui-list-android-item-body');
-const { large } = injectListItemOptions();
 </script>
 
 <template>
-  <component :is="as" :class="b(large ? 'large' : 'small', {'no-right': !$slots.right})">
+  <component :is="as" :class="b({'no-right': !$slots.right})">
     <slot name="left" />
     <slot name="right" />
   </component>
@@ -40,14 +37,6 @@ const { large } = injectListItemOptions();
 
   &--no-right {
     grid-template-columns: 1fr;
-  }
-
-  &--small {
-    min-height: 50px;
-  }
-
-  &--large {
-    min-height: 58px;
   }
 }
 </style>

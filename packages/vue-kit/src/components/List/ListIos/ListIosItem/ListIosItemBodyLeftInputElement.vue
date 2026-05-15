@@ -1,18 +1,29 @@
 <script setup lang="ts">
 import { onClickOutside, useTextareaAutosize } from '@vueuse/core';
-import { computed, useTemplateRef } from 'vue';
+import { computed, onWatcherCleanup, useTemplateRef, watch } from 'vue';
 
 import { useTypographyIosAttrs } from '@/components/Typography/TypographyIos/composables/useTypographyIosAttrs';
-import { useKeyboardVisibility } from '@/composables/useKeyboardVisibility';
 
-defineProps<{
+const props = withDefaults(defineProps<{
   multiline?: boolean;
-}>();
+  /**
+   * True if the element should be scrollable into view when focused. This is sometimes required
+   * for Telegram for iOS when the input is being focused and the keyboard is shown, hiding
+   * the input itself.
+   */
+  scrollIntoViewOnFocus?: boolean;
+  /**
+   * True if the element should blur on click outside.
+   * @default true
+   */
+  blurOnClickOutside?: boolean;
+}>(), {
+  blurOnClickOutside: true,
+});
 
 const model = defineModel<string | undefined>({ default: '' });
 const inputRef = useTemplateRef<HTMLInputElement | HTMLTextAreaElement>('input');
 const typographyAttrs = useTypographyIosAttrs({ variant: 'body' });
-const keyboard = useKeyboardVisibility();
 
 useTextareaAutosize({
   input: computed(() => model.value || ''),
@@ -23,18 +34,20 @@ useTextareaAutosize({
 
 // Both Telegram for iOS and Adnroid don't handle click outside and don't lose focus on
 // the input.
-onClickOutside(inputRef, () => {
-  inputRef.value?.blur();
+watch(() => props.blurOnClickOutside, blur => {
+  if (blur) {
+    onWatcherCleanup(
+      onClickOutside(inputRef, () => {
+        inputRef.value?.blur();
+      }),
+    );
+  }
 });
 
 // Sometimes Telegram for iOS scrolls the input into view improperly. So,
 // after the keyboard was shown, we are scrolling the input into view.
 const onFocus = (e: FocusEvent) => {
-  // FIXME: This should one should depend on if the keyboard exists at all. We can use
-  // this component in macOS, but there should not be this kind of behavior there.
-  if (!keyboard.isShown) {
-    // If the keyboard is not shown, then it is going to. It takes about 500 ms
-    // for the keyboard to appear.
+  if (props.scrollIntoViewOnFocus) {
     setTimeout(() => {
       (e.target as HTMLElement).scrollIntoView({ behavior: 'smooth' });
     }, 500);

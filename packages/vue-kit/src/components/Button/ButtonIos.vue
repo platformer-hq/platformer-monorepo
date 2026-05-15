@@ -2,77 +2,54 @@
 import { useMousePressed } from '@vueuse/core';
 import { useTemplateRef, computed } from 'vue';
 
+import IosActivationHighlight from '@/components/IosActivationHighlight.vue';
 import { bem } from '@/utils/bem.js';
 
 import ButtonBase, { type ButtonBaseProps } from './ButtonBase.vue';
 
 export interface ButtonIosProps extends ButtonBaseProps {
   /**
-   * True if the button is active. This automatically enables or disables all "auto" properties
-   * until the values are specified explicitly.
+   * True if the button is active. This value is used as a default value for
+   * the `highlightOnActive` prop.
    */
   active?: boolean;
   /**
-   * True if the button is clickable. This makes the button display cursor pointer.
-   * @default True if `active` property is omitted or equal to `true`.
-   */
-  clickable?: boolean;
-  /**
-   * True if the button is visually elevated.
+   * True if the button is visually elevated. Creates some kind of effect of liquid glass.
    */
   elevated?: boolean;
   /**
    * Highlights the button on activation.
-   * @default True if `active` property is omitted or equal to `true`.
+   * @default Value of `active` prop if set. True otherwise.
    */
   highlightOnActive?: boolean;
   /**
+   * Size variant.
    * @default 'regular'
    */
   variant?: 'regular' | 'small' | 'multiline';
 }
 
-const props = withDefaults(defineProps<ButtonIosProps>(), {
+withDefaults(defineProps<ButtonIosProps>(), {
   variant: 'regular',
-  clickable: undefined,
   highlightOnActive: undefined,
   active: undefined,
 });
 
-const { b, e } = bem('tgui-button-ios');
-
-const basedOnActive = (key: 'highlightOnActive' | 'clickable') => {
-  return props[key] ?? props.active ?? true;
-};
-
 const rootRef = useTemplateRef('root');
 const { pressed } = useMousePressed({ target: computed(() => rootRef.value?.element) });
-const onHighlightLeave = (el: Element, done: VoidFunction) => {
-  el
-    .animate({ opacity: [0.1, 0] }, { duration: 300 })
-    .finished
-    .then(() => {
-      done();
-    });
-};
+
+const { b } = bem('tgui-button-ios');
 </script>
 
 <template>
   <ButtonBase
     ref="root"
     :as
-    :clickable="basedOnActive('clickable')"
     :palette
     :full-width
     :class="b({elevated, palette}, variant)"
   >
-    <Transition
-      v-if="basedOnActive('highlightOnActive')"
-      :css="false"
-      @leave="onHighlightLeave"
-    >
-      <span v-if="pressed" key="active" :class="e('highlight')"/>
-    </Transition>
+    <IosActivationHighlight v-if="highlightOnActive ?? active ?? true" :show="pressed"/>
     <slot/>
   </ButtonBase>
 </template>
@@ -105,19 +82,6 @@ const onHighlightLeave = (el: Element, done: VoidFunction) => {
     padding: 4px 12px;
     min-height: 28px;
     border-radius: 1000px;
-  }
-
-  &__highlight {
-    background: currentColor;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: inherit;
-    opacity: 0.1;
-    pointer-events: none;
-    overflow: hidden;
   }
 
   @each $palette in ('filled', 'tinted', 'plain', 'gray', 'disabled') {

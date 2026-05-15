@@ -1,7 +1,6 @@
 <script setup lang="ts">
+import IconXMarkFill28 from '@/icons/xmark-fill-28.svg?component';
 import type { KnownHtmlTag } from '@/types/html-tags.js';
-
-import XMarkFillIcon from './xmark-fill-28.svg?component';
 
 withDefaults(defineProps<{
   /**
@@ -15,7 +14,7 @@ withDefaults(defineProps<{
 
 <template>
   <component :is="as" class="tgui-list-ios-item-body-right-clear">
-    <XMarkFillIcon :width="20" :height="20"/>
+    <IconXMarkFill28 :width="20" :height="20"/>
   </component>
 </template>
 

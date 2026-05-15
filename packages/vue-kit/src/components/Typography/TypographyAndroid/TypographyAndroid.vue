@@ -7,11 +7,13 @@ import {
   type UseTypographyAndroidAttrsOptions,
   type UseTypographyAndroidAttrsAlign,
   type UseTypographyAndroidAttrsVariant,
+  type UseTypographyAndroidAttrsWeight,
   useTypographyAndroidAttrs,
 } from './composables/useTypographyAndroidAttrs';
 
 export type TypographyAndroidAlign = UseTypographyAndroidAttrsAlign;
 export type TypographyAndroidVariant = UseTypographyAndroidAttrsVariant;
+export type TypographyAndroidWeight = UseTypographyAndroidAttrsWeight;
 export interface TypographyAndroidProps extends UseTypographyAndroidAttrsOptions {
   /**
    * @default 'p'

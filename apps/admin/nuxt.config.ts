@@ -58,6 +58,12 @@ export default defineNuxtConfig({
       { code: 'ru', name: 'Russian', language: 'ru-RU' },
     ],
     defaultLocale: 'en',
+    bundle: {
+      // Disables lazy loading of locale files. We are disabling it because all our
+      // translations are locally defined in components, so lazy loaded translation
+      // files are always empty.
+      runtimeOnly: true,
+    },
   },
   postcss: {
     plugins: {

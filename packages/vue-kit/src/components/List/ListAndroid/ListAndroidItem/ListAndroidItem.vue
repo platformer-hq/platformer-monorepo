@@ -65,7 +65,11 @@ useRipples({
 </script>
 
 <template>
-  <component :is="as" ref="root" :class="b(variant, {clickable, 'no-left': !$slots.left})">
+  <component
+    :is="as"
+    ref="root"
+    :class="b(variant, large ? 'large' : 'small', {clickable, 'no-left': !$slots.left})"
+  >
     <slot name="left"/>
     <slot name="body">
       <ListAndroidItemBody>
@@ -109,6 +113,14 @@ useRipples({
 
   &--clickable {
     @include mixins.clickable;
+  }
+
+  &--small {
+    min-height: 50px;
+  }
+
+  &--large {
+    min-height: 58px;
   }
 
   @each $variant in ("regular", "destructive", "accent", "placeholder") {

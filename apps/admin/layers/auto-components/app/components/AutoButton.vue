@@ -9,7 +9,7 @@ interface IosSpecificProps {
   elevated?: boolean;
   /**
    * Highlights the button on activation.
-   * @default True if `active` property is omitted or equal to `true`.
+   * @default Value of `active` prop if set. True otherwise.
    */
   highlightOnActive?: boolean;
 }
@@ -17,20 +17,23 @@ interface IosSpecificProps {
 interface AndroidSpecificProps {
   /**
    * Scales down the button on activation.
-   * @default True if `active` property is omitted or equal to `true`.
+   * @default Value of `active` prop if set. True otherwise.
    */
   pressable?: boolean;
   /**
    * Adds ripples on touch.
-   * @default True if `active` property is omitted or equal to `true`.
+   * @default Value of `active` prop if set. True otherwise.
    */
   ripples?: boolean;
 }
 
 interface Props extends Omit<ButtonBaseProps, 'palette'>, IosSpecificProps, AndroidSpecificProps {
   /**
-   * True if the button is active. This value is used as a default for `pressable`, `ripples`
-   * and `clickable` properties.
+   * True if the button is active. This value is used as a default value for the following props:
+   * - `clickable`
+   * - `pressable`
+   * - `ripples`
+   * - `highlightOnActive`
    */
   active?: boolean;
   palette?: ButtonBaseProps['palette'] | {
@@ -39,10 +42,11 @@ interface Props extends Omit<ButtonBaseProps, 'palette'>, IosSpecificProps, Andr
   };
   /**
    * True if the button is clickable. This makes the button display cursor pointer.
-   * @default True if `active` property is omitted or equal to `true`.
+   * @default Value of `active` prop if set. True otherwise.
    */
   clickable?: boolean;
   /**
+   * Size variant.
    * @default 'regular'
    */
   variant?: 'regular' | 'small' | 'multiline';
@@ -60,9 +64,7 @@ const platform = useTmaPlatform();
 const formattedPalette = computed(() => (
   typeof props.palette === 'string' ? props.palette : undefined
 ));
-const sharedProps = reactivePick(props, [
-  'fullWidth', 'as', 'variant', 'clickable', 'active',
-]);
+const sharedProps = reactivePick(props, ['fullWidth', 'as', 'variant', 'active']);
 const style = computed(() => (
   typeof props.palette === 'object'
     ? ({
@@ -81,6 +83,7 @@ const style = computed(() => (
     :style="style"
     :ripples
     :pressable
+    :clickable
   >
     <slot/>
   </ButtonAndroid>

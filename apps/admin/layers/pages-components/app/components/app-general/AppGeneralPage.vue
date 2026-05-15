@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import * as fp from 'fp-ts';
 
-import { AppGeneralPageDataDocument, UpdateAppDocument } from './operations';
+import { UpdateAppDocument } from './operations';
 
 const { t } = useI18n({
   messages: {
@@ -42,25 +42,9 @@ const appId = useQueryAppId();
 const isPageEntered = useIsCurrentPageEntered();
 
 //#region Requests.
-const queryCache = useQueryCache();
 const request = useMakeApiGqlRequest();
-const { data } = useQuery({
-  key: () => [AppGeneralPageDataDocument, appId.value],
-  query: throwify(() => {
-    return fp.function.pipe(
-      request(AppGeneralPageDataDocument, { appId: appId.value }),
-      fp.taskEither.map(({ app }) => (
-        app
-          ? {
-            title: app.title,
-            privacy: apiAppPrivacyToLocal(app.privacy),
-            role: apiAppRoleToLocal(app.currentUserRole),
-          }
-          : null
-      )),
-    );
-  }),
-});
+const { options: pageDataOptions, setData: setPageData } = useAppGeneralPageQueryMeta();
+const { data: pageData } = useQuery(() => pageDataOptions(appId.value));
 const { mutate: updateApp, isLoading: isUpdatingApp } = useMutation({
   key: [UpdateAppDocument],
   mutation(options: { appId: number; privacy: LocalAppPrivacy; title: string }) {
@@ -77,8 +61,7 @@ const { mutate: updateApp, isLoading: isUpdatingApp } = useMutation({
   },
   onSuccess({ privacy, title }) {
     hapticNotificationOccurred('success');
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    queryCache.setQueryData([AppGeneralPageDataDocument, appId], (data: any) => (
+    setPageData(appId.value, data => (
       data
         ? { ...data, privacy: apiAppPrivacyToLocal(privacy), title }
         : data
@@ -91,8 +74,8 @@ const { mutate: updateApp, isLoading: isUpdatingApp } = useMutation({
 });
 //#endregion
 
-const privacy = ref<LocalAppPrivacy>(data.value?.privacy || LocalAppPrivacy.Public);
-const title = ref(data.value?.title.trim() || '');
+const privacy = ref<LocalAppPrivacy>(pageData.value?.privacy || LocalAppPrivacy.Public);
+const title = ref(pageData.value?.title.trim() || '');
 
 const privacyLevels = computed(() => [{
   title: t('privacy.public.title'),
@@ -104,13 +87,13 @@ const privacyLevels = computed(() => [{
   value: LocalAppPrivacy.Private,
 }]);
 const isDirty = computed(() => {
-  return data.value
-    ? privacy.value !== data.value.privacy || title.value.trim() !== data.value.title.trim()
+  return pageData.value
+    ? privacy.value !== pageData.value.privacy || title.value.trim() !== pageData.value.title.trim()
     : false;
 });
 const isButtonDisabled = computed(() => (isUpdatingApp.value || !title.value));
 
-watch(data, data => {
+watch(pageData, data => {
   if (data) {
     privacy.value = data.privacy;
     title.value = data.title.trim();
@@ -154,7 +137,7 @@ preloadRouteComponents({ name: PageNames.App });
           </template>
           <AutoList>
             <AutoListItem>
-              <template v-if="data" #bodyLeftInput>
+              <template v-if="pageData" #bodyLeftInput>
                 <AutoListItemBodyLeftInput>
                   <AutoListItemBodyLeftInputElement
                     v-model="title"
@@ -187,8 +170,8 @@ preloadRouteComponents({ name: PageNames.App });
               v-for="item in privacyLevels"
               :key="item.value"
               large
-              :clickable="!!data"
-              @click="data && (privacy = item.value)"
+              :clickable="!!pageData"
+              @click="pageData && (privacy = item.value)"
             >
               <template #bodyLeftLabel>
                 <AutoListItemBodyLeftLabel>
@@ -200,7 +183,7 @@ preloadRouteComponents({ name: PageNames.App });
                   {{ item.subtitle }}
                 </AutoListItemBodyLeftSubtitle>
               </template>
-              <template v-if="data && privacy === item.value" #bodyRight>
+              <template v-if="pageData && privacy === item.value" #bodyRight>
                 <AutoListItemBodyRight>
                   <AutoListItemBodyRightCheckmark/>
                 </AutoListItemBodyRight>

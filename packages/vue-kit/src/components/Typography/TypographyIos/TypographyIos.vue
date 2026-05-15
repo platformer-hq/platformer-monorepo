@@ -7,11 +7,13 @@ import {
   type UseTypographyIosAttrsOptions,
   type UseTypographyIosAttrsVariant,
   type UseTypographyIosAttrsAlign,
+  type UseTypographyIosAttrsWeight,
   useTypographyIosAttrs,
 } from './composables/useTypographyIosAttrs';
 
 export type TypographyIosAlign = UseTypographyIosAttrsAlign;
 export type TypographyIosVariant = UseTypographyIosAttrsVariant;
+export type TypographyIosWeight = UseTypographyIosAttrsWeight;
 export interface TypographyIosProps extends UseTypographyIosAttrsOptions {
   /**
    * @default 'p'
