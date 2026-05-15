@@ -80,7 +80,7 @@ useRipples({
     :clickable="basedOnActive('clickable')"
     :palette
     :full-width
-    :class="b({pressed, palette}, variant)"
+    :class="b({pressed, palette, clickable: basedOnActive('clickable')}, variant)"
   >
     <slot/>
   </ButtonBase>
