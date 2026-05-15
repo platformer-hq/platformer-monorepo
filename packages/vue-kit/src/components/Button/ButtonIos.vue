@@ -2,6 +2,7 @@
 import { useMousePressed } from '@vueuse/core';
 import { useTemplateRef, computed } from 'vue';
 
+import IosActivationHighlight from '@/components/IosActivationHighlight.vue';
 import { bem } from '@/utils/bem.js';
 
 import ButtonBase, { type ButtonBaseProps } from './ButtonBase.vue';
@@ -37,7 +38,7 @@ withDefaults(defineProps<ButtonIosProps>(), {
 const rootRef = useTemplateRef('root');
 const { pressed } = useMousePressed({ target: computed(() => rootRef.value?.element) });
 
-const { b, e } = bem('tgui-button-ios');
+const { b } = bem('tgui-button-ios');
 </script>
 
 <template>
@@ -48,9 +49,7 @@ const { b, e } = bem('tgui-button-ios');
     :full-width
     :class="b({elevated, palette}, variant)"
   >
-    <Transition v-if="highlightOnActive ?? active ?? true" :name="e('highlight')">
-      <span v-if="pressed" key="active" :class="e('highlight')"/>
-    </Transition>
+    <IosActivationHighlight v-if="highlightOnActive ?? active ?? true" :show="pressed"/>
     <slot/>
   </ButtonBase>
 </template>
@@ -83,31 +82,6 @@ const { b, e } = bem('tgui-button-ios');
     padding: 4px 12px;
     min-height: 28px;
     border-radius: 1000px;
-  }
-
-  &__highlight {
-    background: currentColor;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: inherit;
-    opacity: 0.1;
-    pointer-events: none;
-    overflow: hidden;
-
-    &-leave-active {
-      transition: 300ms all;
-    }
-
-    &-leave-from {
-      opacity: 0.1;
-    }
-
-    &-leave-to {
-      opacity: 0;
-    }
   }
 
   @each $palette in ('filled', 'tinted', 'plain', 'gray', 'disabled') {
