@@ -13,11 +13,6 @@ export interface ButtonIosProps extends ButtonBaseProps {
    */
   active?: boolean;
   /**
-   * True if the button is clickable. This makes the button display cursor pointer.
-   * @default True if `active` property is omitted or equal to `true`.
-   */
-  clickable?: boolean;
-  /**
    * True if the button is visually elevated.
    */
   elevated?: boolean;
@@ -41,9 +36,7 @@ const props = withDefaults(defineProps<ButtonIosProps>(), {
 
 const { b, e } = bem('tgui-button-ios');
 
-const basedOnActive = (key: 'highlightOnActive' | 'clickable') => {
-  return props[key] ?? props.active ?? true;
-};
+const basedOnActive = (key: 'highlightOnActive') => props[key] ?? props.active ?? true;
 
 const rootRef = useTemplateRef('root');
 const { pressed } = useMousePressed({ target: computed(() => rootRef.value?.element) });
@@ -61,16 +54,11 @@ const onHighlightLeave = (el: Element, done: VoidFunction) => {
   <ButtonBase
     ref="root"
     :as
-    :clickable="basedOnActive('clickable')"
     :palette
     :full-width
     :class="b({elevated, palette}, variant)"
   >
-    <Transition
-      v-if="basedOnActive('highlightOnActive')"
-      :css="false"
-      @leave="onHighlightLeave"
-    >
+    <Transition v-if="basedOnActive('highlightOnActive')" :css="false" @leave="onHighlightLeave">
       <span v-if="pressed" key="active" :class="e('highlight')"/>
     </Transition>
     <slot/>
