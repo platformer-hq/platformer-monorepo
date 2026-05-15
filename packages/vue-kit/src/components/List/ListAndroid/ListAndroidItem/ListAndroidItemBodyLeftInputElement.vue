@@ -1,12 +1,19 @@
 <script setup lang="ts">
 import { onClickOutside, useTextareaAutosize } from '@vueuse/core';
-import { computed, useTemplateRef } from 'vue';
+import { computed, onWatcherCleanup, useTemplateRef, watch } from 'vue';
 
 import { useTypographyAndroidAttrs } from '@/components/Typography/TypographyAndroid/composables/useTypographyAndroidAttrs.js';
 
-defineProps<{
+const props = withDefaults(defineProps<{
   multiline?: boolean;
-}>();
+  /**
+   * True if the element should blur on click outside.
+   * @default true
+   */
+  blurOnClickOutside?: boolean;
+}>(), {
+  blurOnClickOutside: true,
+});
 
 const model = defineModel<string | undefined>({ default: '' });
 const inputRef = useTemplateRef<HTMLInputElement | HTMLTextAreaElement>('input');
@@ -19,9 +26,16 @@ useTextareaAutosize({
   }),
 });
 
-// Telegram for Android doesn't handle click outside and doesn't lose focus on the input.
-onClickOutside(inputRef, () => {
-  inputRef.value?.blur();
+// Both Telegram for iOS and Adnroid don't handle click outside and don't lose focus on
+// the input.
+watch(() => props.blurOnClickOutside, blur => {
+  if (blur) {
+    onWatcherCleanup(
+      onClickOutside(inputRef, () => {
+        inputRef.value?.blur();
+      }),
+    );
+  }
 });
 
 defineExpose({ input: inputRef });

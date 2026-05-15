@@ -172,7 +172,6 @@ export { default as VerticalPaddings } from './components/VerticalPaddings.vue';
 //#endregion
 
 //#region Composables.
-export { useKeyboardVisibility } from './composables/useKeyboardVisibility.js';
 export { useRipples } from './composables/useRipples.js';
 //#endregion
 
