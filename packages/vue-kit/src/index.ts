@@ -91,16 +91,47 @@ export { default as SectionHeaderIos, type SectionHeaderIosProps, type SectionHe
 export { default as SwitchAndroid } from './components/Switch/SwitchAndroid.vue';
 export { default as SwitchIos } from './components/Switch/SwitchIos.vue';
 
-export { default as TypographyBase, type TypographyBaseAlign, type TypographyBaseProps } from './components/Typography/TypographyBase/TypographyBase.vue';
+export { default as TextFieldIos, type TextFieldIosProps } from './components/TextField/TextFieldIos/TextFieldIos.vue';
+export { default as TextFieldIosInput } from './components/TextField/TextFieldIos/TextFieldIosInput.vue';
+export { default as TextFieldIosInputElement, type TextFieldIosInputElementProps } from './components/TextField/TextFieldIos/TextFieldIosInputElement.vue';
+export { default as TextFieldIosInputPlaceholder, type TextFieldIosInputPlaceholderProps } from './components/TextField/TextFieldIos/TextFieldIosInputPlaceholder.vue';
+export { default as TextFieldIosLeft } from './components/TextField/TextFieldIos/TextFieldIosLeft.vue';
+export { default as TextFieldIosLeftMagnifyIcon } from './components/TextField/TextFieldIos/TextFieldIosLeftMagnifyIcon.vue';
+export { default as TextFieldIosRight } from './components/TextField/TextFieldIos/TextFieldIosRight.vue';
+export { default as TextFieldIosRightClear } from './components/TextField/TextFieldIos/TextFieldIosRightClear.vue';
+
+export { default as TextFieldAndroid } from './components/TextField/TextFieldAndroid/TextFieldAndroid.vue';
+export { default as TextFieldAndroidInput } from './components/TextField/TextFieldAndroid/TextFieldAndroidInput.vue';
+export { default as TextFieldAndroidInputElement, type TextFieldAndroidInputElementProps } from './components/TextField/TextFieldAndroid/TextFieldAndroidInputElement.vue';
+export { default as TextFieldAndroidInputPlaceholder, type TextFieldAndroidInputPlaceholderProps } from './components/TextField/TextFieldAndroid/TextFieldAndroidInputPlaceholder.vue';
+export { default as TextFieldAndroidLeft } from './components/TextField/TextFieldAndroid/TextFieldAndroidLeft.vue';
+export { default as TextFieldAndroidLeftMagnifyIcon } from './components/TextField/TextFieldAndroid/TextFieldAndroidLeftMagnifyIcon.vue';
+export { default as TextFieldAndroidRight } from './components/TextField/TextFieldAndroid/TextFieldAndroidRight.vue';
+export { default as TextFieldAndroidRightClear } from './components/TextField/TextFieldAndroid/TextFieldAndroidRightClear.vue';
+
+export {
+  default as TypographyBase,
+  type TypographyBaseAlign,
+  type TypographyBaseProps,
+} from './components/Typography/TypographyBase/TypographyBase.vue';
 export {
   type UseTypographyBaseAttrsAlign,
   type UseTypographyBaseAttrsOptions,
   type UseTypographyBaseAttrsReturn,
   useTypographyBaseAttrs,
 } from './components/Typography/TypographyBase/composables/useTypographyBaseAttrs.js';
-export { default as UseTypographyBase, type UseTypographyBaseAttrsProps as UseTypographyBaseProps } from './components/Typography/TypographyBase/UseTypographyBaseAttrs.vue';
+export {
+  default as UseTypographyBase,
+  type UseTypographyBaseAttrsProps as UseTypographyBaseProps,
+} from './components/Typography/TypographyBase/UseTypographyBaseAttrs.vue';
 
-export { default as TypographyAndroid, type TypographyAndroidAlign, type TypographyAndroidProps, type TypographyAndroidVariant } from './components/Typography/TypographyAndroid/TypographyAndroid.vue';
+export {
+  default as TypographyAndroid,
+  type TypographyAndroidAlign,
+  type TypographyAndroidProps,
+  type TypographyAndroidVariant,
+  type TypographyAndroidWeight,
+} from './components/Typography/TypographyAndroid/TypographyAndroid.vue';
 export {
   type UseTypographyAndroidAttrsAlign,
   type UseTypographyAndroidAttrsOptions,
@@ -108,17 +139,30 @@ export {
   type UseTypographyAndroidAttrsVariant,
   useTypographyAndroidAttrs,
 } from './components/Typography/TypographyAndroid/composables/useTypographyAndroidAttrs.js';
-export { default as UseTypographyAndroid, type UseTypographyAndroidAttrsProps as UseTypographyAndroidProps } from './components/Typography/TypographyAndroid/UseTypographyAndroidAttrs.vue';
+export {
+  default as UseTypographyAndroid,
+  type UseTypographyAndroidAttrsProps as UseTypographyAndroidProps,
+} from './components/Typography/TypographyAndroid/UseTypographyAndroidAttrs.vue';
 
-export { default as TypographyIos, type TypographyIosAlign, type TypographyIosProps, type TypographyIosVariant } from './components/Typography/TypographyIos/TypographyIos.vue';
+export {
+  default as TypographyIos,
+  type TypographyIosAlign,
+  type TypographyIosProps,
+  type TypographyIosVariant,
+  type TypographyIosWeight,
+} from './components/Typography/TypographyIos/TypographyIos.vue';
 export {
   type UseTypographyIosAttrsAlign,
   type UseTypographyIosAttrsOptions,
   type UseTypographyIosAttrsReturn,
   type UseTypographyIosAttrsVariant,
+  type UseTypographyIosAttrsWeight,
   useTypographyIosAttrs,
 } from './components/Typography/TypographyIos/composables/useTypographyIosAttrs.js';
-export { default as UseTypographyIos, type UseTypographyIosAttrsProps as UseTypographyIosProps } from './components/Typography/TypographyIos/UseTypographyIosAttrs.vue';
+export {
+  default as UseTypographyIos,
+  type UseTypographyIosAttrsProps as UseTypographyIosProps,
+} from './components/Typography/TypographyIos/UseTypographyIosAttrs.vue';
 
 export { default as PagePaddings, type PagePaddingsProps } from './components/PagePaddings.vue';
 export { default as PageRoot, type PageRootProps } from './components/PageRoot.vue';

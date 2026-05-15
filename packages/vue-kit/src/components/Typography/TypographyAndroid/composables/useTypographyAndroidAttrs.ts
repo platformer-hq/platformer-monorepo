@@ -31,10 +31,11 @@ export type UseTypographyAndroidAttrsVariant =
   | 'caption2';
 
 export type UseTypographyAndroidAttrsAlign = UseTypographyBaseAttrsAlign;
+export type UseTypographyAndroidAttrsWeight = 'regular' | 'medium';
 
 export interface UseTypographyAndroidAttrsOptions extends UseTypographyBaseAttrsOptions {
   variant?: UseTypographyAndroidAttrsVariant;
-  weight?: 'regular' | 'medium';
+  weight?: UseTypographyAndroidAttrsWeight;
   mono?: boolean;
 }
 

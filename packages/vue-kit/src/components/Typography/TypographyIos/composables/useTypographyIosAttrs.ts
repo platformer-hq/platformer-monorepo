@@ -31,10 +31,11 @@ export type UseTypographyIosAttrsVariant =
   | 'caption2';
 
 export type UseTypographyIosAttrsAlign = UseTypographyBaseAttrsAlign;
+export type UseTypographyIosAttrsWeight = 'regular' | 'medium' | 'semibold' | 'bold';
 
 export interface UseTypographyIosAttrsOptions extends UseTypographyBaseAttrsOptions {
   variant?: UseTypographyIosAttrsVariant;
-  weight?: 'regular' | 'medium' | 'semibold' | 'bold';
+  weight?: UseTypographyIosAttrsWeight;
   rounded?: boolean;
 }
 
