@@ -8,46 +8,34 @@ import ButtonBase, { type ButtonBaseProps } from './ButtonBase.vue';
 
 export interface ButtonIosProps extends ButtonBaseProps {
   /**
-   * True if the button is active. This automatically enables or disables all "auto" properties
-   * until the values are specified explicitly.
+   * True if the button is active. This value is used as a default value for
+   * the `highlightOnActive` prop.
    */
   active?: boolean;
   /**
-   * True if the button is visually elevated.
+   * True if the button is visually elevated. Creates some kind of effect of liquid glass.
    */
   elevated?: boolean;
   /**
    * Highlights the button on activation.
-   * @default True if `active` property is omitted or equal to `true`.
+   * @default Value of `active` prop if set. True otherwise.
    */
   highlightOnActive?: boolean;
   /**
+   * Size variant.
    * @default 'regular'
    */
   variant?: 'regular' | 'small' | 'multiline';
 }
 
-const props = withDefaults(defineProps<ButtonIosProps>(), {
+withDefaults(defineProps<ButtonIosProps>(), {
   variant: 'regular',
-  clickable: undefined,
-  highlightOnActive: undefined,
-  active: undefined,
 });
-
-const { b, e } = bem('tgui-button-ios');
-
-const basedOnActive = (key: 'highlightOnActive') => props[key] ?? props.active ?? true;
 
 const rootRef = useTemplateRef('root');
 const { pressed } = useMousePressed({ target: computed(() => rootRef.value?.element) });
-const onHighlightLeave = (el: Element, done: VoidFunction) => {
-  el
-    .animate({ opacity: [0.1, 0] }, { duration: 300 })
-    .finished
-    .then(() => {
-      done();
-    });
-};
+
+const { b, e } = bem('tgui-button-ios');
 </script>
 
 <template>
@@ -58,7 +46,7 @@ const onHighlightLeave = (el: Element, done: VoidFunction) => {
     :full-width
     :class="b({elevated, palette}, variant)"
   >
-    <Transition v-if="basedOnActive('highlightOnActive')" :css="false" @leave="onHighlightLeave">
+    <Transition v-if="highlightOnActive ?? active ?? true" :name="e('highlight')">
       <span v-if="pressed" key="active" :class="e('highlight')"/>
     </Transition>
     <slot/>
@@ -106,6 +94,18 @@ const onHighlightLeave = (el: Element, done: VoidFunction) => {
     opacity: 0.1;
     pointer-events: none;
     overflow: hidden;
+
+    &-leave-active {
+      transition: 300ms all;
+    }
+
+    &-leave-from {
+      opacity: 0.1;
+    }
+
+    &-leave-to {
+      opacity: 0;
+    }
   }
 
   @each $palette in ('filled', 'tinted', 'plain', 'gray', 'disabled') {
