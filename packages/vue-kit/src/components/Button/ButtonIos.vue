@@ -28,9 +28,7 @@ export interface ButtonIosProps extends ButtonBaseProps {
   variant?: 'regular' | 'small' | 'multiline';
 }
 
-withDefaults(defineProps<ButtonIosProps>(), {
-  variant: 'regular',
-});
+withDefaults(defineProps<ButtonIosProps>(), { variant: 'regular' });
 
 const rootRef = useTemplateRef('root');
 const { pressed } = useMousePressed({ target: computed(() => rootRef.value?.element) });
