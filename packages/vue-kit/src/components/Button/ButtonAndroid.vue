@@ -37,7 +37,13 @@ export interface ButtonAndroidProps extends ButtonBaseProps {
   variant?: 'regular' | 'small' | 'multiline';
 }
 
-const props = withDefaults(defineProps<ButtonAndroidProps>(), { variant: 'regular' });
+const props = withDefaults(defineProps<ButtonAndroidProps>(), {
+  variant: 'regular',
+  active: undefined,
+  clickable: undefined,
+  pressable: undefined,
+  ripples: undefined,
+});
 
 const { b } = bem('tgui-button-android');
 
