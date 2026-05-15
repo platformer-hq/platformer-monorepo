@@ -4,8 +4,7 @@ export function createListAndroidItemTransition() {
   return createReversibleTransition({
     animatedProperties({ transition, el }) {
       return reverseTransitionKeyframesIfLeave({
-        overflow: ['hidden', 'hidden'],
-        height: ['0px', el.clientHeight + 'px'],
+        marginBottom: [`-${el.clientHeight}px`, '0px'],
         opacity: [0, 1],
       }, transition);
     },
