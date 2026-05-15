@@ -2,8 +2,6 @@
 import type { KnownHtmlTag } from '@/types/html-tags.js';
 import { bem } from '@/utils/bem';
 
-import { injectListItemOptions } from '../provider';
-
 withDefaults(defineProps<{
   /**
    * @default 'div'
@@ -19,11 +17,10 @@ defineSlots<{
 }>();
 
 const { b } = bem('tgui-list-ios-item-body');
-const { large } = injectListItemOptions();
 </script>
 
 <template>
-  <component :is="as" :class="b(large ? 'large' : 'small', {'no-right': !$slots.right})">
+  <component :is="as" :class="b({'no-right': !$slots.right})">
     <slot name="left" />
     <slot name="right" />
   </component>
@@ -39,14 +36,6 @@ const { large } = injectListItemOptions();
 
   &--no-right {
     grid-template-columns: 1fr;
-  }
-
-  &--small {
-    min-height: 52px;
-  }
-
-  &--large {
-    min-height: 60px;
   }
 }
 </style>

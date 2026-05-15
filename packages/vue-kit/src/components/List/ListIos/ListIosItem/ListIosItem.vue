@@ -70,7 +70,11 @@ const bodyLeftSlots = [
 </script>
 
 <template>
-  <component :is="as" ref="root" :class="b(variant, { 'no-left': !$slots.left })">
+  <component
+    :is="as"
+    ref="root"
+    :class="b(variant, large ? 'large' : 'small', {'no-left': !$slots.left})"
+  >
     <IosActivationHighlight v-if="clickable" :show="pressedDebounced"/>
     <slot name="left"/>
     <slot name="body">
@@ -110,6 +114,14 @@ const bodyLeftSlots = [
 
   &--no-left {
     grid-template-columns: 1fr;
+  }
+
+  &--small {
+    min-height: 52px;
+  }
+
+  &--large {
+    min-height: 60px;
   }
 
   @each $variant in ("regular", "destructive", "accent", "placeholder") {
