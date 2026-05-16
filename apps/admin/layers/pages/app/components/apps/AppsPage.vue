@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { popup } from '@tma.js/sdk-vue';
 
-import { createListIosItemTransition } from '@tma.js/vue-kit';
-
 import { useAppsPageQueryMeta } from './composables/useAppsPageQueryMeta';
 
 const { data, isPending } = useQuery(useAppsPageQueryMeta().options);
@@ -179,28 +177,30 @@ watch(apps, apps => {
               </AutoSectionHeader>
             </template>
             <AutoList>
-              <TransitionGroup v-bind="createListIosItemTransition()" :css="false">
-                <AutoListItem
-                  v-for="app in apps.managed"
-                  :key="app.id"
-                  clickable
-                  @click="navigateTo({name: PageNames.App, params: { appId: app.id }})"
-                >
-                  <template #bodyLeftLabel>
-                    <AutoListItemBodyLeftLabel :max-lines="1">
-                      {{ app.title }}
-                    </AutoListItemBodyLeftLabel>
-                  </template>
-                  <template #bodyRight>
-                    <AutoListItemBodyRight>
-                      <AutoListItemBodyRightLabel>
-                        {{ t(app.role === 'admin' ? 'app.role.admin' : 'app.role.member') }}
-                      </AutoListItemBodyRightLabel>
-                      <AutoListItemBodyRightChevron v-if="platform.isMappedIos"/>
-                    </AutoListItemBodyRight>
-                  </template>
-                </AutoListItem>
-              </TransitionGroup>
+              <UseListItemTransition v-slot="transition">
+                <TransitionGroup v-bind="transition" :css="false">
+                  <AutoListItem
+                    v-for="app in apps.managed"
+                    :key="app.id"
+                    clickable
+                    @click="navigateTo({name: PageNames.App, params: { appId: app.id }})"
+                  >
+                    <template #bodyLeftLabel>
+                      <AutoListItemBodyLeftLabel :max-lines="1">
+                        {{ app.title }}
+                      </AutoListItemBodyLeftLabel>
+                    </template>
+                    <template #bodyRight>
+                      <AutoListItemBodyRight>
+                        <AutoListItemBodyRightLabel>
+                          {{ t(app.role === 'admin' ? 'app.role.admin' : 'app.role.member') }}
+                        </AutoListItemBodyRightLabel>
+                        <AutoListItemBodyRightChevron v-if="platform.isMappedIos"/>
+                      </AutoListItemBodyRight>
+                    </template>
+                  </AutoListItem>
+                </TransitionGroup>
+              </UseListItemTransition>
             </AutoList>
             <template #footer>
               <AutoSectionFooter>
