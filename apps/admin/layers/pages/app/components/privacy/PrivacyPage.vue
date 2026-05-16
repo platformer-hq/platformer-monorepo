@@ -141,7 +141,7 @@ preloadRouteComponents({ name: PageNames.Main });
         </AutoSection>
       </PagePaddings>
     </PageContent>
-    <template #bottomBar>
+    <template #footer>
       <BottomBarTransition>
         <BottomBar
           v-if="!isLoadingPageData && (

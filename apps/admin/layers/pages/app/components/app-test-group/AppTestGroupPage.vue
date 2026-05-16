@@ -191,7 +191,7 @@ watch(() => pageStore.url, console.warn);
         />
       </PagePaddings>
     </PageContent>
-    <template #bottomBar>
+    <template #footer>
       <BottomBarTransition>
         <BottomBar v-if="showBottomBar">
           <PageContent>

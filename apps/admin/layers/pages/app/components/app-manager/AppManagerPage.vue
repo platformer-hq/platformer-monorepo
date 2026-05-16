@@ -237,7 +237,7 @@ watch(role, hapticSelectionChanged);
         </AutoSection>
       </PagePaddings>
     </PageContent>
-    <template #bottomBar>
+    <template #footer>
       <BottomBarTransition>
         <BottomBar v-if="isPageEntered && query.role !== role">
           <BottomBarInner>

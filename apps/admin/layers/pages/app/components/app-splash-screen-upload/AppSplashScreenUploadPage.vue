@@ -229,7 +229,7 @@ const previewTransition = createReversibleTransition({
         </Transition>
       </PagePaddings>
     </PageContent>
-    <template #bottomBar>
+    <template #footer>
       <BottomBarTransition>
         <BottomBar v-if="selectedFile">
           <BottomBarInner>

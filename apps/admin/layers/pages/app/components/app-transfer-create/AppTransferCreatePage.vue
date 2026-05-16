@@ -84,7 +84,7 @@ preloadRouteComponents({ name: PageNames.AppTransfer });
         </AutoSection>
       </PagePaddings>
     </PageContent>
-    <template #bottomBar>
+    <template #footer>
       <BottomBarTransition>
         <BottomBar>
           <PageContent>

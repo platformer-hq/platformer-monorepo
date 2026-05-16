@@ -159,7 +159,7 @@ const role = ref(LocalAppManagementInviteRole.Admin);
         </AutoSection>
       </PagePaddings>
     </PageContent>
-    <template #bottomBar>
+    <template #footer>
       <BottomBarTransition>
         <BottomBar v-if="isPageEntered">
           <BottomBarInner>

@@ -315,7 +315,7 @@ preloadRouteComponents({ name: PageNames.App });
         </Transition>
       </PagePaddings>
     </PageContent>
-    <template #bottomBar>
+    <template #footer>
       <BottomBarTransition>
         <BottomBar v-if="isPageEntered && isDirty">
           <BottomBarInner>

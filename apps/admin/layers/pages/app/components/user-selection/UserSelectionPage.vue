@@ -231,7 +231,7 @@ const confirm = () => {
       </PagePaddings>
     </PageContent>
 
-    <template #bottomBar>
+    <template #footer>
       <BottomBarTransition>
         <BottomBar v-if="isPageEntered && store.alwaysShowConfirm">
           <PageContent>

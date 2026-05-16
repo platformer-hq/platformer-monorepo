@@ -38,7 +38,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 defineSlots<{
   default(): unknown;
-  bottomBar(): unknown;
+  footer(): unknown;
 }>();
 
 const rootRef = useTemplateRef('root');
@@ -113,8 +113,8 @@ onMounted(() => {
     @back="router.back()"
   >
     <slot/>
-    <template #bottomBar>
-      <slot name="bottomBar"/>
+    <template #footer>
+      <slot name="footer"/>
     </template>
   </PageRoot>
 </template>

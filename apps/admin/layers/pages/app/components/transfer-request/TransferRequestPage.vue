@@ -140,7 +140,7 @@ preloadRouteComponents({ name: PageNames.TransferRequests });
         </AutoSection>
       </PagePaddings>
     </PageContent>
-    <template #bottomBar>
+    <template #footer>
       <BottomBarTransition>
         <BottomBar v-if="isPageEntered">
           <PageContent>

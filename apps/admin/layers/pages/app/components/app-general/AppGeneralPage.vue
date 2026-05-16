@@ -201,7 +201,7 @@ preloadRouteComponents({ name: PageNames.App });
         </AutoSection>
       </PagePaddings>
     </PageContent>
-    <template #bottomBar>
+    <template #footer>
       <BottomBarTransition>
         <BottomBar v-if="isPageEntered && isDirty">
           <BottomBarInner>

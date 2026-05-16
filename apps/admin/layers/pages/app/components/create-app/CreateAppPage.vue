@@ -74,7 +74,7 @@ const isButtonEnabled = computed(() => {
         </AutoSection>
       </PagePaddings>
     </PageContent>
-    <template #bottomBar>
+    <template #footer>
       <BottomBarTransition>
         <BottomBar v-if="isPageEntered">
           <BottomBarInner>

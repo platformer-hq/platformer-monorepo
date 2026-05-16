@@ -159,7 +159,7 @@ preloadRouteComponents({ name: PageNames.ManagementInvites });
         </AutoSection>
       </PagePaddings>
     </PageContent>
-    <template #bottomBar>
+    <template #footer>
       <BottomBarTransition>
         <BottomBar v-if="isPageEntered">
           <PageContent>

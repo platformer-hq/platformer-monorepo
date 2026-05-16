@@ -192,7 +192,7 @@ const handleCopy = () => {
         </template>
       </PagePaddings>
     </PageContent>
-    <template #bottomBar>
+    <template #footer>
       <BottomBarTransition>
         <BottomBar v-if="isPageEntered">
           <BottomBarInner>
