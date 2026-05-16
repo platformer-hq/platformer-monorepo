@@ -68,7 +68,7 @@ const isSendingAnyRequest = computed(() => (
 const userSelectionNavId = query.value.userSelectionNavId || Math.random();
 
 const isReadonlyMode = computed(() => (
-  !data.value?.currentUserRole || !isEditorRole(data.value.currentUserRole)
+  !!data.value?.currentUserRole && !isEditorRole(data.value.currentUserRole)
 ));
 // const isReadonlyMode = computed(() => true);
 const isUrlValid = computed(() => isValidUrl(pageStore.url));
