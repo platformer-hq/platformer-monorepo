@@ -208,7 +208,7 @@ watch(sections, sections => {
               :clickable="!isSendingRequest"
               @click="!isSendingRequest && navigateTo({
                 name: item.name,
-                query: {appId: query.appId}
+                params: {appId}
               })"
             >
               <template #left>
