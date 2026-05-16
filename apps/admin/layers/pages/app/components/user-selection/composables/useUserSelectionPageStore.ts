@@ -6,21 +6,20 @@ export interface UserSelectionPageStoreSelectedUser {
   name: string;
 }
 
-type TypedNavPages =
-  | {
-    page: PageNames.AppManagerInvite;
-    query: { appId: number };
-  }
-  | {
-    page: PageNames.AppTransferCreate;
-    query: { appId: number };
-  };
-
 export type UserSelectionPageStoreOnConfirmAction = (
   {
     kind: 'navigate-to';
     replace?: boolean;
-  } & (TypedNavPages | { page: Exclude<PageNames, TypedNavPages['page']> })
+  } & (
+    | {
+      page: PageNames.AppManagerInvite;
+      appId: number;
+    }
+    | {
+      page: PageNames.AppTransferCreate;
+      appId: number;
+    }
+  )
 );
 
 export interface UserSelectionPageStoreState {
@@ -55,6 +54,7 @@ export interface UserSelectionPageStoreState {
   navId?: number;
   /**
    * Action to perform whenever the confirm button is pressed.
+   * @default Navigation back will be called.
    */
   onConfirmAction?: UserSelectionPageStoreOnConfirmAction;
   /**
@@ -90,12 +90,12 @@ export const useUserSelectionPageStore = defineStore('user-selection', () => {
                   v.looseObject({
                     ...sharedNavigateToActionSchema,
                     page: v.literal(PageNames.AppManagerInvite),
-                    query: v.looseObject({ appId: v.number() }),
+                    appId: v.number(),
                   }),
                   v.looseObject({
                     ...sharedNavigateToActionSchema,
                     page: v.literal(PageNames.AppTransferCreate),
-                    query: v.looseObject({ appId: v.number() }),
+                    appId: v.number(),
                   }),
                 ]),
               ])),

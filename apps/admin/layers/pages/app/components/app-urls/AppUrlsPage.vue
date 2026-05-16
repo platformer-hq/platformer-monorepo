@@ -7,6 +7,10 @@ import { AppUrlsPageDataDocument, UpdateAppUrlsDocument } from './operations';
 
 const { e } = bem('app-urls-page');
 
+const props = defineProps<{
+  appId: number;
+}>();
+
 const { t } = useI18n({
   messages: {
     en: {
@@ -36,7 +40,6 @@ const { t } = useI18n({
 
 const platform = useTmaPlatform();
 const isPageEntered = useIsCurrentPageEntered();
-const appId = useQueryAppId();
 const request = useMakeApiGqlRequest();
 const queryCache = useQueryCache();
 const queryOptions = defineQueryOptions((appId: number) => ({
@@ -65,7 +68,7 @@ const queryOptions = defineQueryOptions((appId: number) => ({
     );
   }),
 }));
-const { data: pageData, isPending: isPageDataPending } = useQuery(() => queryOptions(appId.value));
+const { data: pageData, isPending: isPageDataPending } = useQuery(() => queryOptions(props.appId));
 const { mutate: updateUrls, isLoading: isUpdatingUrls } = useMutation({
   key: [UpdateAppUrlsDocument],
   mutation(options: {
@@ -183,7 +186,7 @@ const urlsTransition = createReversibleTransition({
 });
 const handleSave = () => {
   updateUrls({
-    appId: appId.value,
+    appId: props.appId,
     urls: Object.entries(urls.value).map(([plaformId, url]) => ({
       platformId: parseInt(plaformId),
       url,

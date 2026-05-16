@@ -4,8 +4,11 @@ import * as v from 'valibot';
 
 import { RemoveManagerDocument, UpdateManagerDocument } from './operations';
 
+const props = defineProps<{
+  appId: number;
+}>();
+
 const { query } = useParsedQuery({
-  appId: v.pipe(v.string(), v.transform(Number)),
   user: {
     schema: v.pipe(
       v.string(),
@@ -146,7 +149,7 @@ const handleRemoveManager = async () => {
   if (response === 'yes') {
     removeManager({
       userId: query.value.user.id,
-      appId: query.value.appId,
+      appId: props.appId,
     });
   }
 };
@@ -243,7 +246,7 @@ watch(role, hapticSelectionChanged);
               full-width
               :active="!isSendingRequest"
               :disabled="isSendingRequest"
-              @click="updateManager({role, userId: query.user.id, appId: query.appId})"
+              @click="updateManager({role, userId: query.user.id, appId})"
             >
               <AutoTypography variant="body" weight="semibold">
                 {{ t('button.update') }}

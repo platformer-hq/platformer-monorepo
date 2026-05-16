@@ -5,6 +5,10 @@ import { AppUrlViewerPageDataDocument } from './operations';
 
 const { e } = bem('app-url-viewer-page');
 
+const props = defineProps<{
+  appId: number;
+}>();
+
 const { t } = useI18n({
   messages: {
     en: {
@@ -33,7 +37,6 @@ const { t } = useI18n({
     },
   },
 });
-const appId = useQueryAppId();
 const userSelectionStore = useUserSelectionPageStore();
 const navigateToUserSelection = useNavigateToUserSelectionPage();
 const request = useMakeApiGqlRequest();
@@ -46,13 +49,13 @@ const { data } = useQuery({
   enabled: () => lastSelectedUser.value !== undefined,
   key: () => [{
     document: AppUrlViewerPageDataDocument,
-    appId: appId.value,
+    appId: props.appId,
     userId: lastSelectedUser.value?.id,
   }],
   query: throwify(() => {
     return fp.function.pipe(
       request(AppUrlViewerPageDataDocument, {
-        appId: appId.value,
+        appId: props.appId,
         userId: lastSelectedUser.value?.id || 0,
       }),
       fp.taskEither.map(response => {

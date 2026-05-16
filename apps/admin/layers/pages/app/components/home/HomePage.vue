@@ -85,7 +85,7 @@ const sections = computed(() => {
       name: PageNames.Privacy,
       icon: createCustomIconComponent(IconLockFill28, 24, '#8E8E93'),
     }],
-  ];
+  ] as const;
 });
 
 preloadRouteComponents({ name: PageNames.Apps });

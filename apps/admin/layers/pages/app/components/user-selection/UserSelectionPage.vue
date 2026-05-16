@@ -114,8 +114,9 @@ const confirm = () => {
     navigateTo({
       name: action.page,
       replace: action.replace,
-      query: 'query' in action ? action.query : undefined,
+      params: { appId: action.appId },
     });
+    return;
   }
 };
 </script>

@@ -86,12 +86,11 @@ watch(canCreate, value => {
   }
 });
 watch(apps, apps => {
-  if (apps?.owned?.length || apps?.managed.length) {
-    preloadRouteComponents({ name: PageNames.App });
-  }
+  const mergedApps = [...apps?.owned || [], ...apps?.managed || []];
+  mergedApps.forEach(app => {
+    preloadRouteComponents({ name: PageNames.App, params: { appId: app.id } });
+  });
 });
-
-preloadRouteComponents({ name: PageNames.Main });
 </script>
 
 <template>
@@ -136,7 +135,10 @@ preloadRouteComponents({ name: PageNames.Main });
                       : idx
                     : idx"
                   :clickable="typeof appOrWidth === 'object'"
-                  @click="typeof appOrWidth === 'object' && navigateToApp(appOrWidth.id)"
+                  @click="typeof appOrWidth === 'object' && navigateTo({
+                    name: PageNames.App,
+                    params: { appId: appOrWidth.id }
+                  })"
                 >
                   <template #bodyLeftLabel>
                     <AutoListItemBodyLeftLabel :max-lines="1">
@@ -182,7 +184,7 @@ preloadRouteComponents({ name: PageNames.Main });
                   v-for="app in apps.managed"
                   :key="app.id"
                   clickable
-                  @click="navigateToApp(app.id)"
+                  @click="navigateTo({name: PageNames.App, params: { appId: app.id }})"
                 >
                   <template #bodyLeftLabel>
                     <AutoListItemBodyLeftLabel :max-lines="1">

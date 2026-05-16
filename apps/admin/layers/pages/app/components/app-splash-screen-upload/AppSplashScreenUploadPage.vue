@@ -9,7 +9,9 @@ import UploadRules from './_components/UploadRules.vue';
 import { useAppSplashScreenUploadPageQueryMeta } from './composables/useAppSplashScreenUploadPageQueryMeta';
 import { UpdateAppSplashScreenIconDocument } from './operations';
 
-const appId = useQueryAppId();
+const props = defineProps<{
+  appId: number;
+}>();
 
 const { t } = useI18n({
   messages: {
@@ -38,7 +40,7 @@ const router = useRouter();
 //#region Requests.
 const { options: queryOptions, setData: setQueryData } = useAppSplashScreenUploadPageQueryMeta();
 const apiGqlRequest = useMakeApiGqlRequest();
-const { data } = useQuery(() => queryOptions(appId.value));
+const { data } = useQuery(() => queryOptions(props.appId));
 const { mutate: updateIcon, isLoading: isUpdatingIcon } = useMutation({
   key: [UpdateAppSplashScreenIconDocument],
   mutation(options: { appId: number; svg: string }) {
@@ -56,7 +58,7 @@ const { mutate: updateIcon, isLoading: isUpdatingIcon } = useMutation({
   },
   onSuccess({ iconUrl }) {
     selectedFile.value = undefined;
-    setQueryData(appId.value, data => (
+    setQueryData(props.appId, data => (
       data
         ? { ...data, iconUrl: iconUrl || undefined }
         : data
@@ -103,7 +105,7 @@ const handleSave = () => {
   reader.onload = e => {
     const r = e.target?.result;
     if (typeof r === 'string') {
-      updateIcon({ appId: appId.value, svg: r });
+      updateIcon({ appId: props.appId, svg: r });
     }
   };
   reader.readAsText(file);

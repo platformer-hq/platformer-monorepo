@@ -26,7 +26,10 @@ const { mutate: createApp, isLoading: isCreatingApp } = useMutation({
   },
   onSuccess(data) {
     hapticNotificationOccurred('success');
-    navigateToApp(data.createApp.id);
+    navigateTo({
+      name: PageNames.App,
+      params: { appId: data.createApp.id },
+    });
   },
   onError() {
     hapticNotificationOccurred('error');

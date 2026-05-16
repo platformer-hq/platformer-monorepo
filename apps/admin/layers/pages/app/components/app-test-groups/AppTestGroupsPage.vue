@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { popup } from '@tma.js/sdk-vue';
 
+const props = defineProps<{
+  appId: number;
+}>();
+
 const { t } = useI18n({
   messages: {
     en: {
@@ -31,9 +35,8 @@ const { t } = useI18n({
 });
 
 const query = useAppTestGroupsPageQueryMeta();
-const appId = useQueryAppId();
 const navigateToAppTestGroupPage = useNavigateToAppTestGroupPage();
-const { data } = useQuery(() => query.options(appId.value));
+const { data } = useQuery(() => query.options(props.appId));
 const hadInitialData = !!data.value;
 
 const readonly = computed(() => !data.value || !isEditorRole(data.value.currentUserRole));
@@ -46,7 +49,7 @@ const handleCreate = async () => {
     await popup.show({ message: t('popup.message') });
     return;
   }
-  navigateToAppTestGroupPage({ appId: appId.value });
+  navigateToAppTestGroupPage({ appId: props.appId });
 };
 
 watch(() => data.value?.testGroups, testGroups => {
@@ -128,7 +131,9 @@ preloadRouteComponents({ name: PageNames.AppTestGroup });
                     <AutoListItemBodyRight>
                       <AutoListItemBodyRightLabel>
                         <template v-if="typeof itemOrWidth === 'object'">
-                          {{ itemOrWidth.enabled ? t('testGroup.enabled') : t('testGroup.disabled') }}
+                          {{ itemOrWidth.enabled
+                            ? t('testGroup.enabled')
+                            : t('testGroup.disabled') }}
                         </template>
                         <TextShimmerBox v-else :width="80"/>
                       </AutoListItemBodyRightLabel>

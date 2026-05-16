@@ -13,10 +13,13 @@ import {
   IconBinOutline28,
 } from '@workspace/icons';
 import * as fp from 'fp-ts';
-import * as v from 'valibot';
 
 import AppIcon from './_components/AppIcon.vue';
 import { AppPageDataDocument, DeleteAppDocument } from './operations';
+
+const props = defineProps<{
+  appId: number;
+}>();
 
 const createIconComponent = <C extends Component>(component: C, size?: number) => ({
   kind: 'component' as const,
@@ -38,12 +41,6 @@ const TransferIcon = createCustomIconComponent(IconPersonLineDottedFill28, 20, '
 const TelegramIcon = createCustomIconComponent(IconTelegram24, 20, '#007AFF');
 const SplashScreenIcon = createCustomIconComponent(IconSquareArrowDownFill28, 22, '#FF2D55');
 const UrlViewerIcon = createCustomIconComponent(IconEyeFillIOS28, 22, '#FF2D55');
-
-const query = v.parse(
-  v.looseObject({ appId: v.pipe(v.string(), v.transform(Number)) }),
-  useRoute().query,
-);
-const { e } = bem('app-page');
 
 const router = useRouter();
 const { t } = useI18n({
@@ -89,10 +86,10 @@ const { t } = useI18n({
 const isDark = useIsDark();
 const request = useMakeApiGqlRequest();
 const { data: appData, isPending: isLoadingApp } = useQuery({
-  key: [AppPageDataDocument, query.appId],
+  key: [AppPageDataDocument, props.appId],
   query: throwify(() => {
     return fp.function.pipe(
-      request(AppPageDataDocument, { appID: query.appId }),
+      request(AppPageDataDocument, { appID: props.appId }),
       fp.taskEither.map(({ app }) => (
         app
           ? { id: app.id, title: app.title, role: apiAppRoleToLocal(app.currentUserRole) }
@@ -142,7 +139,7 @@ const sections = computed(() => [
       { icon: CacheIcon, title: t('utils.cache'), name: PageNames.AppCache },
     ],
   },
-]);
+] as const);
 
 const handleDelete = async () => {
   const response = await popup.show({
@@ -154,16 +151,23 @@ const handleDelete = async () => {
     ],
   });
   if (response === 'yes') {
-    deleteApp({ appId: query.appId });
+    deleteApp({ appId: props.appId });
   }
 };
 
-preloadRouteComponents({ name: PageNames.Apps });
 watch(sections, sections => {
-  sections.flatMap(s => s.items).forEach(item => {
-    preloadRouteComponents({ name: item.name });
-  });
+  for (const section of sections) {
+    for (const item of section.items) {
+      preloadRouteComponents({
+        name: item.name,
+        params: { appId: props.appId },
+      });
+    }
+  }
 }, { deep: true, immediate: true });
+
+const { e } = bem('app-page');
+preloadRouteComponents({ name: PageNames.Apps });
 </script>
 
 <template>
@@ -195,7 +199,7 @@ watch(sections, sections => {
           list-bg-color="section-bg"
           :class="e('section', sectionIdx && 'offset-top')"
         >
-          <template v-if="section.title" #header>
+          <template v-if="'title' in section" #header>
             <AutoSectionHeader>
               {{ section.title }}
             </AutoSectionHeader>
@@ -208,7 +212,7 @@ watch(sections, sections => {
               :clickable="!isSendingRequest"
               @click="!isSendingRequest && navigateTo({
                 name: item.name,
-                query: {appId: query.appId}
+                params: {appId}
               })"
             >
               <template #left>

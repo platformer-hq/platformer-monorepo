@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { copyTextToClipboard } from '@tma.js/sdk-vue';
 
+const props = defineProps<{
+  appId: number;
+}>();
+
 const { t } = useI18n({
   messages: {
     en: {
@@ -52,14 +56,13 @@ const { mutate: copy } = useMutation({
   },
 });
 
-const appId = useQueryAppId();
 const isPageEntered = useIsCurrentPageEntered();
 const platform = useTmaPlatform();
 const queryLp = ref(false);
 const fallbackUrl = ref('');
 const initTimeout = ref('');
 const loadTimeout = ref('');
-const baseUrl = computed(() => `https://tgl.mini-apps.store/?app_id=${appId.value}`);
+const baseUrl = computed(() => `https://tgl.mini-apps.store/?app_id=${props.appId}`);
 const fields = computed(() => [{
   title: t('queryLp.title'),
   footer: t('queryLp.footer'),

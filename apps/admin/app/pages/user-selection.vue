@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ name: PageNames.UserSelection });
+definePageMeta({ name: 'user-selection' });
 </script>
 
 <template>

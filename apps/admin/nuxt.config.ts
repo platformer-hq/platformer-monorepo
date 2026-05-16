@@ -33,6 +33,7 @@ export default defineNuxtConfig({
     // This disables loading _payload.json file between navigations. This
     // file is only used when you have the server side.
     payloadExtraction: false,
+    typedPages: true,
   },
   modules: [
     '@pinia/nuxt',

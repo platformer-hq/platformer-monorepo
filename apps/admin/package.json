@@ -21,9 +21,9 @@
     "@tma.js/vue-kit": "workspace:*",
     "@vueuse/core": "^14.2.1",
     "@workspace/api": "workspace:*",
+    "@workspace/icons": "workspace:*",
     "@workspace/pinia-colada": "workspace:*",
     "@workspace/tma": "workspace:*",
-    "@workspace/icons": "workspace:*",
     "error-kid": "^2.0.0",
     "eruda": "^3.4.3",
     "fp-ts": "^2.16.11",
@@ -39,6 +39,7 @@
     "baseline-browser-mapping": "^2.9.19",
     "browserslist-to-esbuild": "^2.1.1",
     "sass-embedded": "^1.97.1",
+    "unplugin-vue-router": "^0.19.2",
     "vite-svg-loader": "^5.1.1"
   }
 }

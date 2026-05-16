@@ -2,6 +2,10 @@
 import { IconGearFillIOS28, IconLevels30 } from '@workspace/icons';
 import type { Component } from 'vue';
 
+const props = defineProps<{
+  appId: number;
+}>();
+
 const { t } = useI18n({
   messages: {
     ru: {
@@ -15,7 +19,6 @@ const { t } = useI18n({
   },
 });
 const platform = useTmaPlatform();
-const appId = useQueryAppId();
 
 const createCustomIcon = <C extends Component>(
   component: C,
@@ -36,11 +39,11 @@ const items = computed(() => [{
   title: t('launcher'),
   page: PageNames.AppTgLauncher,
   icon: createStaticIcon(IconLevels30),
-}]);
+}] as const);
 
 watch(items, items => {
   items.forEach(item => {
-    preloadRouteComponents({ name: item.page });
+    preloadRouteComponents({ name: item.page, params: { appId: props.appId } });
   });
 });
 </script>
@@ -55,7 +58,7 @@ watch(items, items => {
               v-for="{icon, page, title} in items"
               :key="page"
               clickable
-              @click="navigateTo({name: page, query: {appId}})"
+              @click="navigateTo({name: page, params: {appId}})"
             >
               <template #left>
                 <AutoListItemLeft>
