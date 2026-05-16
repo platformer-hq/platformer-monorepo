@@ -70,9 +70,7 @@ const handleInvite = () => {
       kind: 'navigate-to',
       page: PageNames.AppManagerInvite,
       replace: true,
-      query: {
-        appId: props.appId,
-      },
+      appId: props.appId,
     },
     excludedUserIds: data.value
       ? [

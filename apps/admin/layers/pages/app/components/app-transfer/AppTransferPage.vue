@@ -144,7 +144,7 @@ preloadRouteComponents({ name: PageNames.App });
                 onConfirmAction: {
                   kind: 'navigate-to',
                   page: PageNames.AppTransferCreate,
-                  query: { appId: query.appId },
+                  appId,
                   replace: true,
                 },
                 limit: 1,
