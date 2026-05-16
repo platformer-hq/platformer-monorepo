@@ -88,14 +88,14 @@ preloadRouteComponents({ name: PageNames.AppSplashScreenUpload });
   <PageRoot colors="secondary-bg">
     <PageContent>
       <PagePaddings>
-          <AutoTypography
-            :class="e('title', platform.mapped)"
-            color="subtitle-text"
-            variant="subheadline1"
-            weight="semibold"
-          >
-            {{ t('title') }}
-          </AutoTypography>
+        <AutoTypography
+          :class="e('title', platform.mapped)"
+          color="subtitle-text"
+          variant="subheadline1"
+          weight="semibold"
+        >
+          {{ t('title') }}
+        </AutoTypography>
         <AutoRoundedPanel :class="e('preview')">
           <ProgressiveImage
             v-if="iconUrl"
