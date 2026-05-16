@@ -41,7 +41,7 @@ const handleDelete = async () => {
   <AutoSection style="margin-top: 16px" list-bg-color="section-bg">
     <AutoList>
       <AutoListItem
-        variant="destructive"
+        :variant="disabled ? 'placeholder' : 'destructive'"
         :clickable="!disabled"
         @click="!disabled && handleDelete()"
       >
