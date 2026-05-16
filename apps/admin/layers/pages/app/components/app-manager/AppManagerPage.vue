@@ -220,7 +220,7 @@ watch(role, hapticSelectionChanged);
           </AutoList>
         </AutoSection>
 
-        <AutoSection style="margin-top: 16px" list-bg-color="destructive-opaque-bg">
+        <AutoSection style="margin-top: 16px" list-bg-color="section-bg">
           <AutoList>
             <AutoListItem
               variant="destructive"

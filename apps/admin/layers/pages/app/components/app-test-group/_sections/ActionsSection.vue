@@ -38,10 +38,7 @@ const handleDelete = async () => {
 </script>
 
 <template>
-  <AutoSection
-    list-bg-color="destructive-opaque-bg"
-    style="margin-top: 16px"
-  >
+  <AutoSection style="margin-top: 16px" list-bg-color="section-bg">
     <AutoList>
       <AutoListItem
         variant="destructive"

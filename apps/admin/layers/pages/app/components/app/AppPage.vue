@@ -83,7 +83,6 @@ const { t } = useI18n({
     },
   },
 });
-const isDark = useIsDark();
 const request = useMakeApiGqlRequest();
 const { data: appData, isPending: isLoadingApp } = useQuery({
   key: [AppPageDataDocument, props.appId],
@@ -246,14 +245,7 @@ preloadRouteComponents({ name: PageNames.Apps });
             </AutoListItem>
           </AutoList>
         </AutoSection>
-        <AutoSection
-          :class="e('section', 'offset-top')"
-          :list-bg-color="isSendingRequest
-            ? 'secondary-bg'
-            : isDark
-              ? 'rgb(221 4 4 / 19%)'
-              : 'rgb(221 4 4 / 10%)'"
-        >
+        <AutoSection :class="e('section', 'offset-top')" list-bg-color="section-bg">
           <AutoList>
             <AutoListItem
               :variant="isSendingRequest ? 'placeholder' : 'destructive'"
