@@ -3,6 +3,10 @@ import * as fp from 'fp-ts';
 
 import { InviteToManageDocument } from './operations';
 
+defineProps<{
+  appId: number;
+}>();
+
 const userSelectionStore = useUserSelectionPageStore();
 const { t } = useI18n({
   messages: {
@@ -26,7 +30,6 @@ const { t } = useI18n({
     },
   },
 });
-const appId = useQueryAppId();
 const platform = useTmaPlatform();
 const isPageEntered = useIsCurrentPageEntered();
 const router = useRouter();

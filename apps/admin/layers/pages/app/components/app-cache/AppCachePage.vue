@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { popup } from '@tma.js/sdk-vue';
 import * as fp from 'fp-ts';
-import * as v from 'valibot';
 
 import { AppCachePageDataDocument, ResetAppCacheDocument } from './operations';
 
-const query = v.parse(
-  v.looseObject({ appId: v.pipe(v.string(), v.transform(Number)) }),
-  useRoute().query,
-);
+const props = defineProps<{
+  appId: number;
+}>();
 
 const { t, locale } = useI18n({
   messages: {
@@ -37,10 +35,10 @@ const { t, locale } = useI18n({
 const request = useMakeApiGqlRequest();
 const queryCache = useQueryCache();
 const { data: appData, isPending: isLoadingApp } = useQuery({
-  key: () => [AppCachePageDataDocument, query.appId],
+  key: () => [AppCachePageDataDocument, props.appId],
   query: throwify(() => {
     return fp.function.pipe(
-      request(AppCachePageDataDocument, { appID: query.appId }),
+      request(AppCachePageDataDocument, { appID: props.appId }),
       fp.taskEither.map(({ app }) => (
         app
           ? { urlsCacheResetAt: app.urlsCacheResetAt ? new Date(app.urlsCacheResetAt) : undefined }
@@ -57,7 +55,7 @@ const { mutate: resetCache, isLoading: isResettingCache } = useMutation({
   onSuccess({ updateApp: { urlsCacheResetAt } }) {
     hapticNotificationOccurred('success');
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    queryCache.setQueryData([AppCachePageDataDocument, query.appId], (data: any) => (
+    queryCache.setQueryData([AppCachePageDataDocument, props.appId], (data: any) => (
       data
         ? { ...data, urlsCacheResetAt: urlsCacheResetAt ? new Date(urlsCacheResetAt) : undefined }
         : data
@@ -81,7 +79,7 @@ const handleReset = async () => {
     ],
   });
   if (response === 'yes') {
-    resetCache({ appId: query.appId });
+    resetCache({ appId: props.appId });
   }
 };
 

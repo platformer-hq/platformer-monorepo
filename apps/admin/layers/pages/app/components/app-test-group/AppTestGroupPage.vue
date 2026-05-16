@@ -13,8 +13,11 @@ import UrlSection from './_sections/UrlSection.vue';
 import UsersSection from './_sections/UsersSection.vue';
 import { useAppTestGroupPageStore } from './_stores/useAppTestGroupPageStore';
 
+const props = defineProps<{
+  appId: number;
+}>();
+
 const { query, update: updateQuery } = useParsedQuery({
-  appId: v.pipe(v.string(), v.transform(Number)),
   testGroupId: v.nullish(v.pipe(v.string(), v.transform(Number))),
   userSelectionNavId: v.nullish(v.pipe(v.string(), v.transform(Number))),
 });
@@ -39,17 +42,17 @@ const pageStore = useAppTestGroupPageStore();
 //#region Requests.
 const { options: appTestGroupPageQueryOptions } = useAppTestGroupPageQueryMeta();
 const { data, isLoading: isLoadingPageData } = useQuery(() => appTestGroupPageQueryOptions({
-  appId: query.value.appId,
+  appId: props.appId,
   testGroupId: query.value.testGroupId || undefined,
 }));
 const {
   mutate: deleteTestGroup,
   isLoading: isDeletingTestGroup,
-} = useDeleteTestGroup(query.value.appId);
+} = useDeleteTestGroup(props.appId);
 const {
   mutate: updateTestGroup,
   isLoading: isUpdatingTestGroup,
-} = useUpdateTestGroup(query.value.appId);
+} = useUpdateTestGroup(props.appId);
 const { mutate: createTestGroup, isLoading: isCreatingTestGroup } = useCreateTestGroup();
 const isSendingMutationRequest = computed(() => (
   isUpdatingTestGroup.value
@@ -98,7 +101,7 @@ const handleButtonClick = () => {
   if (query.value.testGroupId) {
     updateTestGroup({ ...shared, testGroupId: query.value.testGroupId });
   } else {
-    createTestGroup({ ...shared, appId: query.value.appId });
+    createTestGroup({ ...shared, appId: props.appId });
   }
 };
 const handleDelete = () => {

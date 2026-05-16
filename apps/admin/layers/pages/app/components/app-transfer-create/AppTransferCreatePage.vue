@@ -3,6 +3,10 @@ import * as fp from 'fp-ts';
 
 import { CreateAppTransferRequestDocument } from './operations';
 
+const props = defineProps<{
+  appId: number;
+}>();
+
 const { t } = useI18n({
   messages: {
     en: {
@@ -17,7 +21,6 @@ const { t } = useI18n({
     },
   },
 });
-const appId = useQueryAppId();
 const router = useRouter();
 const user = useUserSelectionPageStore().selectedUsers![0]!;
 const { setData: setAppTransferPageQueryData } = useAppTransferPageQueryMeta();
@@ -37,7 +40,7 @@ const { mutate: createTransferRequest, isLoading: isCreatingTransferRequest } = 
   },
   onSuccess({ from, id, to }) {
     hapticNotificationOccurred('success');
-    setAppTransferPageQueryData(appId.value, prev => ({
+    setAppTransferPageQueryData(props.appId, prev => ({
       ...prev,
       transferRequest: { id, from, to },
     }));

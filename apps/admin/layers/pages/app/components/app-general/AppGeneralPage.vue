@@ -3,6 +3,10 @@ import * as fp from 'fp-ts';
 
 import { UpdateAppDocument } from './operations';
 
+const props = defineProps<{
+  appId: number;
+}>();
+
 const { t } = useI18n({
   messages: {
     en: {
@@ -38,13 +42,12 @@ const { t } = useI18n({
   },
 });
 
-const appId = useQueryAppId();
 const isPageEntered = useIsCurrentPageEntered();
 
 //#region Requests.
 const request = useMakeApiGqlRequest();
 const { options: pageDataOptions, setData: setPageData } = useAppGeneralPageQueryMeta();
-const { data: pageData } = useQuery(() => pageDataOptions(appId.value));
+const { data: pageData } = useQuery(() => pageDataOptions(props.appId));
 const { mutate: updateApp, isLoading: isUpdatingApp } = useMutation({
   key: [UpdateAppDocument],
   mutation(options: { appId: number; privacy: LocalAppPrivacy; title: string }) {
@@ -61,7 +64,7 @@ const { mutate: updateApp, isLoading: isUpdatingApp } = useMutation({
   },
   onSuccess({ privacy, title }) {
     hapticNotificationOccurred('success');
-    setPageData(appId.value, data => (
+    setPageData(props.appId, data => (
       data
         ? { ...data, privacy: apiAppPrivacyToLocal(privacy), title }
         : data

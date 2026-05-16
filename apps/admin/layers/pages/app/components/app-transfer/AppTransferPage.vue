@@ -4,8 +4,11 @@ import * as v from 'valibot';
 
 import { RevokeAppTransferRequestDocument } from './operations';
 
+const props = defineProps<{
+  appId: number;
+}>();
+
 const { query, update: updateQuery } = useParsedQuery({
-  appId: v.pipe(v.string(), v.transform(Number)),
   userSelectionNavId: v.nullish(v.pipe(v.string(), v.transform(Number))),
 });
 
@@ -45,7 +48,7 @@ const { t } = useI18n({
 });
 
 const { options, setData } = useAppTransferPageQueryMeta();
-const { data, isPending } = useQuery(() => options(query.value.appId));
+const { data, isPending } = useQuery(() => options(props.appId));
 const navigateToUserSelection = useNavigateToUserSelectionPage();
 const request = useMakeApiGqlRequest();
 const { mutate: revokeTransferRequest, isLoading: isRevokingTransferRequest } = useMutation({
@@ -57,7 +60,7 @@ const { mutate: revokeTransferRequest, isLoading: isRevokingTransferRequest } = 
   },
   onSuccess() {
     hapticNotificationOccurred('success');
-    setData(query.value.appId, prev => ({ ...prev, transferRequest: undefined }));
+    setData(props.appId, prev => ({ ...prev, transferRequest: undefined }));
   },
   onError() {
     hapticNotificationOccurred('error');

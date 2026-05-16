@@ -6,7 +6,9 @@ import { useAppSplashScreenPageQueryMeta } from './composables/useAppSplashScree
 import defaultIconUrl from './default-icon.svg';
 import { ResetAppSplashScreenIconDocument } from './operations';
 
-const appId = useQueryAppId();
+const props = defineProps<{
+  appId: number;
+}>();
 
 const { t } = useI18n({
   messages: {
@@ -30,7 +32,7 @@ const platform = useTmaPlatform();
 const { options: queryOptions, setData: setQueryData } = useAppSplashScreenPageQueryMeta();
 const { setData: setUploadPageQueryData } = useAppSplashScreenUploadPageQueryMeta();
 const apiGqlRequest = useMakeApiGqlRequest();
-const { data } = useQuery(() => queryOptions(appId.value));
+const { data } = useQuery(() => queryOptions(props.appId));
 const { mutate: resetIcon, isLoading: isResettingIcon } = useMutation({
   key: [ResetAppSplashScreenIconDocument],
   mutation(options: { appId: number }) {
@@ -44,10 +46,10 @@ const { mutate: resetIcon, isLoading: isResettingIcon } = useMutation({
     );
   },
   onSuccess({ iconUrl }) {
-    setQueryData(appId.value, data => (
+    setQueryData(props.appId, data => (
       data ? { ...data, iconUrl: iconUrl || undefined } : data
     ));
-    setUploadPageQueryData(appId.value, data => (
+    setUploadPageQueryData(props.appId, data => (
       data ? { ...data, iconUrl: iconUrl || undefined } : data
     ));
     hapticNotificationOccurred('success');
@@ -74,7 +76,7 @@ const handleReset = async () => {
     ],
   });
   if (buttonId === 'ok') {
-    resetIcon({ appId: appId.value });
+    resetIcon({ appId: props.appId });
   }
 };
 const { e } = bem('app-splash-screen-page');

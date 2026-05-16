@@ -5,6 +5,10 @@ import InvitesSection from './_components/InvitesSection.vue';
 import ManagersSection from './_components/ManagersSection.vue';
 import { RevokeManageInviteDocument } from './operations';
 
+const props = defineProps<{
+  appId: number;
+}>();
+
 const { t } = useI18n({
   messages: {
     ru: {
@@ -28,10 +32,9 @@ const { t } = useI18n({
   },
 });
 const navigateToUserSelection = useNavigateToUserSelectionPage();
-const appId = useQueryAppId();
 const request = useMakeApiGqlRequest();
 const queryMeta = useAppManagersPageQueryMeta();
-const { data, isPending } = useQuery(() => queryMeta.options(appId.value));
+const { data, isPending } = useQuery(() => queryMeta.options(props.appId));
 const { mutate: revokeManageInvite, isLoading: isRevokingInvite } = useMutation({
   key: [RevokeManageInviteDocument],
   mutation(options: { inviteId: number }) {
@@ -41,7 +44,7 @@ const { mutate: revokeManageInvite, isLoading: isRevokingInvite } = useMutation(
   },
   onSuccess(_, { inviteId }) {
     hapticNotificationOccurred('success');
-    queryMeta.setData(appId.value, prev => (
+    queryMeta.setData(props.appId, prev => (
       prev
         ? { ...prev, invites: prev.invites.filter(item => item.id !== inviteId) }
         : prev
@@ -68,7 +71,7 @@ const handleInvite = () => {
       page: PageNames.AppManagerInvite,
       replace: true,
       query: {
-        appId: appId.value,
+        appId: props.appId,
       },
     },
     excludedUserIds: data.value
@@ -98,8 +101,8 @@ const handleManagerClick = (managerId: number) => {
   if (manager) {
     navigateTo({
       name: PageNames.AppManager,
+      params: { appId: props.appId },
       query: {
-        appId: appId.value,
         user: JSON.stringify({
           id: manager.user.id,
           name: manager.user.name,
