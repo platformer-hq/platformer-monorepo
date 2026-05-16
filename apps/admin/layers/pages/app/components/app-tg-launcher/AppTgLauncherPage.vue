@@ -201,6 +201,7 @@ const handleCopy = () => {
               full-width
               :active="!displayCopied"
               :disabled="displayCopied"
+              elevated
               @click="handleCopy"
             >
               <AutoTypography variant="body" weight="semibold">

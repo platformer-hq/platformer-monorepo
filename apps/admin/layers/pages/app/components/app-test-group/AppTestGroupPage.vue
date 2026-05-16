@@ -199,6 +199,7 @@ onMounted(() => {
                 :active="isUrlValid && !isSendingAnyRequest"
                 :disabled="!isUrlValid || isSendingAnyRequest"
                 full-width
+                elevated
                 @click="isUrlValid && !isSendingAnyRequest && handleButtonClick()"
               >
                 <AutoTypography variant="body" weight="medium">

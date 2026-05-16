@@ -149,6 +149,7 @@ preloadRouteComponents({ name: PageNames.TransferRequests });
                 :palette="isResponding ? 'disabled' : 'tinted'"
                 :disabled="isResponding"
                 :active="!isResponding"
+                elevated
                 @click="respond(false)"
               >
                 <AutoTypography variant="body" weight="medium">
@@ -160,6 +161,7 @@ preloadRouteComponents({ name: PageNames.TransferRequests });
                 :palette="isResponding ? 'disabled' : 'filled'"
                 :disabled="isResponding"
                 :active="!isResponding"
+                elevated
                 @click="respond(true)"
               >
                 <AutoTypography variant="body" weight="medium">

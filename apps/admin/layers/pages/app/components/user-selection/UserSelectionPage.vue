@@ -236,7 +236,7 @@ const confirm = () => {
         <BottomBar v-if="isPageEntered && store.alwaysShowConfirm">
           <PageContent>
             <BottomBarInner>
-              <AutoButton palette="filled" full-width @click="confirm">
+              <AutoButton palette="filled" full-width elevated @click="confirm">
                 <AutoTypography variant="body" weight="medium">
                   {{ t('done') }}
                 </AutoTypography>

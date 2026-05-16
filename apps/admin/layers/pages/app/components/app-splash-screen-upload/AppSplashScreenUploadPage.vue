@@ -238,6 +238,7 @@ const previewTransition = createReversibleTransition({
               :disabled="isUpdatingIcon"
               :palette="isUpdatingIcon ? 'disabled' : 'filled'"
               full-width
+              elevated
               @click="handleSave"
             >
               <AutoTypography variant="body" weight="medium">
