@@ -20,7 +20,7 @@ const { data } = useQuery(useTransferRequestsPageQueryMeta().options);
 const initialData = data.value;
 const hasInitialData = !!initialData;
 
-const requests = computed(() => {
+const items = computed(() => {
   if (!data.value) {
     return [210, 180, 160].map((width, idx) => ({ kind: 'width' as const, key: idx, width }));
   }
@@ -34,7 +34,7 @@ const requests = computed(() => {
   }));
 });
 
-watch(requests, requests => {
+watch(items, requests => {
   if (requests[0]?.kind === 'request') {
     preloadRouteComponents({ name: PageNames.TransferRequest });
   }
@@ -54,7 +54,7 @@ watch(requests, requests => {
           <UseListItemTransition v-slot="transition">
             <TransitionGroup v-bind="transition" :css="false">
               <AutoListItem
-                v-for="item in requests"
+                v-for="item in items"
                 :key="item.key"
                 :large="item.kind !== 'empty'"
                 :clickable="item.kind === 'request'"
@@ -87,7 +87,7 @@ watch(requests, requests => {
                     </template>
                   </AutoListItemBodyLeftLabel>
                 </template>
-                <template #bodyLeftSubtitle>
+                <template v-if="item.kind !== 'empty'" #bodyLeftSubtitle>
                   <AutoListItemBodyLeftSubtitle :max-lines="1">
                     <template v-if="item.kind === 'request'">
                       {{ t('request.subtitle', {

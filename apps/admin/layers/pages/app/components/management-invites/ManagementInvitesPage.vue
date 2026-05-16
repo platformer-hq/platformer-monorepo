@@ -90,7 +90,7 @@ watch(invites, invites => {
                     </template>
                   </AutoListItemBodyLeftLabel>
                 </template>
-                <template #bodyLeftSubtitle>
+                <template v-if="item.kind !== 'empty'" #bodyLeftSubtitle>
                   <AutoListItemBodyLeftSubtitle :max-lines="1">
                     <template v-if="item.kind === 'invite'">
                       {{ t('invite.subtitle', {
