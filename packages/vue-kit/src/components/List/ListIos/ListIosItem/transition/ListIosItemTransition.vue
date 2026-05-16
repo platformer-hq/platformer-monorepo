@@ -3,11 +3,13 @@ import type { TransitionProps } from 'vue';
 
 import { createListIosItemTransition } from './createListIosItemTransition.js';
 
-defineProps<TransitionProps>();
+type Props = /* @vue-ignore */ TransitionProps;
+
+defineProps<Props>();
 </script>
 
 <template>
-  <Transition v-bind="{...createListIosItemTransition(), ...$props}" :css="false">
+  <Transition v-bind="createListIosItemTransition()" :css="false">
     <slot/>
   </Transition>
 </template>
