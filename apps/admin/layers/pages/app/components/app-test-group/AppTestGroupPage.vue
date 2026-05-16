@@ -115,13 +115,13 @@ const handleDelete = () => {
 // overwrite his changes.
 // TODO: This one should be improved. Not sure about this logic.
 // I guess, changes will be lost if the user just refreshes the page. The store
-// values will be just overwritten.
-const isFromUserSelection = userSelectionStore.navId === query.value.userSelectionNavId;
+// values will be just overwritten. Maybe use some kind of "isDirty" flag?
 watch(() => ({
   testGroup: data.value?.testGroup,
-  isFromUserSelection,
+  isFromUserSelection: !!query.value.userSelectionNavId
+    && userSelectionStore.navId === query.value.userSelectionNavId,
   userSelection: userSelectionStore.selectedUsers || [],
-}), ({ testGroup, userSelection }) => {
+}), ({ testGroup, userSelection, isFromUserSelection }) => {
   if (!testGroup) {
     return;
   }
@@ -139,6 +139,8 @@ watch(() => ({
 onMounted(() => {
   updateQuery({ userSelectionNavId }, { replace: true });
 });
+
+watch(() => pageStore.url, console.warn);
 </script>
 
 <template>
