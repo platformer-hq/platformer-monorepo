@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ name: PageNames.Apps });
+definePageMeta({ name: 'apps' });
 </script>
 
 <template>

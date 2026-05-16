@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ name: PageNames.Main });
+definePageMeta({ name: 'main' });
 </script>
 
 <template>

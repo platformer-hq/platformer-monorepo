@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ name: PageNames.Account });
+definePageMeta({ name: 'account' });
 </script>
 
 <template>

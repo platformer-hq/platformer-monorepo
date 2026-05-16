@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ name: PageNames.ManagementInvites });
+definePageMeta({ name: 'management-invites' });
 </script>
 
 <template>

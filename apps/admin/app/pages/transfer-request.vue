@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ name: PageNames.TransferRequest });
+definePageMeta({ name: 'transfer-request' });
 </script>
 
 <template>
