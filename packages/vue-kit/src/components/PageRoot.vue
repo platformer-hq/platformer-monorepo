@@ -10,8 +10,7 @@ import {
 } from '@tma.js/sdk-vue';
 import { useTemplateRef, watchPostEffect, onWatcherCleanup, computed } from 'vue';
 
-import SafeAreaInsets from '@/components/SafeAreaInsets/SafeAreaInsets.vue';
-import type { UseSafeAreaInsetsAttrsSide } from '@/components/SafeAreaInsets/composables/useSafeAreaInsetsAttrs';
+import SafeAreaInsets, { type SafeAreaInsetsSide } from '@/components/SafeAreaInsets/SafeAreaInsets.vue';
 import { bem } from '@/utils/bem';
 
 type RgbOrThemeParamsKey = RGB | KnownThemeParamsKey;
@@ -42,7 +41,7 @@ export interface PageRootProps {
    * - array to apply specific insets
    * @default true
    */
-  insets?: boolean | UseSafeAreaInsetsAttrsSide[];
+  insets?: boolean | SafeAreaInsetsSide[];
   /**
    * Should the scrollbar be visible.
    */
@@ -137,11 +136,11 @@ const insetsObject = computed(() => {
   const { insets } = props;
   return (
     insets === true
-      ? ['left', 'right', 'bottom', 'top'] satisfies UseSafeAreaInsetsAttrsSide[]
+      ? ['left', 'right', 'bottom', 'top'] satisfies SafeAreaInsetsSide[]
       : insets === false
         ? []
         : insets
-  ).reduce<{ [K in UseSafeAreaInsetsAttrsSide]?: true }>((acc, key) => {
+  ).reduce<{ [K in SafeAreaInsetsSide]?: true }>((acc, key) => {
     acc[key] = true;
     return acc;
   }, {});

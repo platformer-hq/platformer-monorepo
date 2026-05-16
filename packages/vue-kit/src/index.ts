@@ -69,7 +69,11 @@ export { default as RadioIos } from './components/Radio/RadioIos.vue';
 export { default as RoundedPanelAndroid } from './components/RoundedPanel/RoundedPanelAndroid.vue';
 export { default as RoundedPanelIos } from './components/RoundedPanel/RoundedPanelIos.vue';
 
-export { default as SafeAreaInsets, type SafeAreaInsetsProps } from './components/SafeAreaInsets/SafeAreaInsets.vue';
+export {
+  default as SafeAreaInsets,
+  type SafeAreaInsetsProps,
+  type SafeAreaInsetsSide,
+} from './components/SafeAreaInsets/SafeAreaInsets.vue';
 export {
   type UseSafeAreaInsetsAttrsInset,
   type UseSafeAreaInsetsAttrsOptions,
