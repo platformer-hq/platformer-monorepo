@@ -11,16 +11,20 @@ import type {
  * Performs a GraphQL request using specified client.
  * @returns TaskEither with the error and execution result.
  */
-export function gqlRequest<T, V extends Variables>({ client, document, variables }: {
+export function gqlRequest<TData, TVars extends Variables, TError = TypeError>({
+  client,
+  document,
+  variables,
+}: {
   client: GraphQLClient;
-  document: TypedDocumentNode<T, V>;
-  variables: V;
-}): fp.taskEither.TaskEither<ClientError, T> {
+  document: TypedDocumentNode<TData, TVars>;
+  variables: TVars;
+}): fp.taskEither.TaskEither<ClientError | TError, TData> {
   // TODO: Add "retry" option.
   return fp.taskEither.tryCatch(() => {
     return client.request({
       document,
       variables,
-    } as unknown as RequestExtendedOptions<V, T>);
-  }, e => e as ClientError);
+    } as unknown as RequestExtendedOptions<TVars, TData>);
+  }, e => e as ClientError | TError);
 }

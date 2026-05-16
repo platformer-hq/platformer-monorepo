@@ -1,7 +1,7 @@
 import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import { gqlRequest } from '@workspace/graphql';
 import * as fp from 'fp-ts';
-import type { GraphQLClient, Variables } from 'graphql-request';
+import { ClientError, type GraphQLClient, type Variables } from 'graphql-request';
 
 import { ApiGraphQLResponseError } from './ApiGraphQLResponseError.js';
 
@@ -9,13 +9,17 @@ import { ApiGraphQLResponseError } from './ApiGraphQLResponseError.js';
  * Performs a GraphQL request using specified client.
  * @returns TaskEither with the error and execution result.
  */
-export function apiGqlRequest<T, V extends Variables>({ client, document, variables }: {
+export function apiGqlRequest<TData, TVars extends Variables, TError = TypeError>({
+  client,
+  document,
+  variables,
+}: {
   client: GraphQLClient;
-  document: TypedDocumentNode<T, V>;
-  variables: V;
-}): fp.taskEither.TaskEither<ApiGraphQLResponseError, T> {
+  document: TypedDocumentNode<TData, TVars>;
+  variables: TVars;
+}): fp.taskEither.TaskEither<ApiGraphQLResponseError | TError, TData> {
   return fp.function.pipe(
-    gqlRequest({ client, document, variables }),
-    fp.taskEither.mapLeft(e => new ApiGraphQLResponseError(e.response, e.request)),
+    gqlRequest<TData, TVars, TError>({ client, document, variables }),
+    fp.taskEither.mapLeft(e => (e instanceof ClientError ? new ApiGraphQLResponseError(e) : e)),
   );
 }

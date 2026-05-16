@@ -2,9 +2,10 @@ import { ClientError } from 'graphql-request';
 import * as v from 'valibot';
 
 export class ApiGraphQLResponseError extends ClientError {
-  constructor(...args: ConstructorParameters<typeof ClientError>) {
-    super(...args);
+  constructor(error: ClientError) {
+    super(error.response, error.request);
     this.name = 'ApiGraphQLResponseError';
+    this.cause = error.cause;
     Object.setPrototypeOf(this, ApiGraphQLResponseError.prototype);
   }
 
