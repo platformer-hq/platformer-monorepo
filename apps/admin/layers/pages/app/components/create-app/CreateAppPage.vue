@@ -6,13 +6,13 @@ const { t } = useI18n({
     en: {
       title: 'Application name',
       footer: 'Come up with a name for the app. It can be changed in the future',
-      button: 'Create',
-      placeholder: 'опционально',
+      button: 'Create App',
+      placeholder: 'optional',
     },
     ru: {
       title: 'Название приложения',
       footer: 'Придумайте название приложения. Его можно будет изменить в дальнейшем',
-      button: 'Создать',
+      button: 'Создать приложение',
       placeholder: 'обязательно',
     },
   },
@@ -80,6 +80,7 @@ const isButtonEnabled = computed(() => {
           <BottomBarInner>
             <AutoButton
               full-width
+              elevated
               :active="isButtonEnabled"
               :disabled="!isButtonEnabled"
               :palette="isButtonEnabled ? 'filled' : 'disabled'"
