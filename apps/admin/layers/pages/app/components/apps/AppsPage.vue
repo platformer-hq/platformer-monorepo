@@ -86,12 +86,11 @@ watch(canCreate, value => {
   }
 });
 watch(apps, apps => {
-  if (apps?.owned?.length || apps?.managed.length) {
-    preloadRouteComponents({ name: PageNames.App });
-  }
+  const mergedApps = [...apps?.owned || [], ...apps?.managed || []];
+  mergedApps.forEach(app => {
+    preloadRouteComponents({ name: PageNames.App, params: { appId: app.id } });
+  });
 });
-
-preloadRouteComponents({ name: PageNames.Main });
 </script>
 
 <template>
