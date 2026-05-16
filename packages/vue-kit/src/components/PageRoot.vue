@@ -54,7 +54,7 @@ const props = withDefaults(defineProps<PageRootProps>(), {
 });
 defineSlots<{
   default(): unknown;
-  bottomBar(): unknown;
+  footer(): unknown;
 }>();
 const emit = defineEmits<{ back: [] }>();
 
@@ -159,7 +159,7 @@ defineExpose({ element: rootRef });
       <SafeAreaInsets v-bind="insetsObject">
         <slot />
       </SafeAreaInsets>
-      <slot name="bottomBar"/>
+      <slot name="footer"/>
     </div>
   </div>
 </template>
