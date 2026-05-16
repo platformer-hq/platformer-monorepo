@@ -29,6 +29,11 @@ function higherPriorityComponents(componentsPath: string, options: {
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
+  experimental: {
+    // This disables loading _payload.json file between navigations. This
+    // file is only used when you have the server side.
+    payloadExtraction: false,
+  },
   modules: [
     '@pinia/nuxt',
     '@nuxtjs/i18n',
