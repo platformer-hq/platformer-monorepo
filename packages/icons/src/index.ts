@@ -247,6 +247,7 @@ export { default as IconWhatsApp24, type IconWhatsApp24Props } from './icons/24/
 export { default as IconWideSmile24, type IconWideSmile24Props } from './reactions/24/IconWideSmile24.vue';
 export { default as IconXMark20, type IconXMark20Props } from './icons/20/IconXMark20.vue';
 export { default as IconXMark40, type IconXMark40Props } from './icons/40/IconXMark40.vue';
+export { default as IconXMarkCircleFill20, type IconXMarkCircleFill20Props } from './icons/20/IconXMarkCircleFill20.vue';
 export { default as IconXmark24, type IconXmark24Props } from './icons/24/IconXmark24.vue';
 export { default as IconXmark28, type IconXmark28Props } from './icons/28/IconXmark28.vue';
 export { default as IconXmarkFill28, type IconXmarkFill28Props } from './icons/28/IconXmarkFill28.vue';
