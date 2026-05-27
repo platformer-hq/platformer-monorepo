@@ -3,7 +3,7 @@ import { bem } from '@/utils/bem';
 
 export interface TextFieldIosProps {
   rounded?: boolean;
-  elevated?: boolean;
+  glass?: boolean;
 }
 
 defineProps<TextFieldIosProps>();
@@ -17,7 +17,7 @@ const { b } = bem('tgui-text-field-ios');
 </script>
 
 <template>
-  <label :class="b({rounded, 'with-left': !!$slots.left, elevated})">
+  <label :class="b({rounded, 'with-left': !!$slots.left, glass})">
     <slot name="left"/>
     <slot name="input"/>
     <slot name="right"/>
@@ -37,8 +37,9 @@ const { b } = bem('tgui-text-field-ios');
   padding-inline: 16px;
   overflow: hidden;
 
-  &--elevated {
-    box-shadow: var(--tgui-elevated-box-shadow);
+  &--glass {
+    box-shadow: var(--tgui-glass-box-shadow);
+    backdrop-filter: var(--tgui-glass-backdrop-filter);
   }
 
   &--rounded {

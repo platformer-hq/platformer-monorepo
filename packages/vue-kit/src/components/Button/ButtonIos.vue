@@ -14,9 +14,9 @@ export interface ButtonIosProps extends ButtonBaseProps {
    */
   active?: boolean;
   /**
-   * True if the button is visually elevated. Creates some kind of effect of liquid glass.
+   * True if the button should have effect of liquid glass.
    */
-  elevated?: boolean;
+  glass?: boolean;
   /**
    * Highlights the button on activation.
    * @default Value of `active` prop if set. True otherwise.
@@ -47,7 +47,7 @@ const { b } = bem('tgui-button-ios');
     :as
     :palette
     :full-width
-    :class="b({elevated, palette}, variant)"
+    :class="b({glass, palette}, variant)"
   >
     <IosActivationHighlight v-if="highlightOnActive ?? active ?? true" :show="pressed"/>
     <slot/>
@@ -58,9 +58,9 @@ const { b } = bem('tgui-button-ios');
 .tgui-button-ios {
   position: relative;
 
-  &--elevated {
-    box-shadow: var(--tgui-elevated-box-shadow);
-    backdrop-filter: blur(15px);
+  &--glass {
+    box-shadow: var(--tgui-glass-box-shadow);
+    backdrop-filter: var(--tgui-glass-backdrop-filter);
   }
 
   &--regular {
