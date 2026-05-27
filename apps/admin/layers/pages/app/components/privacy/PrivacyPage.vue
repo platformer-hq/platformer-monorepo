@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import * as fp from 'fp-ts';
-
-import { PrivacyPageDataDocument, UpdatePermissionsDocument } from './operations';
+import { UpdatePermissionsDocument } from './operations';
 
 const { t } = useI18n({
   messages: {
@@ -23,20 +21,8 @@ const { t } = useI18n({
 });
 
 const platform = useTmaPlatform();
-const request = useMakeApiGqlRequest();
-const queryCache = useQueryCache();
-const { data: pageData, isPending: isLoadingPageData } = useQuery({
-  key: [PrivacyPageDataDocument],
-  query: throwify(() => {
-    return fp.function.pipe(
-      request(PrivacyPageDataDocument, {}),
-      fp.taskEither.map(({ currentUser }) => ({
-        canAcceptAppTransfers: currentUser.canAcceptAppTransfers,
-        canBeInvitedToManage: currentUser.canBeInvitedToManage,
-      })),
-    );
-  }),
-});
+const { options: queryOptions, setData: setQueryData } = usePrivacyPageQueryMeta();
+const { data: pageData, isPending: isLoadingPageData } = useQuery(queryOptions);
 const { mutate: updatePermissions, isLoading: isUpdating } = useFpMutation({
   mutation(
     options: { canAcceptAppTransfers: boolean; canBeInvitedToManage: boolean },
@@ -49,7 +35,7 @@ const { mutate: updatePermissions, isLoading: isUpdating } = useFpMutation({
   },
   onSuccess(_, variables) {
     hapticNotificationOccurred('success');
-    queryCache.setQueryData([PrivacyPageDataDocument], {
+    setQueryData({
       canAcceptAppTransfers: variables.canAcceptAppTransfers,
       canBeInvitedToManage: variables.canBeInvitedToManage,
     });

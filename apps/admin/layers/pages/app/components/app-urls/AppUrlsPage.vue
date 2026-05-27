@@ -3,7 +3,7 @@ import { openLink } from '@tma.js/sdk-vue';
 import * as fp from 'fp-ts';
 
 import HttpWarning from './_components/HttpWarning.vue';
-import { AppUrlsPageDataDocument, UpdateAppUrlsDocument } from './operations';
+import { UpdateAppUrlsDocument } from './operations';
 
 const { e } = bem('app-urls-page');
 
@@ -38,72 +38,38 @@ const { t } = useI18n({
 
 const platform = useTmaPlatform();
 const isPageEntered = useIsCurrentPageEntered();
-const queryCache = useQueryCache();
 
 //#region Requests.
-const { options: queryOptions } = useParametrizedQueryMeta(({ apiGqlRequest }) => {
-  return defineQueryOptions((appId: number) => ({
-    key: [AppUrlsPageDataDocument, appId],
-    query() {
-      return throwifyAnyEither(
-        fp.function.pipe(
-          apiGqlRequest(AppUrlsPageDataDocument, { appId }),
-          fp.taskEither.map(({ app, platforms }) => {
-            return {
-              app: app
-                ? {
-                  role: apiAppRoleToLocal(app.currentUserRole),
-                  urls: app.urls.map(u => ({
-                    platformId: u.platform.id,
-                    url: u.url,
-                  })),
-                }
-                : undefined,
-              platforms: platforms.map(p => ({
-                id: p.id,
-                title: p.title,
-                vendor: p.vendor.title,
-              })),
-            };
-          }),
-        ),
-      );
-    },
-  }));
-});
+const { options: queryOptions, setData: setQueryData } = useAppUrlsPageQueryMeta();
 const { data: pageData, isPending: isPageDataPending } = useQuery(() => queryOptions(props.appId));
-const { mutate: updateUrls, isLoading: isUpdatingUrls } = useMutationEnhanced({
+const { mutate: updateUrls, isLoading: isUpdatingUrls } = useFpMutation({
   key: [UpdateAppUrlsDocument],
   mutation(options: {
     appId: number;
     urls: { platformId: number; url: string }[];
   }, { apiGqlRequest }) {
-    return throwifyAnyEither(
-      fp.function.pipe(
-        apiGqlRequest(UpdateAppUrlsDocument, {
-          appId: options.appId,
-          urls: options.urls.map(u => ({ platformID: u.platformId, url: u.url })),
-        }),
-        fp.taskEither.map(response => response.updateApp.urls),
-      ),
+    return fp.function.pipe(
+      apiGqlRequest(UpdateAppUrlsDocument, {
+        appId: options.appId,
+        urls: options.urls.map(u => ({ platformID: u.platformId, url: u.url })),
+      }),
+      fp.taskEither.map(response => response.updateApp.urls),
     );
   },
   onSuccess(newUrls, { appId }) {
     hapticNotificationOccurred('success');
-    const queryKey = queryOptions(appId).key;
-    const queryData = queryCache.getQueryData(queryKey);
-    if (queryData?.app) {
-      queryCache.setQueryData(queryKey, {
-        ...queryData,
-        app: {
-          ...queryData.app,
+    setQueryData(appId, data => ({
+      ...data,
+      app: data.app
+        ? {
+          ...data.app,
           urls: newUrls.map(item => ({
             platformId: item.platform.id,
             url: item.url,
           })),
-        },
-      });
-    }
+        }
+        : data.app,
+    }));
   },
   onError() {
     // TODO: Popup

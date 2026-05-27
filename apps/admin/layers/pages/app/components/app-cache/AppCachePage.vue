@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import { popup } from '@tma.js/sdk-vue';
-import * as fp from 'fp-ts';
 
-import { AppCachePageDataDocument, ResetAppCacheDocument } from './operations';
+import { ResetAppCacheDocument } from './operations';
 
-const props = defineProps<{
-  appId: number;
-}>();
+const props = defineProps<{ appId: number }>();
 
 const { t, locale } = useI18n({
   messages: {
@@ -32,30 +29,17 @@ const { t, locale } = useI18n({
     },
   },
 });
-const request = useMakeApiGqlRequest();
-const queryCache = useQueryCache();
-const { data: appData, isPending: isLoadingApp } = useQuery({
-  key: () => [AppCachePageDataDocument, props.appId],
-  query: throwify(() => {
-    return fp.function.pipe(
-      request(AppCachePageDataDocument, { appID: props.appId }),
-      fp.taskEither.map(({ app }) => (
-        app
-          ? { urlsCacheResetAt: app.urlsCacheResetAt ? new Date(app.urlsCacheResetAt) : undefined }
-          : null
-      )),
-    );
-  }),
-});
+
+const { options: queryOptions, setData: setQueryData } = useAppCachePageQueryMeta();
+const { data: pageData, isPending: isLoadingApp } = useQuery(() => queryOptions(props.appId));
 const { mutate: resetCache, isLoading: isResettingCache } = useFpMutation({
   key: [ResetAppCacheDocument],
   mutation(options: { appId: number }, { apiGqlRequest }) {
     return apiGqlRequest(ResetAppCacheDocument, { appID: options.appId });
   },
-  onSuccess({ updateApp: { urlsCacheResetAt } }) {
+  onSuccess({ updateApp: { urlsCacheResetAt } }, { appId }) {
     hapticNotificationOccurred('success');
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    queryCache.setQueryData([AppCachePageDataDocument, props.appId], (data: any) => (
+    setQueryData(appId, data => (
       data
         ? { ...data, urlsCacheResetAt: urlsCacheResetAt ? new Date(urlsCacheResetAt) : undefined }
         : data
@@ -113,8 +97,8 @@ preloadRouteComponents({ name: PageNames.App });
                   </template>
                   <template #label>
                     <AutoListItemBodyLeftLabel>
-                      <template v-if="appData">
-                        {{ appData?.urlsCacheResetAt?.toLocaleString(locale, {
+                      <template v-if="pageData">
+                        {{ pageData?.urlsCacheResetAt?.toLocaleString(locale, {
                           day: 'numeric',
                           month: 'long',
                           year: 'numeric',

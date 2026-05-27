@@ -1,13 +1,9 @@
 <script setup lang="ts">
-import * as fp from 'fp-ts';
-
 import { Translation } from '#i18n';
 
-import { AppTgIntegrationPageDataDocument, UpdateAppTelegramDataDocument } from './operations';
+import { UpdateAppTelegramDataDocument } from './operations';
 
-const props = defineProps<{
-  appId: number;
-}>();
+const props = defineProps<{ appId: number }>();
 
 const { t } = useI18n({
   messages: {
@@ -26,21 +22,8 @@ const { t } = useI18n({
   },
 });
 const isPageEntered = useIsCurrentPageEntered();
-const queryCache = useQueryCache();
-const request = useMakeApiGqlRequest();
-const { data } = useQuery({
-  key: () => [AppTgIntegrationPageDataDocument, props.appId],
-  query: throwify(() => {
-    return fp.function.pipe(
-      request(AppTgIntegrationPageDataDocument, { appId: props.appId }),
-      fp.taskEither.map(({ app }) => (
-        app
-          ? { role: apiAppRoleToLocal(app.currentUserRole), botId: app.telegramBotID || undefined }
-          : null
-      )),
-    );
-  }),
-});
+const { options: queryOptions, setData: setQueryData } = useAppTgIntegrationPageQueryMeta();
+const { data } = useQuery(() => queryOptions(props.appId));
 const { mutate: updateApp, isLoading: isUpdatingApp } = useFpMutation({
   key: [UpdateAppTelegramDataDocument],
   mutation(options: { appId: number; botId?: number }, { apiGqlRequest }) {
@@ -49,10 +32,9 @@ const { mutate: updateApp, isLoading: isUpdatingApp } = useFpMutation({
       telegramBotID: options.botId,
     });
   },
-  onSuccess({ updateApp: { telegramBotID } }) {
+  onSuccess({ updateApp: { telegramBotID } }, { appId }) {
     hapticNotificationOccurred('success');
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    queryCache.setQueryData([AppTgIntegrationPageDataDocument, props.appId], (data: any) => (
+    setQueryData(appId, data => (
       data
         ? { ...data, botId: telegramBotID || undefined }
         : data
