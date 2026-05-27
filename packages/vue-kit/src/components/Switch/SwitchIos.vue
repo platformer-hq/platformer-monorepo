@@ -91,7 +91,8 @@ watch(checked, checked => {
     border-radius: 1000px;
     transform-origin: center center;
     background: var(--tgui-switch-ios-knob-bg, white);
-    box-shadow: var(--tgui-elevated-box-shadow);
+    box-shadow: var(--tgui-glass-box-shadow);
+    backdrop-filter: var(--tgui-glass-backdrop-filter);
 
     &--checked-initially {
       left: 23px;
