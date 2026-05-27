@@ -18,11 +18,10 @@ const { t } = useI18n({
   },
 });
 const isPageEntered = useIsPageEntered(PageNames.CreateApp);
-const request = useMakeApiGqlRequest();
-const { mutate: createApp, isLoading: isCreatingApp } = useMutation({
+const { mutate: createApp, isLoading: isCreatingApp } = useFpMutation({
   key: [CreateAppDocument],
-  mutation(options: { title: string }) {
-    return throwifyAnyEither(request(CreateAppDocument, { title: options.title }));
+  mutation(options: { title: string }, { apiGqlRequest }) {
+    return apiGqlRequest(CreateAppDocument, { title: options.title });
   },
   onSuccess(data) {
     hapticNotificationOccurred('success');

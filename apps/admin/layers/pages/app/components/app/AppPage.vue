@@ -97,11 +97,11 @@ const { data: appData, isPending: isLoadingApp } = useQuery({
     );
   }),
 });
-const { mutate: deleteApp, isLoading: isDeletingApp } = useMutation({
+const { mutate: deleteApp, isLoading: isDeletingApp } = useFpMutation({
   key: [DeleteAppDocument],
-  mutation: throwify((options: { appId: number }) => {
-    return request(DeleteAppDocument, { appID: options.appId });
-  }),
+  mutation(options: { appId: number }, { apiGqlRequest }) {
+    return apiGqlRequest(DeleteAppDocument, { appID: options.appId });
+  },
   onSuccess() {
     hapticNotificationOccurred('success');
     router.back();

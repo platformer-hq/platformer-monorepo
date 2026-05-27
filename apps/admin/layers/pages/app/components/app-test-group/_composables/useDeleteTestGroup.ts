@@ -1,16 +1,13 @@
 import { DeleteTestGroupDocument } from '../operations';
 
 export function useDeleteTestGroup(appId: number) {
-  const request = useMakeApiGqlRequest();
   const { setData: setAppTestGroupsPageQueryData } = useAppTestGroupsPageQueryMeta();
   const router = useRouter();
 
-  return useMutation({
+  return useFpMutation({
     key: [DeleteTestGroupDocument],
-    mutation(options: { testGroupId: number }) {
-      return throwifyAnyEither(
-        request(DeleteTestGroupDocument, { testGroupId: options.testGroupId }),
-      );
+    mutation(options: { testGroupId: number }, { apiGqlRequest }) {
+      return apiGqlRequest(DeleteTestGroupDocument, { testGroupId: options.testGroupId });
     },
     onSuccess(_, { testGroupId }) {
       hapticNotificationOccurred('success');

@@ -47,10 +47,10 @@ const { data: appData, isPending: isLoadingApp } = useQuery({
     );
   }),
 });
-const { mutate: resetCache, isLoading: isResettingCache } = useMutation({
+const { mutate: resetCache, isLoading: isResettingCache } = useFpMutation({
   key: [ResetAppCacheDocument],
-  mutation(options: { appId: number }) {
-    return throwifyAnyEither(request(ResetAppCacheDocument, { appID: options.appId }));
+  mutation(options: { appId: number }, { apiGqlRequest }) {
+    return apiGqlRequest(ResetAppCacheDocument, { appID: options.appId });
   },
   onSuccess({ updateApp: { urlsCacheResetAt } }) {
     hapticNotificationOccurred('success');

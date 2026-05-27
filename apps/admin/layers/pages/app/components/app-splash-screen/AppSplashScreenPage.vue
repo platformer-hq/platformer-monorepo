@@ -31,18 +31,15 @@ const platform = useTmaPlatform();
 //#region Requests.
 const { options: queryOptions, setData: setQueryData } = useAppSplashScreenPageQueryMeta();
 const { setData: setUploadPageQueryData } = useAppSplashScreenUploadPageQueryMeta();
-const apiGqlRequest = useMakeApiGqlRequest();
 const { data } = useQuery(() => queryOptions(props.appId));
-const { mutate: resetIcon, isLoading: isResettingIcon } = useMutation({
+const { mutate: resetIcon, isLoading: isResettingIcon } = useFpMutation({
   key: [ResetAppSplashScreenIconDocument],
-  mutation(options: { appId: number }) {
-    return throwifyAnyEither(
-      fp.function.pipe(
-        apiGqlRequest(ResetAppSplashScreenIconDocument, { appId: options.appId }),
-        fp.taskEither.map(r => ({
-          iconUrl: r.updateApp.splashScreenIconUrl,
-        })),
-      ),
+  mutation(options: { appId: number }, { apiGqlRequest }) {
+    return fp.function.pipe(
+      apiGqlRequest(ResetAppSplashScreenIconDocument, { appId: options.appId }),
+      fp.taskEither.map(r => ({
+        iconUrl: r.updateApp.splashScreenIconUrl,
+      })),
     );
   },
   onSuccess({ iconUrl }) {

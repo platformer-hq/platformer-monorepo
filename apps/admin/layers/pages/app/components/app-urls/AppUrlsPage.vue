@@ -7,9 +7,7 @@ import { AppUrlsPageDataDocument, UpdateAppUrlsDocument } from './operations';
 
 const { e } = bem('app-urls-page');
 
-const props = defineProps<{
-  appId: number;
-}>();
+const props = defineProps<{ appId: number }>();
 
 const { t } = useI18n({
   messages: {
@@ -40,44 +38,49 @@ const { t } = useI18n({
 
 const platform = useTmaPlatform();
 const isPageEntered = useIsCurrentPageEntered();
-const request = useMakeApiGqlRequest();
 const queryCache = useQueryCache();
-const queryOptions = defineQueryOptions((appId: number) => ({
-  key: [AppUrlsPageDataDocument, appId],
-  query: throwify(() => {
-    return fp.function.pipe(
-      request(AppUrlsPageDataDocument, { appId }),
-      fp.taskEither.map(({ app, platforms }) => {
-        return {
-          app: app
-            ? {
-              role: apiAppRoleToLocal(app.currentUserRole),
-              urls: app.urls.map(u => ({
-                platformId: u.platform.id,
-                url: u.url,
+
+//#region Requests.
+const { options: queryOptions } = useParametrizedQueryMeta(({ apiGqlRequest }) => {
+  return defineQueryOptions((appId: number) => ({
+    key: [AppUrlsPageDataDocument, appId],
+    query() {
+      return throwifyAnyEither(
+        fp.function.pipe(
+          apiGqlRequest(AppUrlsPageDataDocument, { appId }),
+          fp.taskEither.map(({ app, platforms }) => {
+            return {
+              app: app
+                ? {
+                  role: apiAppRoleToLocal(app.currentUserRole),
+                  urls: app.urls.map(u => ({
+                    platformId: u.platform.id,
+                    url: u.url,
+                  })),
+                }
+                : undefined,
+              platforms: platforms.map(p => ({
+                id: p.id,
+                title: p.title,
+                vendor: p.vendor.title,
               })),
-            }
-            : undefined,
-          platforms: platforms.map(p => ({
-            id: p.id,
-            title: p.title,
-            vendor: p.vendor.title,
-          })),
-        };
-      }),
-    );
-  }),
-}));
+            };
+          }),
+        ),
+      );
+    },
+  }));
+});
 const { data: pageData, isPending: isPageDataPending } = useQuery(() => queryOptions(props.appId));
-const { mutate: updateUrls, isLoading: isUpdatingUrls } = useMutation({
+const { mutate: updateUrls, isLoading: isUpdatingUrls } = useMutationEnhanced({
   key: [UpdateAppUrlsDocument],
   mutation(options: {
     appId: number;
     urls: { platformId: number; url: string }[];
-  }) {
+  }, { apiGqlRequest }) {
     return throwifyAnyEither(
       fp.function.pipe(
-        request(UpdateAppUrlsDocument, {
+        apiGqlRequest(UpdateAppUrlsDocument, {
           appId: options.appId,
           urls: options.urls.map(u => ({ platformID: u.platformId, url: u.url })),
         }),
@@ -107,6 +110,7 @@ const { mutate: updateUrls, isLoading: isUpdatingUrls } = useMutation({
     hapticNotificationOccurred('error');
   },
 });
+//#endregion
 
 const isSingleUrl = ref(false);
 const singleUrl = ref('');
@@ -165,13 +169,17 @@ const isDirty = computed(() => {
   });
 });
 const invalidUrl = computed(() => {
+  if (isSingleUrl.value) {
+    return singleUrl.value && !isValidUrl(singleUrl.value)
+      ? { kind: 'single' as const }
+      : undefined;
+  }
   for (const platformId in urls.value) {
-    if (!isValidUrl(urls.value[platformId]!)) {
+    const platformUrl = urls.value[platformId] || '';
+    if (platformUrl && !isValidUrl(platformUrl)) {
       const platform = pageData.value?.platforms.find(p => p.id === Number(platformId));
       if (platform) {
-        return isSingleUrl.value
-          ? { kind: 'single' as const }
-          : { kind: 'platform' as const, platform: platform.title };
+        return { kind: 'platform' as const, platform: platform.title };
       }
     }
   }

@@ -37,14 +37,15 @@ const { data: pageData, isPending: isLoadingPageData } = useQuery({
     );
   }),
 });
-const { mutate: updatePermissions, isLoading: isUpdating } = useMutation({
-  mutation(options: { canAcceptAppTransfers: boolean; canBeInvitedToManage: boolean }) {
-    return throwifyAnyEither(
-      request(UpdatePermissionsDocument, {
-        canAcceptAppTransfers: options.canAcceptAppTransfers,
-        canBeInvitedToManage: options.canBeInvitedToManage,
-      }),
-    );
+const { mutate: updatePermissions, isLoading: isUpdating } = useFpMutation({
+  mutation(
+    options: { canAcceptAppTransfers: boolean; canBeInvitedToManage: boolean },
+    { apiGqlRequest },
+  ) {
+    return apiGqlRequest(UpdatePermissionsDocument, {
+      canAcceptAppTransfers: options.canAcceptAppTransfers,
+      canBeInvitedToManage: options.canBeInvitedToManage,
+    });
   },
   onSuccess(_, variables) {
     hapticNotificationOccurred('success');

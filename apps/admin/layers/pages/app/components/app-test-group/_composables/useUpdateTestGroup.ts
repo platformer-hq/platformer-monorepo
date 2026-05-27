@@ -3,11 +3,10 @@ import * as fp from 'fp-ts';
 import { UpdateTestGroupDocument } from '../operations';
 
 export function useUpdateTestGroup(appId: number) {
-  const request = useMakeApiGqlRequest();
   const { setData: setAppTestGroupPageQueryData } = useAppTestGroupPageQueryMeta();
   const { setData: setAppTestGroupsPageQueryData } = useAppTestGroupsPageQueryMeta();
 
-  return useMutation({
+  return useFpMutation({
     key: [UpdateTestGroupDocument],
     mutation(options: {
       testGroupId: number;
@@ -16,19 +15,17 @@ export function useUpdateTestGroup(appId: number) {
       url: string;
       platformIds: number[];
       userIds: number[];
-    }) {
-      return throwifyAnyEither(
-        fp.function.pipe(
-          request(UpdateTestGroupDocument, {
-            enabled: options.enabled,
-            platformIds: options.platformIds,
-            testGroupId: options.testGroupId,
-            title: options.title,
-            url: options.url,
-            userIds: options.userIds,
-          }),
-          fp.taskEither.map(r => r.updateAppTestGroup),
-        ),
+    }, { apiGqlRequest }) {
+      return fp.function.pipe(
+        apiGqlRequest(UpdateTestGroupDocument, {
+          enabled: options.enabled,
+          platformIds: options.platformIds,
+          testGroupId: options.testGroupId,
+          title: options.title,
+          url: options.url,
+          userIds: options.userIds,
+        }),
+        fp.taskEither.map(r => r.updateAppTestGroup),
       );
     },
     onSuccess({ enabled, id, platforms, title, url, users }) {

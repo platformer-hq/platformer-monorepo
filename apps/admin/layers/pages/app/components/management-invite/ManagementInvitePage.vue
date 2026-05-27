@@ -40,21 +40,18 @@ const { query } = useParsedQuery({
 const isPageEntered = useIsCurrentPageEntered();
 
 //#region Requests.
-const request = useMakeApiGqlRequest();
 const router = useRouter();
 const { setData: setManagementInvitesPageQueryData } = useManagementInvitesPageQueryMeta();
 const { invalidate: invalidateAppsPageQuery } = useAppsPageQueryMeta();
-const { mutate: respondInvite, isLoading: isResponding } = useMutation({
+const { mutate: respondInvite, isLoading: isResponding } = useFpMutation({
   key: [RespondManagementInviteDocument],
-  mutation(options: { accept: boolean; inviteId: number }) {
-    return throwifyAnyEither(
-      fp.function.pipe(
-        request(RespondManagementInviteDocument, {
-          inviteId: options.inviteId,
-          accept: options.accept,
-        }),
-        fp.taskEither.map(r => r.respondAppManagementInvite),
-      ),
+  mutation(options: { accept: boolean; inviteId: number }, { apiGqlRequest }) {
+    return fp.function.pipe(
+      apiGqlRequest(RespondManagementInviteDocument, {
+        inviteId: options.inviteId,
+        accept: options.accept,
+      }),
+      fp.taskEither.map(r => r.respondAppManagementInvite),
     );
   },
   onSuccess(_, { inviteId, accept }) {

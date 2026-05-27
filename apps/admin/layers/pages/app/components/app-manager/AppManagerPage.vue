@@ -61,13 +61,10 @@ const router = useRouter();
 const appManagersPageQueryMeta = useAppManagersPageQueryMeta();
 
 //#region Requests.
-const request = useMakeApiGqlRequest();
-const { mutate: removeManager, isLoading: isDeletingManager } = useMutation({
+const { mutate: removeManager, isLoading: isDeletingManager } = useFpMutation({
   key: [RemoveManagerDocument],
-  mutation(options: { appId: number; userId: number }) {
-    return throwifyAnyEither(
-      request(RemoveManagerDocument, { appId: options.appId, userId: options.userId }),
-    );
+  mutation(options: { appId: number; userId: number }, { apiGqlRequest }) {
+    return apiGqlRequest(RemoveManagerDocument, { appId: options.appId, userId: options.userId });
   },
   onSuccess(_, { appId, userId }) {
     hapticNotificationOccurred('success');
@@ -83,16 +80,18 @@ const { mutate: removeManager, isLoading: isDeletingManager } = useMutation({
     // TODO: Popup
   },
 });
-const { mutate: updateManager, isLoading: isUpdatingManager } = useMutation({
+const { mutate: updateManager, isLoading: isUpdatingManager } = useFpMutation({
   key: [UpdateManagerDocument],
-  mutation(options: { appId: number; role: LocalAppManagementInviteRole; userId: number }) {
-    return throwifyAnyEither(
-      request(UpdateManagerDocument, {
-        appId: options.appId,
-        userId: options.userId,
-        role: localAppManagementInviteRoleToApi(options.role),
-      }),
-    );
+  mutation(options: {
+    appId: number;
+    role: LocalAppManagementInviteRole;
+    userId: number;
+  }, { apiGqlRequest }) {
+    return apiGqlRequest(UpdateManagerDocument, {
+      appId: options.appId,
+      userId: options.userId,
+      role: localAppManagementInviteRoleToApi(options.role),
+    });
   },
   onSuccess(_, { appId, userId, role: varsRole }) {
     hapticNotificationOccurred('success');

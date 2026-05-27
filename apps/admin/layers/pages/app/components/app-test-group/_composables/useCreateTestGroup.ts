@@ -3,7 +3,6 @@ import * as fp from 'fp-ts';
 import { CreateTestGroupDocument } from '../operations';
 
 export function useCreateTestGroup() {
-  const request = useMakeApiGqlRequest();
   const {
     setData: setAppTestGroupPageQueryData,
     getData: getAppTestGroupPageQueryData,
@@ -11,7 +10,7 @@ export function useCreateTestGroup() {
   const { setData: setAppTestGroupsPageQueryData } = useAppTestGroupsPageQueryMeta();
   const router = useRouter();
 
-  return useMutation({
+  return useFpMutation({
     key: [CreateTestGroupDocument],
     mutation(options: {
       appId: number;
@@ -20,19 +19,17 @@ export function useCreateTestGroup() {
       url: string;
       platformIds: number[];
       userIds: number[];
-    }) {
-      return throwifyAnyEither(
-        fp.function.pipe(
-          request(CreateTestGroupDocument, {
-            enabled: options.enabled,
-            platformIds: options.platformIds,
-            appId: options.appId,
-            title: options.title,
-            url: options.url,
-            userIds: options.userIds,
-          }),
-          fp.taskEither.map(r => r.createAppTestGroup),
-        ),
+    }, { apiGqlRequest }) {
+      return fp.function.pipe(
+        apiGqlRequest(CreateTestGroupDocument, {
+          enabled: options.enabled,
+          platformIds: options.platformIds,
+          appId: options.appId,
+          title: options.title,
+          url: options.url,
+          userIds: options.userIds,
+        }),
+        fp.taskEither.map(r => r.createAppTestGroup),
       );
     },
     onSuccess({ enabled, id, platforms, title, url, users }, { appId }) {

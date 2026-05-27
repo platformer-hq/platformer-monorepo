@@ -41,15 +41,13 @@ const { data } = useQuery({
     );
   }),
 });
-const { mutate: updateApp, isLoading: isUpdatingApp } = useMutation({
+const { mutate: updateApp, isLoading: isUpdatingApp } = useFpMutation({
   key: [UpdateAppTelegramDataDocument],
-  mutation(options: { appId: number; botId?: number }) {
-    return throwifyAnyEither(
-      request(UpdateAppTelegramDataDocument, {
-        appId: options.appId,
-        telegramBotID: options.botId,
-      }),
-    );
+  mutation(options: { appId: number; botId?: number }, { apiGqlRequest }) {
+    return apiGqlRequest(UpdateAppTelegramDataDocument, {
+      appId: options.appId,
+      telegramBotID: options.botId,
+    });
   },
   onSuccess({ updateApp: { telegramBotID } }) {
     hapticNotificationOccurred('success');

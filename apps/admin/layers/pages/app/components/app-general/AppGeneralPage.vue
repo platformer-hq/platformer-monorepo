@@ -45,21 +45,22 @@ const { t } = useI18n({
 const isPageEntered = useIsCurrentPageEntered();
 
 //#region Requests.
-const request = useMakeApiGqlRequest();
 const { options: pageDataOptions, setData: setPageData } = useAppGeneralPageQueryMeta();
 const { data: pageData } = useQuery(() => pageDataOptions(props.appId));
-const { mutate: updateApp, isLoading: isUpdatingApp } = useMutation({
+const { mutate: updateApp, isLoading: isUpdatingApp } = useFpMutation({
   key: [UpdateAppDocument],
-  mutation(options: { appId: number; privacy: LocalAppPrivacy; title: string }) {
-    return throwifyAnyEither(
-      fp.function.pipe(
-        request(UpdateAppDocument, {
-          appId: options.appId,
-          privacy: localAppPrivacyToApi(options.privacy),
-          title: options.title,
-        }),
-        fp.taskEither.map(response => response.updateApp),
-      ),
+  mutation(options: {
+    appId: number;
+    privacy: LocalAppPrivacy;
+    title: string;
+  }, { apiGqlRequest }) {
+    return fp.function.pipe(
+      apiGqlRequest(UpdateAppDocument, {
+        appId: options.appId,
+        privacy: localAppPrivacyToApi(options.privacy),
+        title: options.title,
+      }),
+      fp.taskEither.map(response => response.updateApp),
     );
   },
   onSuccess({ privacy, title }) {
