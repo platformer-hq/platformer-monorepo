@@ -8,7 +8,7 @@ interface Options<
 > extends Omit<UseMutationEnhancedOptions<TData, TVars, TError, TContext>, 'mutation'> {
   mutation: (
     ...args: Parameters<UseMutationEnhancedOptions<TData, TVars, TError, TContext>['mutation']>
-  ) => fp.taskEither.TaskEither<unknown, TData>;
+  ) => fp.taskEither.TaskEither<TError, TData>;
 }
 
 /**
