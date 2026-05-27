@@ -4,7 +4,15 @@ interface EnhancedContext {
   apiGqlRequest: ApiGqlRequestFn;
 }
 
-type WireContext<T> = Omit<T, keyof EnhancedContext> & EnhancedContext;
+type OverrideContext<TContext extends Record<never, never>> =
+  Omit<TContext, keyof EnhancedContext> & EnhancedContext;
+
+export type UseMutationEnhancedOptions<
+  TData,
+  TVars,
+  TError,
+  TContext extends Record<never, never>,
+> = UseMutationOptions<TData, TVars, TError, OverrideContext<TContext>>;
 
 /**
  * @param options `useMutation` options.
@@ -15,17 +23,17 @@ export function useMutationEnhanced<
   TVars = void,
   TError = Error,
   TContext extends Record<never, never> = object,
->(options: UseMutationOptions<TData, TVars, TError, WireContext<TContext>>) {
+>(options: UseMutationEnhancedOptions<TData, TVars, TError, TContext>) {
   const apiGqlRequest = useMakeApiGqlRequest();
 
-  return useMutation<TData, TVars, TError, WireContext<TContext>>({
+  return useMutation<TData, TVars, TError, OverrideContext<TContext>>({
     ...options,
     onMutate(vars, context) {
       const additionalContext: EnhancedContext = { apiGqlRequest };
       return options.onMutate?.(vars, {
         ...context,
         ...additionalContext,
-      }) || (additionalContext as WireContext<TContext>);
+      }) || (additionalContext as OverrideContext<TContext>);
     },
   });
 }
