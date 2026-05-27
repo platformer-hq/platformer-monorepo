@@ -32,15 +32,12 @@ const { t } = useI18n({
   },
 });
 const navigateToUserSelection = useNavigateToUserSelectionPage();
-const request = useMakeApiGqlRequest();
 const queryMeta = useAppManagersPageQueryMeta();
 const { data, isPending } = useQuery(() => queryMeta.options(props.appId));
-const { mutate: revokeManageInvite, isLoading: isRevokingInvite } = useMutation({
+const { mutate: revokeManageInvite, isLoading: isRevokingInvite } = useFpMutation({
   key: [RevokeManageInviteDocument],
-  mutation(options: { inviteId: number }) {
-    return throwifyAnyEither(request(RevokeManageInviteDocument, {
-      inviteId: options.inviteId,
-    }));
+  mutation(options: { inviteId: number }, { apiGqlRequest }) {
+    return apiGqlRequest(RevokeManageInviteDocument, { inviteId: options.inviteId });
   },
   onSuccess(_, { inviteId }) {
     hapticNotificationOccurred('success');

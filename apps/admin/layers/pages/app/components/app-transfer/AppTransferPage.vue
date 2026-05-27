@@ -50,13 +50,10 @@ const { t } = useI18n({
 const { options, setData } = useAppTransferPageQueryMeta();
 const { data, isPending } = useQuery(() => options(props.appId));
 const navigateToUserSelection = useNavigateToUserSelectionPage();
-const request = useMakeApiGqlRequest();
-const { mutate: revokeTransferRequest, isLoading: isRevokingTransferRequest } = useMutation({
+const { mutate: revokeTransferRequest, isLoading: isRevokingTransferRequest } = useFpMutation({
   key: [RevokeAppTransferRequestDocument],
-  mutation(options: { requestId: number }) {
-    return throwifyAnyEither(
-      request(RevokeAppTransferRequestDocument, { requestId: options.requestId }),
-    );
+  mutation(options: { requestId: number }, { apiGqlRequest }) {
+    return apiGqlRequest(RevokeAppTransferRequestDocument, { requestId: options.requestId });
   },
   onSuccess() {
     hapticNotificationOccurred('success');

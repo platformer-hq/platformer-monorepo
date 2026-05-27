@@ -34,23 +34,20 @@ const platform = useTmaPlatform();
 const isPageEntered = useIsCurrentPageEntered();
 const router = useRouter();
 const appManagersPageQueryMeta = useAppManagersPageQueryMeta();
-const request = useMakeApiGqlRequest();
-const { mutate: invite, isLoading } = useMutation({
+const { mutate: invite, isLoading } = useFpMutation({
   key: [InviteToManageDocument],
   mutation(options: {
     appId: number;
     userId: number;
     role: LocalAppManagementInviteRole;
-  }) {
-    return throwifyAnyEither(
-      fp.function.pipe(
-        request(InviteToManageDocument, {
-          appId: options.appId,
-          role: localAppManagementInviteRoleToApi(options.role),
-          userId: options.userId,
-        }),
-        fp.taskEither.map(r => r.createAppManagementInvite),
-      ),
+  }, { apiGqlRequest }) {
+    return fp.function.pipe(
+      apiGqlRequest(InviteToManageDocument, {
+        appId: options.appId,
+        role: localAppManagementInviteRoleToApi(options.role),
+        userId: options.userId,
+      }),
+      fp.taskEither.map(r => r.createAppManagementInvite),
     );
   },
   onSuccess({ from, id, role, to }, { appId }) {

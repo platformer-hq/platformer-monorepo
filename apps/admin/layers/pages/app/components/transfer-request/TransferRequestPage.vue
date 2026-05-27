@@ -35,21 +35,18 @@ const { query } = useParsedQuery({
 const isPageEntered = useIsCurrentPageEntered();
 
 //#region Requests.
-const request = useMakeApiGqlRequest();
 const router = useRouter();
 const { setData: setTransferRequestsPageQueryData } = useTransferRequestsPageQueryMeta();
 const { invalidate: invalidateAppsPageQuery } = useAppsPageQueryMeta();
-const { mutate: respondRequest, isLoading: isResponding } = useMutation({
+const { mutate: respondRequest, isLoading: isResponding } = useFpMutation({
   key: [RespondAppTransferRequestDocument],
-  mutation(options: { accept: boolean; requestId: number }) {
-    return throwifyAnyEither(
-      fp.function.pipe(
-        request(RespondAppTransferRequestDocument, {
-          requestId: options.requestId,
-          accept: options.accept,
-        }),
-        fp.taskEither.map(r => r.respondAppTransferRequest),
-      ),
+  mutation(options: { accept: boolean; requestId: number }, { apiGqlRequest }) {
+    return fp.function.pipe(
+      apiGqlRequest(RespondAppTransferRequestDocument, {
+        requestId: options.requestId,
+        accept: options.accept,
+      }),
+      fp.taskEither.map(r => r.respondAppTransferRequest),
     );
   },
   onSuccess(_, { requestId, accept }) {

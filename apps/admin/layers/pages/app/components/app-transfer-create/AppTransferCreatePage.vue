@@ -24,18 +24,15 @@ const { t } = useI18n({
 const router = useRouter();
 const user = useUserSelectionPageStore().selectedUsers![0]!;
 const { setData: setAppTransferPageQueryData } = useAppTransferPageQueryMeta();
-const request = useMakeApiGqlRequest();
-const { mutate: createTransferRequest, isLoading: isCreatingTransferRequest } = useMutation({
+const { mutate: createTransferRequest, isLoading: isCreatingTransferRequest } = useFpMutation({
   key: [CreateAppTransferRequestDocument],
-  mutation(options: { appId: number; userId: number }) {
-    return throwifyAnyEither(
-      fp.function.pipe(
-        request(CreateAppTransferRequestDocument, {
-          appId: options.appId,
-          toUserId: options.userId,
-        }),
-        fp.taskEither.map(r => r.createAppTransferRequest),
-      ),
+  mutation(options: { appId: number; userId: number }, { apiGqlRequest }) {
+    return fp.function.pipe(
+      apiGqlRequest(CreateAppTransferRequestDocument, {
+        appId: options.appId,
+        toUserId: options.userId,
+      }),
+      fp.taskEither.map(r => r.createAppTransferRequest),
     );
   },
   onSuccess({ from, id, to }) {

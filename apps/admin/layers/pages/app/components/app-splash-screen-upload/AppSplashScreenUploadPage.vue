@@ -39,21 +39,18 @@ const router = useRouter();
 
 //#region Requests.
 const { options: queryOptions, setData: setQueryData } = useAppSplashScreenUploadPageQueryMeta();
-const apiGqlRequest = useMakeApiGqlRequest();
 const { data } = useQuery(() => queryOptions(props.appId));
-const { mutate: updateIcon, isLoading: isUpdatingIcon } = useMutation({
+const { mutate: updateIcon, isLoading: isUpdatingIcon } = useFpMutation({
   key: [UpdateAppSplashScreenIconDocument],
-  mutation(options: { appId: number; svg: string }) {
-    return throwifyAnyEither(
-      fp.function.pipe(
-        apiGqlRequest(UpdateAppSplashScreenIconDocument, {
-          appId: options.appId,
-          svg: options.svg,
-        }),
-        fp.taskEither.map(r => ({
-          iconUrl: r.updateApp.splashScreenIconUrl,
-        })),
-      ),
+  mutation(options: { appId: number; svg: string }, { apiGqlRequest }) {
+    return fp.function.pipe(
+      apiGqlRequest(UpdateAppSplashScreenIconDocument, {
+        appId: options.appId,
+        svg: options.svg,
+      }),
+      fp.taskEither.map(r => ({
+        iconUrl: r.updateApp.splashScreenIconUrl,
+      })),
     );
   },
   onSuccess({ iconUrl }) {
