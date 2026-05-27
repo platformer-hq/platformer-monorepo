@@ -7,7 +7,7 @@ const props = defineProps<{
   bgColor?: ColorReferenceAnyColor;
   textColor?: ColorReferenceAnyColor;
   rounded?: boolean;
-  elevated?: boolean;
+  glass?: boolean;
 }>();
 defineSlots<{
   left(): unknown;
@@ -31,7 +31,7 @@ const slotIds = ['left', 'input', 'right'] as const;
       '--tgui-text-field-android-bg-color': bgColor,
       '--tgui-text-field-android-text-color': textColor,
     }"
-    v-bind="platform.isMappedIos ? { elevated, rounded } : undefined"
+    v-bind="platform.isMappedIos ? { glass, rounded } : undefined"
   >
     <template v-for="id in slotIds" :key="id" #[id]>
       <slot :name="id"/>

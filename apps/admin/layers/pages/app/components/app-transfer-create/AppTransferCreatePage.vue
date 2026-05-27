@@ -91,7 +91,7 @@ preloadRouteComponents({ name: PageNames.AppTransfer });
                 full-width
                 :active="!isCreatingTransferRequest"
                 :disabled="isCreatingTransferRequest"
-                elevated
+                glass
                 @click="createTransferRequest({appId, userId: user.id})"
               >
                 <AutoTypography variant="body" weight="medium">

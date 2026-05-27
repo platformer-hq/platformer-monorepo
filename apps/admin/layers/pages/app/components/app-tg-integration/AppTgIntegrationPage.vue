@@ -113,7 +113,7 @@ watch(data, data => {
               full-width
               :disabled="isUpdatingApp"
               :active="!isUpdatingApp"
-              elevated
+              glass
               @click="updateApp({appId, botId: parseInt(botId) || undefined})"
             >
               <AutoTypography variant="body" weight="semibold">

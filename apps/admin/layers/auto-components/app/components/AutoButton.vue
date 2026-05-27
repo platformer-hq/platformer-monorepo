@@ -4,9 +4,9 @@ import { reactivePick } from '@vueuse/core';
 
 interface IosSpecificProps {
   /**
-   * True if the button is visually elevated.
+   * True if the button should have liquid glass visuals.
    */
-  elevated?: boolean;
+  glass?: boolean;
   /**
    * Highlights the button on activation.
    * @default Value of `active` prop if set. True otherwise.
@@ -92,7 +92,7 @@ const style = computed(() => (
     v-bind="sharedProps"
     :style="style"
     :highlight-on-active
-    :elevated
+    :glass
     :palette="formattedPalette"
   >
     <slot/>

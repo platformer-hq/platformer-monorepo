@@ -140,7 +140,7 @@ preloadRouteComponents({ name: PageNames.Main });
             <AutoButton
               :palette="isLoading ? 'disabled' : 'filled'"
               full-width
-              elevated
+              glass
               :disabled="isLoading"
               :active="!isLoading"
               @click="updatePermissions({

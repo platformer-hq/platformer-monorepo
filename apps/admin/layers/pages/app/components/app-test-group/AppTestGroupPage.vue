@@ -201,7 +201,7 @@ watch(() => pageStore.url, console.warn);
                 :active="isUrlValid && !isSendingAnyRequest"
                 :disabled="!isUrlValid || isSendingAnyRequest"
                 full-width
-                elevated
+                glass
                 @click="isUrlValid && !isSendingAnyRequest && handleButtonClick()"
               >
                 <AutoTypography variant="body" weight="medium">

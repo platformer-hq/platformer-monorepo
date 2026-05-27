@@ -245,7 +245,7 @@ watch(role, hapticSelectionChanged);
               full-width
               :active="!isSendingRequest"
               :disabled="isSendingRequest"
-              elevated
+              glass
               @click="updateManager({role, userId: query.user.id, appId})"
             >
               <AutoTypography variant="body" weight="semibold">

@@ -165,7 +165,7 @@ const role = ref(LocalAppManagementInviteRole.Admin);
               full-width
               :active="!isLoading"
               :disabled="isLoading"
-              elevated
+              glass
               @click="invite({role, userId: user.id, appId})"
             >
               <AutoTypography variant="body" weight="semibold">

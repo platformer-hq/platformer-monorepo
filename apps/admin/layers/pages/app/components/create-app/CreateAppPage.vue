@@ -79,7 +79,7 @@ const isButtonEnabled = computed(() => {
           <BottomBarInner>
             <AutoButton
               full-width
-              elevated
+              glass
               :active="isButtonEnabled"
               :disabled="!isButtonEnabled"
               :palette="isButtonEnabled ? 'filled' : 'disabled'"

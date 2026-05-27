@@ -298,7 +298,7 @@ preloadRouteComponents({ name: PageNames.App });
               full-width
               :active="isButtonEnabled"
               :disabled="!isButtonEnabled"
-              elevated
+              glass
               @click="handleSave"
             >
               <AutoTypography variant="body" weight="semibold">
