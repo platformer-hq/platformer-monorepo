@@ -58,7 +58,6 @@ watch(() => data.value?.testGroups, testGroups => {
   }
 });
 
-preloadRouteComponents({ name: PageNames.App });
 preloadRouteComponents({ name: PageNames.AppTestGroup });
 </script>
 
