@@ -1,0 +1,13 @@
+query AppServerlessFunctions($appId: ID!) {
+  app(appID: $appId) {
+    currentUserRole
+    limits {
+      maxServerlessFunctionsCount
+    }
+    serverlessFunctions {
+      id
+      name
+      enabled
+    }
+  }
+}
