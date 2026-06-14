@@ -13,7 +13,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  ISODate: { input: any; output: any; }
+  JsonValue: { input: any; output: any; }
   Time: { input: string; output: string; }
 };
 
@@ -41,6 +41,8 @@ export type App = {
    * to request this kind of data.
    */
   secretKey?: Maybe<Scalars['String']['output']>;
+  /** List of app serverless functions. */
+  serverlessFunctions: Array<AppServerlessFunction>;
   /** A URL to retrieve the application splash screen icon. */
   splashScreenIconUrl?: Maybe<Scalars['String']['output']>;
   /** Bound Telegram Bot identifier. */
@@ -65,6 +67,8 @@ export type AppLimits = {
   maxManagementInvitesCount?: Maybe<Scalars['Int']['output']>;
   /** Maximum allowed managers count. */
   maxManagersCount?: Maybe<Scalars['Int']['output']>;
+  /** Max serverless functions count the app may have. */
+  maxServerlessFunctionsCount?: Maybe<Scalars['Int']['output']>;
   /** Maximum allowed test group title length. */
   maxTestGroupTitleLength?: Maybe<Scalars['Int']['output']>;
   /** Maximum allowed users count in test group. */
@@ -121,6 +125,14 @@ export enum AppRole {
   /** Application owner role. */
   Owner = 'OWNER'
 }
+
+export type AppServerlessFunction = {
+  __typename?: 'AppServerlessFunction';
+  code: Scalars['String']['output'];
+  enabled: Scalars['Boolean']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+};
 
 export type AppSplashScreenIconUploadRules = {
   __typename?: 'AppSplashScreenIconUploadRules';
@@ -272,14 +284,20 @@ export type Mutation = {
   createApp: App;
   /** Invites a user to manage the application. */
   createAppManagementInvite: AppManagementInvite;
+  /** Create a new app serverless function. */
+  createAppServerlessFunction: AppServerlessFunction;
   /** Creates a new application test group. */
   createAppTestGroup: AppTestGroup;
   /** Creates an app transfer request. */
   createAppTransferRequest: AppTransferRequest;
   /** Deletes the app using its identifier. */
   deleteApp: Scalars['Boolean']['output'];
+  /** Deletes an app serverless function. */
+  deleteAppServerlessFunction: Scalars['Boolean']['output'];
   /** Deletes the application test group. */
   deleteAppTestGroup: Scalars['Boolean']['output'];
+  /** Executes an app serverless function. */
+  executeAppServerlessFunction: Scalars['JsonValue']['output'];
   /** Deletes the user from the application managers. */
   removeAppManager: Scalars['Boolean']['output'];
   /** Responds to the application management invite. */
@@ -296,6 +314,8 @@ export type Mutation = {
   updateAppManagementInvite: AppManagementInvite;
   /** Updates an application manager role. */
   updateAppManagerRole: AppManager;
+  /** Updates an app serverless function. */
+  updateAppServerlessFunction: AppServerlessFunction;
   /** Updates the application test group. */
   updateAppTestGroup: AppTestGroup;
   /** Updates the current user data. */
@@ -320,6 +340,14 @@ export type MutationCreateAppManagementInviteArgs = {
 };
 
 
+export type MutationCreateAppServerlessFunctionArgs = {
+  appId: Scalars['ID']['input'];
+  code: Scalars['String']['input'];
+  enabled: Scalars['Boolean']['input'];
+  name: Scalars['String']['input'];
+};
+
+
 export type MutationCreateAppTestGroupArgs = {
   appID: Scalars['ID']['input'];
   enabled?: InputMaybe<Scalars['Boolean']['input']>;
@@ -341,8 +369,20 @@ export type MutationDeleteAppArgs = {
 };
 
 
+export type MutationDeleteAppServerlessFunctionArgs = {
+  funcId: Scalars['ID']['input'];
+};
+
+
 export type MutationDeleteAppTestGroupArgs = {
   testGroupID: Scalars['ID']['input'];
+};
+
+
+export type MutationExecuteAppServerlessFunctionArgs = {
+  appId: Scalars['ID']['input'];
+  name: Scalars['String']['input'];
+  params: Scalars['JsonValue']['input'];
 };
 
 
@@ -400,6 +440,14 @@ export type MutationUpdateAppManagerRoleArgs = {
 };
 
 
+export type MutationUpdateAppServerlessFunctionArgs = {
+  code?: InputMaybe<Scalars['String']['input']>;
+  enabled?: InputMaybe<Scalars['Boolean']['input']>;
+  funcId: Scalars['ID']['input'];
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+
 export type MutationUpdateAppTestGroupArgs = {
   enabled?: InputMaybe<Scalars['Boolean']['input']>;
   platformIDs?: InputMaybe<Array<Scalars['ID']['input']>>;
@@ -444,6 +492,8 @@ export type Query = {
   __typename?: 'Query';
   /** Application information. */
   app?: Maybe<App>;
+  /** Retrieves application serverless function by its identifier. */
+  appServerlessFunction?: Maybe<AppServerlessFunction>;
   /** Rules related to uploading app splash screen icons. */
   appSplashScreenIconUploadRules: AppSplashScreenIconUploadRules;
   /** Retrieves application test group by its identifier. */
@@ -464,6 +514,11 @@ export type Query = {
 
 export type QueryAppArgs = {
   appID: Scalars['ID']['input'];
+};
+
+
+export type QueryAppServerlessFunctionArgs = {
+  funcId: Scalars['ID']['input'];
 };
 
 
