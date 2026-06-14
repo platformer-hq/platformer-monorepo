@@ -22,6 +22,7 @@ export enum PageNames {
   AppServerlessFunction = 'app-serverless-function',
   AppServerlessFunctions = 'app-serverless-functions',
   AppSplashScreenUpload = 'app-splash-screen-upload',
+  CreateAppServerlessFunction = 'create-app-serverless-function',
   CreateApp = 'create-app',
   Account = 'account',
   Privacy = 'privacy',
