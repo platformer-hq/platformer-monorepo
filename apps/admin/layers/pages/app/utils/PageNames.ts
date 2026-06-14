@@ -19,6 +19,8 @@ export enum PageNames {
   AppUrlViewer = 'app-url-viewer',
   AppCache = 'app-cache',
   AppSplashScreen = 'app-splash-screen',
+  AppServerlessFunction = 'app-serverless-function',
+  AppServerlessFunctions = 'app-serverless-functions',
   AppSplashScreenUpload = 'app-splash-screen-upload',
   CreateApp = 'create-app',
   Account = 'account',
