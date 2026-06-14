@@ -6,7 +6,7 @@
     "node": ">=22"
   },
   "scripts": {
-    "gql-codegen": "graphql-codegen --config graphql.config.ts",
+    "gql:codegen": "graphql-codegen --config graphql.config.ts",
     "icons:build": "turbo run build --filter=\"@workspace/icons\"",
     "vue-kit:build": "turbo run build --filter=\"@tma.js/vue-kit\"",
     "admin:dev": "turbo run dev --filter=\"@workspace/admin\"",
