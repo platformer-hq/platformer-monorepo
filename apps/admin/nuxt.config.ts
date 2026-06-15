@@ -1,8 +1,19 @@
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 import path from 'node:path';
+import * as v from 'valibot';
 import svgLoader from 'vite-svg-loader';
 
 const componentsIgnore = ['**/_/**', '**/_*'];
+
+const env = v.parse(
+  v.looseObject({
+    API_PROXY_BASE_URL: v.optional(
+      v.pipe(v.string(), v.nonEmpty()),
+      'https://mini-apps.store',
+    ),
+  }),
+  process.env,
+);
 
 function resolve(...filePath: string[]) {
   return path.resolve(__dirname, ...filePath);
@@ -109,7 +120,7 @@ export default defineNuxtConfig({
     server: {
       proxy: {
         '/api/gql': {
-          target: 'https://mini-apps.store',
+          target: env.API_PROXY_BASE_URL,
           changeOrigin: true,
         },
       },
