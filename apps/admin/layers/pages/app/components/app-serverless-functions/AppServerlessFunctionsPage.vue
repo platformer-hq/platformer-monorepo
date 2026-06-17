@@ -16,12 +16,12 @@ const { t } = useI18n({
       'limitPopup.message': 'You\'ve reached your serverless function limit for this application.',
     },
     ru: {
-      title: 'Облачные функции',
-      create: 'Создать облачную функцию',
+      title: 'Serverless-функции',
+      create: 'Создать serverless-функцию',
       'function.enabled': 'Включена',
       'function.disabled': 'Отключена',
-      footer: 'Облачные функции запускаются на серверах Платформер и могут быть вызваны Вашим мини-приложением. Результат будет возвращен приложению.',
-      'limitPopup.message': 'Вы достигли лимита облачных функций для данного приложения.',
+      footer: 'Serverless-функции запускаются на серверах Платформер и могут быть вызваны Вашим мини-приложением. Результат будет возвращен приложению.',
+      'limitPopup.message': 'Вы достигли лимита serverless-функций для данного приложения.',
     },
   },
 });

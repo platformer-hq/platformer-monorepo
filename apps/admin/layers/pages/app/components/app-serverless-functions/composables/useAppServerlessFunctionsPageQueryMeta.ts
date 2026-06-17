@@ -19,7 +19,7 @@ export function useAppServerlessFunctionsPageQueryMeta() {
                     enabled: fn.enabled,
                     name: fn.name,
                   })),
-                  maxServerlessFunctionsCount: r.app.limits.maxServerlessFunctionsCount,
+                  maxServerlessFunctionsCount: r.app.limits.serverlessFunctions.maxCount,
                 })
                 : null;
             }),
