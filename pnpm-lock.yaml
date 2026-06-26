@@ -41,6 +41,9 @@ importers:
       browserslist-to-esbuild:
         specifier: ^2.1.1
         version: 2.1.1(browserslist@4.28.1)
+      dotenv:
+        specifier: ^17.4.2
+        version: 17.4.2
       eslint:
         specifier: ^9.39.2
         version: 9.39.2(jiti@2.6.1)
@@ -62,10 +65,6 @@ importers:
       valibot:
         specifier: ^1.4.1
         version: 1.4.1(typescript@5.9.3)
-    devDependencies:
-      dotenv:
-        specifier: ^17.4.2
-        version: 17.4.2
 
   apps/admin:
     dependencies:
@@ -138,6 +137,9 @@ importers:
       '@workspace/tma':
         specifier: workspace:*
         version: link:../../packages/tma
+      acorn:
+        specifier: ^8.17.0
+        version: 8.17.0
       error-kid:
         specifier: ^2.0.0
         version: 2.0.0
@@ -159,6 +161,9 @@ importers:
       valibot:
         specifier: ^1.2.0
         version: 1.3.1(typescript@5.9.3)
+      vee-validate:
+        specifier: ^4.15.1
+        version: 4.15.1(vue@3.5.32(typescript@5.9.3))
       vue:
         specifier: ^3.5.28
         version: 3.5.32(typescript@5.9.3)
@@ -3411,6 +3416,11 @@ packages:
 
   acorn@8.16.0:
     resolution: {integrity: sha512-UVJyE9MttOsBQIDKw1skb9nAwQuR5wuGD3+82K6JgJlm/Y+KI92oNsMNGZCYdDsVtRHSak0pcV5Dno5+4jh9sw==}
+    engines: {node: '>=0.4.0'}
+    hasBin: true
+
+  acorn@8.17.0:
+    resolution: {integrity: sha512-xRQbDb9BnwDafYNn6Vwl839DYVjqXYb1XVGtWAZ1kcDc6iwAL4hg3B1dZlRiuENFeO2H53gFG3in621AdERVAg==}
     engines: {node: '>=0.4.0'}
     hasBin: true
 
@@ -6818,6 +6828,10 @@ packages:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
     engines: {node: '>= 0.8.0'}
 
+  type-fest@4.41.0:
+    resolution: {integrity: sha512-TeTSQ6H5YHvpqVwBRcnLDCBnDOHWYu7IvGbHT6N8AOymcr9PJGjc1GTtiWZTYg0NCgYwvnYWEkVChQAr9bjfwA==}
+    engines: {node: '>=16'}
+
   type-fest@5.5.0:
     resolution: {integrity: sha512-PlBfpQwiUvGViBNX84Yxwjsdhd1TUlXr6zjX7eoirtCPIr08NAmxwa+fcYBTeRQxHo9YC9wwF3m9i700sHma8g==}
     engines: {node: '>=20'}
@@ -7074,6 +7088,11 @@ packages:
 
   varint@6.0.0:
     resolution: {integrity: sha512-cXEIW6cfr15lFv563k4GuVuW/fiwjknytD37jIOLSdSWuOI6WnO/oKwmP2FQTU2l01LP8/M5TSAJpzUaGe3uWg==}
+
+  vee-validate@4.15.1:
+    resolution: {integrity: sha512-DkFsiTwEKau8VIxyZBGdO6tOudD+QoUBPuHj3e6QFqmbfCRj1ArmYWue9lEp6jLSWBIw4XPlDLjFIZNLdRAMSg==}
+    peerDependencies:
+      vue: ^3.4.26
 
   vite-dev-rpc@1.1.0:
     resolution: {integrity: sha512-pKXZlgoXGoE8sEKiKJSng4hI1sQ4wi5YT24FCrwrLt6opmkjlqPPVmiPWWJn8M8byMxRGzp1CrFuqQs4M/Z39A==}
@@ -10665,6 +10684,8 @@ snapshots:
       acorn: 8.16.0
 
   acorn@8.16.0: {}
+
+  acorn@8.17.0: {}
 
   agent-base@7.1.4: {}
 
@@ -14555,6 +14576,8 @@ snapshots:
     dependencies:
       prelude-ls: 1.2.1
 
+  type-fest@4.41.0: {}
+
   type-fest@5.5.0:
     dependencies:
       tagged-tag: 1.0.0
@@ -14872,6 +14895,12 @@ snapshots:
       typescript: 5.9.3
 
   varint@6.0.0: {}
+
+  vee-validate@4.15.1(vue@3.5.32(typescript@5.9.3)):
+    dependencies:
+      '@vue/devtools-api': 7.7.9
+      type-fest: 4.41.0
+      vue: 3.5.32(typescript@5.9.3)
 
   vite-dev-rpc@1.1.0(vite@8.0.3(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@types/node@25.5.2)(esbuild@0.27.7)(jiti@2.6.1)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.2)):
     dependencies:
