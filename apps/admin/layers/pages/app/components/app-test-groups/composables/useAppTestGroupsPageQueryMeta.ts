@@ -13,7 +13,7 @@ export function useAppTestGroupsPageQueryMeta() {
             app
               ? {
                 currentUserRole: apiAppRoleToLocal(app.currentUserRole),
-                maxTestGroupsCount: app.limits.maxTestGroupsCount,
+                maxTestGroupsCount: app.limits.testGroups.maxCount,
                 testGroups: app.testGroups.map(group => ({
                   id: group.id,
                   title: group.title,
