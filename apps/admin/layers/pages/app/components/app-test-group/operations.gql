@@ -6,7 +6,9 @@ query AppTestGroupPageData(
   app(appID: $appId) {
     currentUserRole
     limits {
-      maxTestGroupUsersCount
+      testGroups {
+        maxCount
+      }
     }
   }
   appTestGroup(testGroupID: $testGroupId) @skip(if: $skipTestGroup) {
