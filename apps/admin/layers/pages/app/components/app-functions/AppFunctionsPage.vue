@@ -8,25 +8,25 @@ const props = defineProps<{
 const { t } = useI18n({
   messages: {
     en: {
-      title: 'Serverless Functions',
-      create: 'Create serverless function',
+      title: 'Functions',
+      create: 'Create function',
       'function.enabled': 'Enabled',
       'function.disabled': 'Disabled',
-      footer: 'Serverless functions run on Platformer\'s servers and can be called by your mini application. Results are returned to your app.',
-      'limitPopup.message': 'You\'ve reached your serverless function limit for this application.',
+      footer: 'Functions run on Platformer\'s servers and can be called by your mini application. Results are returned to your app.',
+      'limitPopup.message': 'You\'ve reached your functions limit for this application.',
     },
     ru: {
-      title: 'Serverless-функции',
-      create: 'Создать serverless-функцию',
+      title: 'Функции',
+      create: 'Создать функцию',
       'function.enabled': 'Включена',
       'function.disabled': 'Отключена',
-      footer: 'Serverless-функции запускаются на серверах Платформер и могут быть вызваны Вашим мини-приложением. Результат будет возвращен приложению.',
-      'limitPopup.message': 'Вы достигли лимита serverless-функций для данного приложения.',
+      footer: 'Функции запускаются на серверах Платформер и могут быть вызваны Вашим мини-приложением. Результат будет возвращен приложению.',
+      'limitPopup.message': 'Вы достигли лимита функций для данного приложения.',
     },
   },
 });
 
-const { options } = useAppServerlessFunctionsPageQueryMeta();
+const { options } = useAppFunctionsPageQueryMeta();
 const { data } = useQuery(() => options(props.appId));
 const hadInitialData = !!data.value;
 
@@ -35,25 +35,25 @@ const handleCreate = async () => {
   if (!data.value) {
     return;
   }
-  const { maxServerlessFunctionsCount: maxStoredFunctionsCount } = data.value;
+  const { maxFunctionsCount: maxStoredFunctionsCount } = data.value;
   if (
     typeof maxStoredFunctionsCount === 'number'
-    && data.value.serverlessFunctions.length >= maxStoredFunctionsCount
+    && data.value.functions.length >= maxStoredFunctionsCount
   ) {
     await popup.show({ message: t('limitPopup.message') });
     return;
   }
-  navigateToAppServerlessFunctionPage({ appId: props.appId });
+  navigateToAppFunctionPage({ appId: props.appId });
 };
 
-watch(() => data.value?.serverlessFunctions, storedFunctions => {
+watch(() => data.value?.functions, storedFunctions => {
   storedFunctions?.forEach(fn => {
-    preloadAppServerlessFunctionPage({ appId: props.appId, fnId: fn.id });
+    preloadAppFunctionPage({ appId: props.appId, fnId: fn.id });
   });
 });
 
 watch(() => props.appId, appId => {
-  preloadAppServerlessFunctionPage({ appId });
+  preloadAppFunctionPage({ appId });
 });
 </script>
 
@@ -66,7 +66,7 @@ watch(() => props.appId, appId => {
             <AutoSectionHeader>
               {{ t('title') }}
               <template v-if="data">
-                ({{ data.serverlessFunctions.length }} / {{ data.maxServerlessFunctionsCount ?? '∞' }})
+                ({{ data.functions.length }} / {{ data.maxFunctionsCount ?? '∞' }})
               </template>
               <TextShimmerBox
                 v-else
@@ -92,12 +92,12 @@ watch(() => props.appId, appId => {
             <UseListItemTransition v-slot="transition">
               <TransitionGroup v-bind="transition" :css="false">
                 <AutoListItem
-                  v-for="(itemOrWidth, idx) in data?.serverlessFunctions || [210, 180, 160]"
+                  v-for="(itemOrWidth, idx) in data?.functions || [210, 180, 160]"
                   :key="hadInitialData && typeof itemOrWidth === 'object'
                     ? itemOrWidth.id
                     : idx"
                   :clickable="typeof itemOrWidth === 'object'"
-                  @click="typeof itemOrWidth === 'object' && navigateToAppServerlessFunctionPage({
+                  @click="typeof itemOrWidth === 'object' && navigateToAppFunctionPage({
                     appId,
                     fnId: itemOrWidth.id,
                   })"

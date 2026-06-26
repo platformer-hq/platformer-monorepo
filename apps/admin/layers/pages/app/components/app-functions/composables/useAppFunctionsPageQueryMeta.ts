@@ -1,25 +1,25 @@
 import * as fp from 'fp-ts';
 
-import { AppServerlessFunctionsDocument } from '../operations';
+import { AppFunctionsDocument } from '../operations';
 
-export function useAppServerlessFunctionsPageQueryMeta() {
+export function useAppFunctionsPageQueryMeta() {
   return useParametrizedQueryMeta(({ apiGqlRequest }) => {
     return defineQueryOptions((appId: number) => ({
-      key: [AppServerlessFunctionsDocument, appId],
+      key: [AppFunctionsDocument, appId],
       query() {
         return throwifyAnyEither(
           fp.function.pipe(
-            apiGqlRequest(AppServerlessFunctionsDocument, { appId }),
+            apiGqlRequest(AppFunctionsDocument, { appId }),
             fp.taskEither.map(r => {
               return r.app
                 ? ({
                   currentUserRole: apiAppRoleToLocal(r.app.currentUserRole),
-                  serverlessFunctions: r.app.serverlessFunctions.map(fn => ({
+                  functions: r.app.functions.map(fn => ({
                     id: fn.id,
                     enabled: fn.enabled,
                     name: fn.name,
                   })),
-                  maxServerlessFunctionsCount: r.app.limits.serverlessFunctions.maxCount,
+                  maxFunctionsCount: r.app.limits.functions.maxCount,
                 })
                 : null;
             }),

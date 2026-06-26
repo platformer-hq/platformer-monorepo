@@ -1,12 +1,12 @@
-query AppServerlessFunctions($appId: ID!) {
+query AppFunctions($appId: ID!) {
   app(appID: $appId) {
     currentUserRole
     limits {
-      serverlessFunctions {
+      functions {
         maxCount
       }
     }
-    serverlessFunctions {
+    functions {
       id
       name
       enabled
