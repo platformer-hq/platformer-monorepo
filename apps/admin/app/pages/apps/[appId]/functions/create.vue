@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-  name: 'app-serverless-functions',
+  name: 'create-app-function',
   validate: validateParamsAppId,
 });
 
@@ -8,5 +8,5 @@ const appId = useParamsAppId();
 </script>
 
 <template>
-  <AppServerlessFunctionsPage :app-id/>
+  <AppFunctionPage :app-id/>
 </template>
