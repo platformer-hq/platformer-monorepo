@@ -107,17 +107,22 @@ await callOnce(async () => {
   });
 
   // We require this text color parts to make "secondary-accent-color" to work properly.
-  subAndApplyToValue(themeParams.accentTextColor, color => {
-    if (color) {
-      const pureColor = toRGBFull(color).slice(1);
-      document.documentElement.style.setProperty(
-        '--accent-text-color-parts',
-        new Array(3)
-          .fill('')
-          .map((_, idx) => parseInt(pureColor.slice(idx * 2, (idx + 1) * 2), 16))
-          .join(', '),
-      );
-    }
+  [
+    { signal: themeParams.accentTextColor, name: 'accent-text-color-parts' },
+    { signal: themeParams.destructiveTextColor, name: 'destructive-text-color-parts' },
+  ].forEach(({ signal, name }) => {
+    subAndApplyToValue(signal, color => {
+      if (color) {
+        const pureColor = toRGBFull(color).slice(1);
+        document.documentElement.style.setProperty(
+          `--${name}`,
+          new Array(3)
+            .fill('')
+            .map((_, idx) => parseInt(pureColor.slice(idx * 2, (idx + 1) * 2), 16))
+            .join(', '),
+        );
+      }
+    });
   });
 });
 
