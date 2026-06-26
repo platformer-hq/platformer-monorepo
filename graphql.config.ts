@@ -39,6 +39,9 @@ export default {
         scalars,
         useTypeImports: true,
         declarationKind: 'interface',
+        printFieldsOnNewLines: true,
+        flattenGeneratedTypes: true,
+        flattenGeneratedTypesIncludeFragments: true,
       },
     },
     './packages/api/src/schema.ts': {

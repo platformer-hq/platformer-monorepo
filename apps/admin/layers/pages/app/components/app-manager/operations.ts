@@ -8,7 +8,10 @@ export type RemoveManagerMutationVariables = Types.Exact<{
 }>;
 
 
-export type RemoveManagerMutation = { __typename?: 'Mutation', removeAppManager: boolean };
+export type RemoveManagerMutation = {
+  __typename?: 'Mutation',
+  removeAppManager: boolean
+};
 
 export type UpdateManagerMutationVariables = Types.Exact<{
   appId: Types.Scalars['ID']['input'];
@@ -17,7 +20,12 @@ export type UpdateManagerMutationVariables = Types.Exact<{
 }>;
 
 
-export type UpdateManagerMutation = { __typename?: 'Mutation', updateAppManagerRole: { __typename: 'AppManager' } };
+export type UpdateManagerMutation = {
+  __typename?: 'Mutation',
+  updateAppManagerRole: {
+    __typename: 'AppManager'
+  }
+};
 
 
 export const RemoveManagerDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RemoveManager"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"appId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeAppManager"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"appID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"appId"}}},{"kind":"Argument","name":{"kind":"Name","value":"userID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}]}}]} as unknown as DocumentNode<RemoveManagerMutation, RemoveManagerMutationVariables>;

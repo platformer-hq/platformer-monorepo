@@ -7,14 +7,26 @@ export type AppSplashScreenPageDataQueryVariables = Types.Exact<{
 }>;
 
 
-export type AppSplashScreenPageDataQuery = { __typename?: 'Query', app?: { __typename?: 'App', splashScreenIconUrl?: string | null } | null };
+export type AppSplashScreenPageDataQuery = {
+  __typename?: 'Query',
+  app?: {
+    __typename?: 'App',
+    splashScreenIconUrl?: string | null
+  } | null
+};
 
 export type ResetAppSplashScreenIconMutationVariables = Types.Exact<{
   appId: Types.Scalars['ID']['input'];
 }>;
 
 
-export type ResetAppSplashScreenIconMutation = { __typename?: 'Mutation', updateApp: { __typename?: 'App', splashScreenIconUrl?: string | null } };
+export type ResetAppSplashScreenIconMutation = {
+  __typename?: 'Mutation',
+  updateApp: {
+    __typename?: 'App',
+    splashScreenIconUrl?: string | null
+  }
+};
 
 
 export const AppSplashScreenPageDataDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AppSplashScreenPageData"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"appId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"app"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"appID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"appId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"splashScreenIconUrl"}}]}}]}}]} as unknown as DocumentNode<AppSplashScreenPageDataQuery, AppSplashScreenPageDataQueryVariables>;
