@@ -14,11 +14,7 @@ export class ApiGraphQLResponseError extends ClientError {
   }
 
   hasErrorWithCode(code: string): boolean {
-    const schema = v.looseObject({
-      errorData: v.looseObject({
-        code: v.literal(code),
-      }),
-    });
+    const schema = v.looseObject({ code: v.literal(code) });
     return this.response.errors?.some(err => v.is(schema, err.extensions)) || false;
   }
 }
