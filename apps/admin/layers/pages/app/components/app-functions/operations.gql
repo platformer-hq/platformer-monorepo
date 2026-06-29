@@ -1,0 +1,15 @@
+query AppFunctions($appId: ID!) {
+  app(appID: $appId) {
+    currentUserRole
+    limits {
+      functions {
+        maxCount
+      }
+    }
+    functions {
+      id
+      name
+      enabled
+    }
+  }
+}

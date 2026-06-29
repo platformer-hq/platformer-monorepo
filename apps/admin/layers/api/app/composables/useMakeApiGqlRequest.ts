@@ -6,7 +6,7 @@ import type { Variables } from 'graphql-request';
 export type ApiGqlRequestFn = <T, V extends Variables>(
   document: TypedDocumentNode<T, V>,
   variables: V,
-) => fp.taskEither.TaskEither<ApiGraphQLResponseError, T>;
+) => fp.taskEither.TaskEither<ApiGraphQLResponseError | TypeError, T>;
 
 export function useMakeApiGqlRequest(): ApiGqlRequestFn {
   const store = useApiStore();

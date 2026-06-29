@@ -139,8 +139,6 @@ watch(() => ({
 onMounted(() => {
   updateQuery({ userSelectionNavId }, { replace: true });
 });
-
-watch(() => pageStore.url, console.warn);
 </script>
 
 <template>

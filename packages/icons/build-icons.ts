@@ -15,6 +15,9 @@ const dirsConfig: Record<string, {
   icons: {
     monochrome: true,
   },
+  local: {
+    monochrome: true,
+  },
   ios: {
     prefix: 'Ios',
     monochrome: true,

@@ -1,0 +1,37 @@
+fragment fullAppFunctionData on AppFunction {
+  id
+  enabled
+  name
+  code
+}
+
+query AppFunctionsPageData($appId: ID!, $funcId: ID!, $skipFuncData: Boolean!) {
+  app(appID: $appId) {
+    currentUserRole
+    limits {
+      functions {
+        maxNameLength
+        maxCodeLength
+      }
+    }
+  }
+  appFunction(funcId: $funcId) @skip(if: $skipFuncData) {
+    ...fullAppFunctionData
+  }
+}
+
+mutation DeleteAppFunction($funcId: ID!) {
+  deleteAppFunction(funcId: $funcId)
+}
+
+mutation UpdateAppFunction($funcId: ID!, $enabled: Boolean, $name: String, $code: String) {
+  updateAppFunction(funcId: $funcId, enabled: $enabled, code: $code, name: $name) {
+    ...fullAppFunctionData
+  }
+}
+
+mutation CreateAppFunction($appId: ID!, $enabled: Boolean!, $name: String!, $code: String!) {
+  createAppFunction(appId: $appId, code: $code, enabled: $enabled, name: $name) {
+    ...fullAppFunctionData
+  }
+}

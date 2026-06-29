@@ -13,7 +13,9 @@ query AppTestGroupsPageData($appId: ID!) {
       }
     }
     limits {
-      maxTestGroupsCount
+      testGroups {
+        maxCount
+      }
     }
   }
 }

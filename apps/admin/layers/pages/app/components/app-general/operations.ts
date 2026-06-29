@@ -7,7 +7,15 @@ export type AppGeneralPageDataQueryVariables = Types.Exact<{
 }>;
 
 
-export type AppGeneralPageDataQuery = { __typename?: 'Query', app?: { __typename?: 'App', currentUserRole: Types.AppRole, title: string, privacy: Types.AppPrivacy } | null };
+export type AppGeneralPageDataQuery = {
+  __typename?: 'Query',
+  app?: {
+    __typename?: 'App',
+    currentUserRole: Types.AppRole,
+    title: string,
+    privacy: Types.AppPrivacy
+  } | null
+};
 
 export type UpdateAppMutationVariables = Types.Exact<{
   appId: Types.Scalars['ID']['input'];
@@ -16,7 +24,14 @@ export type UpdateAppMutationVariables = Types.Exact<{
 }>;
 
 
-export type UpdateAppMutation = { __typename?: 'Mutation', updateApp: { __typename?: 'App', title: string, privacy: Types.AppPrivacy } };
+export type UpdateAppMutation = {
+  __typename?: 'Mutation',
+  updateApp: {
+    __typename?: 'App',
+    title: string,
+    privacy: Types.AppPrivacy
+  }
+};
 
 
 export const AppGeneralPageDataDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AppGeneralPageData"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"appId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"app"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"appID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"appId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentUserRole"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"privacy"}}]}}]}}]} as unknown as DocumentNode<AppGeneralPageDataQuery, AppGeneralPageDataQueryVariables>;

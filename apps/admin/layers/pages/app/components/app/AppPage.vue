@@ -11,6 +11,7 @@ import {
   IconEyeFillIOS28,
   IconDataAndStorage30,
   IconBinOutline28,
+  IconFunction24,
 } from '@workspace/icons';
 import * as fp from 'fp-ts';
 
@@ -41,6 +42,7 @@ const TransferIcon = createCustomIconComponent(IconPersonLineDottedFill28, 20, '
 const TelegramIcon = createCustomIconComponent(IconTelegram24, 20, '#007AFF');
 const SplashScreenIcon = createCustomIconComponent(IconSquareArrowDownFill28, 22, '#FF2D55');
 const UrlViewerIcon = createCustomIconComponent(IconEyeFillIOS28, 22, '#FF2D55');
+const ServerlessFunctionsIcon = createCustomIconComponent(IconFunction24, 20, '#36a7d2');
 
 const router = useRouter();
 const { t } = useI18n({
@@ -52,6 +54,7 @@ const { t } = useI18n({
       'common.testGroups': 'Test Groups',
       'common.transfer': 'Transfer',
       'common.splashScreen': 'Splash Screen',
+      'common.functions': 'Functions',
       'integrations.title': 'Integrations',
       'integrations.tg': 'Telegram',
       'utils.title': 'Utilities',
@@ -70,6 +73,7 @@ const { t } = useI18n({
       'common.testGroups': 'Тестовые группы',
       'common.transfer': 'Передача приложения',
       'common.splashScreen': 'Сплеш-скрин',
+      'common.functions': 'Функции',
       'integrations.title': 'Интеграции',
       'integrations.tg': 'Telegram',
       'utils.title': 'Утилиты',
@@ -123,6 +127,7 @@ const sections = computed(() => [
       { icon: TestGroupsIcon, title: t('common.testGroups'), name: PageNames.AppTestGroups },
       { icon: TransferIcon, title: t('common.transfer'), name: PageNames.AppTransfer },
       { icon: SplashScreenIcon, title: t('common.splashScreen'), name: PageNames.AppSplashScreen },
+      { icon: ServerlessFunctionsIcon, title: t('common.functions'), name: PageNames.AppFunctions },
     ],
   },
   {
@@ -166,7 +171,6 @@ watch(sections, sections => {
 }, { deep: true, immediate: true });
 
 const { e } = bem('app-page');
-preloadRouteComponents({ name: PageNames.Apps });
 </script>
 
 <template>

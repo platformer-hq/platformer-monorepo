@@ -7,7 +7,14 @@ export type AppTgIntegrationPageDataQueryVariables = Types.Exact<{
 }>;
 
 
-export type AppTgIntegrationPageDataQuery = { __typename?: 'Query', app?: { __typename?: 'App', currentUserRole: Types.AppRole, telegramBotID?: number | null } | null };
+export type AppTgIntegrationPageDataQuery = {
+  __typename?: 'Query',
+  app?: {
+    __typename?: 'App',
+    currentUserRole: Types.AppRole,
+    telegramBotID?: number | null
+  } | null
+};
 
 export type UpdateAppTelegramDataMutationVariables = Types.Exact<{
   appId: Types.Scalars['ID']['input'];
@@ -15,7 +22,13 @@ export type UpdateAppTelegramDataMutationVariables = Types.Exact<{
 }>;
 
 
-export type UpdateAppTelegramDataMutation = { __typename?: 'Mutation', updateApp: { __typename?: 'App', telegramBotID?: number | null } };
+export type UpdateAppTelegramDataMutation = {
+  __typename?: 'Mutation',
+  updateApp: {
+    __typename?: 'App',
+    telegramBotID?: number | null
+  }
+};
 
 
 export const AppTgIntegrationPageDataDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AppTgIntegrationPageData"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"appId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"app"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"appID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"appId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentUserRole"}},{"kind":"Field","name":{"kind":"Name","value":"telegramBotID"}}]}}]}}]} as unknown as DocumentNode<AppTgIntegrationPageDataQuery, AppTgIntegrationPageDataQueryVariables>;

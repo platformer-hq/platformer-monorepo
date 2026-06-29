@@ -7,14 +7,26 @@ export type AppCachePageDataQueryVariables = Types.Exact<{
 }>;
 
 
-export type AppCachePageDataQuery = { __typename?: 'Query', app?: { __typename?: 'App', urlsCacheResetAt?: string | null } | null };
+export type AppCachePageDataQuery = {
+  __typename?: 'Query',
+  app?: {
+    __typename?: 'App',
+    urlsCacheResetAt?: string | null
+  } | null
+};
 
 export type ResetAppCacheMutationVariables = Types.Exact<{
   appID: Types.Scalars['ID']['input'];
 }>;
 
 
-export type ResetAppCacheMutation = { __typename?: 'Mutation', updateApp: { __typename?: 'App', urlsCacheResetAt?: string | null } };
+export type ResetAppCacheMutation = {
+  __typename?: 'Mutation',
+  updateApp: {
+    __typename?: 'App',
+    urlsCacheResetAt?: string | null
+  }
+};
 
 
 export const AppCachePageDataDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AppCachePageData"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"appID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"app"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"appID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"appID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"urlsCacheResetAt"}}]}}]}}]} as unknown as DocumentNode<AppCachePageDataQuery, AppCachePageDataQueryVariables>;

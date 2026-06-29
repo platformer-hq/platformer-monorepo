@@ -13,7 +13,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  ISODate: { input: any; output: any; }
+  Anything: { input: any; output: any; }
   Time: { input: string; output: string; }
 };
 
@@ -24,6 +24,8 @@ export type App = {
   currentUserRole: AppRole;
   /** Short description. */
   description?: Maybe<Scalars['String']['output']>;
+  /** List of app serverless functions. */
+  functions: Array<AppFunction>;
   /** Public identifier. */
   id: Scalars['ID']['output'];
   /** Application limits. */
@@ -57,24 +59,53 @@ export type App = {
   urlsCacheResetAt?: Maybe<Scalars['Time']['output']>;
 };
 
+export type AppFunction = {
+  __typename?: 'AppFunction';
+  code: Scalars['String']['output'];
+  enabled: Scalars['Boolean']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+};
+
+export type AppFunctionErrorResult = {
+  __typename?: 'AppFunctionErrorResult';
+  error: Scalars['String']['output'];
+};
+
+export type AppFunctionLimits = {
+  __typename?: 'AppFunctionLimits';
+  maxCodeLength?: Maybe<Scalars['Int']['output']>;
+  maxCount?: Maybe<Scalars['Int']['output']>;
+  maxNameLength?: Maybe<Scalars['Int']['output']>;
+};
+
+export type AppFunctionResult = AppFunctionErrorResult | AppFunctionSuccessResult;
+
+export type AppFunctionSuccessResult = {
+  __typename?: 'AppFunctionSuccessResult';
+  result: Scalars['Anything']['output'];
+};
+
 export type AppLimits = {
   __typename?: 'AppLimits';
+  functions: AppFunctionLimits;
   /** Maximum description length */
   maxDescriptionLength?: Maybe<Scalars['Int']['output']>;
   /** Maximum allowed active invites count for the application. */
   maxManagementInvitesCount?: Maybe<Scalars['Int']['output']>;
   /** Maximum allowed managers count. */
   maxManagersCount?: Maybe<Scalars['Int']['output']>;
-  /** Maximum allowed test group title length. */
+  /** @deprecated Use "testGroups" */
   maxTestGroupTitleLength?: Maybe<Scalars['Int']['output']>;
-  /** Maximum allowed users count in test group. */
+  /** @deprecated Use "testGroups" */
   maxTestGroupUsersCount?: Maybe<Scalars['Int']['output']>;
-  /** Maximum allowed test groups. */
+  /** @deprecated Use "testGroups" */
   maxTestGroupsCount?: Maybe<Scalars['Int']['output']>;
   /** Maximum title length. */
   maxTitleLength?: Maybe<Scalars['Int']['output']>;
   /** Max allowed application URL length. This value is used for both test groups and platform-specific URLs. */
   maxURLLength?: Maybe<Scalars['Int']['output']>;
+  testGroups: AppTestGroupsLimits;
 };
 
 export type AppManagementInvite = {
@@ -153,6 +184,13 @@ export type AppTestGroup = {
   url: Scalars['String']['output'];
   /** List of users in this test group. */
   users: Array<User>;
+};
+
+export type AppTestGroupsLimits = {
+  __typename?: 'AppTestGroupsLimits';
+  maxCount?: Maybe<Scalars['Int']['output']>;
+  maxTitleLength?: Maybe<Scalars['Int']['output']>;
+  maxUsersCount?: Maybe<Scalars['Int']['output']>;
 };
 
 export type AppTransferRequest = {
@@ -270,6 +308,8 @@ export type Mutation = {
   authenticateTelegram: Jwt;
   /** Creates a new application on behalf of the user. */
   createApp: App;
+  /** Create a new app function. */
+  createAppFunction: AppFunction;
   /** Invites a user to manage the application. */
   createAppManagementInvite: AppManagementInvite;
   /** Creates a new application test group. */
@@ -278,8 +318,12 @@ export type Mutation = {
   createAppTransferRequest: AppTransferRequest;
   /** Deletes the app using its identifier. */
   deleteApp: Scalars['Boolean']['output'];
+  /** Deletes an app function. */
+  deleteAppFunction: Scalars['Boolean']['output'];
   /** Deletes the application test group. */
   deleteAppTestGroup: Scalars['Boolean']['output'];
+  /** Executes an app function. */
+  executeAppFunction: AppFunctionResult;
   /** Deletes the user from the application managers. */
   removeAppManager: Scalars['Boolean']['output'];
   /** Responds to the application management invite. */
@@ -292,6 +336,8 @@ export type Mutation = {
   revokeAppTransferRequest: Scalars['Boolean']['output'];
   /** Updates basic application information. */
   updateApp: App;
+  /** Updates an app function. */
+  updateAppFunction: AppFunction;
   /** Updates application management invite. */
   updateAppManagementInvite: AppManagementInvite;
   /** Updates an application manager role. */
@@ -310,6 +356,14 @@ export type MutationAuthenticateTelegramArgs = {
 
 export type MutationCreateAppArgs = {
   title: Scalars['String']['input'];
+};
+
+
+export type MutationCreateAppFunctionArgs = {
+  appId: Scalars['ID']['input'];
+  code: Scalars['String']['input'];
+  enabled: Scalars['Boolean']['input'];
+  name: Scalars['String']['input'];
 };
 
 
@@ -341,8 +395,20 @@ export type MutationDeleteAppArgs = {
 };
 
 
+export type MutationDeleteAppFunctionArgs = {
+  funcId: Scalars['ID']['input'];
+};
+
+
 export type MutationDeleteAppTestGroupArgs = {
   testGroupID: Scalars['ID']['input'];
+};
+
+
+export type MutationExecuteAppFunctionArgs = {
+  appId: Scalars['ID']['input'];
+  name: Scalars['String']['input'];
+  param?: InputMaybe<Scalars['Anything']['input']>;
 };
 
 
@@ -384,6 +450,14 @@ export type MutationUpdateAppArgs = {
   title?: InputMaybe<Scalars['String']['input']>;
   urls?: InputMaybe<Array<InputAppUrl>>;
   urlsCacheReset?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationUpdateAppFunctionArgs = {
+  code?: InputMaybe<Scalars['String']['input']>;
+  enabled?: InputMaybe<Scalars['Boolean']['input']>;
+  funcId: Scalars['ID']['input'];
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -444,6 +518,8 @@ export type Query = {
   __typename?: 'Query';
   /** Application information. */
   app?: Maybe<App>;
+  /** Retrieves application function by its identifier. */
+  appFunction?: Maybe<AppFunction>;
   /** Rules related to uploading app splash screen icons. */
   appSplashScreenIconUploadRules: AppSplashScreenIconUploadRules;
   /** Retrieves application test group by its identifier. */
@@ -464,6 +540,11 @@ export type Query = {
 
 export type QueryAppArgs = {
   appID: Scalars['ID']['input'];
+};
+
+
+export type QueryAppFunctionArgs = {
+  funcId: Scalars['ID']['input'];
 };
 
 

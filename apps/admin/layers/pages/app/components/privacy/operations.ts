@@ -5,7 +5,14 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
 export type PrivacyPageDataQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type PrivacyPageDataQuery = { __typename?: 'Query', currentUser: { __typename?: 'CurrentUser', canAcceptAppTransfers: boolean, canBeInvitedToManage: boolean } };
+export type PrivacyPageDataQuery = {
+  __typename?: 'Query',
+  currentUser: {
+    __typename?: 'CurrentUser',
+    canAcceptAppTransfers: boolean,
+    canBeInvitedToManage: boolean
+  }
+};
 
 export type UpdatePermissionsMutationVariables = Types.Exact<{
   canBeInvitedToManage: Types.Scalars['Boolean']['input'];
@@ -13,7 +20,10 @@ export type UpdatePermissionsMutationVariables = Types.Exact<{
 }>;
 
 
-export type UpdatePermissionsMutation = { __typename?: 'Mutation', updateCurrentUser: boolean };
+export type UpdatePermissionsMutation = {
+  __typename?: 'Mutation',
+  updateCurrentUser: boolean
+};
 
 
 export const PrivacyPageDataDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PrivacyPageData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"canAcceptAppTransfers"}},{"kind":"Field","name":{"kind":"Name","value":"canBeInvitedToManage"}}]}}]}}]} as unknown as DocumentNode<PrivacyPageDataQuery, PrivacyPageDataQueryVariables>;

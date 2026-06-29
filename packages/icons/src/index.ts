@@ -90,6 +90,7 @@ export { default as IconFingerprint112, type IconFingerprint112Props } from './i
 export { default as IconFireFill28, type IconFireFill28Props } from './icons/28/IconFireFill28.vue';
 export { default as IconFragment24, type IconFragment24Props } from './icons/24/IconFragment24.vue';
 export { default as IconFragment28, type IconFragment28Props } from './icons/28/IconFragment28.vue';
+export { default as IconFunction24, type IconFunction24Props } from './local/24/IconFunction24.vue';
 export { default as IconGameControllerFill24, type IconGameControllerFill24Props } from './icons/24/IconGameControllerFill24.vue';
 export { default as IconGearFillIOS28, type IconGearFillIOS28Props } from './icons/28/IconGearFillIOS28.vue';
 export { default as IconGearOutlineIOS28, type IconGearOutlineIOS28Props } from './icons/28/IconGearOutlineIOS28.vue';
