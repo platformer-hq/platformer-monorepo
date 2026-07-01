@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import type { RGB, KnownThemeParamsKey as RawThemeParamsKey } from '@tma.js/sdk-vue';
-import { PageRoot, type PageRootProps } from '@tma.js/vue-kit';
 import { useScroll } from '@vueuse/core';
 
 import type { KnownThemeParamsKey as SimpleThemeParamsKey } from '#colors/types';
+import PageRoot, { type PageRootProps } from '#ui-kit/components/PageRoot.vue';
 
 import { useScrollStatesStore } from './useScrollStates';
 

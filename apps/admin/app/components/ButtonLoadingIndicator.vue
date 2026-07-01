@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { createReversibleTransition, reverseTransitionKeyframesIfLeave } from '@tma.js/vue-kit';
-
 defineProps<{ show?: boolean }>();
 
 const transition = createReversibleTransition({

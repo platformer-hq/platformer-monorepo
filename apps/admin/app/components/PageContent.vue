@@ -3,7 +3,7 @@
  * This component is responsible for providing a container with a restricted width, equal to
  * the max possible view content width.
  */
-import type { KnownHtmlTag } from '@tma.js/vue-kit';
+import type { KnownHtmlTag } from '#ui-kit/types';
 
 const { as = 'div' } = defineProps<{
   /**

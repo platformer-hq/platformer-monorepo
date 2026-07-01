@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { createListAndroidItemTransition, createListIosItemTransition } from '@tma.js/vue-kit';
 import type { TransitionProps } from 'vue';
 
 defineSlots<{
