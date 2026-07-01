@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { KnownHtmlTag } from '@/types/html-tags.js';
+import type { KnownHtmlTag } from '#ui-kit/types';
 
 withDefaults(defineProps<{
   /**
