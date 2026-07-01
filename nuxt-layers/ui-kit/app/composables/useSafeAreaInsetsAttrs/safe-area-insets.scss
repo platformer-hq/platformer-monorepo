@@ -1,0 +1,7 @@
+.tgui-safe-area-insets {
+  @each $side in ('bottom', 'top', 'left', 'right') {
+    &--#{$side} {
+      padding-#{$side}: var(--padding-#{$side}, 0);
+    }
+  }
+}
