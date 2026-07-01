@@ -1,11 +1,4 @@
 <script setup lang="ts">
-import {
-  bem,
-  createReversibleTransition,
-  ProgressiveImage,
-  ProgressiveImageElement,
-  SafeAreaInsets,
-} from '@tma.js/vue-kit';
 import type * as v from 'valibot';
 
 import platformerLogoSrc from '@/assets/platformer-logo.svg?url';

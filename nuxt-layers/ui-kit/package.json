@@ -1,0 +1,21 @@
+{
+  "name": "@workspace-layers/ui-kit",
+  "type": "module",
+  "private": true,
+  "main": "./nuxt.config.ts",
+  "scripts": {
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@workspace-layers/scss": "workspace:*"
+  },
+  "peerDependencies": {
+    "@pinia/nuxt": "^0.11.3",
+    "@tma.js/sdk-vue": "^1.0.0",
+    "@vueuse/core": "^14.0.0",
+    "vue": "^3.0.0"
+  },
+  "devDependencies": {
+    "nuxt": "^4.0.0"
+  }
+}

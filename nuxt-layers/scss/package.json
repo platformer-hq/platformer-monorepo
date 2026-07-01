@@ -1,0 +1,9 @@
+{
+  "name": "@workspace-layers/scss",
+  "type": "module",
+  "private": true,
+  "main": "./nuxt.config.ts",
+  "devDependencies": {
+    "nuxt": "^4.0.0"
+  }
+}
