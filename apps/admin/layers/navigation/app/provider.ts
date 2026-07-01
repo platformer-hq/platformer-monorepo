@@ -1,4 +1,4 @@
-import { type UsePageTransitionState, createProvider } from '@tma.js/vue-kit';
+import type { UsePageTransitionState } from '@tma.js/vue-kit';
 import type { DeepReadonly } from 'vue';
 
 export const { provide: providePageTransition, inject: injectPageTransition } = createProvider<{
