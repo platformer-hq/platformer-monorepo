@@ -1,4 +1,4 @@
-import { ListAndroidItemBodyLeftSubtitle, ListIosItemBodyLeftSubtitle } from '@tma.js/vue-kit';
+import { ListAndroidItemBodyLeftSubtitle, ListIosItemBodyLeftSubtitle } from '#components';
 
 export default platformed({
   fallback: ListAndroidItemBodyLeftSubtitle,

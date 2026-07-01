@@ -1,4 +1,4 @@
-import { ListAndroidItemLeftIconElement, ListIosItemLeftIconElement } from '@tma.js/vue-kit';
+import { ListAndroidItemLeftIconElement, ListIosItemLeftIconElement } from '#components';
 
 export default platformed({
   fallback: ListAndroidItemLeftIconElement,

@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import {
-  TextFieldAndroidInputPlaceholder,
-  type TextFieldIosInputPlaceholderProps,
-  TextFieldIosInputPlaceholder,
-  type TextFieldAndroidInputPlaceholderProps,
-} from '@tma.js/vue-kit';
 import { reactiveOmit } from '@vueuse/core';
+
+import { TextFieldAndroidInputPlaceholder, TextFieldIosInputPlaceholder } from '#components';
+import type {
+  TextFieldAndroidInputPlaceholderProps,
+} from '#ui-kit/components/TextField/TextFieldAndroid/TextFieldAndroidInputPlaceholder.vue';
+import type {
+  TextFieldIosInputPlaceholderProps,
+} from '#ui-kit/components/TextField/TextFieldIos/TextFieldIosInputPlaceholder.vue';
 
 type FontVariant = (
   | 'title1'

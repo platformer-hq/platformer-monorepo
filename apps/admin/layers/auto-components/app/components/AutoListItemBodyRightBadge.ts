@@ -1,4 +1,4 @@
-import { ListAndroidItemBodyRightBadge, ListIosItemBodyRightBadge } from '@tma.js/vue-kit';
+import { ListAndroidItemBodyRightBadge, ListIosItemBodyRightBadge } from '#components';
 
 export default platformed({
   fallback: ListAndroidItemBodyRightBadge,

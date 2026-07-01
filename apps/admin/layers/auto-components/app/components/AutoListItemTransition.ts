@@ -1,4 +1,4 @@
-import { ListAndroidItemTransition, ListIosItemTransition } from '@tma.js/vue-kit';
+import { ListAndroidItemTransition, ListIosItemTransition } from '#components';
 
 export default platformed({
   fallback: ListAndroidItemTransition,

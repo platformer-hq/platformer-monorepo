@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { UseTypographyAndroid, UseTypographyIos } from '@tma.js/vue-kit';
-import type { UseTypographyBaseProps } from '@tma.js/vue-kit';
 import { mergeProps, type StyleValue } from 'vue';
 
 import type { ColorReferenceAnyColor } from '#colors/utils/utils';
+import { UseTypographyAndroidAttrs, UseTypographyIosAttrs } from '#components';
+import type {
+  UseTypographyBaseAttrsProps,
+} from '#ui-kit/components/Typography/TypographyBase/UseTypographyBaseAttrs.vue';
 
 export type AutoUseTypographyVariant =
   | 'title1'
@@ -18,7 +20,7 @@ export type AutoUseTypographyVariant =
   | 'caption2';
 export type AutoUseTypographyWeight = 'regular' | 'medium' | 'semibold' | 'bold';
 
-export interface AutoUseTypographyProps extends UseTypographyBaseProps {
+export interface AutoUseTypographyProps extends UseTypographyBaseAttrsProps {
   variant?: AutoUseTypographyVariant;
   weight?: AutoUseTypographyWeight;
   rounded?: boolean;
@@ -63,7 +65,7 @@ const rootProps = computed(() => {
 
 <template>
   <component
-    :is="platform?.isMappedIos ? UseTypographyIos : UseTypographyAndroid"
+    :is="platform?.isMappedIos ? UseTypographyIosAttrs : UseTypographyAndroidAttrs"
     ref="root"
     v-slot="{classes, style}"
     v-bind="rootProps"

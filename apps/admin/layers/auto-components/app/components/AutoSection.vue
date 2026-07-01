@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { SectionAndroid, SectionIos } from '@tma.js/vue-kit';
-
 import type { ColorReferenceAnyColor } from '#colors/utils/utils';
+import { SectionAndroid, SectionIos } from '#components';
 
 const props = defineProps<{
   listBgColor?: ColorReferenceAnyColor;

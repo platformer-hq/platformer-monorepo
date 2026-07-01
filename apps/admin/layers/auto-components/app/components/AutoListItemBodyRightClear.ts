@@ -1,4 +1,4 @@
-import { ListAndroidItemBodyRightClear, ListIosItemBodyRightClear } from '@tma.js/vue-kit';
+import { ListAndroidItemBodyRightClear, ListIosItemBodyRightClear } from '#components';
 
 export default platformed({
   fallback: ListAndroidItemBodyRightClear,

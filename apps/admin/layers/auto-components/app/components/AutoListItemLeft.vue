@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ListIosItemLeft, ListAndroidItemLeft } from '@tma.js/vue-kit';
+import { ListIosItemLeft, ListAndroidItemLeft } from '#components';
 
 const props = defineProps<{
   width?: number | string;

@@ -1,4 +1,4 @@
-import { TextFieldAndroidLeftMagnifyIcon, TextFieldIosLeftMagnifyIcon } from '@tma.js/vue-kit';
+import { TextFieldAndroidLeftMagnifyIcon, TextFieldIosLeftMagnifyIcon } from '#components';
 
 export default platformed({
   fallback: TextFieldAndroidLeftMagnifyIcon,

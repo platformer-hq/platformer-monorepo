@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { TextFieldAndroid, TextFieldIos } from '@tma.js/vue-kit';
-
 import type { ColorReferenceAnyColor } from '#colors/utils/utils';
+import { TextFieldAndroid, TextFieldIos } from '#components';
 
 const props = defineProps<{
   bgColor?: ColorReferenceAnyColor;

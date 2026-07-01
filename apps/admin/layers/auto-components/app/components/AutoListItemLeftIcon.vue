@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ListAndroidItemLeftIcon, ListIosItemLeftIcon } from '@tma.js/vue-kit';
 import { reactiveOmit } from '@vueuse/core';
+
+import { ListAndroidItemLeftIcon, ListIosItemLeftIcon } from '#components';
 
 defineProps<{
   /**

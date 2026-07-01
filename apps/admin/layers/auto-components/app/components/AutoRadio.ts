@@ -1,3 +1,3 @@
-import { RadioAndroid, RadioIos } from '@tma.js/vue-kit';
+import { RadioAndroid, RadioIos } from '#components';
 
 export default platformed({ fallback: RadioAndroid, ios: RadioIos });

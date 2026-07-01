@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { KnownHtmlTag } from '@tma.js/vue-kit';
+import type { KnownHtmlTag } from '#ui-kit/types';
 
 import AutoUseTypography from './AutoUseTypography.vue';
 import type {
