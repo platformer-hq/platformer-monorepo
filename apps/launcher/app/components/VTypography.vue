@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { bem, type KnownHtmlTag } from '@tma.js/vue-kit';
+import { TypographyAndroid, TypographyIos } from '#components';
+import type { KnownHtmlTag } from '#ui-kit/types';
 
 const { as = 'p' } = defineProps<{
   /**
@@ -15,7 +16,11 @@ const platform = usePlatform();
 </script>
 
 <template>
-  <component :is="as" :class="b(variant, weight, platform)">
+  <component
+    :is="platform === 'ios' ? TypographyIos : TypographyAndroid"
+    :as
+    :class="b(variant, weight, platform)"
+  >
     <slot/>
   </component>
 </template>

@@ -210,9 +210,6 @@ importers:
       '@tma.js/sdk-vue':
         specifier: ^1.0.18
         version: 1.0.18(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3))
-      '@tma.js/vue-kit':
-        specifier: workspace:*
-        version: link:../../packages/vue-kit
       '@vueuse/core':
         specifier: ^14.2.1
         version: 14.2.1(vue@3.5.32(typescript@5.9.3))

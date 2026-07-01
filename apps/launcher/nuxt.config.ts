@@ -11,9 +11,6 @@ const isDev = process.env.NODE_ENV === 'development';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2025-07-15',
-  devtools: { enabled: true },
-  modules: ['@nuxtjs/i18n', '@pinia/nuxt', '@pinia/colada-nuxt', 'nuxt-security'],
   alias: {
     '@': resolve('app'),
     '~': resolve('app'),
@@ -39,6 +36,9 @@ export default defineNuxtConfig({
     ignore: componentsIgnore,
     priority: 100,
   }],
+  compatibilityDate: '2025-07-15',
+  devtools: { enabled: true },
+  extends: ['@workspace-layers/ui-kit'],
   i18n: {
     strategy: 'no_prefix',
     locales: [
@@ -47,6 +47,7 @@ export default defineNuxtConfig({
     ],
     defaultLocale: 'en',
   },
+  modules: ['@nuxtjs/i18n', '@pinia/nuxt', '@pinia/colada-nuxt', 'nuxt-security'],
   nitro: {
     preset: 'netlify',
   },

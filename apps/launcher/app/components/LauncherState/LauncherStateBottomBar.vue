@@ -1,17 +1,12 @@
 <script setup lang="ts">
 import { miniApp, useSignal } from '@tma.js/sdk-vue';
+
 import {
   ButtonAndroid,
   ButtonIos,
   LoadingIndicatorAndroid,
   LoadingIndicatorIos,
-  BottomBar,
-  BottomBarTransition,
-  BottomBarInner,
-  bem,
-  createReversibleTransition,
-  reverseTransitionKeyframesIfLeave,
-} from '@tma.js/vue-kit';
+} from '#components';
 
 const props = defineProps<{
   action?: 'retry' | 'redirect' | 'redirecting';
@@ -38,18 +33,6 @@ const { t } = useI18n({
 
 const { e } = bem('launcher-state-bottom-bar');
 
-const loadingIndicatorTransition = createReversibleTransition({
-  animatedProperties({ transition, el }) {
-    return reverseTransitionKeyframesIfLeave({
-      opacity: [0, 0, 1],
-      transform: ['scale(0.93)', 'scale(1)'],
-      marginLeft: ['0px', '8px', '8px'],
-      width: ['0px', el.clientWidth + 'px'],
-    }, transition);
-  },
-  animationOptions: { duration: 300, easing: 'ease-out', fill: 'both' },
-});
-
 const isButtonEnabled = computed(() => props.action !== 'redirecting');
 const isDark = useSignal(miniApp.isDark);
 const platform = usePlatform();
@@ -66,6 +49,7 @@ const platform = usePlatform();
             {disabled: !isButtonEnabled},
             !isButtonEnabled && `disabled-${isDark ? 'dark' : 'light'}`
           )"
+          palette="filled"
           full-width
           :active="isButtonEnabled"
           :disabled="!isButtonEnabled"
@@ -78,7 +62,20 @@ const platform = usePlatform();
               redirecting: 'button.label.redirecting',
             }[action]) }}
           </VTypography>
-          <Transition v-bind="loadingIndicatorTransition" :css="false">
+          <Transition
+            v-bind="createReversibleTransition({
+              animatedProperties({ transition, el }) {
+                return reverseTransitionKeyframesIfLeave({
+                  opacity: [0, 0, 1],
+                  transform: ['scale(0.93)', 'scale(1)'],
+                  marginLeft: ['0px', '8px', '8px'],
+                  width: ['0px', el.clientWidth + 'px'],
+                }, transition);
+              },
+              animationOptions: { duration: 300, easing: 'ease-out', fill: 'both' },
+            })"
+            :css="false"
+          >
             <component
               :is="platform === 'android' ? LoadingIndicatorAndroid : LoadingIndicatorIos"
               v-if="action === 'redirecting'"

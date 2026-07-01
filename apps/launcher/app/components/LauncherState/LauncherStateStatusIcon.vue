@@ -1,14 +1,5 @@
 <script setup lang="ts">
-import {
-  LoadingIndicatorAndroid,
-  LoadingIndicatorIos,
-  bem,
-  createReversibleTransition,
-} from '@tma.js/vue-kit';
-import {
-  IconXmark28,
-  IconExclamationMarkTriangleFill28,
-} from '@workspace/icons';
+import { IconXmark28, IconExclamationMarkTriangleFill28 } from '@workspace/icons';
 
 defineProps<{
   status?: 'error' | 'warning' | 'loading';
@@ -16,18 +7,21 @@ defineProps<{
 const { b } = bem('launcher-state-status-icon');
 
 const platform = usePlatform();
-
-const transition = createReversibleTransition({
-  animatedProperties: {
-    transform: [0.65, 1.1, 1].map(scale => `translate3d(-75%, -75%, 0) scale(${scale})`),
-    opacity: [0, 1],
-  },
-  animationOptions: { duration: 300, easing: 'ease-in-out', fill: 'forwards' },
-});
 </script>
 
 <template>
-  <Transition v-bind="transition" :css="false" mode="out-in" appear>
+  <Transition
+    v-bind="createReversibleTransition({
+      animatedProperties: {
+        transform: [0.65, 1.1, 1].map(scale => `translate3d(-75%, -75%, 0) scale(${scale})`),
+        opacity: [0, 1],
+      },
+      animationOptions: { duration: 300, easing: 'ease-in-out', fill: 'forwards' },
+    })"
+    :css="false"
+    mode="out-in"
+    appear
+  >
     <div v-if="status === 'error'" :class="b('error')">
       <IconXmark28 :size="16"/>
     </div>
