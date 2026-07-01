@@ -22,6 +22,7 @@ export default defineNuxtConfig({
   imports: {
     dirs: [
       resolve('app/components/*/utils/*.ts'),
+      resolve('app/components/*/*/utils/*.ts'),
       resolve('app/components/*/composables/*.ts'),
       resolve('app/composables/use*/use*.ts'),
     ],

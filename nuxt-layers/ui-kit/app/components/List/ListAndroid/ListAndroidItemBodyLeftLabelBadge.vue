@@ -12,6 +12,6 @@ defineProps<BadgeAndroidProps>();
 
 <style>
 .tgui-list-android-item-body-left-label-badge {
-  margin-left: 3px;
+  margin-left: 6px;
 }
 </style>

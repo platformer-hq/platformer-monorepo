@@ -1,5 +1,11 @@
 <script setup lang="ts">
+import type { KnownHtmlTag } from '#ui-kit/types';
+
 withDefaults(defineProps<{
+  /**
+   * @default 'i'
+   */
+  as?: KnownHtmlTag;
   /**
    * The icon size.
    * - `small` - 28px
@@ -9,6 +15,7 @@ withDefaults(defineProps<{
   size?: 'small' | 'large';
   rounded?: boolean;
 }>(), {
+  as: 'i',
   size: 'small',
 });
 
@@ -16,9 +23,9 @@ const { b } = bem('tgui-list-ios-item-left-icon-element');
 </script>
 
 <template>
-  <i :class="b({ rounded }, size)">
+  <component :is="as" :class="b({ rounded }, size)">
     <slot/>
-  </i>
+  </component>
 </template>
 
 <style lang="scss">

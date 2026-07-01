@@ -1,8 +1,36 @@
 <script setup lang="ts">
+import type { KnownHtmlTag } from '#ui-kit/types';
+
+withDefaults(defineProps<{
+  /**
+   * @default 'label'
+   */
+  as?: KnownHtmlTag;
+  /**
+   * @default 'regular'
+   */
+  variant?: 'regular' | 'disabled';
+}>(), {
+  as: 'label',
+  variant: 'regular',
+});
+
+const { b } = bem('tgui-list-android-item-body-input');
 </script>
 
 <template>
-  <label class="tgui-list-android-item-body-input">
+  <component :is="as" :class="b(variant)">
     <slot/>
-  </label>
+  </component>
 </template>
+
+<style lang="scss">
+.tgui-list-android-item-body-input {
+  @each $variant in ("regular", "disabled") {
+    &--#{$variant} {
+      --input-text-color: var(--tgui-list-android-item-body-left-input-#{$variant}-text-color);
+      --input-placeholder-color: var(--tgui-list-android-item-body-left-input-#{$variant}-placeholder-color);
+    }
+  }
+}
+</style>

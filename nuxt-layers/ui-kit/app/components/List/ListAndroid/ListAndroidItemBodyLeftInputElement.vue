@@ -1,7 +1,16 @@
 <script setup lang="ts">
 import { onClickOutside, useTextareaAutosize } from '@vueuse/core';
 
-defineProps<{ multiline?: boolean }>();
+const props = withDefaults(defineProps<{
+  multiline?: boolean;
+  /**
+   * True if the element should blur on click outside.
+   * @default true
+   */
+  blurOnClickOutside?: boolean;
+}>(), {
+  blurOnClickOutside: true,
+});
 
 const model = defineModel<string | undefined>({ default: '' });
 const inputRef = useTemplateRef<HTMLInputElement | HTMLTextAreaElement>('input');
@@ -14,9 +23,16 @@ useTextareaAutosize({
   }),
 });
 
-// Telegram for Android doesn't handle click outside and doesn't lose focus on the input.
-onClickOutside(inputRef, () => {
-  inputRef.value?.blur();
+// Both Telegram for iOS and Adnroid don't handle click outside and don't lose focus on
+// the input.
+watch(() => props.blurOnClickOutside, blur => {
+  if (blur) {
+    onWatcherCleanup(
+      onClickOutside(inputRef, () => {
+        inputRef.value?.blur();
+      }),
+    );
+  }
 });
 
 defineExpose({ input: inputRef });
@@ -46,7 +62,7 @@ defineExpose({ input: inputRef });
   resize: none;
   padding-block: 15px;
   width: 100%;
-  color: var(--tgui-list-android-item-body-left-input-text-color);
+  color: var(--input-text-color);
   @include mixins.hideScrollbar;
   @include mixins.noHighlight;
 
@@ -57,7 +73,7 @@ defineExpose({ input: inputRef });
   }
 
   &::placeholder {
-    color: var(--tgui-list-android-item-body-left-input-placeholder-color);
+    color: var(--input-placeholder-color);
   }
 }
 </style>

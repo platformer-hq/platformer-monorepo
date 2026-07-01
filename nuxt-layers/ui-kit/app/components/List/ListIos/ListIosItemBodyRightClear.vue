@@ -1,11 +1,22 @@
 <script setup lang="ts">
 import { IconXmarkFill28 } from '@workspace/icons';
+
+import type { KnownHtmlTag } from '#ui-kit/types';
+
+withDefaults(defineProps<{
+  /**
+   * @default 'i'
+   */
+  as?: KnownHtmlTag;
+}>(), {
+  as: 'i',
+});
 </script>
 
 <template>
-  <i class="tgui-list-ios-item-body-right-clear">
+  <component :is="as" class="tgui-list-ios-item-body-right-clear">
     <IconXmarkFill28 :size="20"/>
-  </i>
+  </component>
 </template>
 
 <style lang="scss">

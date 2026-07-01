@@ -1,10 +1,20 @@
 <script setup lang="ts">
+import type { KnownHtmlTag } from '#ui-kit/types';
+
+withDefaults(defineProps<{
+  /**
+   * @default 'div'
+   */
+  as?: KnownHtmlTag;
+}>(), {
+  as: 'div',
+});
 </script>
 
 <template>
-  <div class="tgui-list-android-item-left-icon">
+  <component :is="as" class="tgui-list-android-item-left-icon">
     <slot/>
-  </div>
+  </component>
 </template>
 
 <style>

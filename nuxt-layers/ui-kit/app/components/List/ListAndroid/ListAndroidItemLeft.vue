@@ -1,18 +1,27 @@
 <script setup lang="ts">
-const { size = 'default' } = defineProps<{
+import type { KnownHtmlTag } from '#ui-kit/types';
+
+withDefaults(defineProps<{
+  /**
+   * @default 'div'
+   */
+  as?: KnownHtmlTag;
   width?: number | string;
   /**
    * @default 'default'
    */
   size?: 'default' | 'small' | 'large';
-}>();
+}>(), {
+  as: 'div',
+  size: 'default',
+});
 const { b } = bem('tgui-list-android-item-left');
 </script>
 
 <template>
-  <div :class="b(size)" :style="{width: toPx(width)}">
+  <component :is="as" :class="b(size)" :style="{width: toPx(width)}">
     <slot/>
-  </div>
+  </component>
 </template>
 
 <style lang="scss">

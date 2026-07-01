@@ -1,11 +1,22 @@
 <script setup lang="ts">
+import type { KnownHtmlTag } from '#ui-kit/types';
+
+withDefaults(defineProps<{
+  /**
+   * @default 'div'
+   */
+  as?: KnownHtmlTag;
+}>(), {
+  as: 'div',
+});
+
 const { b } = bem('tgui-list-android-item-body-right');
 </script>
 
 <template>
-  <div :class="b()">
+  <component :is="as" :class="b()">
     <slot/>
-  </div>
+  </component>
 </template>
 
 <style>

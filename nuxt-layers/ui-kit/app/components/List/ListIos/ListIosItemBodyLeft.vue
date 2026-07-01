@@ -1,12 +1,20 @@
 <script setup lang="ts">
+import type { KnownHtmlTag } from '#ui-kit/types';
+
 import { injectListItemOptions } from './_provider.js';
 
-defineProps<{
+withDefaults(defineProps<{
+  /**
+   * @default 'div'
+   */
+  as?: KnownHtmlTag;
   /**
    * True if the elements direction must be reversed.
    */
   reversed?: boolean;
-}>();
+}>(), {
+  as: 'div',
+});
 defineSlots<{
   input(): unknown;
   label(): unknown;
@@ -18,7 +26,7 @@ const { b, e } = bem('tgui-list-ios-item-body-left');
 </script>
 
 <template>
-  <div :class="b()">
+  <component :is="as" :class="b()">
     <slot v-if="'input' in $slots" name="input"/>
     <div
       v-else
@@ -31,7 +39,7 @@ const { b, e } = bem('tgui-list-ios-item-body-left');
       <slot name="label" />
       <slot name="subtitle"/>
     </div>
-  </div>
+  </component>
 </template>
 
 <style lang="scss">

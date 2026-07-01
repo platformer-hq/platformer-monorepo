@@ -1,10 +1,20 @@
 <script setup lang="ts">
+import type { KnownHtmlTag } from '#ui-kit/types';
+
+withDefaults(defineProps<{
+  /**
+   * @default 'ul'
+   */
+  as?: KnownHtmlTag;
+}>(), {
+  as: 'ul',
+});
 </script>
 
 <template>
-  <ul class="tgui-list-ios">
+  <component :is="as" class="tgui-list-ios">
     <slot />
-  </ul>
+  </component>
 </template>
 
 <style>

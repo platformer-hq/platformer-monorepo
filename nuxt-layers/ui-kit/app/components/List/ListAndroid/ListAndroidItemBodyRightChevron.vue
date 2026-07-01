@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { IconChevronRight28, type IconChevronRight28Props } from '@workspace/icons';
-
-defineProps<IconChevronRight28Props>();
+import { IconChevronRight28 } from '@workspace/icons';
 </script>
 
 <template>
-  <IconChevronRight28 class="tgui-list-android-item-body-right-chevron" v-bind="$props"/>
+  <IconChevronRight28 class="tgui-list-android-item-body-right-chevron"/>
 </template>
 
 <style>

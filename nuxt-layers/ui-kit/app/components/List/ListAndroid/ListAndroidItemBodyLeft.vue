@@ -1,10 +1,18 @@
 <script setup lang="ts">
-defineProps<{
+import type { KnownHtmlTag } from '#ui-kit/types';
+
+withDefaults(defineProps<{
+  /**
+   * @default 'div'
+   */
+  as?: KnownHtmlTag;
   /**
    * True if the elements direction must be reversed.
    */
   reversed?: boolean;
-}>();
+}>(), {
+  as: 'div',
+});
 defineSlots<{
   input(): unknown;
   label(): unknown;
@@ -15,13 +23,13 @@ const { b, e } = bem('tgui-list-android-item-body-left');
 </script>
 
 <template>
-  <div :class="b()">
+  <component :is="as" :class="b()">
     <slot v-if="'input' in $slots" name="input"/>
     <div v-else :class="e('texts', {reversed, 'label-only': !('subtitle' in $slots)})">
       <slot name="label" />
       <slot name="subtitle"/>
     </div>
-  </div>
+  </component>
 </template>
 
 <style lang="scss">
