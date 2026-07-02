@@ -1,3 +1,3 @@
-import { ListAndroidItemBodyLeft, ListIosItemBodyLeft } from '@tma.js/vue-kit';
+import { ListAndroidItemBodyLeft, ListIosItemBodyLeft } from '#components';
 
 export default platformed({ fallback: ListAndroidItemBodyLeft, ios: ListIosItemBodyLeft });

@@ -1,4 +1,4 @@
-import { ListAndroidItemBodyLeftLabel, ListIosItemBodyLeftLabel } from '@tma.js/vue-kit';
+import { ListAndroidItemBodyLeftLabel, ListIosItemBodyLeftLabel } from '#components';
 
 export default platformed({
   fallback: ListAndroidItemBodyLeftLabel,

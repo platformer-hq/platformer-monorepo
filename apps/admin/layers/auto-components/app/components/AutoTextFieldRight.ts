@@ -1,4 +1,4 @@
-import { TextFieldAndroidRight, TextFieldIosRight } from '@tma.js/vue-kit';
+import { TextFieldAndroidRight, TextFieldIosRight } from '#components';
 
 export default platformed({
   fallback: TextFieldAndroidRight,

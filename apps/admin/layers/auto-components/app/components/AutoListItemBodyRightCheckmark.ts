@@ -1,4 +1,4 @@
-import { ListAndroidItemBodyRightCheckmark, ListIosItemBodyRightCheckmark } from '@tma.js/vue-kit';
+import { ListAndroidItemBodyRightCheckmark, ListIosItemBodyRightCheckmark } from '#components';
 
 export default platformed({
   fallback: ListAndroidItemBodyRightCheckmark,

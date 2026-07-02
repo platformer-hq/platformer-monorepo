@@ -1,4 +1,4 @@
-import { TextFieldAndroidRightClear, TextFieldIosRightClear } from '@tma.js/vue-kit';
+import { TextFieldAndroidRightClear, TextFieldIosRightClear } from '#components';
 
 export default platformed({
   fallback: TextFieldAndroidRightClear,

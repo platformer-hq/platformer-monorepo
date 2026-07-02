@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { LoadingIndicatorAndroid, LoadingIndicatorIos } from '@tma.js/vue-kit';
-
 import type { ColorReferenceAnyColor } from '#colors/utils/utils';
+import { LoadingIndicatorAndroid, LoadingIndicatorIos } from '#components';
 
 defineProps<{
   size: number;

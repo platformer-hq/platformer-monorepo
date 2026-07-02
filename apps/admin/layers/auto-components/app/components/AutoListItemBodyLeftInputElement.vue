@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ListIosItemBodyLeftInputElement, ListAndroidItemBodyLeftInputElement } from '@tma.js/vue-kit';
 import { reactivePick } from '@vueuse/core';
+
+import { ListIosItemBodyLeftInputElement, ListAndroidItemBodyLeftInputElement } from '#components';
 
 const props = withDefaults(defineProps<{
   multiline?: boolean;

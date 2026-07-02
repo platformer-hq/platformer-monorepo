@@ -125,6 +125,12 @@ importers:
       '@vueuse/core':
         specifier: ^14.2.1
         version: 14.2.1(vue@3.5.32(typescript@5.9.3))
+      '@workspace-layers/scss':
+        specifier: workspace:*
+        version: link:../../nuxt-layers/scss
+      '@workspace-layers/ui-kit':
+        specifier: workspace:*
+        version: link:../../nuxt-layers/ui-kit
       '@workspace/api':
         specifier: workspace:*
         version: link:../../packages/api
@@ -289,6 +295,9 @@ importers:
       '@workspace-layers/scss':
         specifier: workspace:*
         version: link:../scss
+      '@workspace/icons':
+        specifier: workspace:*
+        version: link:../../packages/icons
       vue:
         specifier: ^3.0.0
         version: 3.5.32(typescript@5.9.3)

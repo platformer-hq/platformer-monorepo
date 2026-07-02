@@ -33,6 +33,8 @@
     "@workspace/icons": "workspace:*",
     "@workspace/pinia-colada": "workspace:*",
     "@workspace/tma": "workspace:*",
+    "@workspace-layers/ui-kit": "workspace:*",
+    "@workspace-layers/scss": "workspace:*",
     "acorn": "^8.17.0",
     "error-kid": "^2.0.0",
     "eruda": "^3.4.3",

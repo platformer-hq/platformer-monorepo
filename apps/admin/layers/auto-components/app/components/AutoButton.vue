@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { ButtonAndroid, ButtonIos, type ButtonBaseProps } from '@tma.js/vue-kit';
 import { reactivePick } from '@vueuse/core';
+
+import { ButtonAndroid, ButtonIos } from '#components';
+import type { ButtonBaseProps } from '#ui-kit/components/Button/ButtonBase.vue';
 
 interface IosSpecificProps {
   /**

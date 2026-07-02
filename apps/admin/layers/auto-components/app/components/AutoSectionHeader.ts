@@ -1,3 +1,3 @@
-import { SectionHeaderAndroid, SectionHeaderIos } from '@tma.js/vue-kit';
+import { SectionAndroidHeader, SectionIosHeader } from '#components';
 
-export default platformed({ fallback: SectionHeaderAndroid, ios: SectionHeaderIos });
+export default platformed({ fallback: SectionAndroidHeader, ios: SectionIosHeader });

@@ -1,3 +1,3 @@
-import { RoundedPanelAndroid, RoundedPanelIos } from '@tma.js/vue-kit';
+import { RoundedPanelAndroid, RoundedPanelIos } from '#components';
 
 export default platformed({ fallback: RoundedPanelAndroid, ios: RoundedPanelIos });

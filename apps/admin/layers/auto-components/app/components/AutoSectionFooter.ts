@@ -1,3 +1,3 @@
-import { SectionFooterAndroid, SectionFooterIos } from '@tma.js/vue-kit';
+import { SectionAndroidFooter, SectionIosFooter } from '#components';
 
-export default platformed({ fallback: SectionFooterAndroid, ios: SectionFooterIos });
+export default platformed({ fallback: SectionAndroidFooter, ios: SectionIosFooter });

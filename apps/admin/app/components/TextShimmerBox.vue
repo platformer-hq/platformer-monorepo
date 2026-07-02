@@ -3,9 +3,8 @@
  * This component is reponsible for displaying a block, notifying the user that the content
  * is loading.
  */
-import type { KnownHtmlTag } from '@tma.js/vue-kit';
-
 import type { AutoTypographyVariant } from '#auto-components/components/AutoTypography/AutoTypography.vue';
+import type { KnownHtmlTag } from '#ui-kit/types';
 
 const { borderRadius = 5, as = 'div' } = defineProps<{
   /**

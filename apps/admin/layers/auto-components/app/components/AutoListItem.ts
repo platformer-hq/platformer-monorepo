@@ -1,3 +1,3 @@
-import { ListAndroidItem, ListIosItem } from '@tma.js/vue-kit';
+import { ListAndroidItem, ListIosItem } from '#components';
 
 export default platformed({ fallback: ListAndroidItem, ios: ListIosItem });

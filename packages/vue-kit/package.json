@@ -21,8 +21,7 @@
     "**/*.scss"
   ],
   "scripts": {
-    "build": "vite build",
-    "build-icons": "tsx build-icons.ts"
+    "build": "vite build"
   },
   "keywords": [],
   "author": "",

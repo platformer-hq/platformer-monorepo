@@ -1,4 +1,4 @@
-import { ListAndroidItemBodyRightChevron, ListIosItemBodyRightChevron } from '@tma.js/vue-kit';
+import { ListAndroidItemBodyRightChevron, ListIosItemBodyRightChevron } from '#components';
 
 export default platformed({
   fallback: ListAndroidItemBodyRightChevron,

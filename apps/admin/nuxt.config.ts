@@ -68,6 +68,7 @@ export default defineNuxtConfig({
   appId: 'admin-panel',
   css: [resolve('app/assets/global.scss')],
   components: [higherPriorityComponents(resolve('app/components'))],
+  extends: ['@workspace-layers/ui-kit', '@workspace-layers/scss'],
   i18n: {
     strategy: 'no_prefix',
     locales: [
