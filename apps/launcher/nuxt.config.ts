@@ -47,7 +47,13 @@ export default defineNuxtConfig({
     ],
     defaultLocale: 'en',
   },
-  modules: ['@nuxtjs/i18n', '@pinia/nuxt', '@pinia/colada-nuxt', 'nuxt-security'],
+  modules: [
+    '@nuxtjs/i18n',
+    '@pinia/nuxt',
+    '@pinia/colada-nuxt',
+    'nuxt-security',
+    '@nuxt/test-utils/module',
+  ],
   nitro: {
     preset: 'netlify',
   },
