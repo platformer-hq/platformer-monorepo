@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "nuxt dev --port 5174 --host",
+    "dev:https": "cross-env HTTPS=1 NODE_TLS_REJECT_UNAUTHORIZED=0 nuxt dev --https --https.cert=cert.pem --https.key=key.pem --port 5174 --host",
     "build": "nuxt generate",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
@@ -51,6 +52,7 @@
   "devDependencies": {
     "baseline-browser-mapping": "^2.9.19",
     "browserslist-to-esbuild": "^2.1.1",
+    "cross-env": "^10.1.0",
     "sass-embedded": "^1.97.1",
     "unplugin-vue-router": "^0.19.2",
     "vite-svg-loader": "^5.1.1"

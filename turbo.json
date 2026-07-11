@@ -21,6 +21,13 @@
         "@tma.js/vue-kit#build"
       ]
     },
+    "@workspace/admin#dev:https": {
+      "persistent": true,
+      "cache": false,
+      "dependsOn": [
+        "@tma.js/vue-kit#build"
+      ]
+    },
     "@workspace/launcher#dev": {
       "persistent": true,
       "cache": false,

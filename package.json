@@ -10,6 +10,7 @@
     "icons:build": "turbo run build --filter=\"@workspace/icons\"",
     "vue-kit:build": "turbo run build --filter=\"@tma.js/vue-kit\"",
     "admin:dev": "turbo run dev --filter=\"@workspace/admin\"",
+    "admin:dev:https": "turbo run dev:https --filter=\"@workspace/admin\"",
     "admin:build": "turbo run build --filter=\"@workspace/admin\"",
     "launcher:dev": "turbo run dev --filter=\"@workspace/launcher\"",
     "launcher:build": "turbo run build --filter=\"@workspace/launcher\""
