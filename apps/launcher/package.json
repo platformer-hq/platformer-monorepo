@@ -17,11 +17,11 @@
     "@pinia/nuxt": "0.11.3",
     "@tma.js/sdk-vue": "^1.0.18",
     "@vueuse/core": "^14.2.1",
+    "@workspace-layers/ui-kit": "workspace:*",
+    "@workspace/icons": "workspace:*",
     "@workspace/navigation": "workspace:*",
     "@workspace/tma": "workspace:*",
     "@workspace/utils": "workspace:*",
-    "@workspace/icons": "workspace:*",
-    "@workspace-layers/ui-kit": "workspace:*",
     "error-kid": "^2.0.0",
     "eruda": "^3.4.3",
     "fp-ts": "^2.16.11",
@@ -33,9 +33,14 @@
     "vue-tsc": "^3.2.6"
   },
   "devDependencies": {
+    "@nuxt/test-utils": "^4.0.3",
+    "@vue/test-utils": "^2.4.11",
     "@workspace/vite-plugins": "workspace:*",
     "baseline-browser-mapping": "^2.9.19",
     "browserslist-to-esbuild": "^2.1.1",
-    "sass-embedded": "^1.97.1"
+    "happy-dom": "^20.10.6",
+    "playwright-core": "^1.61.1",
+    "sass-embedded": "^1.97.1",
+    "vitest": "^4.1.10"
   }
 }
