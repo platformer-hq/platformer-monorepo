@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "nuxt dev --port 5174 --host",
-    "dev:https": "cross-env HTTPS=1 NODE_TLS_REJECT_UNAUTHORIZED=0 nuxt dev --https --https.cert=cert.pem --https.key=key.pem --port 5174 --host",
+    "dev:https": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 nuxt dev --https --https.cert=cert.pem --https.key=key.pem --port 5174 --host",
     "build": "nuxt generate",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
