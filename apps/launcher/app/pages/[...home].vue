@@ -17,28 +17,27 @@ useHead({
 
 const route = useRoute();
 const requestEvent = useRequestEvent();
+const config = useRuntimeConfig();
 
 const launcherOptions = fp.function.pipe(
   extractLauncherOptions(route.query),
-  fp.either.map(options => ({
-    ...options,
-    apiBaseUrl: options.apiBaseUrl ?? (
-      import.meta.env.DEV
-        ? new URL(
-          '/api/',
-          requestEvent ? getRequestURL(requestEvent)?.origin : window.location.origin,
-        ).toString()
-        : 'https://mini-apps.store/api/'
-    ),
-    initTimeout: options.initTimeout ?? 5000,
-    loadTimeout: options.loadTimeout ?? 10000,
-    queryLp: options.queryLp ?? false,
-  })),
   fp.either.matchW(
     e => ({ valid: false as const, error: e }),
-    v => ({ valid: true as const, value: v }),
+    options => ({
+      valid: true as const,
+      value: ({
+        ...options,
+        initTimeout: options.initTimeout ?? 5000,
+        loadTimeout: options.loadTimeout ?? 10000,
+        queryLp: options.queryLp ?? false,
+      }),
+    }),
   ),
 );
+const apiBaseUrl = new URL(
+  config.public.apiBaseUrl,
+  requestEvent ? getRequestURL(requestEvent)?.origin : window.location.origin,
+).toString();
 
 const state = ref<LauncherStateState | { kind: 'ready' }>(
   launcherOptions.valid
@@ -53,7 +52,7 @@ const splashScreen = launcherOptions.valid
       () => {
         return $fetch.raw(new URL(
           `apps/${launcherOptions.value.appId}/splash-screen`,
-          launcherOptions.value.apiBaseUrl,
+          apiBaseUrl,
         ).toString(), { timeout: 3000 });
       },
       e => e as Error,
