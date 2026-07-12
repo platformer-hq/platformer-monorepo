@@ -14,7 +14,6 @@ export function extractLauncherOptions(query: LocationQuery): fp.either.Either<
   v.ValiError<v.BaseSchema<unknown, unknown, v.BaseIssue<unknown>>>,
   {
     appId: number;
-    apiBaseUrl?: string;
     fallbackUrl?: string;
     initTimeout?: number;
     loadTimeout?: number;
@@ -25,7 +24,6 @@ export function extractLauncherOptions(query: LocationQuery): fp.either.Either<
     v.looseObject({
       app_id: positiveIntFromStr(),
       // app_id: v.optional(positiveIntFromStr(), '1'),
-      api_base_url: v.optional(v.string()),
       fallback_url: v.optional(v.string()),
       init_timeout: v.optional(positiveIntFromStr()),
       load_timeout: v.optional(positiveIntFromStr()),
@@ -39,7 +37,6 @@ export function extractLauncherOptions(query: LocationQuery): fp.either.Either<
   const { output } = parseResult;
   return fp.either.right({
     appId: output.app_id,
-    apiBaseUrl: output.api_base_url,
     fallbackUrl: output.fallback_url,
     initTimeout: output.init_timeout,
     loadTimeout: output.load_timeout,
