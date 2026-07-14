@@ -24,7 +24,7 @@ export default {
   schema: env.SCHEMA_INTROSPECTION_URL,
   generates: {
     '.': {
-      documents: ['./apps/admin/**/*.gql'],
+      documents: ['./apps/admin/**/*.gql', './apps/launcher/**/*.gql'],
       preset: 'near-operation-file-preset',
       presetConfig: {
         extension: '.ts',
