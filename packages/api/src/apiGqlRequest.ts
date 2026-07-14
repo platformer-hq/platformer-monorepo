@@ -14,7 +14,7 @@ export function apiGqlRequest<TData, TVars extends Variables, TError = TypeError
   document,
   variables,
 }: {
-  client: GraphQLClient;
+  client?: GraphQLClient;
   document: TypedDocumentNode<TData, TVars>;
   variables: TVars;
 }): fp.taskEither.TaskEither<ApiGraphQLResponseError | TError, TData> {
