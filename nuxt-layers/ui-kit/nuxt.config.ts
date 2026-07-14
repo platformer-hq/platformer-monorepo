@@ -10,6 +10,7 @@ export default defineNuxtConfig({
   },
   alias: {
     '#ui-kit': resolve('app'),
+    '~ui-kit': resolve('app'),
   },
   css: [resolve('app/assets/global.scss')],
   components: [{

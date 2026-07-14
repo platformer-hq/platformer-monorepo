@@ -1,0 +1,28 @@
+.android-page-transition {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  &--right {
+    z-index: 100;
+  }
+
+  &--leave {
+    &.android-page-transition {
+      &--left {
+        .bottom-bar {
+          transform: translateY(100%) scale(0.8);
+          opacity: 0;
+        }
+      }
+
+      &--right {
+        .bottom-bar {
+          left: 100%;
+          transform: translateY(100%) scale(0.8);
+          opacity: 0;
+        }
+      }
+    }
+  }
+}
