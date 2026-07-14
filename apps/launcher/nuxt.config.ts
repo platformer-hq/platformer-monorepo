@@ -63,6 +63,11 @@ export default defineNuxtConfig({
       cssnano: {},
     },
   },
+  runtimeConfig: {
+    public: {
+      apiBaseUrl: isDev ? '/api/' : 'https://mini-apps.store/api/',
+    },
+  },
   security: {
     headers: {
       // Default values here:
