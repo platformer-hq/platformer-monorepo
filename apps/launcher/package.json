@@ -13,7 +13,7 @@
     "@graphql-typed-document-node/core": "^3.2.0",
     "@nuxtjs/i18n": "10.2.3",
     "@pinia/colada": "^1.0.0",
-    "@pinia/colada-nuxt": "0.3.2",
+    "@pinia/colada-nuxt": "1.0.1",
     "@pinia/colada-plugin-retry": "^0.2.3",
     "@pinia/nuxt": "0.11.3",
     "@tma.js/sdk-vue": "^1.0.18",
@@ -33,7 +33,7 @@
     "nuxt-security": "2.5.1",
     "pinia": "^3.0.4",
     "valibot": "^1.2.0",
-    "vue": "^3.5.28",
+    "vue": "^3.5.39",
     "vue-tsc": "^3.2.6"
   },
   "devDependencies": {
