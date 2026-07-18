@@ -1,9 +1,9 @@
 import type { UseMutationOptions } from '@pinia/colada';
 
-import type { ApiGqlRequestFn } from './useMakeApiGqlRequest';
+import type { GqlRequestFn } from '../stores/useApiStore';
 
 export interface MutationEnhancedContext {
-  apiGqlRequest: ApiGqlRequestFn;
+  apiGqlRequest: GqlRequestFn;
 }
 
 type OverrideContext<TContext extends Record<never, never>> =

@@ -4,10 +4,12 @@ import {
   type UseParametrizedQueryMetaSetDataUpdater,
 } from '@workspace/pinia-colada';
 
+import type { GqlRequestFn } from '../stores/useApiStore';
+
 export type { UseParametrizedQueryMetaSetDataUpdater };
 
 export type UseParametrizedQueryMetaCreateOptionsFn<R> = (context: {
-  apiGqlRequest: ApiGqlRequestFn;
+  apiGqlRequest: GqlRequestFn;
 }) => R;
 
 export function useParametrizedQueryMeta<
