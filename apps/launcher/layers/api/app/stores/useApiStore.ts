@@ -36,7 +36,6 @@ export const useApiStore = defineStore('api', () => {
   );
 
   return {
-    // gqlClient: markRaw(gqlClient),
     apiGqlRequest: createMakeGqlRequest(gqlClient),
   };
 });
