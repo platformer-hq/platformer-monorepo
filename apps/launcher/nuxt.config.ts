@@ -65,7 +65,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBaseUrl: isDev ? '/api/' : 'https://mini-apps.store/api/',
+      gqlApiBaseUrl: isDev ? '/api/gql' : 'https://mini-apps.store/api/gql',
     },
   },
   security: {
@@ -113,7 +113,8 @@ export default defineNuxtConfig({
     server: {
       proxy: {
         '/api': {
-          target: 'https://mini-apps.store',
+          // target: 'https://mini-apps.store',
+          target: 'http://localhost:10000',
           changeOrigin: true,
         },
       },
