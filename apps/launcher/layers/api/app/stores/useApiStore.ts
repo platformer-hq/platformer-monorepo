@@ -11,7 +11,7 @@ export type GqlRequestFn = <TData, TVars extends Variables>(
     timeout?: number;
     signal?: AbortSignal;
   },
-) => fp.taskEither.TaskEither<ApiGraphQLResponseError | FetchError, TData>;
+) => fp.taskEither.TaskEither<ApiGraphQLResponseError | Error, TData>;
 
 function createMakeGqlRequest(client: GraphQLClient): GqlRequestFn {
   return (document, variables, options) => {
