@@ -3,10 +3,7 @@ import { PiniaColadaRetry } from '@pinia/colada-plugin-retry';
 
 export default {
   plugins: [
-    PiniaColadaRetry({
-      // TODO: Disable retries for some specific certain errors.
-      retry: 3,
-    }),
+    PiniaColadaRetry(),
     PiniaColadaQueryHooksPlugin({
       onError(error, entry) {
         console.error('Query failed:', { key: entry.key, error });
