@@ -26,6 +26,7 @@ export default defineNuxtConfig({
       resolve('app/components/*/*/utils/*.ts'),
       resolve('app/components/*/composables/*.ts'),
       resolve('app/composables/use*/use*.ts'),
+      resolve('app/utils/*/*.ts'),
     ],
   },
   modules: ['@pinia/nuxt'],
