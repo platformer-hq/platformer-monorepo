@@ -7,11 +7,15 @@ import { getRequestURL } from 'h3';
 export type GqlRequestFn = <TData, TVars extends Variables>(
   document: TypedDocumentNode<TData, TVars>,
   variables: TVars,
+  options?: {
+    timeout?: number;
+    signal?: AbortSignal;
+  },
 ) => fp.taskEither.TaskEither<ApiGraphQLResponseError | FetchError, TData>;
 
 function createMakeGqlRequest(client: GraphQLClient): GqlRequestFn {
-  return (document, variables) => {
-    return apiGqlRequest({ client, document, variables });
+  return (document, variables, options) => {
+    return apiGqlRequest({ client, document, variables, ...options });
   };
 }
 
