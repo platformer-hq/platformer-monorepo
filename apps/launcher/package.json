@@ -20,6 +20,7 @@
     "@vueuse/core": "^14.3.0",
     "@workspace-layers/ui-kit": "workspace:*",
     "@workspace/api": "workspace:*",
+    "@workspace/errors": "workspace:*",
     "@workspace/icons": "workspace:*",
     "@workspace/navigation": "workspace:*",
     "@workspace/pinia-colada": "workspace:*",
