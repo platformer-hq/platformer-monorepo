@@ -28,7 +28,6 @@
     "@pinia/colada-plugin-retry": "^0.2.3",
     "@pinia/nuxt": "0.11.3",
     "@tma.js/sdk-vue": "^1.0.19",
-    "@tma.js/vue-kit": "workspace:*",
     "@vueuse/core": "^14.2.1",
     "@workspace-layers/scss": "workspace:*",
     "@workspace-layers/ui-kit": "workspace:*",
