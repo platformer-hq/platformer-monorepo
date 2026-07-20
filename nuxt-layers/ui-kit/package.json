@@ -4,6 +4,7 @@
   "private": true,
   "main": "./nuxt.config.ts",
   "scripts": {
+    "prepare": "nuxt prepare",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
