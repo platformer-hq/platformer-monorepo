@@ -39,6 +39,9 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   extends: ['@workspace-layers/ui-kit'],
+  experimental: {
+    payloadExtraction: false,
+  },
   i18n: {
     strategy: 'no_prefix',
     locales: [
