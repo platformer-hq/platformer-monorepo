@@ -68,6 +68,11 @@ export default defineNuxtConfig({
       gqlApiBaseUrl: isDev ? '/api/gql' : 'https://mini-apps.store/api/gql',
     },
   },
+  routeRules: {
+    '/**': {
+      prerender: true,
+    },
+  },
   security: {
     headers: {
       // Default values here:
