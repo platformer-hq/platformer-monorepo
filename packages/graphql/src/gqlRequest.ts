@@ -35,7 +35,7 @@ export function gqlRequest<TData, TVars extends Variables, TError = TypeError>(
   if (timeout) {
     timeoutId = setTimeout(() => {
       controller.abort(new TimeoutError(timeout));
-    }, timeout) as number;
+    }, timeout) as unknown as number;
   }
   if (signal) {
     signal.onabort = () => {
