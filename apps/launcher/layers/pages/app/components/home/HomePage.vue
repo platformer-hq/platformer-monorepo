@@ -39,24 +39,26 @@ onErrorCaptured(error => {
 });
 
 const initDataSanitized = useInitDataSanitized(initDataRaw);
+const extractedOptions = computed(() => (
+  launcherOptions.value.kind === 'options'
+    ? launcherOptions.value.options
+    : undefined
+));
 
 const handleApiError = (error: Error) => {
   state.value = TimeoutError.is(error)
     ? { kind: 'api-timeout', timeout: error.data.timeout }
     : { kind: 'api-error', error };
-  if (
-    launcherOptions.value.ok
-    && launcherOptions.value.options.fallbackUrl
-  ) {
-    frameSrc.value = { kind: 'fallback', src: launcherOptions.value.options.fallbackUrl };
+  if (extractedOptions.value?.fallbackUrl) {
+    frameSrc.value = { kind: 'fallback', src: extractedOptions.value.fallbackUrl };
   }
   hapticError();
 };
 
 const { data: appData, isLoading: isLoadingAppData } = useAppData({
   params() {
-    if (launcherOptions.value.ok) {
-      const { appId, initTimeout } = launcherOptions.value.options;
+    if (extractedOptions.value) {
+      const { appId, initTimeout } = extractedOptions.value;
       return { appId, timeout: initTimeout };
     }
   },
@@ -64,10 +66,10 @@ const { data: appData, isLoading: isLoadingAppData } = useAppData({
 });
 const { refetch: refetchAppUrl } = useAppUrl({
   params() {
-    return launcherOptions.value.ok && !!launchParams.value && !!initDataSanitized.value
+    return extractedOptions.value && !!launchParams.value && !!initDataSanitized.value
       ? {
-        appId: launcherOptions.value.options.appId,
-        timeout: launcherOptions.value.options.initTimeout,
+        appId: extractedOptions.value.appId,
+        timeout: extractedOptions.value.initTimeout,
         platform: launchParams.value.tgWebAppPlatform,
         initData: initDataSanitized.value,
       }
@@ -88,7 +90,7 @@ const { refetch: refetchAppUrl } = useAppUrl({
     const appUrl = appendLaunchParams(
       app.url,
       launchParamsRaw.value || '',
-      launcherOptions.value.ok ? launcherOptions.value.options.queryLp : false,
+      extractedOptions.value?.queryLp || false,
     );
     if (!app.url.startsWith('http://')) {
       state.value = { kind: 'loading', step: 'waiting-load' };
@@ -154,8 +156,8 @@ const { b, e } = bem('home-page');
       />
     </Transition>
     <AppFrame
-      v-if="frameSrc && launcherOptions.ok"
-      :init-timeout="launcherOptions.options.loadTimeout"
+      v-if="frameSrc && extractedOptions"
+      :init-timeout="extractedOptions.loadTimeout"
       :src="frameSrc.src"
       @ready="state = {kind: 'ready'}"
       @error="
@@ -163,7 +165,7 @@ const { b, e } = bem('home-page');
         hapticError();
       "
       @timeout="
-        state = {kind: 'app-timeout', timeout: launcherOptions.options.loadTimeout};
+        state = {kind: 'app-timeout', timeout: extractedOptions.loadTimeout};
         hapticError();
       "
     />
