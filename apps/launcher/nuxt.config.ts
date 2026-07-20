@@ -58,7 +58,7 @@ export default defineNuxtConfig({
     '@nuxt/test-utils/module',
   ],
   nitro: {
-    preset: 'netlify',
+    preset: 'netlify-static',
   },
   postcss: {
     plugins: {
