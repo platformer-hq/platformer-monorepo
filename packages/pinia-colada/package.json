@@ -7,7 +7,7 @@
   "license": "ISC",
   "peerDependencies": {
     "@pinia/colada": "^1.4.2",
-    "pinia": "^3.0.0"
+    "pinia": "^4.0.0"
   },
   "devDependencies": {
     "@workspace/tsconfigs": "workspace:*"
