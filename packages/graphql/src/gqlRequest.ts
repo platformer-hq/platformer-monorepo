@@ -33,9 +33,9 @@ export function gqlRequest<TData, TVars extends Variables, TError = TypeError>(
   const controller = new AbortController();
   let timeoutId: number | undefined;
   if (timeout) {
-    timeoutId = window.setTimeout(() => {
+    timeoutId = setTimeout(() => {
       controller.abort(new TimeoutError(timeout));
-    }, timeout);
+    }, timeout) as number;
   }
   if (signal) {
     signal.onabort = () => {
