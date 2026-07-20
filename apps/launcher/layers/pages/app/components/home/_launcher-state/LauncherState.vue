@@ -220,7 +220,11 @@ const contentKey = computed(() => {
 const handleRedirect = () => {
   if (props.state.kind === 'app-http-url') {
     redirecting.value = true;
-    window.location.href = props.state.url;
+    const { url } = props.state;
+    console.log('Navigating:', url);
+    setTimeout(() => {
+      window.location.href = url;
+    }, 1000);
   }
 };
 
