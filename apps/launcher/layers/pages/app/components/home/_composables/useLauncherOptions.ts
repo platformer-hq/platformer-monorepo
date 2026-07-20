@@ -8,6 +8,9 @@ export function useLauncherOptions() {
   const route = useRoute();
 
   return computed(() => {
+    if (import.meta.prerender) {
+      return { kind: 'prerender' as const };
+    }
     const parseResult = v.safeParse(
       v.looseObject({
         app_id: positiveIntFromStr(),
@@ -20,11 +23,11 @@ export function useLauncherOptions() {
       route.query,
     );
     if (!parseResult.success) {
-      return { ok: false as const, error: new v.ValiError(parseResult.issues) };
+      return { kind: 'error' as const, error: new v.ValiError(parseResult.issues) };
     }
     const { output } = parseResult;
     return {
-      ok: true as const,
+      kind: 'options' as const,
       options: {
         appId: output.app_id,
         fallbackUrl: output.fallback_url,

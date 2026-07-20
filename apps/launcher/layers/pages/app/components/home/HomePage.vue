@@ -28,9 +28,9 @@ const launchParamsRaw = ref<string>();
 const initDataRaw = ref<string>();
 const frameSrc = ref<{ kind: 'original' | 'fallback'; src: string }>();
 const state = ref<LauncherStateState | { kind: 'ready' }>(
-  launcherOptions.value.ok
-    ? { kind: 'initial' }
-    : { kind: 'config-invalid', error: launcherOptions.value.error },
+  launcherOptions.value.kind === 'error'
+    ? { kind: 'config-invalid', error: launcherOptions.value.error }
+    : { kind: 'initial' },
 );
 
 onErrorCaptured(error => {
