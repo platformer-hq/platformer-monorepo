@@ -30,7 +30,8 @@
     },
     "@workspace/launcher#build": {
       "dependsOn": [
-        "^build"
+        "^build",
+        "@workspace-layers/ui-kit#prepare"
       ],
       "outputs": [
         ".netlify/**",
