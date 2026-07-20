@@ -99,8 +99,7 @@ export default defineNuxtConfig({
   },
   vite: {
     plugins: [
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error Its ok.
+      // @ts-expect-error Its ok. Nothing really dangerous here.
       svgLoader({
         defaultImport: 'url',
       }),

@@ -10,6 +10,7 @@ export default defineNuxtConfig({
   },
   alias: {
     '#ui-kit': resolve('app'),
+    '~ui-kit': resolve('app'),
   },
   css: [resolve('app/assets/global.scss')],
   components: [{
@@ -25,6 +26,7 @@ export default defineNuxtConfig({
       resolve('app/components/*/*/utils/*.ts'),
       resolve('app/components/*/composables/*.ts'),
       resolve('app/composables/use*/use*.ts'),
+      resolve('app/utils/*/*.ts'),
     ],
   },
   modules: ['@pinia/nuxt'],

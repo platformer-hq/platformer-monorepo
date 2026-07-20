@@ -17,7 +17,7 @@ export type Scalars = {
   Time: { input: string; output: string; }
 };
 
-/** Application information. This object can only be returned in case, current user is a member of it. */
+/** Application information. */
 export type App = {
   __typename?: 'App';
   /** The current user role in this application. */
@@ -26,7 +26,7 @@ export type App = {
   description?: Maybe<Scalars['String']['output']>;
   /** List of app serverless functions. */
   functions: Array<AppFunction>;
-  /** Public identifier. */
+  /** Unique identifier. */
   id: Scalars['ID']['output'];
   /** Application limits. */
   limits: AppLimits;
@@ -47,6 +47,8 @@ export type App = {
   splashScreenIconUrl?: Maybe<Scalars['String']['output']>;
   /** Bound Telegram Bot identifier. */
   telegramBotID?: Maybe<Scalars['Int']['output']>;
+  /** A URL to be used in Telegram Mini Apps. This value may differ for each user. */
+  telegramUrl?: Maybe<Scalars['String']['output']>;
   /** List of test groups. */
   testGroups: Array<AppTestGroup>;
   /** Localized title. */
@@ -57,6 +59,13 @@ export type App = {
   urls: Array<AppUrl>;
   /** Date, when the URLs cache was reset. */
   urlsCacheResetAt?: Maybe<Scalars['Time']['output']>;
+};
+
+
+/** Application information. */
+export type AppTelegramUrlArgs = {
+  initData?: InputMaybe<Scalars['String']['input']>;
+  platform: Scalars['String']['input'];
 };
 
 export type AppFunction = {
@@ -304,7 +313,10 @@ export type Jwt = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  /** Performs authentication using Telegram Mini App init data. Returns a JSON Web Token used in all other resolvers. */
+  /**
+   * Performs authentication using Telegram Mini App init data. Returns a JSON
+   * Web Token used in all other resolvers.
+   */
   authenticateTelegram: Jwt;
   /** Creates a new application on behalf of the user. */
   createApp: App;

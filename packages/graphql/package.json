@@ -5,6 +5,9 @@
   "type": "module",
   "main": "src/index.ts",
   "license": "ISC",
+  "dependencies": {
+    "@workspace/errors": "workspace:*"
+  },
   "peerDependencies": {
     "@graphql-typed-document-node/core": "^3.0.0",
     "fp-ts": "^2.0.0",

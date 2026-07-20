@@ -1,0 +1,14 @@
+{
+  "name": "@workspace/errors",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "license": "ISC",
+  "peerDependencies": {
+    "error-kid": "^2.0.0"
+  },
+  "devDependencies": {
+    "@workspace/tsconfigs": "workspace:*"
+  }
+}

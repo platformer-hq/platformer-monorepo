@@ -11,7 +11,7 @@
     "@workspace-layers/scss": "workspace:*"
   },
   "peerDependencies": {
-    "@pinia/nuxt": "^0.11.3",
+    "pinia": "^4.0.0",
     "@tma.js/sdk-vue": "^1.0.0",
     "@vueuse/core": "^14.0.0",
     "vue": "^3.0.0"

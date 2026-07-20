@@ -1,9 +1,4 @@
 <script setup lang="ts">
-import {
-  getIosPageTransitionOptions,
-  getAndroidPageTransitionOptions,
-  usePageTransition,
-} from '@tma.js/vue-kit';
 import type { TransitionProps } from 'vue';
 
 import { providePageTransition } from '../provider';

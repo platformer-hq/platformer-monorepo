@@ -1,0 +1,11 @@
+query AppData($appId: ID!) {
+  app(appID: $appId) {
+    splashScreenIconUrl
+  }
+}
+
+query AppTelegramURL($appId: ID!, $platform: String!, $initData: String!) {
+  app(appID: $appId) {
+    telegramUrl(platform: $platform, initData: $initData)
+  }
+}

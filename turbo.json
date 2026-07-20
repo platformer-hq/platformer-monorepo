@@ -6,27 +6,17 @@
         "^build"
       ]
     },
-    "@tma.js/vue-kit#build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "dist/**"
-      ]
-    },
     "@workspace/admin#dev": {
       "persistent": true,
-      "cache": false,
-      "dependsOn": [
-        "@tma.js/vue-kit#build"
-      ]
+      "cache": false
+    },
+    "@workspace/admin#dev:https": {
+      "persistent": true,
+      "cache": false
     },
     "@workspace/launcher#dev": {
       "persistent": true,
-      "cache": false,
-      "dependsOn": [
-        "@tma.js/vue-kit#build"
-      ]
+      "cache": false
     },
     "@workspace/admin#build": {
       "dependsOn": [

@@ -47,7 +47,13 @@ export default defineNuxtConfig({
     ],
     defaultLocale: 'en',
   },
-  modules: ['@nuxtjs/i18n', '@pinia/nuxt', '@pinia/colada-nuxt', 'nuxt-security'],
+  modules: [
+    '@nuxtjs/i18n',
+    '@pinia/nuxt',
+    '@pinia/colada-nuxt',
+    'nuxt-security',
+    '@nuxt/test-utils/module',
+  ],
   nitro: {
     preset: 'netlify',
   },
@@ -55,6 +61,11 @@ export default defineNuxtConfig({
     plugins: {
       autoprefixer: {},
       cssnano: {},
+    },
+  },
+  runtimeConfig: {
+    public: {
+      gqlApiBaseUrl: isDev ? '/api/gql' : 'https://mini-apps.store/api/gql',
     },
   },
   security: {
@@ -102,7 +113,8 @@ export default defineNuxtConfig({
     server: {
       proxy: {
         '/api': {
-          target: 'https://mini-apps.store',
+          // target: 'https://mini-apps.store',
+          target: 'http://localhost:10000',
           changeOrigin: true,
         },
       },
