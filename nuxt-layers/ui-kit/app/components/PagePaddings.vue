@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { KnownHtmlTag } from '#ui-kit/types';
+import type { KnownHtmlTag } from '~ui-kit/types';
 
 export interface PagePaddingsProps {
   /**
@@ -32,7 +32,7 @@ const {
   top = true,
 } = defineProps<PagePaddingsProps>();
 
-const { b } = bem('tgui-page-paddings');
+const { b } = bem('page-paddings');
 </script>
 
 <template>
@@ -42,10 +42,10 @@ const { b } = bem('tgui-page-paddings');
 </template>
 
 <style lang="scss">
-.tgui-page-paddings {
+.page-paddings {
   @each $side in ("top", "left", "right", "bottom") {
     &--#{$side} {
-      padding-#{$side}: var(--tgui-page-paddings-#{$side}, 16px);
+      padding-#{$side}: 16px;
     }
   }
 }

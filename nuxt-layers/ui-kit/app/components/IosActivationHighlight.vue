@@ -3,13 +3,13 @@ defineProps<{ show?: boolean }>();
 </script>
 
 <template>
-  <Transition name="tgui-ios-activation-highlight">
-    <span v-if="show" key="active" class="tgui-ios-activation-highlight"/>
+  <Transition name="ios-activation-highlight">
+    <span v-if="show" key="active" class="ios-activation-highlight"/>
   </Transition>
 </template>
 
 <style lang="scss">
-.tgui-ios-activation-highlight {
+.ios-activation-highlight {
   background: currentColor;
   position: absolute;
   top: 0;

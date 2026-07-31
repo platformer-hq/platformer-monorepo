@@ -6,13 +6,13 @@ defineExpose({ element: rootEl });
 </script>
 
 <template>
-  <SafeAreaInsets ref="root" class="tgui-bottom-bar" left right bottom>
+  <SafeAreaInsets ref="root" class="bottom-bar" left right bottom>
     <slot/>
   </SafeAreaInsets>
 </template>
 
 <style lang="scss">
-.tgui-bottom-bar {
+.bottom-bar {
   position: sticky;
   bottom: 0;
   left: 0;

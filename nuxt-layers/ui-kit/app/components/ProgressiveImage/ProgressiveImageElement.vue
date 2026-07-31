@@ -25,7 +25,7 @@ onMounted(() => {
   }
 });
 
-const { b } = bem('tgui-progressive-image-element');
+const { b } = bem('progressive-image-element');
 </script>
 
 <template>
@@ -38,7 +38,7 @@ const { b } = bem('tgui-progressive-image-element');
 </template>
 
 <style lang="scss">
-.tgui-progressive-image-element {
+.progressive-image-element {
   position: absolute;
   inset: 0;
   -webkit-touch-callout: none;

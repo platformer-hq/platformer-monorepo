@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { b } = bem('tgui-bottom-bar-inner');
+const { b } = bem('bottom-bar-inner');
 
 const props = defineProps<{
   variant?: '2-columns' | {
@@ -30,7 +30,7 @@ const variantMod = computed(() => {
 </template>
 
 <style lang="scss">
-.tgui-bottom-bar-inner {
+.bottom-bar-inner {
   padding: 8px 16px 16px;
 
   &--2-columns {

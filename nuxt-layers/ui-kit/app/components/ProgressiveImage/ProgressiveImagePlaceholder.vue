@@ -7,13 +7,13 @@ defineProps<{
 
 <template>
   <div
-    class="tgui-progressive-image-placeholder"
+    class="progressive-image-placeholder"
     :style="{borderRadius: toPx(borderRadius), backgroundColor: color}"
   />
 </template>
 
 <style>
-.tgui-progressive-image-placeholder {
+.progressive-image-placeholder {
   position: absolute;
   inset: 0;
   width: 100%;
