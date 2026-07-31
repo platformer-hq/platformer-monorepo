@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "@workspace/icons": "workspace:*",
-    "@workspace-layers/scss": "workspace:*"
+    "@workspace-layers/scss": "workspace:*",
+    "@workspace-layers/colors": "workspace:*"
   },
   "peerDependencies": {
     "pinia": "^4.0.0",

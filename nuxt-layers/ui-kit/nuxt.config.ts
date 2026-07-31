@@ -19,7 +19,7 @@ export default defineNuxtConfig({
     extensions: ['.vue'],
     ignore: ['**/_/**', '**/_*'],
   }],
-  extends: ['../scss'],
+  extends: ['@workspace-layers/scss', '@workspace-layers/colors'],
   imports: {
     dirs: [
       resolve('app/components/*/utils/*.ts'),
