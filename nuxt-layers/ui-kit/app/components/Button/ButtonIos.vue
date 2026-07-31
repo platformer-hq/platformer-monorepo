@@ -61,8 +61,8 @@ const { b } = bem('tgui-button-ios');
   position: relative;
 
   &--glass {
-    box-shadow: var(--tgui-glass-box-shadow);
-    backdrop-filter: var(--tgui-glass-backdrop-filter);
+    box-shadow: var(--glass-box-shadow);
+    backdrop-filter: var(--glass-backdrop-filter);
   }
 
   &--regular {
