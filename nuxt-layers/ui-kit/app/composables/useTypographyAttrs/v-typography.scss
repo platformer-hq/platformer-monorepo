@@ -1,0 +1,99 @@
+@use "sass:list";
+@use "sass:map";
+
+$fontVariants: (
+  "title1": ("ios": (28px, 34px, 700), "android": (24px, 28px, 500)),
+  "title2": ("ios": (22px, 28px), "android": (20px, 24px, 500)),
+  "title3": ("ios": (20px, 24px), "android": (17px, 22px, 500)),
+  "body": ("ios": (17px, 22px), "android": (16px, 20px)),
+  "callout": ("ios": (16px, 22px), "android": (15px, 18px)),
+  "subheadline1": ("ios": (15px, 20px), "android": (15px, 18px)),
+  "subheadline2": ("ios": (14px, 18px), "android": (14px, 16px)),
+  "footnote": ("ios": (13px, 18px), "android": (13px, 16px)),
+  "caption1": ("ios": (12px, 16px), "android": (13px, 16px)),
+  "caption2": ("ios": (11px, 13px), "android": (12px, 14px)),
+);
+$fontWeights: (
+  "regular": ("ios": 400, "android": 400),
+  "medium": ("ios": 510, "android": 500),
+  "semibold": ("ios": 590, "android": 500),
+  "bold": ("ios": 700, "android": 500)
+);
+
+@mixin fontVariants($platform) {
+  @each $name, $platforms in $fontVariants {
+    $settings: map.get($platforms, $platform);
+
+    &-#{$name} {
+      font-size: list.nth($settings, 1);
+      line-height: list.nth($settings, 2);
+
+      @if list.length($settings)>2 {
+        font-weight: list.nth($settings, 3);
+      }
+    }
+  }
+}
+
+@mixin fontWeights($platform) {
+  @each $name, $platforms in $fontWeights {
+    &-#{$name} {
+      font-weight: map.get($platforms, $platform);
+    }
+  }
+}
+
+.v-typography {
+  margin: 0;
+
+  @each $align in (left, center, right) {
+    &--#{$align} {
+      text-align: $align;
+    }
+  }
+
+  &--caps {
+    text-transform: uppercase;
+  }
+
+  &--single-line {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  &--clamped {
+    text-overflow: ellipsis;
+    @include mixins.lineClamp(var(--max-lines));
+  }
+
+  &--ios {
+    font-family: -apple-system, 'SF Pro', BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+
+    &-rounded {
+      font-family: ui-rounded, 'SF Pro Rounded';
+    }
+
+    &-mono {
+      font-family: ui-monospace, 'SF Mono', SFMono-Regular, 'DejaVu Sans Mono', Menlo, Consolas, monospace;
+
+      &-numbers {
+        font-variant-numeric: lining-nums tabular-nums;
+      }
+    }
+
+    @include fontVariants("ios");
+    @include fontWeights("ios");
+  }
+
+  &--android {
+    font-family: Roboto, "Segoe UI", "Helvetica Neue", sans-serif;
+
+    &-mono {
+      font-family: Roboto Mono, sans-serif;
+    }
+
+    @include fontVariants("android");
+    @include fontWeights("android");
+  }
+}
