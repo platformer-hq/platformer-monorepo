@@ -5,14 +5,13 @@ function resolve(...filePath: string[]) {
 }
 
 export default defineNuxtConfig({
-  alias: {
-    '~colors': resolve('app'),
-  },
   $meta: {
     name: 'colors',
   },
+  alias: {
+    '~colors': resolve('app'),
+  },
   css: [
     resolve('./app/assets/generated.scss'),
-    resolve('./app/assets/color-vars.scss'),
   ],
 });
