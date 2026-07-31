@@ -1,0 +1,16 @@
+{
+  "name": "@workspace-layers/colors",
+  "type": "module",
+  "private": true,
+  "main": "./nuxt.config.ts",
+  "scripts": {
+    "prepare": "nuxt prepare",
+    "postinstall": "nuxt prepare",
+    "generate": "tsx ./app/scripts/generate.ts"
+  },
+  "devDependencies": {
+    "nuxt": "^4.0.0",
+    "tsx": "^4.21.0",
+    "@workspace/tsconfigs": "workspace:*"
+  }
+}

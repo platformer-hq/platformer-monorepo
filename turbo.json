@@ -6,6 +6,12 @@
         "^build"
       ]
     },
+    "@workspace-layers/colors#generate": {
+      "outputs": [
+        "app/assets/generated.scss",
+        "app/generated.ts"
+      ]
+    },
     "@workspace-layers/ui-kit#prepare": {},
     "@workspace/admin#dev": {
       "persistent": true,

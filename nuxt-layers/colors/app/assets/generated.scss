@@ -1,0 +1,175 @@
+:root[data-platform="android"] {
+  &[data-theme="dark"] {
+    // #region Custom.
+    --button-confirm-color: #61BD67;
+    --button-destructive-color: #EE686F19;
+    --button-main-disabled-color: #3C3C3E;
+    --highlight-default: #FFFFFF0C;
+    --primary-fill-background: #7B7B7B5B;
+    --quaternary-fill-background: #7B7B7B2D;
+    --quick-menu-background: #282829;
+    --quick-menu-foreground: #FFFFFF;
+    --secondary-accent-color: #439BDE19;
+    --secondary-fill-background: #7B7B7B51;
+    --segmented-control-active-background: #636366;
+    --separator-color: #000000;
+    --separator-non-opaque: #545458A6;
+    --tertiary-fill-background: #7B7B7B3D;
+    --text-confirm-color: #54CB64;
+    --text-destructive-color: #EE686F;
+    --text-main-disabled-color: #606060;
+    --text-overlay: #FFFFFF;
+    --toast-background: #282828F4;
+    --toast-link: #6CB7FF;
+    --tooltip-background: #3A3A3C;
+    --tw-header-color: #131314;
+    // #endregion
+    // #region Accent.
+    --black: #000000;
+    --blue: #0A84FF;
+    --brown: #AC8E68;
+    --cyan: #64D2FF;
+    --green: #30D158;
+    --indigo: #5E5CE6;
+    --mint: #63E6E2;
+    --orange: #FF9F0A;
+    --pink: #FF375F;
+    --purple: #BF5AF2;
+    --red: #FF453A;
+    --teal: #40CBE0;
+    --white: #FFFFFF;
+    --yellow: #FFD60A;
+    // #endregion
+  }
+
+  &[data-theme="light"] {
+    // #region Custom.
+    --button-confirm-color: #4ECC5E;
+    --button-destructive-color: #CC292919;
+    --button-main-disabled-color: #E9E8E8;
+    --highlight-default: #0000000C;
+    --primary-fill-background: #7A7A7A33;
+    --quaternary-fill-background: #7A7A7A14;
+    --quick-menu-background: #FFFFFF;
+    --quick-menu-foreground: #222222;
+    --secondary-accent-color: #50A8EB19;
+    --secondary-fill-background: #7A7A7A28;
+    --segmented-control-active-background: #FFFFFF;
+    --separator-color: #D9D9D9;
+    --separator-non-opaque: #9999995B;
+    --tertiary-fill-background: #7A7A7A1E;
+    --text-confirm-color: #20B935;
+    --text-destructive-color: #CC2929;
+    --text-main-disabled-color: #BABABA;
+    --text-overlay: #FFFFFF;
+    --toast-background: #283039EA;
+    --toast-link: #85CAFF;
+    --tooltip-background: #000000CC;
+    --tw-header-color: #131314;
+    // #endregion
+    // #region Accent.
+    --black: #000000;
+    --blue: #007AFF;
+    --brown: #A2845E;
+    --cyan: #32ADE6;
+    --green: #34C759;
+    --indigo: #5856D6;
+    --mint: #00C7BE;
+    --orange: #FF9500;
+    --pink: #FF2D55;
+    --purple: #AF52DE;
+    --red: #FF3B30;
+    --teal: #30B0C7;
+    --white: #FFFFFF;
+    --yellow: #FFCC00;
+    // #endregion
+  }
+}
+
+:root[data-platform="ios"] {
+  &[data-theme="dark"] {
+    // #region Custom.
+    --button-confirm-color: #35CA5B;
+    --button-destructive-color: #FF453019;
+    --button-main-disabled-color: #2F2F2F;
+    --highlight-default: #98989D3D;
+    --primary-fill-background: #7878805B;
+    --quaternary-fill-background: #7676802D;
+    --quick-menu-background: #000000C6;
+    --quick-menu-foreground: #FFFFFF;
+    --secondary-accent-color: #3E88F719;
+    --secondary-fill-background: #78788051;
+    --segmented-control-active-background: #636366;
+    --separator-color: #3D3D3F;
+    --separator-non-opaque: #545458A5;
+    --tertiary-fill-background: #7676803D;
+    --text-confirm-color: #35CA5B;
+    --text-destructive-color: #FF4530;
+    --text-main-disabled-color: #606060;
+    --text-overlay: #FFFFFF;
+    --toast-background: #2D2D2DCC;
+    --toast-link: #5AC8FA;
+    --tooltip-background: #3A3A3C;
+    --tw-header-color: #131314;
+    // #endregion
+    // #region Accent.
+    --black: #000000;
+    --blue: #0A84FF;
+    --brown: #AC8E68;
+    --cyan: #64D2FF;
+    --green: #30D158;
+    --indigo: #5E5CE6;
+    --mint: #63E6E2;
+    --orange: #FF9F0A;
+    --pink: #FF375F;
+    --purple: #BF5AF2;
+    --red: #FF453A;
+    --teal: #40CBE0;
+    --white: #FFFFFF;
+    --yellow: #FFD60A;
+    // #endregion
+  }
+
+  &[data-theme="light"] {
+    // #region Custom.
+    --button-confirm-color: #2FB250;
+    --button-destructive-color: #FF3B3019;
+    --button-main-disabled-color: #E8E8E9;
+    --highlight-default: #8E8E923D;
+    --primary-fill-background: #74748033;
+    --quaternary-fill-background: #74748014;
+    --quick-menu-background: #FFFFFF8C;
+    --quick-menu-foreground: #000000;
+    --secondary-accent-color: #007AFF19;
+    --secondary-fill-background: #74748028;
+    --segmented-control-active-background: #FFFFFF;
+    --separator-color: #C8C7CB;
+    --separator-non-opaque: #3C3C435B;
+    --tertiary-fill-background: #7474801E;
+    --text-confirm-color: #2FB250;
+    --text-destructive-color: #FF3B30;
+    --text-main-disabled-color: #B9B9BA;
+    --text-overlay: #FFFFFF;
+    --toast-background: #2D2D2DCC;
+    --toast-link: #5AC8FA;
+    --tooltip-background: #000000CC;
+    --tw-header-color: #131314;
+    // #endregion
+    // #region Accent.
+    --black: #000000;
+    --blue: #007AFF;
+    --brown: #A2845E;
+    --cyan: #32ADE6;
+    --green: #34C759;
+    --indigo: #5856D6;
+    --mint: #00C7BE;
+    --orange: #FF9500;
+    --pink: #FF2D55;
+    --purple: #AF52DE;
+    --red: #FF3B30;
+    --teal: #30B0C7;
+    --white: #FFFFFF;
+    --yellow: #FFCC00;
+    // #endregion
+  }
+}

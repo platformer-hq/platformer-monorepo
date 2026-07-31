@@ -1,0 +1,16 @@
+@use "sass:list" as list;
+
+:root {
+  // TODO: These are all fallback. We have to remove them in future.
+  --accent-orange-color: var(--orange);
+  --mira-blue-color: var(--mira-blue);
+  --mira-pro-accent-color: var(--pro-accent);
+  --mira-pro-accent-secondary-color: var(--pro-accent-secondary);
+  --primary-fill-bg-color: var(--primary-fill-background);
+  --quaternary-fill-bg-color: var(--quaternary-fill-background);
+  --tertiary-fill-bg-color: var(--tertiary-fill-background);
+  --secondary-fill-bg-color: var(--secondary-fill-background);
+  --separator-non-opaque-color: var(--separator-non-opaque);
+  --mira-elevated-bg-color: var(--elevated-bg);
+  --mira-elevated-bg-overlay-color: var(--elevated-bg-overlay);
+}
