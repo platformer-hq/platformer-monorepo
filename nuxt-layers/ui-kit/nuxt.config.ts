@@ -9,7 +9,6 @@ export default defineNuxtConfig({
     name: 'ui-kit',
   },
   alias: {
-    '#ui-kit': resolve('app'),
     '~ui-kit': resolve('app'),
   },
   css: [resolve('app/assets/global.scss')],
