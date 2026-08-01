@@ -9,14 +9,13 @@ import {
   type KnownThemeParamsKey as RawThemeParamsKey,
 } from '@tma.js/sdk-vue';
 import { useScroll } from '@vueuse/core';
-import { useNavigationDirection } from '@workspace/navigation';
 
 import type { KnownThemeParamsKey as SimpleThemeParamsKey } from '~colors/types';
 import { usePlatform } from '~ui-kit/_composables/usePlatform';
 
 import type { PageRootExpose } from './_types';
 import { useScrollStatesStore } from './_useScrollStates';
-import { providePageRootContext } from './utils/provider';
+import { providePageRoot } from './utils/provider';
 
 type RgbOrSimpleThemeParamsKey = RGB | SimpleThemeParamsKey;
 
@@ -194,7 +193,7 @@ const insetsObject = computed(() => {
 });
 
 const context: PageRootExpose = { scrollTop, rootElement: rootRef };
-providePageRootContext(context);
+providePageRoot(context);
 defineExpose(context);
 </script>
 
