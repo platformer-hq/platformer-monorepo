@@ -29,4 +29,13 @@ export default defineNuxtConfig({
     ],
   },
   modules: ['@pinia/nuxt'],
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: '@use "~scss/mixins.scss" as mixins;',
+        },
+      },
+    },
+  },
 });
