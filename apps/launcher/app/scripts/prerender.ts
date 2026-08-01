@@ -1,4 +1,4 @@
-import { postEvent, retrieveLaunchParams } from '@tma.js/sdk-vue';
+import { postEvent, retrieveLaunchParams, isColorDark } from '@tma.js/sdk-vue';
 
 const { tgWebAppThemeParams } = retrieveLaunchParams();
 
@@ -11,6 +11,13 @@ Object.entries(tgWebAppThemeParams).forEach(([key, value]) => {
     );
   }
 });
+
+document.documentElement.dataset['platform'] = /Macintosh|Mac OS X|MacIntel|iPad|iPhone|iPod/.test(navigator.userAgent)
+  ? 'ios'
+  : 'android';
+document.documentElement.dataset['theme'] = tgWebAppThemeParams.bg_color && isColorDark(tgWebAppThemeParams.bg_color)
+  ? 'dark'
+  : 'light';
 
 // TODO: Save theme params changes.
 
