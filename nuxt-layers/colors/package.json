@@ -11,5 +11,9 @@
   "devDependencies": {
     "nuxt": "^4.0.0",
     "tsx": "^4.21.0"
+  },
+  "peerDependencies": {
+    "@tma.js/sdk-vue": "^1.0.0",
+    "vue": "^3.0.0"
   }
 }
