@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { KnownHtmlTag } from '~/types';
+import type { KnownHtmlTag } from '~ui-kit/types';
 
 export interface PagePaddingsProps {
   /**

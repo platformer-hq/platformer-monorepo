@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { usePlatform } from '~/_composables/usePlatform';
+import { usePlatform } from '~ui-kit/_composables/usePlatform';
 
 const { size = 'default' } = defineProps<{
   width?: number | string;

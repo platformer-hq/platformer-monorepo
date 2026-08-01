@@ -2,7 +2,7 @@
 import VTypography, {
   type TypographyVariant,
   type TypographyWeight,
-} from '~/components/VTypography/VTypography.vue';
+} from '~ui-kit/components/VTypography/VTypography.vue';
 
 defineProps<{
   fontVariant?: TypographyVariant;

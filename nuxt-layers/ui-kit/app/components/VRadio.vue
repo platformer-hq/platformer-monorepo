@@ -2,7 +2,7 @@
 import { hapticFeedback } from '@tma.js/sdk-vue';
 import { useMousePressed } from '@vueuse/core';
 
-import { usePlatform } from '~/_composables/usePlatform';
+import { usePlatform } from '~ui-kit/_composables/usePlatform';
 
 const props = defineProps<{
   value: T;

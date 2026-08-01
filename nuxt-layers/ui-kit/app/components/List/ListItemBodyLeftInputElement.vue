@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onClickOutside, useTextareaAutosize } from '@vueuse/core';
 
-import { usePlatform } from '~/_composables/usePlatform';
+import { usePlatform } from '~ui-kit/_composables/usePlatform';
 
 defineProps<{ multiline?: boolean }>();
 

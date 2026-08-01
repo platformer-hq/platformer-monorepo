@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { usePlatform } from '~/_composables/usePlatform';
-import type { TypographyProps } from '~/components/VTypography/VTypography.vue';
+import { usePlatform } from '~ui-kit/_composables/usePlatform';
+import type { TypographyProps } from '~ui-kit/components/VTypography/VTypography.vue';
 
 const platform = usePlatform();
 

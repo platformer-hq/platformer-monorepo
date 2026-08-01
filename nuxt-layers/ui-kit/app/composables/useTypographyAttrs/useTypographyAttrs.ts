@@ -1,8 +1,7 @@
 import type { StyleValue } from 'vue';
 
-import { usePlatform } from '~/_composables/usePlatform';
-
 import type { KnownCssColorToken } from '~colors/generated';
+import { usePlatform } from '~ui-kit/_composables/usePlatform';
 
 import './v-typography.scss';
 

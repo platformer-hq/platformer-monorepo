@@ -4,7 +4,7 @@ import { onClickOutside } from '@vueuse/core';
 import type {
   TypographyVariant,
   TypographyWeight,
-} from '~/components/VTypography/VTypography.vue';
+} from '~ui-kit/components/VTypography/VTypography.vue';
 
 const props = withDefaults(defineProps<{
   fontVariant?: TypographyVariant;

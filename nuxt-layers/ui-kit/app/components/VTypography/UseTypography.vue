@@ -6,7 +6,7 @@ import type {
   UseTypographyAttrsAlign,
   UseTypographyAttrsWeight,
   UseTypographyAttrsVariant,
-} from '~/composables/useTypographyAttrs/useTypographyAttrs';
+} from '~ui-kit/composables/useTypographyAttrs/useTypographyAttrs';
 
 export type UseTypographyAlign = UseTypographyAttrsAlign;
 export type UseTypographyVariant = UseTypographyAttrsVariant;

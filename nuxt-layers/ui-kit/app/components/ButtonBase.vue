@@ -1,8 +1,7 @@
 <script lang="ts" setup>
-import { usePlatform } from '~/_composables/usePlatform';
-import type { KnownHtmlTag, KnownPlatform } from '~/types';
-
 import type { KnownCssColorToken } from '~colors/generated';
+import { usePlatform } from '~ui-kit/_composables/usePlatform';
+import type { KnownHtmlTag, KnownPlatform } from '~ui-kit/types';
 
 interface AndroidSpecificProps {
   /**

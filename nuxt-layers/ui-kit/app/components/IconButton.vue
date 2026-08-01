@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { reactiveOmit } from '@vueuse/core';
 
-import { usePlatform } from '~/_composables/usePlatform.js';
+import { usePlatform } from '~ui-kit/_composables/usePlatform.js';
 
 import type { ButtonBaseProps } from './ButtonBase.vue';
 

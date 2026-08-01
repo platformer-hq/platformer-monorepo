@@ -3,8 +3,8 @@
  * This component is reponsible for displaying a block, notifying the user that the content
  * is loading.
  */
-import type { TypographyVariant } from '~/components/VTypography/VTypography.vue';
-import type { KnownHtmlTag } from '~/types';
+import type { TypographyVariant } from '~ui-kit/components/VTypography/VTypography.vue';
+import type { KnownHtmlTag } from '~ui-kit/types';
 
 const { borderRadius = 5, as = 'div' } = defineProps<{
   /**

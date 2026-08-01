@@ -2,8 +2,8 @@
 import {
   useSafeAreaInsetsAttrs,
   type UseSafeAreaInsetsAttrsOptions,
-} from '~/composables/useSafeAreaInsetsAttrs/useSafeAreaInsetsAttrs';
-import type { KnownHtmlTag } from '~/types';
+} from '~ui-kit/composables/useSafeAreaInsetsAttrs/useSafeAreaInsetsAttrs';
+import type { KnownHtmlTag } from '~ui-kit/types';
 
 export interface SafeAreaInsetsProps extends UseSafeAreaInsetsAttrsOptions {
   /**

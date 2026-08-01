@@ -4,8 +4,8 @@ import type {
   UseTypographyAttrsAlign,
   UseTypographyAttrsWeight,
   UseTypographyAttrsVariant,
-} from '~/composables/useTypographyAttrs/useTypographyAttrs';
-import type { KnownHtmlTag } from '~/types';
+} from '~ui-kit/composables/useTypographyAttrs/useTypographyAttrs';
+import type { KnownHtmlTag } from '~ui-kit/types';
 
 export type TypographyAlign = UseTypographyAttrsAlign;
 export type TypographyVariant = UseTypographyAttrsVariant;

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { KnownHtmlTag } from '~/types';
+import type { KnownHtmlTag } from '~ui-kit/types';
 
 export interface ShimmerBoxProps {
   /**
@@ -29,7 +29,9 @@ const { b, e } = bem('shimmer-box');
     :is="as"
     :class="b({rounded})"
     :style="{
-      background: color === 'transparent' ? undefined : colorReference(`${color}-fill-bg`),
+      background: color === 'transparent'
+        ? undefined
+        : cssColorTokenReference(`${color}-fill-background`),
       height: toPx(height),
       width: toPx(width),
       borderRadius: toPx(borderRadius),

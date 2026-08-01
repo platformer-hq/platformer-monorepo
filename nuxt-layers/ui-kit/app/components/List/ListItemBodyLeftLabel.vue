@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TypographyProps } from '~/components/VTypography/VTypography.vue';
+import type { TypographyProps } from '~ui-kit/components/VTypography/VTypography.vue';
 
 defineProps<{
   /**

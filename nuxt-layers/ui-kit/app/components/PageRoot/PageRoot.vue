@@ -11,9 +11,8 @@ import {
 import { useScroll } from '@vueuse/core';
 import { useNavigationDirection } from '@workspace/navigation';
 
-import { usePlatform } from '~/_composables/usePlatform';
-
 import type { KnownThemeParamsKey as SimpleThemeParamsKey } from '~colors/types';
+import { usePlatform } from '~ui-kit/_composables/usePlatform';
 
 import type { PageRootExpose } from './_types';
 import { useScrollStatesStore } from './_useScrollStates';
@@ -169,7 +168,7 @@ watch(() => [scrollTop.value, route.name] as const, ([y, routeName]) => {
 });
 
 onMounted(() => {
-  const direction = routingDirection.value;
+  const direction = toValue(routingDirection);
   const { scrollToTop } = props;
   if (scrollToTop === true || (scrollToTop === 'default' && direction === 'forward')) {
     return scrollTop.value = 0;

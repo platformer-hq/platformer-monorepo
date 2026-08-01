@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { usePlatform } from '~/_composables/usePlatform';
-import type { KnownHtmlTag } from '~/types';
+import { usePlatform } from '~ui-kit/_composables/usePlatform';
+import type { KnownHtmlTag } from '~ui-kit/types';
 
 const { as = 'div' } = defineProps<{
   /**

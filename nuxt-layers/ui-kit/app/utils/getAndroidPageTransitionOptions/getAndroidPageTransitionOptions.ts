@@ -1,4 +1,4 @@
-import type { UsePageTransitionOptions } from '~/composables/usePageTransition.js';
+import type { UsePageTransitionOptions } from '~ui-kit/composables/usePageTransition.js';
 
 import './android-page-transition.scss';
 

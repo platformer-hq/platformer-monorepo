@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { usePlatform } from '~/_composables/usePlatform';
-import type { BadgeProps } from '~/components/VBadge.vue';
+import { usePlatform } from '~ui-kit/_composables/usePlatform';
+import type { BadgeProps } from '~ui-kit/components/VBadge.vue';
 
 defineProps<{
   palette?: BadgeProps['palette'];

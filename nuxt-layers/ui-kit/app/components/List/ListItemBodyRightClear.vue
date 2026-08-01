@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { IconXmark24, IconXmarkFill28 } from '@workspace/icons';
 
-import { usePlatform } from '~/_composables/usePlatform';
+import { usePlatform } from '~ui-kit/_composables/usePlatform';
 
 const platform = usePlatform();
 
