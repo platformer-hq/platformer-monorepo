@@ -5,11 +5,7 @@ import type { InjectionKey } from 'vue';
  * @returns A set of utilities to provide and inject a value.
  */
 /* @__NO_SIDE_EFFECTS__ */
-export function createProvider<V>(): {
-  provide(v: V): void;
-  inject(): V | undefined;
-  inject(defaultValue: V): V;
-} {
+export function createProvider<V>() {
   const k = Symbol() as InjectionKey<V>;
 
   function inject(): V | undefined;
