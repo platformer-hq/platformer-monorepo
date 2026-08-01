@@ -1,13 +1,12 @@
 <script lang="ts" setup>
-import { computed, onUnmounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { provideRoutingState, type RoutingDirection } from '../routing-state.js';
+import { provideNavigationState, type NavigationDirection } from '../provider.js';
 
 const router = useRouter();
 
 let prevPosition = router.options.history.state.position as number;
-const direction = ref<RoutingDirection>('initial');
+const direction = ref<NavigationDirection>('initial');
 
 // Whenever the the current route changes, we update the position.
 onUnmounted(
@@ -18,7 +17,7 @@ onUnmounted(
   }),
 );
 
-provideRoutingState({
+provideNavigationState({
   direction: computed(() => direction.value),
 });
 </script>

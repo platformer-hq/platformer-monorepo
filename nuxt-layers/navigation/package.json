@@ -1,0 +1,21 @@
+{
+  "name": "@workspace-layers/navigation",
+  "type": "module",
+  "private": true,
+  "main": "./nuxt.config.ts",
+  "scripts": {
+    "prepare": "nuxt prepare",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@workspace-layers/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "nuxt": "^4.0.0"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0",
+    "vue-router": "^5.0.0",
+    "valibot": "^1.0.0"
+  }
+}
