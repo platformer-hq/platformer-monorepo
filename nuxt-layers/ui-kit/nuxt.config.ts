@@ -18,11 +18,15 @@ export default defineNuxtConfig({
     extensions: ['.vue'],
     ignore: ['**/_/**', '**/_*'],
   }],
-  extends: ['@workspace-layers/scss', '@workspace-layers/colors'],
+  extends: [
+    '@workspace-layers/scss',
+    '@workspace-layers/colors',
+    '@workspace-layers/utils',
+    '@workspace-layers/navigation',
+  ],
   imports: {
     dirs: [
       resolve('app/components/*/utils/*.ts'),
-      resolve('app/components/*/*/utils/*.ts'),
       resolve('app/components/*/composables/*.ts'),
       resolve('app/composables/use*/use*.ts'),
       resolve('app/utils/*/*.ts'),
