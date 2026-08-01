@@ -2,10 +2,11 @@ import { postEvent, retrieveLaunchParams } from '@tma.js/sdk-vue';
 
 const { tgWebAppThemeParams } = retrieveLaunchParams();
 
+// Set initial CSS variables related to the theme.
 Object.entries(tgWebAppThemeParams).forEach(([key, value]) => {
   if (value) {
     document.documentElement.style.setProperty(
-      `--tg-theme-${key.replace(/_[a-z]/g, match => `-${match[1]}`)}`,
+      `--${key.replace(/_[a-z]/g, match => `-${match[1]}`)}`,
       value,
     );
   }

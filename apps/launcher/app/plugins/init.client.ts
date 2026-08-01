@@ -13,7 +13,6 @@ import {
 import { isPageReload } from '@workspace/navigation';
 import {
   formatMiniAppCssVar,
-  formatThemeParamsCssVar,
   formatViewportCssVar,
   interceptBrokenEvents,
 } from '@workspace/tma';
@@ -76,7 +75,9 @@ export default defineNuxtPlugin({
     // Initialize required components.
     initData.restore();
     themeParams.mount();
-    themeParams.bindCssVars(formatThemeParamsCssVar);
+    themeParams.bindCssVars(key => {
+      return `--${key.replace(/_[a-z]/g, match => `-${match[1]}`)}`;
+    });
     if (miniApp.mount.isAvailable()) {
       miniApp.mount();
       miniApp.bindCssVars(formatMiniAppCssVar);
@@ -98,6 +99,7 @@ export default defineNuxtPlugin({
     if (!isPageReload()) {
       await navigateTo({ query: route.query, replace: true });
     }
+
     return {
       provide: {
         init: {
