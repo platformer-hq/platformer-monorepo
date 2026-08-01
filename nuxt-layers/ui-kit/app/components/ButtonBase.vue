@@ -188,13 +188,13 @@ defineExpose({ element: rootRef });
 
   @each $name, $settings in (
     "filled": (var(--button-text-color), var(--button-color)),
-    "gray": (var(--text-color), var(--tertiary-fill-bg-color)),
+    "gray": (var(--text-color), var(--tertiary-fill-background-color)),
     "tinted": (var(--accent-text-color), var(--secondary-accent-color)),
     "disabled": (var(--text-main-disabled-color), var(--button-main-disabled-color)),
   ) {
     &--#{$name} {
-      color: list.nth($settings, 1);
-      background-color: list.nth($settings, 2);
+      --button-base-text-color: #{list.nth($settings, 1)};
+      --button-base-bg-color: #{list.nth($settings, 2)};
     }
   }
 }
