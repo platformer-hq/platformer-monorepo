@@ -2,7 +2,6 @@ import type { KnownThemeParamsKey as SdkKnownThemeParamsKey } from '@tma.js/sdk-
 
 import type {
   AnyKnownColorKey,
-  KnownCustomColorKey,
   KnownMiniAppColorKey,
   KnownThemeParamsKey,
 } from '../types';
@@ -25,25 +24,6 @@ const knownThemeKeyToSdkKnownThemeKeyMap = {
   'section-separator': 'section_separator_color',
 } satisfies Record<KnownThemeParamsKey, SdkKnownThemeParamsKey>;
 
-const knownCustomColorKeyMap = {
-  'accent-orange': 1,
-  'button-main-disabled': 1,
-  'button-confirm': 1,
-  'button-destructive': 1,
-  'mira-elevated-bg': 1,
-  'mira-elevated-bg-overlay': 1,
-  'mira-blue': 1,
-  'mira-pro-accent': 1,
-  'mira-pro-accent-secondary': 1,
-  'primary-fill-bg': 1,
-  'quaternary-fill-bg': 1,
-  'separator-non-opaque': 1,
-  'secondary-accent': 1,
-  'tertiary-fill-bg': 1,
-  'text-main-disabled': 1,
-  'text-confirm': 1,
-} satisfies Record<KnownCustomColorKey, 1>;
-
 const knownMiniAppColorKeyMap = {
   'app-header': 1,
   'app-bottom-bar': 1,
@@ -58,9 +38,7 @@ export function isAnyKnownColorKey(value: unknown): value is AnyKnownColorKey {
   if (typeof value !== 'string') {
     return false;
   }
-  return isKnownThemeParamsKey(value)
-    || value in knownCustomColorKeyMap
-    || value in knownMiniAppColorKeyMap;
+  return isKnownThemeParamsKey(value) || value in knownMiniAppColorKeyMap;
 }
 
 export function knownThemeKeyToSdkKnownThemeKey(key: KnownThemeParamsKey): SdkKnownThemeParamsKey {
@@ -68,14 +46,14 @@ export function knownThemeKeyToSdkKnownThemeKey(key: KnownThemeParamsKey): SdkKn
 }
 
 export type ColorReferenceAnyColor = AnyKnownColorKey | string;
-type ColorReferenceResult<T extends Maybe<ColorReferenceAnyColor>> =
+type ColorReferenceResult<T extends ColorReferenceAnyColor | undefined | null> =
   T extends (null | undefined) ? string | null : string;
 
 /**
  * Converts the value to a CSS variable reference if the value is any known color key. Returns
  * the value itself otherwise.
  */
-export function colorReference<T extends Maybe<ColorReferenceAnyColor>>(
+export function colorReference<T extends ColorReferenceAnyColor | undefined | null>(
   color: T,
 ): ColorReferenceResult<T> {
   return (
