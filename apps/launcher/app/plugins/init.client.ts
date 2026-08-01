@@ -10,12 +10,6 @@ import {
   miniApp,
   retrieveLaunchParams,
 } from '@tma.js/sdk-vue';
-import { isPageReload } from '@workspace/navigation';
-import {
-  formatMiniAppCssVar,
-  formatViewportCssVar,
-  interceptBrokenEvents,
-} from '@workspace/tma';
 
 export default defineNuxtPlugin({
   name: 'init',
@@ -75,9 +69,7 @@ export default defineNuxtPlugin({
     // Initialize required components.
     initData.restore();
     themeParams.mount();
-    themeParams.bindCssVars(key => {
-      return `--${key.replace(/_[a-z]/g, match => `-${match[1]}`)}`;
-    });
+    themeParams.bindCssVars(formatThemeParamsCssVar);
     if (miniApp.mount.isAvailable()) {
       miniApp.mount();
       miniApp.bindCssVars(formatMiniAppCssVar);
