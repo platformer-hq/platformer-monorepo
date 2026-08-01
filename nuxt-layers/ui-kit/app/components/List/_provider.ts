@@ -1,7 +1,7 @@
 export const {
   provide: provideListItemOptions,
   inject: injectListItemOptions,
-} = createProvider<{
+} = createProvide<{
   large: MaybeRefOrGetter<boolean>;
   separator: MaybeRefOrGetter<boolean>;
-}>();
+}>('list-item');
