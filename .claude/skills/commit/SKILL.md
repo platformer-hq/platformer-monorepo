@@ -1,6 +1,9 @@
 ---
 name: commit
 description: Create well-formatted git commits following conventional commit standards. Use when the user asks to commit staged changes, write a commit message, or invokes /commit.
+model: haiku
+effort: low
+context: fork
 ---
 
 # Git Commit Skill
