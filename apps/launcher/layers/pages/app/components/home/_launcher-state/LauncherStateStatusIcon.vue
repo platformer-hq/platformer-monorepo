@@ -5,8 +5,6 @@ defineProps<{
   status?: 'error' | 'warning' | 'loading';
 }>();
 const { b } = bem('launcher-state-status-icon');
-
-const platform = usePlatform();
 </script>
 
 <template>
@@ -29,8 +27,7 @@ const platform = usePlatform();
       <IconExclamationMarkTriangleFill28 :size="16"/>
     </div>
     <div v-else-if="status === 'loading'" :class="b('loading')">
-      <LoadingIndicatorIos v-if="platform === 'ios'" :size="16"/>
-      <LoadingIndicatorAndroid v-else :size="16"/>
+      <LoadingIndicator :size="16"/>
     </div>
   </Transition>
 </template>
@@ -54,7 +51,7 @@ const platform = usePlatform();
   outline-offset: -0.5px;
 
   &--error {
-    background: var(--tg-theme-destructive-text-color);
+    background: var(--destructive-text-color);
 
     path {
       stroke-width: 4;
@@ -66,8 +63,8 @@ const platform = usePlatform();
   }
 
   &--loading {
-    background: var(--tg-theme-secondary-bg-color);
-    color: var(--tg-theme-text-color);
+    background: var(--secondary-bg-color);
+    color: var(--text-color);
   }
 }
 </style>
