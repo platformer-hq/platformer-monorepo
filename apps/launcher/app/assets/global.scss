@@ -1,24 +1,8 @@
-// Local variables.
+// ui-kit variables.
 :root {
-  // Fallbacks.
-  @each $key, $fallback in ("subtitle-text-color": "hint-color") {
-    --tg-theme-#{$key}: var(--tg-theme-#{$fallback});
-  }
-}
-
-// vue-kit variables.
-:root {
-  // Common.
-  --tgui-button-base-filled-bg-color: var(--tg-theme-button-color);
-  --tgui-button-base-filled-text-color: var(--tg-theme-button-text-color);
-  --tgui-button-base-tinted-bg-color: var(--secondary-accent-color);
-  --tgui-button-base-tinted-text-color: var(--tg-theme-accent-text-color);
-  --tgui-button-base-disabled-bg-color: var(--button-main-disabled-color);
-  --tgui-button-base-disabled-text-color: var(--text-main-disabled-color);
-
   // Insets.
   @each $side in ('bottom', 'top', 'left', 'right') {
-    --tgui-safe-area-insets-#{$side}-sum-inset: calc(var(--tg-viewport-safe-area-inset-#{$side}, 0px) + var(--tg-viewport-content-safe-area-inset-#{$side}, 0px));
+    --sum-inset-#{$side}: calc(var(--tg-viewport-safe-area-inset-#{$side}, 0px) + var(--tg-viewport-content-safe-area-inset-#{$side}, 0px));
   }
 }
 
@@ -27,7 +11,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   padding: 0;
   margin: 0;
-  color: var(--tg-theme-text-color, white);
+  color: var(--text-color, white);
   background: var(--tg-app-bg-color);
   overflow: hidden;
 }
