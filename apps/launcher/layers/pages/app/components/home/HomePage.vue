@@ -8,7 +8,6 @@ import prerenderScriptUrl from '@/scripts/prerender?iife-url';
 import AppFrame from './_app-frame/AppFrame.vue';
 import { useAppData } from './_composables/useAppData';
 import { useAppUrl } from './_composables/useAppUrl';
-import { useInitDataSanitized } from './_composables/useInitDataSanitized';
 import { useLauncherOptions } from './_composables/useLauncherOptions';
 import LauncherState, { type LauncherStateState } from './_launcher-state/LauncherState.vue';
 import { appendLaunchParams } from './_utils/appendLaunchParams';
@@ -38,7 +37,14 @@ onErrorCaptured(error => {
   return false;
 });
 
-const initDataSanitized = useInitDataSanitized(initDataRaw);
+const initDataSanitized = computed(() => {
+  if (!initDataRaw.value) {
+    return;
+  }
+  const searchParams = new URLSearchParams(initDataRaw.value);
+  searchParams.delete('hash');
+  return searchParams.toString();
+});
 const extractedOptions = computed(() => (
   launcherOptions.value.kind === 'options'
     ? launcherOptions.value.options
