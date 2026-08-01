@@ -5,8 +5,9 @@ defineProps<{
   disabled?: boolean;
 }>();
 
-const { b, e } = bem('tgui-switch-android');
 const checked = defineModel<boolean>('checked', { default: false });
+
+const { b, e } = bem('switch-android');
 </script>
 
 <template>
@@ -24,9 +25,7 @@ const checked = defineModel<boolean>('checked', { default: false });
 </template>
 
 <style lang="scss">
-@use "~scss/mixins";
-
-.tgui-switch-android {
+.switch-android {
   display: inline-block;
   height: 16px;
   width: 32px;
@@ -44,7 +43,7 @@ const checked = defineModel<boolean>('checked', { default: false });
     height: 100%;
     width: 100%;
     border-radius: 100px;
-    background: var(--tgui-switch-android-bg, #A8A8A8);
+    background: var(--hint-color);
     transition: 300ms;
     mask-image: radial-gradient(circle 9px, transparent 100%, black 100%);
     mask-size: 300% 100%;
@@ -52,7 +51,7 @@ const checked = defineModel<boolean>('checked', { default: false });
     mask-position: -39.5px center;
 
     &--checked {
-      background: var(--tgui-switch-android-checked-bg, #50A8EB);
+      background: var(--button-color);
       mask-position: -23px center;
     }
   }
@@ -64,12 +63,12 @@ const checked = defineModel<boolean>('checked', { default: false });
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    outline: 2px solid var(--tgui-switch-android-knob-color, #A8A8A8);
+    outline: 2px solid var(--hint-color);
     transition: left 300ms;
 
     &--checked {
       left: 17px;
-      outline-color: var(--tgui-switch-android-knob-checked-color, #50A8EB);
+      outline-color: var(--button-color);
     }
   }
 }

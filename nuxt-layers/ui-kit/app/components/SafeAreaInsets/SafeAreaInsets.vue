@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import type { UseSafeAreaInsetsAttrsOptions } from '#ui-kit/composables/useSafeAreaInsetsAttrs/types';
-import type { KnownHtmlTag } from '#ui-kit/types';
+import {
+  useSafeAreaInsetsAttrs,
+  type UseSafeAreaInsetsAttrsOptions,
+} from '~/composables/useSafeAreaInsetsAttrs/useSafeAreaInsetsAttrs';
+import type { KnownHtmlTag } from '~/types';
 
 export interface SafeAreaInsetsProps extends UseSafeAreaInsetsAttrsOptions {
   /**

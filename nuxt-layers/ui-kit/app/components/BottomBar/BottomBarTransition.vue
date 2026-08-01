@@ -11,6 +11,7 @@ defineProps<{
         return reverseTransitionKeyframesIfLeave({
           overflow: ['hidden', 'hidden'],
           height: ['0px', el.clientHeight + 'px'],
+          paddingBottom: ['0px', 'var(--sum-inset-bottom)'],
           marginBottom: ['-24px', '0px'],
           opacity: [0, 0, 0, 1],
         }, transition);

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useImageCacheStore } from '#ui-kit/stores/useImageCacheStore';
+import { useImageCacheStore } from './useImageCacheStore';
 
 const props = defineProps<{
   height?: number | string;

@@ -5,8 +5,11 @@ defineProps<{
   disabled?: boolean;
 }>();
 
-const { b, e } = bem('tgui-switch-ios');
 const checked = defineModel<boolean>('checked', { default: false });
+
+const knob = useTemplateRef('knob');
+
+const { b, e } = bem('switch-ios');
 const checkedInitially = checked.value;
 
 const makeKeyframes = (checked: boolean): Keyframe[] => {
@@ -30,7 +33,6 @@ const makeKeyframes = (checked: boolean): Keyframe[] => {
   ];
 };
 
-const knob = useTemplateRef('knob');
 watch(checked, checked => {
   knob.value?.animate(
     makeKeyframes(checked),
@@ -58,14 +60,12 @@ watch(checked, checked => {
 </template>
 
 <style lang="scss">
-@use "~scss/mixins";
-
-.tgui-switch-ios {
+.switch-ios {
   display: inline-block;
   height: 28px;
   width: 64px;
   border-radius: 1000px;
-  background: var(--tgui-switch-ios-bg, #747480);
+  background: var(--secondary-fill-bg-color);
   position: relative;
   transition: 350ms ease;
   @include mixins.clickable;
@@ -76,7 +76,7 @@ watch(checked, checked => {
   }
 
   &--checked {
-    background: var(--tgui-switch-ios-checked-bg, #2FB250);
+    background: var(--button-confirm-color);
   }
 
   &__knob {
@@ -87,8 +87,8 @@ watch(checked, checked => {
     width: 39px;
     border-radius: 1000px;
     transform-origin: center center;
-    background: var(--tgui-switch-ios-knob-bg, white);
-    box-shadow: var(--tgui-elevated-box-shadow);
+    background: var(--tg-theme-button-text-color);
+    box-shadow: var(--glass-box-shadow);
 
     &--checked-initially {
       left: 23px;
@@ -107,7 +107,7 @@ watch(checked, checked => {
       left: 13px;
       width: 1px;
       height: 10px;
-      background: var(--tgui-switch-ios-mark-left-color, black);
+      background: black;
     }
 
     &--right {
@@ -115,7 +115,7 @@ watch(checked, checked => {
       width: 10px;
       height: 10px;
       border-radius: 50%;
-      border: 1.5px solid var(--tgui-switch-ios-mark-right-color, rgba(255,255,255,.3));
+      border: 1.5px solid var(--tg-theme-subtitle-text-color);
     }
 
     &--visible {

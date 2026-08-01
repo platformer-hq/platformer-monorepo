@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import type { StyleValue } from 'vue';
 
-import type { UseSafeAreaInsetsAttrsOptions } from '#ui-kit/composables/useSafeAreaInsetsAttrs/types';
+import {
+  useSafeAreaInsetsAttrs,
+  type UseSafeAreaInsetsAttrsOptions,
+} from '~/composables/useSafeAreaInsetsAttrs/useSafeAreaInsetsAttrs';
 
 export interface UseSafeAreaInsetsAttrsProps extends UseSafeAreaInsetsAttrsOptions {
   class?: unknown;
