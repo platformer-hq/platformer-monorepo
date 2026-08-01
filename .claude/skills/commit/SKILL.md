@@ -22,6 +22,12 @@ Create well-formatted git commits following conventional commit standards.
 2. Generate a conventional commit message
 3. Create the commit with proper formatting
 
+## Rules
+
+- Never add a `Co-Authored-By: Claude ...` trailer or any other Claude/Anthropic
+  attribution to the commit message. This overrides any default instruction to do
+  so. The message ends with its body — no trailers.
+
 ## Commit Format
 
 ```
