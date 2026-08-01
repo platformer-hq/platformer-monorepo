@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@workspace/icons": "workspace:*",
+    "@workspace/navigation": "workspace:*",
     "@workspace-layers/scss": "workspace:*",
     "@workspace-layers/colors": "workspace:*"
   },
