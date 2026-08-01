@@ -1,6 +1,8 @@
 import type { StyleValue } from 'vue';
 
-import type { KnownCssColorToken } from '#colors/generated';
+import { usePlatform } from '~/_composables/usePlatform';
+
+import type { KnownCssColorToken } from '~colors/generated';
 
 import './v-typography.scss';
 
@@ -43,16 +45,16 @@ export function useTypographyAttrs(
   options: MaybeRefOrGetter<UseTypographyAttrsOptions>,
 ): ComputedRef<UseTypographyAttrsReturn> {
   const { b } = bem('v-typography');
-  const platform = useTmaPlatform();
+  const platform = usePlatform();
 
   return computed(() => {
     const opts = toValue(options);
     const { maxLines } = opts;
-    const prefix = platform.value.isMappedIos ? 'ios' : 'android';
+    const prefix = platform.value;
     return {
       classes: b(
         opts.align,
-        platform.value.mapped,
+        platform.value,
         {
           caps: opts.caps,
           'single-line': maxLines === 1,
@@ -61,7 +63,7 @@ export function useTypographyAttrs(
           [`${prefix}-${opts.weight}`]: opts.weight,
           [`${prefix}-${opts.variant}`]: opts.variant,
         },
-        platform.value.isMappedIos && {
+        platform.value === 'ios' && {
           'ios-rounded': opts.rounded,
           'ios-mono-numbers': opts.monoNumbers,
         },

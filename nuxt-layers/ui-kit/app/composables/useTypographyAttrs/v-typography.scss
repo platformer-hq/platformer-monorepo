@@ -45,6 +45,7 @@ $fontWeights: (
 
 .v-typography {
   margin: 0;
+  font-weight: inherit;
 
   @each $align in (left, center, right) {
     &--#{$align} {
