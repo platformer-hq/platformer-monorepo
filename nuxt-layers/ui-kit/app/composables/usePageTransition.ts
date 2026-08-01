@@ -1,13 +1,9 @@
 import { useScrollLock } from '@vueuse/core';
-import {
-  type TransitionProps,
-  type DeepReadonly,
-  computed,
-  readonly,
-  ref,
-  toValue,
-  type ComputedRef,
-  type MaybeRefOrGetter,
+import type {
+  TransitionProps,
+  DeepReadonly,
+  ComputedRef,
+  MaybeRefOrGetter,
 } from 'vue';
 
 export type UsePageTransitionTransitionType = 'enter' | 'leave';
