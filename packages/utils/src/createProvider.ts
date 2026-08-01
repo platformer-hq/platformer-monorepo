@@ -5,18 +5,23 @@ import type { InjectionKey } from 'vue';
  * @returns A set of utilities to provide and inject a value.
  */
 /* @__NO_SIDE_EFFECTS__ */
-export function createProvider<V>() {
+export function createProvider<V>(): {
+  provide(v: V): void;
+  inject(): V | undefined;
+  inject(defaultValue: V): V;
+} {
   const k = Symbol() as InjectionKey<V>;
+
+  function inject(): V | undefined;
+  function inject(defaultValue: V): V;
+  function inject(defaultValue?: V): V | undefined {
+    return injectLocal(k, defaultValue);
+  }
+
   return {
     provide(v: V) {
       provideLocal(k, v);
     },
-    inject(): V {
-      const injected = injectLocal(k);
-      if (injected === undefined) {
-        throw new Error('Value was not provided');
-      }
-      return injected;
-    },
+    inject,
   };
 }
