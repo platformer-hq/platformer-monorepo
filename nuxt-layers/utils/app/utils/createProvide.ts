@@ -1,5 +1,4 @@
 import { injectLocal, provideLocal } from '@vueuse/core';
-import type { InjectionKey } from 'vue';
 
 /**
  * @returns A set of utilities to provide and inject a value.
