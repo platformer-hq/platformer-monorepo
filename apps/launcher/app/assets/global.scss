@@ -1,6 +1,8 @@
 // ui-kit variables.
 :root {
-  // Insets.
+  @each $key in ('secondary-bg', 'text', 'destructive-text', 'subtitle-text', 'button', 'button-text') {
+    --#{$key}-color: var(--tg-theme-#{$key}-color);
+  }
   @each $side in ('bottom', 'top', 'left', 'right') {
     --sum-inset-#{$side}: calc(var(--tg-viewport-safe-area-inset-#{$side}, 0px) + var(--tg-viewport-content-safe-area-inset-#{$side}, 0px));
   }
