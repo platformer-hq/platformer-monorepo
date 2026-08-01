@@ -1,0 +1,19 @@
+{
+  "name": "@workspace-layers/tma",
+  "type": "module",
+  "private": true,
+  "main": "./nuxt.config.ts",
+  "scripts": {
+    "prepare": "nuxt prepare",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@workspace-layers/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "nuxt": "^4.0.0"
+  },
+  "peerDependencies": {
+    "@tma.js/sdk-vue": "^1.0.0"
+  }
+}
