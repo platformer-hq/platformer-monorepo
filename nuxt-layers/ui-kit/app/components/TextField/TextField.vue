@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import { usePlatform } from '~/_composables/usePlatform';
+import type { KnownCssColorToken } from '~colors/generated';
+import { usePlatform } from '~ui-kit/_composables/usePlatform';
 
 defineProps<{
-  bgColor?: ColorReferenceAnyColor;
-  textColor?: ColorReferenceAnyColor;
+  bgColor?: KnownCssColorToken;
+  textColor?: KnownCssColorToken;
   rounded?: boolean;
   glass?: boolean;
 }>();
@@ -22,8 +23,8 @@ const { b } = bem('text-field');
   <label
     :class="b({'with-left': !!$slots.left, glass, rounded}, platform)"
     :style="{
-      background: colorReference(bgColor) || undefined,
-      color: colorReference(textColor) || undefined,
+      background: bgColor ? cssColorTokenReference(bgColor) : undefined,
+      color: textColor ? cssColorTokenReference(textColor) : undefined,
     }"
   >
     <slot name="left"/>
@@ -38,7 +39,7 @@ const { b } = bem('text-field');
   grid-template-columns: 1fr;
   grid-auto-columns: auto;
   grid-auto-flow: column;
-  background-color: var(--tertiary-fill-bg-color);
+  background-color: var(--tertiary-fill-background);
   color: var(--text-color);
   overflow: hidden;
 
