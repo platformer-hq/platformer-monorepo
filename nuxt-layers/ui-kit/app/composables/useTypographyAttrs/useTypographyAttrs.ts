@@ -32,7 +32,7 @@ export interface UseTypographyAttrsOptions {
   variant?: UseTypographyAttrsVariant;
   weight?: UseTypographyAttrsWeight;
   rounded?: boolean;
-  color?: ColorReferenceAnyColor | KnownCssColorToken;
+  color?: KnownCssColorToken;
 }
 
 export interface UseTypographyAttrsReturn {
@@ -69,10 +69,8 @@ export function useTypographyAttrs(
       ),
       style: {
         '--max-lines': typeof maxLines === 'number' && maxLines > 1 ? maxLines : undefined,
-        color: opts.color
-          ? isKnownCssColorToken(opts.color)
-            ? cssColorTokenReference(opts.color)
-            : colorReference(opts.color)
+        '--v-typography-color': opts.color
+          ? cssColorTokenReference(opts.color)
           : undefined,
       },
     };
