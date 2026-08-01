@@ -33,6 +33,7 @@ const state = ref<LauncherStateState | { kind: 'ready' }>(
 );
 
 onErrorCaptured(error => {
+  console.error('Error captured', error);
   state.value = { kind: 'unknown-error', error };
   return false;
 });
@@ -147,6 +148,8 @@ onMounted(() => {
 
 const hapticError = () => hapticFeedback.notificationOccurred.ifAvailable('error');
 const { b, e } = bem('home-page');
+
+provideUiKitPlatform(usePlatform());
 </script>
 
 <template>
