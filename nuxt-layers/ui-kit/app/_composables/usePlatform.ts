@@ -1,6 +1,4 @@
-import { injectUiKitPlatform } from '~ui-kit/utils/platform-provider';
-
 export function usePlatform() {
-  const injected = injectUiKitPlatform('ios');
+  const injected = injectUiKitPlatform();
   return computed(() => toValue(injected));
 }
