@@ -70,7 +70,7 @@ preloadRouteComponents({ name: PageNames.Main });
             <AutoListItem
               :clickable="platform.isMappedAndroid && !isLoading"
               @click="platform.isMappedAndroid && !isLoading
-                ? (canAcceptAppTransfers = !canAcceptAppTransfers)
+                ? (canBeInvitedToManage = !canBeInvitedToManage)
                 : undefined"
             >
               <template #bodyLeftLabel>
@@ -81,7 +81,7 @@ preloadRouteComponents({ name: PageNames.Main });
               <template #bodyRight>
                 <AutoListItemBodyRight>
                   <AutoSwitch
-                    v-model:checked="canAcceptAppTransfers"
+                    v-model:checked="canBeInvitedToManage"
                     :disabled="isLoading"
                     @click="platform.isMappedAndroid ? $event.preventDefault() : undefined"
                   />
@@ -101,7 +101,7 @@ preloadRouteComponents({ name: PageNames.Main });
             <AutoListItem
               :clickable="platform.isMappedAndroid && !isLoading"
               @click="platform.isMappedAndroid && !isLoading
-                ? (canBeInvitedToManage = !canBeInvitedToManage)
+                ? (canAcceptAppTransfers = !canAcceptAppTransfers)
                 : undefined"
             >
               <template #bodyLeftLabel>
@@ -112,7 +112,7 @@ preloadRouteComponents({ name: PageNames.Main });
               <template #bodyRight>
                 <AutoListItemBodyRight>
                   <AutoSwitch
-                    v-model:checked="canBeInvitedToManage"
+                    v-model:checked="canAcceptAppTransfers"
                     :disabled="isLoading"
                     @click="platform.isMappedAndroid ? $event.preventDefault() : undefined"
                   />
