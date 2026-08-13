@@ -121,7 +121,7 @@ export const useUserSelectionPageStore = defineStore('user-selection', () => {
     setAlwaysShowConfirm(value: boolean | undefined) {
       state.value.alwaysShowConfirm = value;
     },
-    canAcceptAppTransfers: computed(() => state.value.canBeInvitedToManage),
+    canAcceptAppTransfers: computed(() => state.value.canAcceptAppTransfers),
     setCanAcceptAppTransfers(value: boolean | undefined) {
       state.value.canAcceptAppTransfers = value;
     },
